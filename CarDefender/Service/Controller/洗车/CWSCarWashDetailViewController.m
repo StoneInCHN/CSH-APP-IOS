@@ -1,0 +1,577 @@
+//
+//  CWSCarWashDetailViewController.m
+//  CarDefender
+//
+//  Created by 王泰莅 on 15/12/10.
+//  Copyright © 2015年 SKY. All rights reserved.
+//
+
+#import "CWSCarWashDetailViewController.h"
+#import "CWSCarWashReviewViewController.h"
+#import "CWSPayViewController.h"
+#import "CWSCarWashDetileController.h"
+
+#import "NewCarWashDetailHeaderView.h"
+#import "CWSTableViewButtonCellDelegate.h"
+
+//模型
+#import "CWSCarMaintainInfoModel.h"
+#import "CWSCellHeightModel.h"
+#import "CWSCarWashDetailReviewModel.h"   //用户评论model
+#import "CWSCarWashDiscountModel.h"       //含有打折信息的model
+
+//cell
+#import "NewCarWashDetailReviewCell.h"  //评论cell
+#import "NewCarWashDiscountCell.h"     //打折cell
+
+#define HEADER_HEIGHT 33.0f
+#define CELL_HEIGHT 40.f
+#define REVIEWCELL_HEIGHT_NOIMG 64.0f
+#define REVIEWCELL_HEIGHT_IMG 114.0f
+#define DISCOUNTCELL_HEIGHT_NOINFO 40.0f
+#define DISCOUNTCELL_HEIGHT_INFO 52.0f
+@interface CWSCarWashDetailViewController ()<UITableViewDataSource,UITableViewDelegate,CWSTableViewButtonCellDelegate>{
+
+    UITableView* myTableView;
+    
+    NSMutableArray* dataArray;
+    NSMutableArray* reviewDataArray;
+    NSMutableArray* rowsHeightArray;
+    
+    //换接口后数据源
+    NSMutableDictionary *_dataDic;
+    NSMutableArray *_goodsListArray;
+    NSMutableArray *_sectionNameArray; //分段的名称
+//    NSMutableArray *_commentsArray;
+//    NSMutableArray *_normolWashArray;
+//    NSMutableArray *_fineWashArray;
+//    NSMutableArray *_BeautyArray;
+//    NSMutableArray *_maintenanceArray;
+    
+    NSString* _currentStoreName;
+}
+
+@end
+
+@implementation CWSCarWashDetailViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.title = @"商家详情";
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.view.backgroundColor = [UIColor whiteColor];
+    [Utils changeBackBarButtonStyle:self];
+    
+    [self initialData];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [ModelTool stopAllOperation];
+}
+
+#pragma mark -================================InitialData
+-(void)initialData{
+    if(!dataArray){
+    
+        dataArray = @[].mutableCopy;
+        reviewDataArray = @[].mutableCopy;
+        rowsHeightArray = @[].mutableCopy;
+        
+        _dataDic = [NSMutableDictionary dictionary];
+        _goodsListArray = [NSMutableArray array];
+        _sectionNameArray = [NSMutableArray array];
+//        _commentsArray = [NSMutableArray array];
+//        _normolWashArray= [NSMutableArray array];
+//        _fineWashArray= [NSMutableArray array];
+//        _BeautyArray= [NSMutableArray array];
+//        _maintenanceArray= [NSMutableArray array];
+    }
+    
+    [self loadData];
+}
+
+-(void)loadData{
+    [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+    [ModelTool getMerchantsDetailAndDoodsWithParameter:@{@"id":[NSString stringWithFormat:@"%ld",(long)self.idNumber]} andSuccess:^(id object) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
+                MyLog(@"----------商家详情信息-------%@",object);
+                _dataDic = [object[@"data"] mutableCopy];
+                
+                _currentStoreName = _dataDic[@"store_name"];
+                _goodsListArray = [_dataDic[@"type"] mutableCopy];
+                
+                
+                //添加数据源
+//                for (NSDictionary* typeDict in _goodsListArray) {
+//                    if([typeDict[@"typename"] isEqualToString:@"商家评价"]){
+//                        //这个留给以后商家评价分析
+//                        
+//                        [_sectionNameArray addObject:typeDict[@"typename"]];
+//                        NSMutableArray* reviewDataArray = [NSMutableArray array];
+//                        NSMutableDictionary* reviewDict = [NSMutableDictionary dictionaryWithObject:reviewDataArray forKey:typeDict[@"typename"]];
+//                        [dataArray addObject:reviewDict];
+//                    }else{
+//                        [_sectionNameArray addObject:typeDict[@"typename"]];
+//                        NSMutableArray* tempDataArray = [NSMutableArray array];
+//                        for (NSDictionary* tempGoodsDict in typeDict[@"goodsList"]) {
+//                            [tempDataArray addObject:tempGoodsDict];
+//                        }
+//                        NSMutableDictionary* dataDict = [NSDictionary dictionaryWithObject:tempDataArray forKey:typeDict[@"typename"]];
+//                        [dataArray addObject:dataDict];
+//                        tempDataArray = nil;
+//                    }
+//                }
+                
+                NSMutableDictionary* reviewDataDict = [NSMutableDictionary dictionary];
+                for (NSDictionary* typeDict in _goodsListArray) {
+                    if([typeDict[@"typename"] isEqualToString:@"商家评价"]){
+                        //这个留给以后商家评价分析
+
+             
+                        
+                    }else{
+                        [_sectionNameArray addObject:typeDict[@"typename"]];
+                        NSMutableArray* tempDataArray = [NSMutableArray array];
+                        for (NSMutableDictionary* tempGoodsDict in typeDict[@"goodsList"]) {
+                            [tempGoodsDict setObject:[tempGoodsDict valueForKey:@"productDetailName"] ? [NSString stringWithFormat:@"%f",DISCOUNTCELL_HEIGHT_INFO] : [NSString stringWithFormat:@"%f",DISCOUNTCELL_HEIGHT_NOINFO]  forKey:@"currentCellHeight"];
+                            [tempDataArray addObject:tempGoodsDict];
+                        }
+                        NSMutableDictionary* dataDict = [NSMutableDictionary dictionaryWithObject:tempDataArray forKey:typeDict[@"typename"]];
+                        [dataArray addObject:dataDict];
+                        tempDataArray = nil;
+                    }
+                }
+                
+                [_sectionNameArray insertObject:@"" atIndex:0];
+                [dataArray insertObject:reviewDataDict atIndex:0];
+                
+                
+      
+                
+//                //分别添加数据源
+//                NSMutableArray *sectionNameArray = [NSMutableArray array];
+//                for (NSDictionary *dic in _goodsListArray) {
+//                    [sectionNameArray addObject:dic[@"typename"]];
+//                    if ([dic[@"typename"] isEqualToString:@"商家评价"]) {
+//                        _commentsArray = dic[@"goodsList"];
+//                    }else if ([dic[@"typename"] isEqualToString:@"普洗"]){
+//                        _normolWashArray = dic[@"goodsList"];
+//                    }else if ([dic[@"typename"] isEqualToString:@"精洗"]){
+//                        _fineWashArray = dic[@"goodsList"];
+//                    }else if ([dic[@"typename"] isEqualToString:@"美容"]){
+//                        _BeautyArray= dic[@"goodsList"];
+//                    }else if ([dic[@"typename"] isEqualToString:@"养护"]){
+//                        _maintenanceArray= dic[@"goodsList"];
+//                    }
+//                }
+//
+//                //将数据源添加进model
+//                for (int i = 0; i<sectionNameArray.count; i++) {
+//                    CWSCarMaintainInfoModel* model = [CWSCarMaintainInfoModel new];
+//                    model.sectionName = sectionNameArray[i];
+//                    if([model.sectionName isEqualToString:@"商家评价"]){
+//
+//
+//                    }else if([model.sectionName isEqualToString:@"普洗"]){
+//                        
+//                        for(int j=0; j<_normolWashArray.count; j++){
+//                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_normolWashArray[j]];
+//                            [dic setValue:model.sectionName forKey:@"type"];
+//                            CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+//                            [model.realDataArray addObject:discountModel];
+//                            
+//                            CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+//                            cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+//                            [model.cellHeightArray addObject:cellHeightModel];
+//                        }
+//                    }else if([model.sectionName isEqualToString:@"精洗"]){
+//                        for(int j=0; j<_fineWashArray.count; j++){
+//                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_fineWashArray[j]];
+//                            [dic setValue:model.sectionName forKey:@"type"];
+//                            CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+//                            
+//                            [model.realDataArray addObject:discountModel];
+//                            CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+//                            cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+//                            [model.cellHeightArray addObject:cellHeightModel];
+//                        }
+//                    }else if([model.sectionName isEqualToString:@"养护"]){
+//                        for(int j=0; j<_maintenanceArray.count; j++){
+//                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_maintenanceArray[j]];
+//                            [dic setValue:model.sectionName forKey:@"type"];
+//                            CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+//                            
+//                            [model.realDataArray addObject:discountModel];
+//                            CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+//                            cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+//                            [model.cellHeightArray addObject:cellHeightModel];
+//                        }
+//                    }else if([model.sectionName isEqualToString:@"美容"]){
+//                        for(int j=0; j<_BeautyArray.count; j++){
+//                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_BeautyArray[j]];
+//                            [dic setValue:model.sectionName forKey:@"type"];
+//                            
+//                            CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+//                            
+//                            [model.realDataArray addObject:discountModel];
+//                            CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+//                            cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+//                            [model.cellHeightArray addObject:cellHeightModel];
+//                        }
+//                    }
+//                    
+//                    [dataArray addObject:model];
+//                   
+//                }
+                if (dataArray.count > 1) {
+                    [self createTableView];
+                }
+                
+            }
+            else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
+            }
+        });
+    } andFail:^(NSError *err) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }];
+}
+
+
+#pragma mark -================================CreateUI
+-(void)createTableView{
+    
+    myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height-kDockHeight) style:UITableViewStyleGrouped];
+    myTableView.backgroundColor = kCOLOR(245, 245, 245);
+    myTableView.dataSource = self;
+    myTableView.delegate = self;
+    myTableView.bounces = YES;
+    myTableView.showsHorizontalScrollIndicator = NO;
+    myTableView.showsVerticalScrollIndicator = NO;
+  //  myTableView.estimatedRowHeight = 2.0f;
+  //  myTableView.rowHeight = UITableViewAutomaticDimension;
+    
+//    [myTableView registerNib:[UINib nibWithNibName:@"NewCarWashDetailReviewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"ThyReviewCell"];
+//    [myTableView registerNib:[UINib nibWithNibName:@"NewCarWashDiscountCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"DiscountCell"];
+//    [myTableView registerNib:[UINib nibWithNibName:@"CWSNewCarWashNormalCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NormalCell"];
+    [self.view addSubview:myTableView];
+}
+
+
+
+
+#pragma mark -================================TableViewDataSource
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+
+//    return dataArray.count + 1;
+    return _sectionNameArray.count + 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if(!section){
+        return 0;
+    }else if (section == 1){
+        return 0;
+    }
+    else{
+    
+//        CWSCarMaintainInfoModel* model = dataArray[section-1];
+//        return model.realDataArray.count;
+        NSDictionary* dataDict = dataArray[section-1];
+        NSMutableArray* currentDataDictArr = dataDict[_sectionNameArray[section-1]];
+        return currentDataDictArr.count;
+    }
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if(!indexPath.section){
+        return nil;
+    }
+        else if(indexPath.section == 1){
+        //添加评论
+        
+        return nil;
+    }
+    else{
+        
+        NSDictionary* currentDataDict = dataArray[indexPath.section-1];
+        NSMutableDictionary* dataDict = currentDataDict[_sectionNameArray[indexPath.section-1]][indexPath.row];
+        [dataDict setObject:_currentStoreName forKeyedSubscript:@"store_name"];
+        CWSCarWashDiscountModel* model = [[CWSCarWashDiscountModel alloc]initWithDic:dataDict];
+        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle] loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
+        cell.delegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell setDiscountModel:model];
+        return cell;
+    }
+    
+    
+//    if(!indexPath.section){
+//        return nil;
+//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"商家评价"]){
+//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
+//        NewCarWashDetailReviewCell* cell = [[[NSBundle mainBundle] loadNibNamed:@"NewCarWashDetailReviewCell" owner:self options:nil] lastObject];
+//        cell.userReviewStarView.hidden = YES;
+//        [cell setThyReviewModel:model.realDataArray[indexPath.row]];
+//         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+//
+//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"普洗"]){
+//        
+//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
+//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
+//        cell.delegate = self;
+//        
+//        [cell setDiscountModel:model.realDataArray[indexPath.row]];
+//         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+//        
+//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"精洗"]){
+//
+//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
+//        
+//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
+//        cell.delegate = self;
+//        [cell setDiscountModel:model.realDataArray[indexPath.row]];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"养护"]){
+//        
+//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
+//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
+//        cell.delegate = self;
+//        [cell setDiscountModel:model.realDataArray[indexPath.row]];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"美容"]){
+//        
+//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
+//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
+//        cell.delegate = self;
+//        [cell setDiscountModel:model.realDataArray[indexPath.row]];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+//    }
+//    else {
+//        return nil;
+//    }
+}
+
+
+#pragma mark -================================TableViewDelegate
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CGFloat thyRowHeight;
+    
+    if(!indexPath.section){
+        thyRowHeight = 0.0f;
+    }else  if(indexPath.section == 1){
+        return 0;
+    }else{
+//        CWSCellHeightModel* heightModel = [dataArray[indexPath.section-1] cellHeightArray][indexPath.row];
+//        thyRowHeight = [heightModel.currentCellHeight floatValue];
+        NSDictionary* currentDict = dataArray[indexPath.section-1];
+        NSArray* currentArray = [currentDict valueForKey:_sectionNameArray[indexPath.section-1]];
+        return [currentArray[indexPath.row][@"currentCellHeight"] floatValue];
+    }
+    
+    return thyRowHeight;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    if(!section){
+    
+        return 98.0f;
+    }else  if(section == 1){
+        return 0;
+    }
+    
+    return HEADER_HEIGHT;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if(!section){
+        return 0.01;
+    }else if(section == 1){
+        return 0.01;
+    }
+    return 15.0f;
+}
+
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    
+    UIView* eachHeaderView = nil;
+    
+    if(!section){
+        
+        eachHeaderView = [[NewCarWashDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 98) Data:_dataDic controller:self];
+        
+    }else if (section == 1){
+        return nil;
+    }
+    else{
+        
+        eachHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width,HEADER_HEIGHT)];
+        eachHeaderView.backgroundColor = [UIColor whiteColor];
+        UILabel* titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 7, kSizeOfScreen.width, 15)];
+        titleLabel.textAlignment = NSTextAlignmentLeft;
+        titleLabel.font = [UIFont systemFontOfSize:17.0f];
+        titleLabel.textColor = KBlueColor;
+//        titleLabel.text = [dataArray[section-1] sectionName];
+        titleLabel.text = _sectionNameArray[section-1];
+        [eachHeaderView addSubview:titleLabel];
+        [titleLabel sizeToFit];
+        
+//        if([[dataArray[section-1] sectionName] isEqualToString:@"商家评价"]){
+//            UIImageView* leftImageView = [[UIImageView alloc]initWithFrame:CGRectMake(kSizeOfScreen.width-18, 10, 8, 12)];
+//            leftImageView.image = [UIImage imageNamed:@"infor_jiantou"];
+//            [eachHeaderView addSubview:leftImageView];
+//            
+//            NSString* sectionDetailString = [dataArray[section-1] sectionDetailName];
+//            CGFloat sectionDetailWidth = [Utils strSize:sectionDetailString withMaxSize:CGSizeMake(0, 15) withFont:[UIFont systemFontOfSize:17.0f] withLineBreakMode:NSLineBreakByWordWrapping].width;
+//            
+//            UILabel* sectionDetailLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(leftImageView.frame)-sectionDetailWidth-5, 8, sectionDetailWidth, 15)];
+//            sectionDetailLabel.textAlignment = NSTextAlignmentRight;
+//            sectionDetailLabel.textColor = [UIColor darkGrayColor];
+//            sectionDetailLabel.font = [UIFont systemFontOfSize:17.0f];
+//            sectionDetailLabel.text = sectionDetailString;
+//            [eachHeaderView addSubview:sectionDetailLabel];
+//            
+//            UIButton* headerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//            headerButton.frame = CGRectMake(CGRectGetMinX(sectionDetailLabel.frame), 0, kSizeOfScreen.width-CGRectGetMinX(sectionDetailLabel.frame), eachHeaderView.frame.size.height);
+//            [headerButton addTarget:self action:@selector(headerButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//            [eachHeaderView addSubview:headerButton];
+//        
+//        }
+        
+    }
+    
+    return eachHeaderView;
+}
+
+
+#pragma mark -=========================================OtherCallBack
+-(void)headerButtonClicked:(UIButton*)sender{
+    
+    MyLog(@"查看更多用户评论");
+    
+    CWSCarWashReviewViewController* reviewVc = [CWSCarWashReviewViewController new];
+    [self.navigationController pushViewController:reviewVc animated:YES];
+}
+
+
+-(void)selectTableViewButtonClicked:(UIButton *)sender andDiscountModel:(CWSCarWashDiscountModel *)thyModel{
+    
+    CWSCarWashDiscountModel* selectedModel = thyModel;
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:[NSString stringWithFormat:@"%ld",(long)selectedModel.merchantsID ] forKey:@"store_id"];
+    [dic setValue:KUserManager.uid forKey:@"uid"];
+    [dic setValue:[NSString stringWithFormat:@"%ld",(long)selectedModel.productID ] forKey:@"goods_id"];
+    [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.productName] forKey:@"goods_name"];
+    [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.discountPrice] forKey:@"discount_price"];
+    [dic setValue:[NSString stringWithFormat:@"%d",selectedModel.isDiscount] forKey:@"is_discount_price"];
+    [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.merchantsName] forKey:@"store_name"];
+    //判断是否有优惠
+    if(selectedModel.isDiscount){
+
+            [dic setValue:selectedModel.discountPrice forKey:@"price"];
+
+    }else {
+            [dic setValue:selectedModel.originalPrice forKey:@"price"];
+    }
+    
+    
+    //支付
+    if([sender.titleLabel.text isEqualToString:@"支付"]){
+        //生成订单
+//        [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+//        [ModelTool getGenerateOrderWithParameter:dic andSuccess:^(id object) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
+//                    MyLog(@"-----------支付订单信息--------%@",object);
+//                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                    CWSPayViewController* appointmentVc = [[CWSPayViewController alloc] init];
+//                    appointmentVc.washDiscountModel = thyModel;
+//                    [self.navigationController pushViewController:appointmentVc animated:YES];
+//                
+//                }
+//                else {
+//                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//                    [alert show];
+//                }
+//            });
+//        } andFail:^(NSError *err) {
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alert show];
+//        }];
+        if(selectedModel.isRedPackageUseable){
+            //可用红包
+            CWSPayViewController* payVc = [CWSPayViewController new];
+            payVc.isRedpackageUseable = YES;
+            [payVc setDataDict:dic];
+            [self.navigationController pushViewController:payVc animated:YES];
+        
+        }else{
+            
+            //不可用红包
+            
+        }
+        
+    }
+    
+    //预约
+    if([sender.titleLabel.text isEqualToString:@"预约"]){
+        //生成订单
+        [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+        
+        [ModelTool getGenerateOrderWithParameter:dic andSuccess:^(id object) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
+                    MyLog(@"------------预约订单信息----------%@",object);
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    CWSCarWashDetileController* payVc = [[CWSCarWashDetileController alloc] init];
+//                    payVc.washDiscountModel = thyModel;
+                    [payVc setDataDict:object[@"data"]];
+                    [self.navigationController pushViewController:payVc animated:YES];
+                }
+                else {
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                    [alert show];
+                }
+                
+            });
+            
+            
+        } andFail:^(NSError *err) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }];
+    }
+}
+
+
+@end

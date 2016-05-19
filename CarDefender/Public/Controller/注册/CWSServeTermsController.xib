@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CWSServeTermsController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="c0c-4a-Do8">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <string key="text">
+请务必认真阅读和理解本《软件许可使用协议》（以下简称《协议》）中规定的所有权利和限制。除非您接受本《协议》条款，否则您无权下载、安装或使用本"软件"及其相关服务。您一旦安装、复制、下载、访问或以其它方式使用本软件产品，将视为对本《协议》的接受，即表示您同意接受本《协议》各项条款的约束。如果您不同意本《协议》中的条款，请不要安装、复制或使用本软件。本《协议》是用户与车生活之间关于用户下载、安装、使用、复制随附本《协议》的手机App软件（以下简称“软件”）的法律协议。
+
+一、协议内容及签署
+1.本协议内容包括协议正文及所有车生活已经发布的或将来可能发布的各类规则。所有规则为本协议不可分割的组成部分，与协议正文具有同等法律效力。除另行明确声明外，任何车生活及其关联公司提供的服务（以下称为车生活平台服务）均受本协议约束。
+2.您应当在使用车生活平台服务之前认真阅读全部协议内容。如您对协议有任何疑问的，应向车生活咨询。但无论您事实上是否在使用车生活平台服务之前认真阅读了本协议内容，只要您使用车生活平台服务，则本协议即对您产生约束，届时您不应以未阅读本协议的内容或者未获得车生活对您问询的解答等理由，主张本协议无效，或要求撤销本协议。
+3.您承诺接受并遵守本协议的约定。如果您不同意本协议的约定，您应立即停止注册/激活程序或停止使用车生活平台服务。
+4.车生活有权根据需要不时地制订、修改本协议及/或各类规则，并以网站及App公示的方式进行公告，不再单独通知您。变更后的协议和规则一经在网站公布后，立即自动生效。如您不同意相关变更，应当立即停止使用车生活平台服务。您继续使用车生活平台服务的，即表示您接受经修订的协议和规则。
+
+二、注册与账户
+1.注册者资格
+您确认，在您完成注册程序或以其他车生活允许的方式实际使用车生活平台服务时，您应当是具备完全民事权利能力和完全民事行为能力的自然人、法人或其他组织。若您不具备前述主体资格，则您及您的监护人应承担因此而导致的一切后果，且车生活有权注销或永久冻结您的账户，并向您及您的监护人索偿。
+2.注册和账户
+a）在您按照注册页面提示填写信息、阅读并同意本协议且完成全部注册程序后，或在您按照激活页面提示填写信息、阅读并同意本协议且完成全部激活程序后，或您以其他车生活允许的方式实际使用车生活服务平台时，您即受本协议约束。您可以使用您提供或确认的邮箱、手机号码或者车生活允许的其它方式作为登录手段进入车生活平台服务。
+b）除非有法律规定或司法裁定，或者符合车生活公布的条件，否则您的登录名、车生活昵称和密码不得以任何方式转让、赠与或继承，并且转让、赠与或继承需提供车生活要求的合格的文件材料并根据车生活制定的操作流程办理。
+3.用户信息
+a）在完成注册时，您应当按照法律法规要求，按相应页面的提示准确提供并及时更新您的资料，以使之真实、及时、完整和准确。如有合理理由怀疑您提供的资料错误、不实、过时或不完整的，车生活有权向您发出询问，要求改正的通知，并有权直接做出删除相应资料的处理，直至中止、终止对您提供部分或全部车生活平台服务。车生活对此不承担任何责任，您将承担因此产生的任何直接或间接损失及不利后果。
+b）您应当准确填写并及时更新您提供的电子邮件地址、联系电话、联系地址、邮政编码等联系方式，以便车生活或其他用户与您进行有效联系，因通过这些联系方式无法与您取得联系，导致您在使用车生活平台服务过程中产生任何损失或增加费用的，应由您完全独自承担。您了解并同意，您有义务保持你提供的联系方式的有效性，如有变更或需要更新的，您应按车生活的要求进行相关操作。
+您了解车生活平台上的信息系用户自行发布，且可能存在风险和瑕疵。车生活平台仅作为交易地点。车生活平台仅作为您获取物品或服务信息、物色交易对象、 就物品和/或服务的交易进行协商及开展交易的场所，但车生活无法控制交易所涉及的物品的质量、安全或合法性，商贸信息的真实性或准确性，以及交易各方履行其在贸易协议中各项义务的能力。您应自行谨慎判断确定相关物品及/或信息的真实性、合法性和有效性，并自行承担因此产生的责任与损失。
+
+三、车生活平台服务
+1.通过车生活平台服务，车生活会员用户可在平台上请求商家发布的服务，与商家达成交易。
+2.若您在车生活平台交易途中与商家发生纠纷时，任意一方或双方共同提交车生活要求调处，则车生活有权根据单方判断做出调处决定，您了解并同意接受车生活的判断和调处决定。
+3.您了解并同意车生活有权应政府部门（包括司法及行政部门）的要求，向其提供您向车生活提供的用户信息和交易记录等必要信息。如您涉嫌侵犯他人知识产权等合法权益，则车生活亦有权在初步判断涉嫌侵权行为存在的情况下，向权利人提供您必要的身份信息。
+4.您在使用车生活平台服务过程中，所产生的应纳税赋，以及一切硬件、软件、服务及其它方面的费用，均由您独自承担。
+5.服务可包含对其他网站或内容或资源的超级链接。车生活可能并不控制由车生活以外的公司或个人提供的任何网站或资源。
+6.您认知并同意，车生活不对该等外部网站或资源的可用性负责，亦不对该等网络或资源上的或从该等网站或资源获得的任何广告、产品或其他材料加以认可。
+7.您认知并同意，车生活不对由于您由于那些外部的网站或资源的可用性或您对该等网站或资源上的或从该等网站或资源获得的任何广告、产品或其他材料的完整性、准确性或存在的信赖而发生的任何损失或损害承担责任。
+
+四、许可范围
+1.下载、安装和使用：本软件为免费软件，用户可以非商业性、无限制数量地下载、安装及使用本软件。
+2.复制、分发和传播：用户可以非商业性、无限制数量地复制、分发和传播本软件产品。但必须保证每一份复制、分发和传播都是完整和真实的,包括所有有关本软件产品的软件、电子文档,版权和商标，亦包括本协议。
+五、权利限制
+1.禁止反向工程、反向编译和反向汇编：用户不得对本软件产品进行反向工程（ReverseEngineer）、反向编译（Decompile）或反向汇编（Disassemble），同时不得改动编译在程序文件内部的任何资源。除法律、法规明文规定允许上述活动外，用户必须遵守此协议限制。
+2.在下列情况下您不可使用服务且不能接受本条款：
+a）您未达到与车生活订立有约束力的合同的法定年龄。
+b）根据中国或其他国家（包括您居住的或您从那里使用服务的国家）的法律，您是被禁止接受服务的人。</string>
+                    <color key="textColor" red="0.28235294117647058" green="0.28235294117647058" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="425" y="350"/>
+        </view>
+    </objects>
+</document>

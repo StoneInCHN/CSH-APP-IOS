@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CWSAdInfoViewController">
+            <connections>
+                <outlet property="activityIndicator" destination="DJk-w1-9s3" id="jrT-KC-cih"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webView" destination="302-sB-08Y" id="3pu-RE-dTF"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DJk-w1-9s3">
+                    <rect key="frame" x="290" y="290" width="20" height="20"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="302-sB-08Y">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                </webView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="DJk-w1-9s3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0BP-Jg-FV0"/>
+                <constraint firstItem="302-sB-08Y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6Ak-H1-UZA"/>
+                <constraint firstItem="302-sB-08Y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6Tf-7C-Mdu"/>
+                <constraint firstAttribute="trailing" secondItem="302-sB-08Y" secondAttribute="trailing" id="KNF-JO-NN2"/>
+                <constraint firstAttribute="bottom" secondItem="302-sB-08Y" secondAttribute="bottom" id="N7k-Kt-V51"/>
+                <constraint firstItem="302-sB-08Y" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="iqQ-ti-SUD"/>
+                <constraint firstItem="302-sB-08Y" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="sy0-H7-5dM"/>
+                <constraint firstItem="DJk-w1-9s3" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="y6w-7a-mQM"/>
+            </constraints>
+            <point key="canvasLocation" x="373" y="249"/>
+        </view>
+    </objects>
+</document>

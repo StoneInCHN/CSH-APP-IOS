@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C317AA43D5D5C4138DA0A9B69D6F4D8C76CFFA51",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "6bfbe968-30b9-f54f-996c-d34f940f17c2++6741" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C317AA43D5D5C4138DA0A9B69D6F4D8C76CFFA51" : 0,
+    "6bfbe968-30b9-f54f-996c-d34f940f17c2++6741" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "74167407-65E6-4112-BE16-573F5AB7F17B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C317AA43D5D5C4138DA0A9B69D6F4D8C76CFFA51" : "csh-ios\/",
+    "6bfbe968-30b9-f54f-996c-d34f940f17c2++6741" : "CarDefender\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CarDefender",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "CarDefender.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/115.28.161.11\/svn\/zl",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6bfbe968-30b9-f54f-996c-d34f940f17c2++6741"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/summerzhang\/csh-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C317AA43D5D5C4138DA0A9B69D6F4D8C76CFFA51"
+    }
+  ]
+}

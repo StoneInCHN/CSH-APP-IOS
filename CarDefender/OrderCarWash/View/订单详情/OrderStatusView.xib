@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="OrderStatusView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dingdanxiangqing_chenggong" translatesAutoresizingMaskIntoConstraints="NO" id="WeC-TF-1qW">
+                    <rect key="frame" x="77" y="10" width="26" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="bm7-7L-VWx"/>
+                        <constraint firstAttribute="width" constant="26" id="ijP-Db-Zy5"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预约成功，等待商家接单......" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3jl-EI-pfp">
+                    <rect key="frame" x="113" y="16" width="200" height="13"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="CBc-PM-mp7"/>
+                        <constraint firstAttribute="height" constant="13" id="J1W-Jb-3eb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.17647058823529413" green="0.75294117647058822" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="3jl-EI-pfp" firstAttribute="leading" secondItem="WeC-TF-1qW" secondAttribute="trailing" constant="10" id="BEo-MH-kQW"/>
+                <constraint firstItem="3jl-EI-pfp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="25" id="HAt-nR-YpF"/>
+                <constraint firstItem="WeC-TF-1qW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mNL-bE-4kf"/>
+                <constraint firstItem="3jl-EI-pfp" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="oYv-hJ-UHs"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="centerConstraint" destination="HAt-nR-YpF" id="prq-fn-keA"/>
+            </connections>
+            <point key="canvasLocation" x="371.5" y="318.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="dingdanxiangqing_chenggong" width="27" height="27"/>
+    </resources>
+</document>

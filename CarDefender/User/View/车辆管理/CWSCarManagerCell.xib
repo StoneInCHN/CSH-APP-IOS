@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="KGk-i7-Jjw" customClass="CWSCarManagerCell">
+            <rect key="frame" x="0.0" y="0.0" width="319" height="49"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="319" height="48"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ikz-M7-tCG">
+                        <rect key="frame" x="5" y="10" width="60" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="Zjx-I7-3a6"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="渝BTS895" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ylr-1d-8JP">
+                        <rect key="frame" x="68" y="10" width="58" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Ncg-BJ-8Sy"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.28235294117647058" green="0.28235294117647058" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="福特      野马" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5xx-MI-JfS">
+                        <rect key="frame" x="68" y="23" width="199" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Qzy-l6-ziU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6qM-Jk-bhn">
+                        <rect key="frame" x="289" y="10" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="a28-3A-NLY"/>
+                            <constraint firstAttribute="width" constant="10" id="i3N-JC-tMq"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="mycar_noclick.png"/>
+                        <state key="selected" backgroundImage="mycar_click.png"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[默认]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRl-X6-mxx">
+                        <rect key="frame" x="277" y="25" width="37" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="Qjl-jo-miU"/>
+                            <constraint firstAttribute="width" constant="37" id="hMs-Qh-ei7"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.16078431372549021" green="0.63921568627450975" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="6qM-Jk-bhn" secondAttribute="trailing" constant="20" id="12g-Qb-lAN"/>
+                    <constraint firstAttribute="bottom" secondItem="5xx-MI-JfS" secondAttribute="bottom" constant="10" id="4Iv-pU-foP"/>
+                    <constraint firstAttribute="bottom" secondItem="Ikz-M7-tCG" secondAttribute="bottom" constant="10" id="Cxb-Nc-hSD"/>
+                    <constraint firstItem="Ylr-1d-8JP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Pll-bb-cYg"/>
+                    <constraint firstItem="wRl-X6-mxx" firstAttribute="top" secondItem="6qM-Jk-bhn" secondAttribute="bottom" constant="5" id="UbB-pd-dLa"/>
+                    <constraint firstItem="Ylr-1d-8JP" firstAttribute="leading" secondItem="Ikz-M7-tCG" secondAttribute="trailing" constant="3" id="WmJ-kS-R6F"/>
+                    <constraint firstItem="6qM-Jk-bhn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Xal-he-nZj"/>
+                    <constraint firstItem="Ikz-M7-tCG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="YoG-xe-TUQ"/>
+                    <constraint firstItem="Ikz-M7-tCG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="aI4-bc-62D"/>
+                    <constraint firstAttribute="trailing" secondItem="wRl-X6-mxx" secondAttribute="trailing" constant="5" id="aO0-aw-FPL"/>
+                    <constraint firstItem="wRl-X6-mxx" firstAttribute="leading" secondItem="5xx-MI-JfS" secondAttribute="trailing" constant="10" id="e8f-cF-H22"/>
+                    <constraint firstItem="5xx-MI-JfS" firstAttribute="leading" secondItem="Ikz-M7-tCG" secondAttribute="trailing" constant="3" id="sLg-pd-DdE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="carBrandImage" destination="Ikz-M7-tCG" id="lY2-sW-kHg"/>
+                <outlet property="carNumberLabel" destination="Ylr-1d-8JP" id="RLX-a9-W9e"/>
+                <outlet property="carTypeLabel" destination="5xx-MI-JfS" id="HM6-1A-06q"/>
+                <outlet property="defaultLabel" destination="wRl-X6-mxx" id="xi1-I2-vjD"/>
+                <outlet property="selectButton" destination="6qM-Jk-bhn" id="Vtv-bs-duu"/>
+            </connections>
+            <point key="canvasLocation" x="-4.5" y="279.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="mycar_click.png" width="14" height="14"/>
+        <image name="mycar_noclick.png" width="14" height="14"/>
+    </resources>
+</document>

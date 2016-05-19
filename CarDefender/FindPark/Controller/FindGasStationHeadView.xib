@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CWSFindParkingSpaceController">
+            <connections>
+                <outlet property="headListButton" destination="Bxc-WB-2xr" id="ztn-Su-cnC"/>
+                <outlet property="headListLineView" destination="gO4-bc-CPv" id="vvM-xQ-S2Y"/>
+                <outlet property="headMapButton" destination="hu3-cR-bPh" id="Z79-SV-wv7"/>
+                <outlet property="headMapLineView" destination="05m-3r-7Yk" id="qiD-Ve-2t8"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FindGasStationHeadView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCn-pq-IOD" userLabel="buttonView1">
+                    <rect key="frame" x="0.0" y="0.0" width="188" height="40"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hu3-cR-bPh">
+                            <rect key="frame" x="0.0" y="0.0" width="188" height="38"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="地图" image="chewei_map_click">
+                                <color key="titleColor" red="0.18039215689999999" green="0.70196078429999997" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="headChangeButtonClick:" destination="-1" eventType="touchUpInside" id="qsn-O0-cyE"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="05m-3r-7Yk" userLabel="lineView1">
+                            <rect key="frame" x="0.0" y="38" width="188" height="2"/>
+                            <color key="backgroundColor" red="0.1803921568627451" green="0.70196078431372544" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="2" id="nr0-Wp-BX4"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="05m-3r-7Yk" secondAttribute="bottom" id="5CO-Nu-b3A"/>
+                        <constraint firstAttribute="trailing" secondItem="hu3-cR-bPh" secondAttribute="trailing" id="5HD-pa-j8C"/>
+                        <constraint firstItem="05m-3r-7Yk" firstAttribute="width" secondItem="hCn-pq-IOD" secondAttribute="width" id="5lN-sj-scU"/>
+                        <constraint firstItem="hu3-cR-bPh" firstAttribute="leading" secondItem="hCn-pq-IOD" secondAttribute="leading" id="8H3-2e-Mk1"/>
+                        <constraint firstItem="hu3-cR-bPh" firstAttribute="leading" secondItem="hCn-pq-IOD" secondAttribute="leading" id="8tE-09-r82"/>
+                        <constraint firstAttribute="height" constant="40" id="92D-Ap-Uwb"/>
+                        <constraint firstItem="05m-3r-7Yk" firstAttribute="leading" secondItem="hCn-pq-IOD" secondAttribute="leading" id="Egt-UG-NNb"/>
+                        <constraint firstAttribute="bottom" secondItem="hu3-cR-bPh" secondAttribute="bottom" constant="2" id="F1R-Hr-V3c"/>
+                        <constraint firstItem="hu3-cR-bPh" firstAttribute="top" secondItem="hCn-pq-IOD" secondAttribute="top" id="NtT-Zo-0SP"/>
+                        <constraint firstItem="hu3-cR-bPh" firstAttribute="top" secondItem="hCn-pq-IOD" secondAttribute="top" id="aAe-wh-UWS"/>
+                        <constraint firstAttribute="trailing" secondItem="05m-3r-7Yk" secondAttribute="trailing" id="eiO-iM-pwY"/>
+                        <constraint firstAttribute="trailing" secondItem="hu3-cR-bPh" secondAttribute="trailing" id="jl7-ds-tEQ"/>
+                        <constraint firstAttribute="bottom" secondItem="hu3-cR-bPh" secondAttribute="bottom" id="ouB-Ma-Zg7"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="5HD-pa-j8C"/>
+                            <exclude reference="8tE-09-r82"/>
+                            <exclude reference="aAe-wh-UWS"/>
+                            <exclude reference="ouB-Ma-Zg7"/>
+                            <exclude reference="eiO-iM-pwY"/>
+                        </mask>
+                    </variation>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VLj-pe-wRK" userLabel="buttonView2">
+                    <rect key="frame" x="188" y="0.0" width="187" height="40"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bxc-WB-2xr">
+                            <rect key="frame" x="0.0" y="0.0" width="187" height="38"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="列表" image="chewei_list">
+                                <color key="titleColor" red="0.28235294117647058" green="0.28235294117647058" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="headChangeButtonClick:" destination="-1" eventType="touchUpInside" id="MJQ-07-IJG"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gO4-bc-CPv">
+                            <rect key="frame" x="0.0" y="38" width="187" height="2"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="2" id="MIu-ah-JH7"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Bxc-WB-2xr" firstAttribute="leading" secondItem="VLj-pe-wRK" secondAttribute="leading" id="1bZ-nz-ll7"/>
+                        <constraint firstAttribute="trailing" secondItem="Bxc-WB-2xr" secondAttribute="trailing" id="7gY-Zt-U4J"/>
+                        <constraint firstAttribute="bottom" secondItem="Bxc-WB-2xr" secondAttribute="bottom" constant="2" id="8ge-2D-Sv8"/>
+                        <constraint firstItem="Bxc-WB-2xr" firstAttribute="top" secondItem="VLj-pe-wRK" secondAttribute="top" id="FkT-yH-ffV"/>
+                        <constraint firstItem="gO4-bc-CPv" firstAttribute="width" secondItem="Bxc-WB-2xr" secondAttribute="width" id="PBn-iB-Vet"/>
+                        <constraint firstAttribute="trailing" secondItem="gO4-bc-CPv" secondAttribute="trailing" id="jqr-rf-hoH"/>
+                        <constraint firstAttribute="bottom" secondItem="gO4-bc-CPv" secondAttribute="bottom" id="xJ6-nd-zX0"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="hCn-pq-IOD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7n7-K1-FVn"/>
+                <constraint firstAttribute="bottom" secondItem="hCn-pq-IOD" secondAttribute="bottom" id="Qjn-8w-tLB"/>
+                <constraint firstItem="VLj-pe-wRK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Vy1-aL-d2x"/>
+                <constraint firstItem="VLj-pe-wRK" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="h0X-Mu-wbt"/>
+                <constraint firstAttribute="trailing" secondItem="VLj-pe-wRK" secondAttribute="trailing" id="iXS-hG-yic"/>
+                <constraint firstItem="hCn-pq-IOD" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="naf-hg-c0L"/>
+                <constraint firstAttribute="bottom" secondItem="VLj-pe-wRK" secondAttribute="bottom" id="pIw-RR-jN7"/>
+                <constraint firstItem="hCn-pq-IOD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="v7a-Zv-RGn"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="307.5" y="313"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chewei_list" width="18" height="18"/>
+        <image name="chewei_map_click" width="18" height="18"/>
+    </resources>
+</document>
