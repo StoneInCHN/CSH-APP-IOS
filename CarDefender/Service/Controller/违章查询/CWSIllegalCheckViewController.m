@@ -15,7 +15,7 @@
 @interface CWSIllegalCheckViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UILabel *_messagelabel;
-    NSMutableArray*     _dataArray;
+    NSMutableArray*  _dataArray;
     UserInfo *_userInfo;
 }
 @end
@@ -27,9 +27,9 @@
     self.title = @"违章查询";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
-    _dataArray = [NSMutableArray array];
     _userInfo = [UserInfo userDefault];
-    [self initalizeUserInterface];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"切换车辆" style:UIBarButtonItemStylePlain target:self action:@selector(changePlate)];
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blueColor]];
     [self getData];
 }
 #pragma mark - 数据源
@@ -45,13 +45,16 @@
                                         NSLog(@"get illegal records :%@",responseObjcet);
                                         NSDictionary *dict = (NSDictionary *)responseObjcet;
                                         if ([dict[@"code"] isEqualToString:SERVICE_SUCCESS]) {
-                                            _dataArr = dict[@"msg"];
-                                            if ([_dataArr isKindOfClass:[NSNull class]]) {
+                                            _dataArray = dict[@"msg"];
+                                            if ([_dataArray isKindOfClass:[NSNull class]]) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                    _messagelabel.text = @"您还没有违章记录";
+                                                    [self initUIWithoutData];
+                                                });
+                                            } else {
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    [self initUIWithData];
                                                 });
                                             }
-                                            [self.tableView reloadData];
                                         } else if ([dict[@"code"] isEqualToString:SERVICE_TIME_OUT]) {
                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
                                         } else {
@@ -59,17 +62,15 @@
                                         }
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         MyLog(@"%@",error);
-                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                                        [alert show];
+                                        [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
                                     }];
 
 }
 
 #pragma mark - 界面
-- (void)initalizeUserInterface
+- (void)initUIWithData
 {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 90*_dataArray.count) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(20, 0, [UIScreen mainScreen].bounds.size.width, 90*_dataArray.count) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     UIView *view = [[UIView alloc] init];
@@ -83,11 +84,15 @@
     _messagelabel.font = [UIFont systemFontOfSize:15];
     _messagelabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_messagelabel];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"切换车辆" style:UIBarButtonItemStylePlain target:self action:@selector(changePlate)];
-    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blueColor]];
 }
-
+- (void)initUIWithoutData {
+    _messagelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.tableView.endY+70, [UIScreen mainScreen].bounds.size.width, 15)];
+     _messagelabel.text = @"您还没有违章记录";
+    _messagelabel.textColor = KBlackMainColor;
+    _messagelabel.font = [UIFont systemFontOfSize:15];
+    _messagelabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_messagelabel];
+}
 - (void)changePlate {
     NSLog(@"change plate");
 }
@@ -107,14 +112,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return 90;
+    return 109;
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     UINib *nib = [UINib nibWithNibName:@"IllegalCheckTableViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"illegalCheckTableViewCell"];
     IllegalCheckTableViewCell *cell = [[IllegalCheckTableViewCell alloc] init];
@@ -123,9 +126,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.dicMsg=_dataArray[indexPath.row];
-    return cell;
-    
-    
+    return cell; 
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -133,11 +134,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CWSCWSIllegalCheckDetailViewController *vc = [[CWSCWSIllegalCheckDetailViewController alloc] init];
     NSDictionary *dic = _dataArray[indexPath.row];
-//    NSString*url=[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"baseUrl"],dic[@"brand"][@"brandIcon"]];
-//    NSURL*logoImgUrl=[NSURL URLWithString:url];
-//    [vc.headCarImageView setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"servicezhanwei"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
-//    
-//    vc.headCarBrandLabel.text = dic[@"plate"];
+    NSLog(@"cell data :%@",dic);
     vc.dic = dic;
     [self.navigationController pushViewController:vc animated:YES];
     

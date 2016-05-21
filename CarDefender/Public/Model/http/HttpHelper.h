@@ -150,4 +150,10 @@
                                latitude:(NSString *)latitude
                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+#pragma mark 车辆动态
++ (void)carTrendsWithUserId:(NSString *)userId
+                                  token:(NSString *)token
+                                deviceNo:(NSString *)deviceNo
+                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end

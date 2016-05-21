@@ -27,7 +27,7 @@
 #import "CWSDetectionOneForAllViewController.h"
 #import "CWSIllegalCheckViewController.h"
 #import "CWSCarReportViewController.h"
-
+#import "CWSAddCarController.h"
 
 #import "CWSPayViewController.h"
 
@@ -136,116 +136,65 @@
 
 #pragma mark -================================================服务按钮回调
 -(void)serviceButtonClicked:(UIButton*)sender{
+    UserInfo *userInfo = [UserInfo userDefault];
     NSString* whichService = sender.titleLabel.text;
     NSLog(@"%@",whichService);
-//        if (KUserManager.userCID != nil) {
-            if([whichService isEqualToString:@"买车险"]) {
-                
-                //判断有无设备号
-                if (KUserManager.userDefaultVehicle[@"device"] == nil || [KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请先绑定设备号" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                    [alert show];
-                }
-                else {
-                    CWSBuyCarInsuranceViewController *vc = [[CWSBuyCarInsuranceViewController alloc] init];
-                    [self.thyRootVc.navigationController pushViewController:vc animated:YES];
-                    
-                }
-                
-            }
-            else if([whichService isEqualToString:@"洗车"]) {
-                
-                
-                    CWSCarWashViewController* lController = [[CWSCarWashViewController alloc] init];
-                    [self.thyRootVc.navigationController pushViewController:lController animated:YES];
-//                ///////测试////////
-//                if(1){
-//                    CWSPayViewController* payVc = [CWSPayViewController new];
-//                    payVc.isRedpackageUseable = YES;
-//                    NSMutableDictionary* testDict = @{}.mutableCopy;
-//                    [testDict setValue:@"1" forKey:@"merchantsID"];
-//                    [testDict setObject:@"测试商店" forKey:@"store_name"];
-//                    [testDict setObject:@"0" forKey:@"is_discount_price"];
-//                    [testDict setObject:@"20" forKey:@"price"];
-//                   // [testDict setObject:@"普洗" forKey:@"goods_name"];
-//                    [testDict setObject:@"非普洗" forKey:@"goods_name"];
-//                    [payVc setDataDict:testDict];
-//                    [self.thyRootVc.navigationController pushViewController:payVc animated:YES];
-//                }
-//                ///////测试////////
-                
-            }
-            else if([whichService isEqualToString:@"紧急救援"]) {
-                
-                //判断有无设备号
-                if (KUserManager.userDefaultVehicle[@"device"] == nil || [KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请先绑定设备号" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                    [alert show];
-                }
-                else {
-                    CWSTyreHomeController* cyreVC = [[CWSTyreHomeController alloc] initWithNibName:@"CWSTyreHomeController" bundle:nil];
-                    cyreVC.title = @"紧急救援";
-                    [self.thyRootVc.navigationController pushViewController:cyreVC animated:YES];
-                    
-                }
-                
-                
-            }
-            else if([whichService isEqualToString:@"保养"]) {
-                
-                
-                    CWSCarMaintainViewController* carMaintainVc = [CWSCarMaintainViewController new];
-                    [self.thyRootVc.navigationController pushViewController:carMaintainVc animated:YES];
-                    
-    
-                
-            }
-            else if ([whichService isEqualToString:@"违章查询"]) {
-                    CWSIllegalCheckViewController *vc = [[CWSIllegalCheckViewController alloc] init];
-                    vc.title = @"违章查询";
-                    [self.thyRootVc.navigationController pushViewController:vc animated:YES];
-            }
-            else if ([whichService isEqualToString:@"美容"]) {
-                    CWSCarBeautyViewController* beautyVc = [CWSCarBeautyViewController new];
-                    beautyVc.title = @"汽车美容";
-                    [self.thyRootVc.navigationController pushViewController:beautyVc animated:YES];
-            }
-            else if ([whichService isEqualToString:@"车辆动态"]) {
-                //判断有无设备号
-                if (KUserManager.userDefaultVehicle[@"device"] == nil || [KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请先绑定设备号" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                    [alert show];
-                    
-                }
-                else {
-                    CWSCarTrendsController*carTrend=[[CWSCarTrendsController alloc]initWithNibName:@"CWSCarTrendsController" bundle:nil];
-                    carTrend.title=@"车辆动态";
-                    [self.thyRootVc.navigationController pushViewController:carTrend animated:YES];
-                }  
-            }
-            else if ([whichService isEqualToString:@"一键检测"]) {
-                    CWSDetectionOneForAllViewController* carDetectionVc = [CWSDetectionOneForAllViewController new];
-                    carDetectionVc.title = @"一键检测";
-                    [self.thyRootVc.navigationController pushViewController:carDetectionVc animated:YES];
-            }
-            else if ([whichService isEqualToString:@"找加油站"]) {
-                CWSFindGasStationController* lController = [[CWSFindGasStationController alloc] initWithNibName:@"CWSFindCarLocationController" bundle:nil];
-                lController.type = @"加油站";
-                lController.findMapViewType = 3;
-                
-                [self.thyRootVc.navigationController pushViewController:lController animated:YES];
-            }
-            else if ([whichService isEqualToString:@"找车位"]) {
-                CWSFindParkingSpaceController* lController = [[CWSFindParkingSpaceController alloc] init];
-                [self.thyRootVc.navigationController pushViewController:lController animated:YES]; 
-            }
-    
-//        }else {
-//            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您当前还没有车辆信息，请点击添加以绑定车辆!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//            [alert show];
-//        }
-    
-    
+    if([whichService isEqualToString:@"买车险"]) {
+            CWSBuyCarInsuranceViewController *vc = [[CWSBuyCarInsuranceViewController alloc] init];
+            [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+    }
+    else if([whichService isEqualToString:@"洗车"]) {
+            CWSCarWashViewController* lController = [[CWSCarWashViewController alloc] init];
+            [self.thyRootVc.navigationController pushViewController:lController animated:YES];
+    }
+    else if([whichService isEqualToString:@"紧急救援"]) {
+            CWSTyreHomeController* cyreVC = [[CWSTyreHomeController alloc] initWithNibName:@"CWSTyreHomeController" bundle:nil];
+            cyreVC.title = @"紧急救援";
+            [self.thyRootVc.navigationController pushViewController:cyreVC animated:YES];
+    }
+    else if([whichService isEqualToString:@"保养"]) {
+            CWSCarMaintainViewController* carMaintainVc = [CWSCarMaintainViewController new];
+            [self.thyRootVc.navigationController pushViewController:carMaintainVc animated:YES];
+    }
+    else if ([whichService isEqualToString:@"违章查询"]) {
+            CWSIllegalCheckViewController *vc = [[CWSIllegalCheckViewController alloc] init];
+            vc.title = @"违章查询";
+            [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+    }
+    else if ([whichService isEqualToString:@"美容"]) {
+            CWSCarBeautyViewController* beautyVc = [CWSCarBeautyViewController new];
+            beautyVc.title = @"汽车美容";
+            [self.thyRootVc.navigationController pushViewController:beautyVc animated:YES];
+    }
+    else if ([whichService isEqualToString:@"车辆动态"]) {
+        if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]]) {
+            [MBProgressHUD showError:@"先绑定车牌吧" toView:self.thyRootVc.view];
+            CWSAddCarController* lController = [[CWSAddCarController alloc] init];
+            lController.title = @"添加车辆";
+            [self.thyRootVc.navigationController pushViewController:lController animated:YES];
+        } else {
+            CWSCarTrendsController*carTrend=[[CWSCarTrendsController alloc]initWithNibName:@"CWSCarTrendsController" bundle:nil];
+            carTrend.title=@"车辆动态";
+            [self.thyRootVc.navigationController pushViewController:carTrend animated:YES];
+        }
+    }
+    else if ([whichService isEqualToString:@"一键检测"]) {
+            CWSDetectionOneForAllViewController* carDetectionVc = [CWSDetectionOneForAllViewController new];
+            carDetectionVc.title = @"一键检测";
+            [self.thyRootVc.navigationController pushViewController:carDetectionVc animated:YES];
+    }
+    else if ([whichService isEqualToString:@"找加油站"]) {
+        CWSFindGasStationController* lController = [[CWSFindGasStationController alloc] initWithNibName:@"CWSFindCarLocationController" bundle:nil];
+        lController.type = @"加油站";
+        lController.findMapViewType = 3;
+        
+        [self.thyRootVc.navigationController pushViewController:lController animated:YES];
+    }
+    else if ([whichService isEqualToString:@"找车位"]) {
+        CWSFindParkingSpaceController* lController = [[CWSFindParkingSpaceController alloc] init];
+        [self.thyRootVc.navigationController pushViewController:lController animated:YES]; 
+    }
+
 }
 
 #pragma mark - 中间按钮点击事件

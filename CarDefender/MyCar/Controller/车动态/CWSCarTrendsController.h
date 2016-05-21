@@ -15,8 +15,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
 @property (weak, nonatomic) IBOutlet UIButton *minusBtn;
 
-
-
-
 - (IBAction)addBtnClcik:(UIButton *)sender;
 @end

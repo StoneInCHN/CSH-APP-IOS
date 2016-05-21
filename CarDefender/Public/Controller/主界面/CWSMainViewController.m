@@ -518,7 +518,6 @@
 {
     userInfo.latitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.latitude];
     userInfo.longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
-    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     [_locService stopUserLocationService];
     if ([userInfo.latitude integerValue] == 0 && [userInfo.longitude integerValue] == 0) {
         [_locService startUserLocationService];

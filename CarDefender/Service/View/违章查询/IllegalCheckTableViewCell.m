@@ -14,14 +14,21 @@
 
 -(void)setDicMsg:(NSDictionary *)dicMsg
 {
-    
 
-    NSString*url=[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"baseUrl"],dicMsg[@"brand"][@"brandIcon"]];
-    NSURL*logoImgUrl=[NSURL URLWithString:url];
-    [self.headImageView setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
-    
-    self.carBrandLabel.text = dicMsg[@"plate"];
-    
+    self.addressLabe.text = [PublicUtils checkNSNullWithgetString:dicMsg[@"illegalAddress"]];
+    self.headImageView.image = [UIImage imageNamed:@"logo"];
+    self.carBrandLabel.text = [PublicUtils checkNSNullWithgetString:dicMsg[@"plate"]];
+    self.illegalTimeLabel.text = [PublicUtils checkNSNullWithgetString:dicMsg[@"illegalDate"]];
+    if ([dicMsg[@"finesAmount"] isKindOfClass:[NSNull class]]) {
+        self.fineLabel.text = @"0";
+    } else {
+        self.fineLabel.text = [NSString stringWithFormat:@"%@",dicMsg[@"finesAmount"]];
+    }
+    if ([dicMsg[@"score"] isKindOfClass:[NSNull class]]) {
+        self.pointLabel.text = @"0";
+    } else {
+        self.pointLabel.text = [NSString stringWithFormat:@"%@",dicMsg[@"score"]];
+    }
 }
 
 

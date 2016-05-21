@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CWSCarTrendsController">
             <connections>
                 <outlet property="addBtn" destination="HFk-jp-EsM" id="4mj-av-OZ1"/>
                 <outlet property="addressLabel" destination="U9y-NU-Um5" id="GeN-3M-4mC"/>
-                <outlet property="backgroundView1" destination="HjZ-Bn-1U5" id="M2K-Da-1Nf"/>
                 <outlet property="backgroundView2" destination="HWY-IV-k2P" id="Bbd-LB-V9F"/>
                 <outlet property="mileageLabel" destination="cv9-Yu-Tu9" id="sgC-tX-XM2"/>
                 <outlet property="minusBtn" destination="40Y-bU-Vyt" id="w0t-HI-N77"/>
@@ -24,11 +23,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view alpha="0.80000000000000004" contentMode="scaleToFill" id="HjZ-Bn-1U5">
-                    <rect key="frame" x="0.0" y="455" width="320" height="113"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <view alpha="0.80000000000000004" contentMode="scaleToFill" id="AKr-z2-QTG">
                     <rect key="frame" x="8" y="0.0" width="67" height="201"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -198,7 +192,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="433" y="393"/>
+            <point key="canvasLocation" x="929" y="346"/>
         </view>
     </objects>
     <resources>

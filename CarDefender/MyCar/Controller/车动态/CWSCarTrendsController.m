@@ -168,28 +168,63 @@
     rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(0, 0, 20, 20);
     [rightButton setBackgroundImage:[UIImage imageNamed:@"dongtai_gps_1"] forState:UIControlStateNormal];
-    
+    [rightButton addTarget:self action:@selector(gpsEvent) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     
-    [Utils changeBackBarButtonStyle:self];
+//    [Utils changeBackBarButtonStyle:self];
 //    UIBarButtonItem* nav = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chedongtai_daohang"] style:UIBarButtonItemStylePlain target:self action:@selector(navigation)];
 //    self.navigationItem.rightBarButtonItem = nav;
     
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height - kDockHeight)];
-    _mapView.delegate = self;
     _mapView.userTrackingMode = BMKUserTrackingModeFollow;
+    _mapView.mapType = BMKMapTypeStandard;
     [_mapView setZoomLevel:16];
     [self.view insertSubview:_mapView atIndex:0];
     
 //    _oldPt = (CLLocationCoordinate2D){29.565, 106.549};
-    [self GPSNewCarInfoRun];
-    if (_timer == nil) {
-         _timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(GPSNewCarInfoRun) userInfo:nil repeats:YES];
-    }
+//    [self GPSNewCarInfoRun];
+//    if (_timer == nil) {
+//         _timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(GPSNewCarInfoRun) userInfo:nil repeats:YES];
+//    }
+    self.mileageLabel.text = @"0km";
+    self.timeLabel.text = @"0s";
+    self.speedLabel.text = @"0km/h";
+    self.oilLabel.text = @"0/100km";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(carTrendNotiMsgBack:) name:@"currentIsCarTrend" object:nil];
     MyLog(@"%@",self.notiDic);
+    [self initWithData];
+    [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(initWithData) userInfo:nil repeats:YES];
+}
+- (void)gpsEvent {
+    [MBProgressHUD showSuccess:@"pgs clicked!" toView:self.view];
+}
+- (void)initWithData {
+    UserInfo *userInfo = [UserInfo userDefault];
+    [HttpHelper carTrendsWithUserId:userInfo.desc
+                              token:userInfo.token
+                           deviceNo:userInfo.defaultDeviceNo
+                            success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                NSLog(@"car trends response :%@",responseObjcet);
+                                NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                NSString *code = dict[@"code"];
+                                if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        self.mileageLabel.text = [NSString stringWithFormat:@"%@km",dict[@"msg"][@"mileAge"]];
+                                        self.timeLabel.text = [NSString stringWithFormat:@"%@s",dict[@"msg"][@"engineRuntime"]];
+                                        self.speedLabel.text = [NSString stringWithFormat:@"%@km/h",dict[@"msg"][@"speed"]];
+                                        self.oilLabel.text = [NSString stringWithFormat:@"%@/100km",dict[@"msg"][@"averageOil"]];
+                                    });
+                                } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                } else {
+                                    [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                }
+                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                NSLog(@"one key error :%@",error);
+                                [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                            }];
 }
 
 #pragma mark - 右键
@@ -208,47 +243,46 @@
     self.notiDic=(NSDictionary*)sender.object;
     [self GPSNewCarInfoRun];
 }
--(void)viewWillDisappear:(BOOL)animated{
-    [_timer invalidate];
-    _mapView.delegate = nil;
-    [ModelTool stopAllOperation];
+//-(void)viewWillDisappear:(BOOL)animated{
+//    [_timer invalidate];
+//    _mapView.delegate = nil;
+//    [ModelTool stopAllOperation];
+//}
+-(void)viewDidAppear:(BOOL)animated
+{
+    //存储当前界面标记
+    NSUserDefaults*user=[[NSUserDefaults alloc]init];
+    [user setObject:@"CWSCarTrendsController" forKey:@"currentController"];
+    [NSUserDefaults resetStandardUserDefaults];
 }
-//-(void)viewDidAppear:(BOOL)animated
-//{
-//    //存储当前界面标记
-//    NSUserDefaults*user=[[NSUserDefaults alloc]init];
-//    [user setObject:@"CWSCarTrendsController" forKey:@"currentController"];
-//    [NSUserDefaults resetStandardUserDefaults];
-//}
-//-(void)viewWillAppear:(BOOL)animated {
-//    [_mapView viewWillAppear];
-//    
-//    _shouji = NO;
-//    _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-//    _geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-//    _locService.delegate = nil;
-//    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-//}
-//
-//-(void)viewWillDisappear:(BOOL)animated {
-//    [_mapView viewWillDisappear];
-//    _shouji = YES;
-//    [_timer fire];
-//    _mapView.delegate = nil; // 不用时，置nil
-//    _geocodesearch.delegate = nil; // 不用时，置nil
-//    _locService.delegate = nil;
-////    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-//    
-//    //移除
-//    NSUserDefaults*user=[[NSUserDefaults alloc]init];
-//    [user setObject:@"" forKey:@"currentController"];
-//    [NSUserDefaults resetStandardUserDefaults];
-//}
-//- (void)dealloc {
-//    if (_mapView) {
-//        _mapView = nil;
-//    }
-//}
+-(void)viewWillAppear:(BOOL)animated {
+    [_mapView viewWillAppear];
+    _shouji = NO;
+    _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    _geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    _locService.delegate = nil;
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [_mapView viewWillDisappear];
+    _shouji = YES;
+    [_timer fire];
+    _mapView.delegate = nil; // 不用时，置nil
+    _geocodesearch.delegate = nil; // 不用时，置nil
+    _locService.delegate = nil;
+//    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    
+    //移除
+    NSUserDefaults*user=[[NSUserDefaults alloc]init];
+    [user setObject:@"" forKey:@"currentController"];
+    [NSUserDefaults resetStandardUserDefaults];
+}
+- (void)dealloc {
+    if (_mapView) {
+        _mapView = nil;
+    }
+}
 #pragma mark - 添加轨迹点
 -(void)addPoint{
     if (_locationDicArray.count > 1) {

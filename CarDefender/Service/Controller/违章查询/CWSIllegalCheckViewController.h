@@ -10,7 +10,6 @@
 
 @interface CWSIllegalCheckViewController : UIViewController
 
-@property (nonatomic,strong)NSArray *dataArr;
 @property (nonatomic,strong)UITableView *tableView;
 
 @end
