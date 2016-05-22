@@ -49,7 +49,7 @@
     if ([recomHeaderDataDict[@"distance"] isKindOfClass:[NSNull class]]) {
         self.storeDistanceLabel.text = @"";
     } else {
-        self.storeDistanceLabel.text = [NSString stringWithFormat:@"%dkm",[recomHeaderDataDict[@"distance"] intValue]/1000];
+        self.storeDistanceLabel.text = [NSString stringWithFormat:@"%@km",recomHeaderDataDict[@"distance"]];
     }
     self.storeTitleLabel.text = recomHeaderDataDict[@"tenantName"];
     self.storeAddressLabel.text = recomHeaderDataDict[@"address"];

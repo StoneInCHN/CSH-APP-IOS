@@ -29,6 +29,7 @@
     int     _pageSize; //每页条数
     NSMutableArray*_cellDataArray;
     NSDictionary  *currentDic;
+    UserInfo *userInfo;
 }
 
 @end
@@ -43,21 +44,49 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     [Utils changeBackBarButtonStyle:self];
-    
+    userInfo = [UserInfo userDefault];
+    NSLog(@"userInfo.longitude: %@", userInfo.longitude);
+    NSLog(@"userInfo.latitude: %@", userInfo.latitude);
     
     [self initialData];
     
 }
 
-
-
 #pragma mark -===========================================================InitialData
 -(void)initialData{
     _page = 1;
-    _pageSize = 20;
+    _pageSize = 5;
     _dataArray = [NSMutableArray array];
     _cellDataArray = [NSMutableArray array];
-    [self loadData];
+    [self getData];
+}
+
+//获取租户列表
+- (void)getData {
+    [HttpHelper searchRenterListWithServiceCategoryId:@"2"
+                                               userId:userInfo.desc
+                                                token:userInfo.token
+                                             latitude:userInfo.latitude
+                                            longitude:userInfo.longitude
+                                             pageSize:_pageSize
+                                           pageNumber:_page
+                                              success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                                  NSLog(@"到店洗车 :%@",responseObjcet);
+                                                  NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                                  NSString *code = dict[@"code"];
+                                                  userInfo.token = dict[@"token"];
+                                                  if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                                      NSMutableArray* rootArray = [dict[@"msg"] mutableCopy];
+                                                      _dataArray = rootArray;
+                                                      [self createTableView];
+                                                  }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                                  } else {
+                                                      [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                                  }
+                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                  [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                              }];
 }
 
 -(void)loadData{
@@ -65,8 +94,6 @@
     [dic setValue:KUserManager.uid forKey:@"uid"];
     [dic setValue:KUserManager.mobile forKey:@"mobile"];
 
-    
-    
 //    if (KManager.currentPt.latitude >0 && KManager.currentPt.longitude>0) {
 //        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.latitude] forKey:@"lat"];
 //        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.longitude] forKey:@"lon"];
@@ -115,7 +142,7 @@
     myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _page = 1;
         [_dataArray removeAllObjects];
-        [self refreshData];
+        [self getData];
     }];
     myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _page++;
@@ -129,36 +156,65 @@
 
 #pragma mark - 刷新加载
 -(void)refreshData{
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:KUserManager.uid forKey:@"uid"];
-    [dic setValue:KUserManager.mobile forKey:@"mobile"];
     
-    if (KManager.currentPt.latitude >0 && KManager.currentPt.longitude>0) {
-        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.latitude] forKey:@"lat"];
-        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.longitude] forKey:@"lon"];
-    }
-    else {
-        [dic setValue:[NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.latitude] forKey:@"lat"];
-        [dic setValue:[NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.longitude] forKey:@"lon"];
-    }
-    [dic setValue:[NSString stringWithFormat:@"%d",_page] forKey:@"pageNumber"];
-    [dic setValue:[NSString stringWithFormat:@"%d",_pageSize] forKey:@"pageSize"];
+    [HttpHelper searchRenterListWithServiceCategoryId:@"2"
+                                               userId:userInfo.desc
+                                                token:userInfo.token
+                                             latitude:userInfo.latitude
+                                            longitude:userInfo.longitude
+                                             pageSize:_pageSize
+                                           pageNumber:_page
+                                              success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                                  NSLog(@"到店洗车 :%@",responseObjcet);
+                                                  NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                                  NSString *code = dict[@"code"];
+                                                  userInfo.token = dict[@"token"];
+                                                  if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                                      
+                                                      [_dataArray addObject:dict[@"msg"]];
+                                                      
+                                                      [myTableView.mj_header endRefreshing];
+                                                      [myTableView.mj_footer endRefreshing];
+                                                      
+                                                  }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                                  } else {
+                                                      [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                                  }
+                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                  [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                              }];
     
-    
-    [ModelTool getWashCarWithParameter:dic andSuccess:^(id object) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                for (NSDictionary* dict in object[@"data"]) {
-                    [_dataArray addObject:dict];
-                }
-                [myTableView.mj_header endRefreshing];
-                [myTableView.mj_footer endRefreshing];
-            }
-        });
-    } andFail:^(NSError *err) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }];
+//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//    [dic setValue:KUserManager.uid forKey:@"uid"];
+//    [dic setValue:KUserManager.mobile forKey:@"mobile"];
+//    
+//    if (KManager.currentPt.latitude >0 && KManager.currentPt.longitude>0) {
+//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.latitude] forKey:@"lat"];
+//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.longitude] forKey:@"lon"];
+//    }
+//    else {
+//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.latitude] forKey:@"lat"];
+//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.longitude] forKey:@"lon"];
+//    }
+//    [dic setValue:[NSString stringWithFormat:@"%d",_page] forKey:@"pageNumber"];
+//    [dic setValue:[NSString stringWithFormat:@"%d",_pageSize] forKey:@"pageSize"];
+//    
+//    
+//    [ModelTool getWashCarWithParameter:dic andSuccess:^(id object) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+//                for (NSDictionary* dict in object[@"data"]) {
+//                    [_dataArray addObject:dict];
+//                }
+//                [myTableView.mj_header endRefreshing];
+//                [myTableView.mj_footer endRefreshing];
+//            }
+//        });
+//    } andFail:^(NSError *err) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//    }];
 }
 
 #pragma mark - 更新数据源方法
@@ -173,7 +229,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    _cellDataArray = [_dataArray[section][@"commodity"] mutableCopy];
+    _cellDataArray = [_dataArray[section][@"carService"] mutableCopy];
     return [_cellDataArray count];
 }
 
@@ -196,27 +252,26 @@
 
     NewCarWashTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"NewCarWashCell"];
 
-    NSMutableDictionary *goodsDic = [NSMutableDictionary dictionaryWithDictionary:_dataArray[indexPath.section][@"commodity"][indexPath.row]];
-    [goodsDic setValue:_dataArray[indexPath.section][@"id"] forKey:@"merchantsID"];
+    NSMutableDictionary *goodsDic = [NSMutableDictionary dictionaryWithDictionary:_dataArray[indexPath.section][@"carService"][indexPath.row]];
+//    [goodsDic setValue:_dataArray[indexPath.section][@"id"] forKey:@"merchantsID"];
     [goodsDic setValue:_dataArray[indexPath.section][@"id"] forKey:@"store_id"];
-    [goodsDic setValue:_dataArray[indexPath.section][@"store_name"] forKey:@"store_name"];
-    [goodsDic setObject:[NSString stringWithFormat:@"%@",_dataArray[indexPath.section][@"commodity"][indexPath.row][@"id"]] forKey:@"goods_id"];
+    [goodsDic setValue:_dataArray[indexPath.section][@"tenantName"] forKey:@"tenantName"];
+//    [goodsDic setObject:[NSString stringWithFormat:@"%@",_dataArray[indexPath.section][@"carService"][indexPath.row][@"service_id"]] forKey:@"service_id"];
 
-    
-    
     cell = [[NewCarWashTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NewCarWashCell" Data:goodsDic];
     
     cell.delegate = self;
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.projectNameLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"goods_name"]];
-    if ([goodsDic[@"is_discount_price"] integerValue] == 1) {
-        cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"discount_price"]];
-    }
-    else {
-        cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"price"]];
-    }
+    cell.projectNameLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"serviceName"]];
+//    if ([goodsDic[@"is_discount_price"] integerValue] == 1) {
+//        cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"discount_price"]];
+//    }
+//    else {
+//        cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"price"]];
+//    }
+    cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"promotion_price"]];
     cell.originalPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"price"]];
     return cell;
 }
