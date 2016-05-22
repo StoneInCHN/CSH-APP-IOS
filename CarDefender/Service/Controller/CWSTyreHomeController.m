@@ -22,6 +22,7 @@
     BMKLocationService *locationService;
     CLLocationCoordinate2D    nowLocation;
     BMKGeoCodeSearch*        _geocodesearch;
+    UserInfo *userInfo;
 }
 
 @end
@@ -36,6 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    userInfo = [UserInfo userDefault];
     [Utils changeBackBarButtonStyle:self];
     self.title = @"紧急救援";
     [self initalizeUserInterface];
@@ -164,7 +166,8 @@
     
     pointAnnotation.coordinate = KManager.currentPt;
 //    pointAnnotation.title = KUserManager.car.plate;
-    pointAnnotation.title = KUserManager.userDefaultVehicle[@"plate"];
+//    pointAnnotation.title = KUserManager.userDefaultVehicle[@"plate"];
+    pointAnnotation.title = userInfo.defaultVehiclePlate;
     [_mapView addAnnotation:pointAnnotation];
     
     
@@ -201,7 +204,8 @@
         
         pointAnnotation.coordinate = KManager.currentPt;
         //    pointAnnotation.title = KUserManager.car.plate;
-        pointAnnotation.title = KUserManager.userDefaultVehicle[@"plate"];
+//        pointAnnotation.title = KUserManager.userDefaultVehicle[@"plate"];
+        pointAnnotation.title = userInfo.defaultVehiclePlate;
         [_mapView addAnnotation:pointAnnotation];
         _mapView.centerCoordinate = KUserManager.currentPt;
         
@@ -230,7 +234,8 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, -5, backView.frame.size.width, backView.frame.size.height)];
 //    label.text = KUserManager.car.plate;
-    label.text = KUserManager.userDefaultVehicle[@"plate"];
+//    label.text = KUserManager.userDefaultVehicle[@"plate"];
+    label.text = userInfo.defaultVehiclePlate;
     label.textColor = kMainColor;
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:12];
@@ -255,7 +260,10 @@
     
 //    NSLog(@"%@",KUserManager.car.logo);
 //    [logoImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseUrl"],KUserManager.car.logo]] placeholderImage:nil options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload|SDWebImageLowPriority];
-    [logoImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseUrl"],KUserManager.userDefaultVehicle[@"brand"][@"brandIcon"]]] placeholderImage:nil options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload|SDWebImageLowPriority];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS, userInfo.photo]];
+    [logoImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"infor_moren.png"] options:SDWebImageLowPriority | SDWebImageRetryFailed | SDWebImageProgressiveDownload | SDWebImageRefreshCached];
+    
     [markView addSubview:logoImageView];
     
     return [Utils imageFromView:markView];

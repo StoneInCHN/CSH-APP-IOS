@@ -109,7 +109,7 @@
     _locService.delegate = self;
     [_locService startUserLocationService];
     [self getLocation];
-//    [self getLocationCity];
+    [self getLocationCity];
     [self stepUI];
     [self initialIndexScrollView];
     [self refreshUserIcon];
@@ -486,12 +486,12 @@
         
         _reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     }
-//    if (KManager.currentPt.latitude>0 && KManager.currentPt.longitude>0) {
-//        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KManager.currentPt.latitude, KManager.currentPt.longitude};
-//    }
+    if (KManager.currentPt.latitude>0 && KManager.currentPt.longitude>0) {
+        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KManager.currentPt.latitude, KManager.currentPt.longitude};
+    }
 //    else {
-        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){[userInfo.latitude doubleValue],
-            [userInfo.longitude doubleValue]};
+//        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){[userInfo.latitude doubleValue],
+//            [userInfo.longitude doubleValue]};
 //    }
     BOOL flag = [_geocodesearch reverseGeoCode:_reverseGeocodeSearchOption];
     
@@ -507,7 +507,7 @@
     //    [_mapView updateLocationData:userLocation];
     //    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
-//    [self getLocationCity];
+    [self getLocationCity];
     NSString *latitudeString = [NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.latitude];
     NSString *longitudeeString = [NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.longitude];
     if ([latitudeString integerValue] == 0 && [longitudeeString integerValue] == 0) {
@@ -522,6 +522,8 @@
  */
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
+    KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
+    
     userInfo.latitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.latitude];
     userInfo.longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
     [_locService stopUserLocationService];

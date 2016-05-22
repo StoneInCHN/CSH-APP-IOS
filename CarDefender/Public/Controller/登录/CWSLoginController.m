@@ -596,7 +596,7 @@
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
         //    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
-//    KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
+    KManager.currentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
     
     UserInfo *userInfo = [UserInfo userDefault];
     userInfo.longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
@@ -613,7 +613,7 @@
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
     
-//    KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
+    KManager.currentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
     
     UserInfo *userInfo = [UserInfo userDefault];
     userInfo.longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
