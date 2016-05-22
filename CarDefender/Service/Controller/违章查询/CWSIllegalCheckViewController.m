@@ -11,6 +11,7 @@
 #import "IllegalCheckTableViewCell.h"
 #import "CWSCWSIllegalCheckDetailViewController.h"
 #import "UIImageView+WebCache.h"
+#import "ChangeCarView.h"
 
 @interface CWSIllegalCheckViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -95,6 +96,13 @@
 }
 - (void)changePlate {
     NSLog(@"change plate");
+    CGSize size  = [UIScreen mainScreen].bounds.size;
+    ChangeCarView *view = [[ChangeCarView alloc] initWithFrame:CGRectMake(size.width - 70,64 , 60, 100)];
+    view.backgroundColor = [UIColor whiteColor];
+    view.layer.borderWidth = 1.0;
+    [UIView animateWithDuration:5.0 animations:^{
+        [self.view.window addSubview:view];
+    }];
 }
 
 #pragma mark - <UITableViewDataSource,UITableViewDelegate>

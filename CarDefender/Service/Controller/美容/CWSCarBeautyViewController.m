@@ -29,6 +29,7 @@
     NSMutableArray*_cellDataArray;
     NSDictionary  *currentDic;
     CWSNoDataView *_noDataView;
+    UserInfo *userInfo;
 }
 
 @end
@@ -43,6 +44,7 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
     self.view.backgroundColor = kCOLOR(245, 245, 245);
+    userInfo = [UserInfo userDefault];
     [self initialData];
     
 
@@ -53,11 +55,46 @@
 -(void)initialData{
     
     _page = 1;
-    _pageSize = 20;
+    _pageSize = 5;
     _dataArray = [NSMutableArray array];
     _cellDataArray = [NSMutableArray array];
-    [self loadData];
+    [self getData:NO];
 
+}
+
+//获取租户列表
+- (void)getData:(Boolean) isRefresh {
+    [HttpHelper searchRenterListWithServiceCategoryId:@"5"
+                                               userId:userInfo.desc
+                                                token:userInfo.token
+                                             latitude:userInfo.latitude
+                                            longitude:userInfo.longitude
+                                             pageSize:_pageSize
+                                           pageNumber:_page
+                                              success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                                  NSLog(@"美容 :%@",responseObjcet);
+                                                  NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                                  NSString *code = dict[@"code"];
+                                                  userInfo.token = dict[@"token"];
+                                                  if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                                      if (isRefresh) {
+                                                          [_dataArray addObject:dict[@"msg"]];
+                                                          [myTableView.mj_header endRefreshing];
+                                                          [myTableView.mj_footer endRefreshing];
+                                                      }else{
+                                                          NSMutableArray* rootArray = [dict[@"msg"] mutableCopy];
+                                                          _dataArray = rootArray;
+                                                          [self createTableView];
+                                                      }
+                                                      
+                                                  }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                                  } else {
+                                                      [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                                  }
+                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                  [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                              }];
 }
 
 -(void)loadData{
@@ -144,11 +181,11 @@
     myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _page = 1;
         [_dataArray removeAllObjects];
-        [self refreshData];
+        [self getData:NO];
     }];
     myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _page++;
-        [self refreshData];
+        [self getData:YES];
     }];
     
 }
@@ -180,7 +217,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    _cellDataArray = [_dataArray[section][@"commodity"] mutableCopy];
+    _cellDataArray = [_dataArray[section][@"carService"] mutableCopy];
     currentDic = [[NSDictionary alloc] initWithDictionary:_dataArray[section]];
     return [_cellDataArray count];
 }
@@ -208,8 +245,10 @@
     NewCarWashTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"NewCarWashCell"];
     
     NSMutableDictionary *goodsDic = [NSMutableDictionary dictionaryWithDictionary:_cellDataArray[indexPath.row]];
-    [goodsDic setValue:currentDic[@"id"] forKey:@"merchantsID"];
-    [goodsDic setValue:currentDic[@"store_name"] forKey:@"store_name"];
+    //    [goodsDic setValue:_dataArray[indexPath.section][@"id"] forKey:@"merchantsID"];
+    [goodsDic setValue:_dataArray[indexPath.section][@"id"] forKey:@"store_id"];
+    [goodsDic setValue:_dataArray[indexPath.section][@"tenantName"] forKey:@"tenantName"];
+    //    [goodsDic setObject:[NSString stringWithFormat:@"%@",_dataArray[indexPath.section][@"carService"][indexPath.row][@"service_id"]] forKey:@"service_id"];
     
     cell = [[NewCarWashTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NewCarWashCell" Data:goodsDic];
     
@@ -217,13 +256,8 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.projectNameLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"goods_name"]];
-    if ([goodsDic[@"is_discount_price"] integerValue] == 1) {
-        cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"discount_price"]];
-    }
-    else {
-        cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"price"]];
-    }
+    cell.projectNameLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"serviceName"]];
+    cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"promotion_price"]];
     cell.originalPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"price"]];
     return cell;
 }

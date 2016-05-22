@@ -58,11 +58,11 @@
     _pageSize = 5;
     _dataArray = [NSMutableArray array];
     _cellDataArray = [NSMutableArray array];
-    [self getData];
+    [self getData:NO];
 }
 
 //获取租户列表
-- (void)getData {
+- (void)getData:(Boolean) isRefresh {
     [HttpHelper searchRenterListWithServiceCategoryId:@"2"
                                                userId:userInfo.desc
                                                 token:userInfo.token
@@ -76,9 +76,16 @@
                                                   NSString *code = dict[@"code"];
                                                   userInfo.token = dict[@"token"];
                                                   if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                                      NSMutableArray* rootArray = [dict[@"msg"] mutableCopy];
-                                                      _dataArray = rootArray;
-                                                      [self createTableView];
+                                                      if (isRefresh) {
+                                                          [_dataArray addObject:dict[@"msg"]];
+                                                          [myTableView.mj_header endRefreshing];
+                                                          [myTableView.mj_footer endRefreshing];
+                                                      }else{
+                                                          NSMutableArray* rootArray = [dict[@"msg"] mutableCopy];
+                                                          _dataArray = rootArray;
+                                                          [self createTableView];
+                                                      }
+                                                      
                                                   }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
                                                   } else {
@@ -142,11 +149,11 @@
     myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _page = 1;
         [_dataArray removeAllObjects];
-        [self getData];
+        [self getData:NO];
     }];
     myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _page++;
-        [self refreshData];
+        [self getData:YES];
     }];
     
     [self setExtraCellLineHidden:myTableView];

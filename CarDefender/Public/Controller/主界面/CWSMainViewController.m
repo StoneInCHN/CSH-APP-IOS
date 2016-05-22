@@ -206,6 +206,11 @@
                                      NSString *code = dict[@"code"];
                                      userInfo.token = dict[@"token"];
                                      if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                         if ([dict[@"desc"] isEqualToString:@"0"]) {
+                                             [self.badgeValueLabel removeFromSuperview];
+                                         } else {
+                                             self.badgeValueLabel.text = dict[@"desc"];
+                                         }
                                          _messageList = dict[@"msg"];
                                      } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
@@ -256,7 +261,6 @@
                                            NSString *code = dict[@"code"];
                                            userInfo.token = dict[@"token"];
                                            if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                               self.badgeValueLabel.text = dict[@"desc"];
                                                AdScrollView.adImagesDataArray = dict[@"msg"];
                                                AdScrollView.delegate = self;
                                            } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
@@ -413,7 +417,7 @@
 
 #pragma mark --================================================================ 用户信息
 -(void)refreshUserIcon{
-    [self.UserIconButton setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS,userInfo.defaultVehicleIcon]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"infor_moren"] options:SDWebImageLowPriority | SDWebImageRetryFailed | SDWebImageProgressiveDownload];
+    [self.UserIconButton setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS,userInfo.defaultVehicleIcon]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed | SDWebImageProgressiveDownload];
 }
 
 -(void)isHaveUnreadMessage{
