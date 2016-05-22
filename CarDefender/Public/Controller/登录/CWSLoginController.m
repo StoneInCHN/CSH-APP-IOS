@@ -596,8 +596,15 @@
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
         //    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
-    KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
+//    KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
     
+    UserInfo *userInfo = [UserInfo userDefault];
+    userInfo.longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
+    userInfo.latitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.latitude];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:userInfo.longitude forKey:@"longitude"];
+    [userDefaults setObject:userInfo.latitude forKey:@"latitude"];
+    [userDefaults synchronize];
 }
 /**
  *用户位置更新后，会调用此函数
@@ -606,8 +613,15 @@
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
     
-    KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
+//    KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
     
+    UserInfo *userInfo = [UserInfo userDefault];
+    userInfo.longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
+    userInfo.latitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.latitude];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:userInfo.longitude forKey:@"longitude"];
+    [userDefaults setObject:userInfo.latitude forKey:@"latitude"];
+    [userDefaults synchronize];
 }
 
 @end

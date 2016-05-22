@@ -218,7 +218,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     _cellDataArray = [_dataArray[section][@"carService"] mutableCopy];
-    currentDic = [[NSDictionary alloc] initWithDictionary:_dataArray[section]];
+//    currentDic = [[NSDictionary alloc] initWithDictionary:_dataArray[section]];
     return [_cellDataArray count];
 }
 
@@ -229,7 +229,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NewCarWashTableHeaderView *view = [[NewCarWashTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 77) Data:currentDic];
+    NewCarWashTableHeaderView *view = [[NewCarWashTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 77) Data:_dataArray[section]];
     view.delegate = self;
     return view;
 }
@@ -244,7 +244,7 @@
     
     NewCarWashTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"NewCarWashCell"];
     
-    NSMutableDictionary *goodsDic = [NSMutableDictionary dictionaryWithDictionary:_cellDataArray[indexPath.row]];
+    NSMutableDictionary *goodsDic = [NSMutableDictionary dictionaryWithDictionary:_dataArray[indexPath.section][@"carService"][indexPath.row]];
     //    [goodsDic setValue:_dataArray[indexPath.section][@"id"] forKey:@"merchantsID"];
     [goodsDic setValue:_dataArray[indexPath.section][@"id"] forKey:@"store_id"];
     [goodsDic setValue:_dataArray[indexPath.section][@"tenantName"] forKey:@"tenantName"];

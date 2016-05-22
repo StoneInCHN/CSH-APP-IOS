@@ -28,6 +28,7 @@
     NSDictionary  *currentDic;
     UIView* titleView;
     CWSNoDataView *_noDataView;
+    UserInfo *userInfo;
 }
 
 @end
@@ -39,18 +40,21 @@
     
     self.title = @"预约保养";
     self.view.backgroundColor = [UIColor whiteColor];
+    userInfo = [UserInfo userDefault];
     [Utils changeBackBarButtonStyle:self];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     _temp = 1;
+
+/**
     titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 40)];
     titleView.backgroundColor = KBlueColor;
- 
     UILabel* titleViewLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, 10, kSizeOfScreen.width-20, 15)];
     titleViewLabel.font = [UIFont systemFontOfSize:14.0f];
 //    titleViewLabel.text = @"我的车辆:现代 朗动 2015款 1.6L 自动领先型";
     titleViewLabel.text = [NSString stringWithFormat:@"我的车辆:%@   %@",KUserManager.userDefaultVehicle[@"brand"][@"brandName"],KUserManager.userDefaultVehicle[@"brand"][@"seriesName"]];
     titleViewLabel.textColor = [UIColor whiteColor];
     [titleView addSubview:titleViewLabel];
+
     UIImageView* titleImageView = [[UIImageView alloc]initWithFrame:CGRectMake(kSizeOfScreen.width-20, 12, 10, 15)];
     titleImageView.image = [UIImage imageWithCGImage:[UIImage imageNamed:@"tabbar_jiantou"].CGImage scale:1 orientation:UIImageOrientationDown];
     [titleView addSubview:titleImageView];
@@ -59,12 +63,47 @@
     titleViewButton.frame = titleView.frame;
     [titleViewButton addTarget:self action:@selector(titleViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:titleViewButton];
+ */
     
     [self initialData];
-    [self getDataWithPage:_temp];
+    [self getData:NO];
 
 }
 
+//获取租户列表
+- (void)getData:(Boolean) isRefresh {
+    [HttpHelper searchRenterListWithServiceCategoryId:@"1"
+                                               userId:userInfo.desc
+                                                token:userInfo.token
+                                             latitude:userInfo.latitude
+                                            longitude:userInfo.longitude
+                                             pageSize:5
+                                           pageNumber:[[NSString stringWithFormat:@"%ld", (long)_temp] intValue]
+                                              success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                                  NSLog(@"保养 :%@",responseObjcet);
+                                                  NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                                  NSString *code = dict[@"code"];
+                                                  userInfo.token = dict[@"token"];
+                                                  if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                                      if (isRefresh) {
+                                                          [dataArray addObject:dict[@"msg"]];
+                                                          [myTableView.mj_header endRefreshing];
+                                                          [myTableView.mj_footer endRefreshing];
+                                                      }else{
+                                                          NSMutableArray* rootArray = [dict[@"msg"] mutableCopy];
+                                                          dataArray = rootArray;
+                                                          [self createTableView];
+                                                      }
+                                                      
+                                                  }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                                  } else {
+                                                      [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                                  }
+                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                  [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                              }];
+}
 
 #pragma mark -===========================================================InitialData
 -(void)getDataWithPage:(NSInteger)page
@@ -160,7 +199,7 @@
     MyLog(@"下拉刷新");
     [dataArray removeAllObjects];
     _temp = 1;
-    [self getDataWithPage:_temp];
+    [self getData:NO];
     
 }
 
@@ -170,7 +209,7 @@
 
     MyLog(@"上拉加载");
     _temp ++;
-    [self getDataWithPage:_temp];
+    [self getData:YES];
 }
 
 #pragma mark - 更新数据源方法
@@ -186,8 +225,8 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    _cellDataArray = [dataArray[section][@"commodity"] mutableCopy];
-    currentDic = [[NSDictionary alloc] initWithDictionary:dataArray[section]];
+    _cellDataArray = [dataArray[section][@"carService"] mutableCopy];
+//    currentDic = [[NSDictionary alloc] initWithDictionary:dataArray[section]];
     return [_cellDataArray count];
 }
 
@@ -198,7 +237,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NewCarWashTableHeaderView *view = [[NewCarWashTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 75) Data:currentDic];
+    NewCarWashTableHeaderView *view = [[NewCarWashTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 75) Data:dataArray[section]];
     
     view.delegate = self;
     return view;
@@ -209,22 +248,25 @@
     
     CarMaintainTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"CarMaintainCell"];
     
-    NSMutableDictionary *goodsDic = [NSMutableDictionary dictionaryWithDictionary:_cellDataArray[indexPath.row]];
-    [goodsDic setValue:currentDic[@"id"] forKey:@"merchantsID"];
-    [goodsDic setValue:currentDic[@"store_name"] forKey:@"store_name"];
+    NSMutableDictionary *goodsDic = [NSMutableDictionary dictionaryWithDictionary:dataArray[indexPath.section][@"carService"][indexPath.row]];
+    [goodsDic setValue:currentDic[@"id"] forKey:@"store_id"];
+    [goodsDic setValue:currentDic[@"tenantName"] forKey:@"tenantName"];
     
     cell = [[CarMaintainTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CarMaintainCell" Data:goodsDic];
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.maintainTitleLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"goods_name"]];
-    cell.maintainContentLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"description"]];
-    if ([goodsDic[@"is_discount_price"] integerValue] == 1) {
-        cell.moneyLabel.text = [NSString stringWithFormat:@"￥%@",goodsDic[@"discount_price"]];
-    }
-    else {
-        cell.moneyLabel.text = [NSString stringWithFormat:@"￥%@",goodsDic[@"price"]];
-    }
+//    cell.maintainTitleLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"serviceName"]];
+    cell.maintainContentLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"serviceName"]];
+//    if ([goodsDic[@"is_discount_price"] integerValue] == 1) {
+//        cell.moneyLabel.text = [NSString stringWithFormat:@"￥%@",goodsDic[@"discount_price"]];
+//    }
+//    else {
+//        cell.moneyLabel.text = [NSString stringWithFormat:@"￥%@",goodsDic[@"price"]];
+//    }
+    cell.maintainTitleLabel.hidden = YES;
+    cell.moneyLabel.hidden = YES;
+    
     return cell;
 }
 

@@ -104,11 +104,12 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     userInfo = [UserInfo userDefault];
     NSLog(@"user info icon :%@",userInfo.defaultVehicleIcon);
+    NSLog(@"user 经纬度 :%@, %@", userInfo.longitude, userInfo.latitude);
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
     [_locService startUserLocationService];
     [self getLocation];
-    [self getLocationCity];
+//    [self getLocationCity];
     [self stepUI];
     [self initialIndexScrollView];
     [self refreshUserIcon];
@@ -489,12 +490,13 @@
 //        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KManager.currentPt.latitude, KManager.currentPt.longitude};
 //    }
 //    else {
-        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KManager.mobileCurrentPt.latitude, KManager.mobileCurrentPt.longitude};
+        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){[userInfo.latitude doubleValue],
+            [userInfo.longitude doubleValue]};
 //    }
     BOOL flag = [_geocodesearch reverseGeoCode:_reverseGeocodeSearchOption];
     
     if(flag){
-        //        MyLog(@"反geo检索发送成功");
+        MyLog(@"反geo检索发送成功");
     }else{
         MyLog(@"反geo检索发送失败");
     }
