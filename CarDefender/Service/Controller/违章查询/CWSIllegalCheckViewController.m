@@ -70,7 +70,7 @@
 #pragma mark - 界面
 - (void)initUIWithData
 {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(20, 0, [UIScreen mainScreen].bounds.size.width, 90*_dataArray.count) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 0, [UIScreen mainScreen].bounds.size.width-10, 109*_dataArray.count) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     UIView *view = [[UIView alloc] init];
@@ -132,10 +132,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CWSCWSIllegalCheckDetailViewController *vc = [[CWSCWSIllegalCheckDetailViewController alloc] init];
     NSDictionary *dic = _dataArray[indexPath.row];
-    NSLog(@"cell data :%@",dic);
-    vc.dic = dic;
+    CWSCWSIllegalCheckDetailViewController *vc = [[CWSCWSIllegalCheckDetailViewController alloc] initWithDic:dic];
     [self.navigationController pushViewController:vc animated:YES];
     
 }

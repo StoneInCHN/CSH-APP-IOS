@@ -14,28 +14,39 @@
 @end
 
 @implementation CWSCWSIllegalCheckDetailViewController
-
+- (instancetype)initWithDic:(NSDictionary *)dict {
+    if ([super init]) {
+        self.dic = dict;
+        return  self;
+    }
+    return nil;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
+    [self updateUI];
 }
-- (void)setDic:(NSDictionary *)dic {
+- (void)updateUI {
     self.headCarImageView.image = [UIImage imageNamed:@"logo"];
-    self.headCarBrandLabel.text = [PublicUtils checkNSNullWithgetString:dic[@"plate"]];
-    if ([dic[@"score"] isKindOfClass:[NSNull class]]) {
+    self.headCarBrandLabel.text = [PublicUtils checkNSNullWithgetString:self.dic[@"plate"]];
+    if ([self.dic[@"score"] isKindOfClass:[NSNull class]]) {
         self.gradeLabel.text = @"0";
     } else {
-        self.gradeLabel.text = dic[@"score"];
+        self.gradeLabel.text = self.dic[@"score"];
     }
-    if ([dic[@"finesAmount"] isKindOfClass:[NSNull class]]) {
+    if ([self.dic[@"finesAmount"] isKindOfClass:[NSNull class]]) {
         self.moneyLabel.text = @"0";
     } else {
-        self.moneyLabel.text = dic[@"finesAmount"];
+        self.moneyLabel.text = self.dic[@"finesAmount"];
     }
-    self.illegalLabel.text = [PublicUtils checkNSNullWithgetString:dic[@"illegalContent"]];
-    self.addressLabel.text = [PublicUtils checkNSNullWithgetString:dic[@"illegalAddress"]];
-    self.siteLabel.text = [PublicUtils checkNSNullWithgetString:dic[@"processingSite"]];
-    self.timeLabel.text = [PublicUtils checkNSNullWithgetString:dic[@"illegalDate"]];
+    self.illegalLabel.text = [PublicUtils checkNSNullWithgetString:self.dic[@"illegalContent"]];
+    self.addressLabel.text = [PublicUtils checkNSNullWithgetString:self.dic[@"illegalAddress"]];
+    self.siteLabel.text = [PublicUtils checkNSNullWithgetString:self.dic[@"processingSite"]];
+    if ([self.dic[@"illegalDate"] isKindOfClass:[NSNull class]]) {
+        self.timeLabel.text = @"";
+    } else {
+        self.timeLabel.text = [NSString stringWithFormat:@"%@",self.dic[@"illegalDate"]];
+    }
 }
 @end

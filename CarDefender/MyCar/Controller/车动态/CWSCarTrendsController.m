@@ -211,6 +211,9 @@
                                 NSString *code = dict[@"code"];
                                 if ([code isEqualToString:SERVICE_SUCCESS]) {
                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                        CLLocationCoordinate2D  lPoint = CLLocationCoordinate2DMake([dict[@"msg"][@"lat"] floatValue], [dict[@"msg"][@"lon"] floatValue]);
+                                        [_locationDicArray addObject:@{@"latitude":[NSString stringWithFormat:@"%f",lPoint.latitude],@"longitude":[NSString stringWithFormat:@"%f",lPoint.longitude]}];
+                                        
                                         self.mileageLabel.text = [NSString stringWithFormat:@"%@km",dict[@"msg"][@"mileAge"]];
                                         self.timeLabel.text = [NSString stringWithFormat:@"%@s",dict[@"msg"][@"engineRuntime"]];
                                         self.speedLabel.text = [NSString stringWithFormat:@"%@km/h",dict[@"msg"][@"speed"]];

@@ -252,7 +252,7 @@
                 <constraint firstItem="bgJ-wn-SQk" firstAttribute="trailing" secondItem="rJs-jE-eeT" secondAttribute="trailing" id="wYu-YV-xlS"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="525" y="252"/>
+            <point key="canvasLocation" x="428" y="252"/>
         </view>
     </objects>
     <resources>

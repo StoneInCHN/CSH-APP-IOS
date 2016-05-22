@@ -20,4 +20,5 @@
 
 @property (weak, nonatomic) IBOutlet UIView *footView;
 @property (nonatomic,strong)NSDictionary *dic;
+- (instancetype)initWithDic:(NSDictionary *)dict;
 @end
