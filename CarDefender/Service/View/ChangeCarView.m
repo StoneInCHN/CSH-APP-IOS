@@ -33,4 +33,7 @@
     cell.textLabel.text = @"cell";
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"change car ");
+}
 @end

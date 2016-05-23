@@ -101,7 +101,7 @@
     view.backgroundColor = [UIColor whiteColor];
     view.layer.borderWidth = 1.0;
     [UIView animateWithDuration:5.0 animations:^{
-        [self.view.window addSubview:view];
+        [self.view addSubview:view];
     }];
 }
 

@@ -194,6 +194,7 @@
     purchaseRecomView = [[CWSPurchaseRecommendView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(trimView2.frame), kSizeOfScreen.width, 0)];
     purchaseRecomView.rootVc = self;
     [self.myIndexScrollView addSubview:purchaseRecomView];
+    self.badgeValueLabel.text = @"";//没有网络时显示
 }
 //获取右上角消息列表(此处应该不需要吧？要显示未读消息啊，必须拿到返回的desc)
 - (void)getMessageList {
@@ -202,6 +203,7 @@
                               pageNumber:@"10"
                                 pageSize:@"5"
                                  success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                     [self.myIndexScrollView.mj_header endRefreshing];
                                      NSLog(@"message :%@",responseObjcet);
                                      NSDictionary *dict = (NSDictionary *)responseObjcet;
                                      NSString *code = dict[@"code"];
@@ -232,6 +234,7 @@
                                              pageSize:3
                                            pageNumber:1
                                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                                  [self.myIndexScrollView.mj_header endRefreshing];
                                                   NSLog(@"search :%@",responseObjcet);
                                                   NSDictionary *dict = (NSDictionary *)responseObjcet;
                                                   NSString *code = dict[@"code"];
@@ -257,6 +260,7 @@
     [HttpHelper getAdvertismentImageWithUserId:userInfo.desc
                                          token:userInfo.token
                                        success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                           [self.myIndexScrollView.mj_header endRefreshing];
                                            NSLog(@"get advertisment :%@",responseObjcet);
                                            NSDictionary *dict = (NSDictionary *)responseObjcet;
                                            NSString *code = dict[@"code"];
@@ -343,7 +347,7 @@
     self.myIndexScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(updateIndexPageData)];
 }
 
-#pragma mark -=================================================================InitialData
+#pragma mark 下拉刷新
 /**更新首页信息*/
 -(void)updateIndexPageData{
     [self getAdvertismentImage];
@@ -351,7 +355,7 @@
     [self getPurchaseData];
 }
 
-#pragma mark --================================================================ 点击事件
+#pragma mark 首页左右按钮点击事件
 - (IBAction)UserIconButtonClicked:(UIButton *)sender {
     
     if(![UserInfo userDefault].desc){ //未登录

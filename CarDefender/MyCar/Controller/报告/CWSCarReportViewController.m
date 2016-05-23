@@ -181,6 +181,7 @@
 {
     _detailOrMain=NO;
     _bodyDic=[NSMutableDictionary dictionary];
+    /*
 #if USENEWVERSION
     [_bodyDic setObject:KUserManager.uid forKey:@"uid"];
     [_bodyDic setObject:KUserManager.mobile forKey:@"mobile"];
@@ -220,7 +221,7 @@
     
 #endif
     
-    
+    */
     
     
     
@@ -582,16 +583,15 @@
 }
 -(void)buildRightBtn
 {
-
     [self.dateView setFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height - kDockHeight - kSTATUS_BAR)];
     self.dateView.hidden = YES;
     [self.view addSubview:self.dateView];
     [self.datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
     _dateRightBtn = [[UIButton alloc]initWithFrame:CGRectMake(0,0,65,30)];
     
-    //    [_dateRightBtn setBackgroundImage:[UIImage imageNamed:@"baogao_kuang@2x"] forState:UIControlStateNormal];
+//    [_dateRightBtn setBackgroundImage:[UIImage imageNamed:@"baogao_kuang@2x"] forState:UIControlStateNormal];
     [_dateRightBtn setTitle:@"时间" forState:UIControlStateNormal];
-    [_dateRightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dateRightBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _dateRightBtn.titleLabel.font=kFontOfSize(12);
     [_dateRightBtn addTarget:self action:@selector(searchprogram)forControlEvents:UIControlEventTouchUpInside];
     
