@@ -115,6 +115,8 @@
     [self refreshUserIcon];
     [self updateIndexPageData];
     [self buildNoti];
+    [self initJpush];
+    
 }
 #pragma mark 初始化UI和数据
 - (void)stepUI {
@@ -196,6 +198,29 @@
     [self.myIndexScrollView addSubview:purchaseRecomView];
     self.badgeValueLabel.text = @"";//没有网络时显示
 }
+
+//初始化极光推送
+- (void)initJpush{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *regId = [userDefaults objectForKey:@"regId"];
+    [HttpHelper initJpushWithUserId:userInfo.desc
+                              token:userInfo.token
+                        versionCode:@"11"
+                              regId:regId
+                        appPlatform:@"IOS"
+                            success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                NSString *code = dict[@"code"];
+                                userInfo.token = dict[@"token"];
+                                if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                    NSLog(@"init jpush success");
+                                }else{
+                                    NSLog(@"init jpush failure");
+                                }
+                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                NSLog(@"init jpush failure");
+                            }];
+}
 //获取右上角消息列表(此处应该不需要吧？要显示未读消息啊，必须拿到返回的desc)
 - (void)getMessageList {
     [HttpHelper getMessageListWithUserId:userInfo.desc
@@ -235,7 +260,7 @@
                                            pageNumber:1
                                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                                   [self.myIndexScrollView.mj_header endRefreshing];
-                                                  NSLog(@"search :%@",responseObjcet);
+                                                  NSLog(@"首页租户列表 :%@",responseObjcet);
                                                   NSDictionary *dict = (NSDictionary *)responseObjcet;
                                                   NSString *code = dict[@"code"];
                                                   userInfo.token = dict[@"token"];
@@ -261,7 +286,7 @@
                                          token:userInfo.token
                                        success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                            [self.myIndexScrollView.mj_header endRefreshing];
-                                           NSLog(@"get advertisment :%@",responseObjcet);
+                                           NSLog(@"广告列表 :%@",responseObjcet);
                                            NSDictionary *dict = (NSDictionary *)responseObjcet;
                                            NSString *code = dict[@"code"];
                                            userInfo.token = dict[@"token"];

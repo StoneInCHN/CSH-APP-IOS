@@ -156,4 +156,14 @@
                                 deviceNo:(NSString *)deviceNo
                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 初始化极光推送
++ (void)initJpushWithUserId:(NSString *)userId
+                      token:(NSString *)token
+                versionCode:(NSString *)versionCode
+                      regId:(NSString *)regId
+                appPlatform:(NSString *)appPlatform
+                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

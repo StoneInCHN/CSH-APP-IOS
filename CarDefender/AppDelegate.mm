@@ -575,10 +575,15 @@ BMKMapManager* _mapManager;
     /**极光推送DeviceToken*/
     [MyJPushService registerDeviceToken:deviceToken];
     MyLog(@"%@",[NSString stringWithFormat:@"Device Token:%@",deviceToken]);
+    NSString *registrationID = [APService registrationID];
+    NSLog(@"registration id is %@", registrationID);
+    [userDefaults setObject:registrationID forKey:@"regId"];
+    [userDefaults synchronize];
 }
 
 /**这是7.0以后才有的方法*/
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler{
+    NSLog(@"收到推送消息回调啦");
     
     [MyJPushService handleRemoteNotification:userInfo completion:completionHandler];
     
@@ -619,13 +624,14 @@ BMKMapManager* _mapManager;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
 
+    NSLog(@"收到推送消息回调啦");
     /**极光推送设置*/
-//    NSDictionary* aps = [userInfo valueForKey:@"aps"]; //取得APNs标准信息内容
-//    NSString* content = [aps valueForKey:@"alert"];  //推送显示内容
-//    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
-//    NSString* sound = [aps valueForKey:@"sound"]; //播放的声音
+    NSDictionary* aps = [userInfo valueForKey:@"aps"]; //取得APNs标准信息内容
+    NSString* content = [aps valueForKey:@"alert"];  //推送显示内容
+    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
+    NSString* sound = [aps valueForKey:@"sound"]; //播放的声音
     
-  
+    NSLog(@"推送内容:%@", content);
     
     
     [MyJPushService handleRemoteNotification:userInfo completion:nil];

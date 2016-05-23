@@ -29,6 +29,8 @@
 #define KHTTPHELPER_ONEKEEDETECTION_URL @"/csh-interface/obd/oneKeyDetection.jhtml" //一键检测
 #define KHTTPHELPER_AROUND_SEARCH_URL @"/csh-interface/aroundSearch/keyWordSearch.jhtml" //周边加油站
 #define KHTTPHELPER_CAR_TREND_URL @"/csh-interface/obd/vehicleTrends.jhtml" //车辆动态
+#define KHTTPHELPER_INIT_JPUSH_URL @"/csh-interface/jpush/setRegId.jhtml" //初始化极光推送
+
 @implementation HttpHelper
 
 #pragma mark 登陆
@@ -478,4 +480,31 @@
         failure(operation,error);
     }];
 }
+
+#pragma mark 初始化极光推送
++ (void)initJpushWithUserId:(NSString *)userId
+                      token:(NSString *)token
+                versionCode:(NSString *)versionCode
+                      regId:(NSString *)regId
+                appPlatform:(NSString *)appPlatform
+                    success:(void (^)(AFHTTPRequestOperation *, id))success
+                    failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:userId forKey:@"userId"];
+    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:versionCode forKey:@"versionCode"];
+    [parmDict setObject:regId forKey:@"regId"];
+    [parmDict setObject:appPlatform forKey:@"appPlatform"];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_INIT_JPUSH_URL];
+    NSLog(@"init jpush url :%@",urlString);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(operation,responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation,error);
+    }];
+}
+
 @end
