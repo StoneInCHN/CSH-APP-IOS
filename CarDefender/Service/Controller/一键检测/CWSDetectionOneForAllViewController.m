@@ -35,14 +35,22 @@
     [self getData];
 }
 #pragma mark -========================InitialData
+- (NSString *)currentDateStr {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *currentDate = [[NSDate alloc] init];
+    NSString *currentDateStr = [NSString stringWithFormat:@"%@",[formatter stringFromDate:currentDate]];
+    return currentDateStr;
+}
 - (void)getData
 {
     UserInfo *userInfo = [UserInfo userDefault];
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+    NSString *searchDate = [self currentDateStr];
     [HttpHelper oneKeyDetectionWithUserId:userInfo.desc
                                     token:userInfo.token
                                  deviceNo:userInfo.defaultVehiclePlate
-                               searchDate:@"2016-05-18"
+                               searchDate:searchDate
                                   success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                       NSLog(@"one key detection :%@",responseObjcet);

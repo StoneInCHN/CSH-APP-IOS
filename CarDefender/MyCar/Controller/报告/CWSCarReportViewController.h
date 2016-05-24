@@ -27,7 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *normalLabel1;
 @property (weak, nonatomic) IBOutlet UILabel *normalLable;
 
-
+@property (strong, nonatomic) NSString *searchDate;
 
 @property (strong, nonatomic) IBOutlet UIView *dateView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;

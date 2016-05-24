@@ -196,7 +196,9 @@
     purchaseRecomView = [[CWSPurchaseRecommendView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(trimView2.frame), kSizeOfScreen.width, 0)];
     purchaseRecomView.rootVc = self;
     [self.myIndexScrollView addSubview:purchaseRecomView];
+    self.myIndexScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(updateIndexPageData)];
     self.badgeValueLabel.text = @"";//没有网络时显示
+    totalHeight -= 100;
 }
 
 //初始化极光推送
@@ -265,10 +267,11 @@
                                                   NSString *code = dict[@"code"];
                                                   userInfo.token = dict[@"token"];
                                                   if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                                      purchaseRecomView.storeDataArray = dict[@"msg"];
+                                                      
                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                          totalHeight -= purchaseRecomView.frame.size.height ;
+                                                          purchaseRecomView.storeDataArray = dict[@"msg"];
                                                           totalHeight += purchaseRecomView.frame.size.height;
-                                                          totalHeight -= 100;
                                                           [self initialIndexScrollView];
                                                       });
                                                   }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
@@ -369,7 +372,6 @@
     self.myIndexScrollView.showsHorizontalScrollIndicator = NO;
     self.myIndexScrollView.showsVerticalScrollIndicator = NO;
     self.myIndexScrollView.bounces = YES;
-    self.myIndexScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(updateIndexPageData)];
 }
 
 #pragma mark 下拉刷新

@@ -73,35 +73,24 @@
 @implementation CWSCarReportViewController
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
     _isShare = YES;
     _gotoAddCost = NO;
     [Utils changeBackBarButtonStyle:self];
-    
     //创建基本视图和基础数据
     [self buildUIAndBaseData];
     //创建右上角按钮事件
     [self buildRightBtn];
     //创建日期选择
     [self calendarViewBuild];
-    
     self.title=@"车辆报告";
-    
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
+    _selectDay = self.searchDate;
     [self creatUI];
-
-    
-    
     [self getdata];
-    
-    
     _getDataChooseOrNor=YES;
     _stopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height)];
     _stopView.backgroundColor = [UIColor clearColor];
-    
-    
     //日常费用
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reportCostBack:) name:@"ReoirtCostBack" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(shareContentClick:) name:@"shareContent" object:nil];
@@ -690,12 +679,61 @@
     
 }
 
-
+- (NSString *)changeStrWithData:(id)data {
+    if ([data isKindOfClass:[NSNull class]]) {
+        return @"0";
+    }
+    return data;
+}
 //获取数据
 -(void)getdata
 {
     loadORNoSide=YES;
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+    NSLog(@"select day :%@",_selectDay);
+    UserInfo *userInfo = [UserInfo userDefault];
+    [HttpHelper oneKeyDetectionWithUserId:userInfo.desc
+                                    token:userInfo.token
+                                 deviceNo:userInfo.defaultDeviceNo
+                               searchDate:_selectDay
+                                  success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                      loadORNoSide=NO;
+                                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                      NSLog(@"car report message :%@",responseObjcet);
+                                      NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                      userInfo.token = dict[@"token"];
+                                      NSString *code = dict[@"code"];
+                                      if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                          NSDictionary *msg = dict[@"msg"];
+                                          NSDictionary* lDic1 = @{@"image":@"baogao_youhao",
+                                                                  @"name":@"当日油耗",
+                                                                  @"data":[NSString stringWithFormat:@"%@Min",[self changeStrWithData:msg[@"fuelConsumption"]]]};
+                                          NSDictionary* lDic2 = @{@"image":@"baogao_baigongli",
+                                                                  @"name":@"平均油耗",
+                                                                  @"data":[NSString stringWithFormat:@"%@Min",[self changeStrWithData:msg[@"averageFuelConsumption"]]]};
+                                          NSDictionary* lDic3 = @{@"image":@"baogao_time",
+                                                                  @"name":@"驾驶时间",
+                                                                  @"data":[NSString stringWithFormat:@"%@Min",[self changeStrWithData:msg[@"runningTime"]]]};
+                                          NSDictionary* lDic4 = @{@"image":@"baogao_licheng",
+                                                                  @"name":@"当日里程",
+                                                                  @"data":[NSString stringWithFormat:@"%@km",[self changeStrWithData:msg[@"totalMileAge"]]]};
+                                          NSDictionary* lDic5 = @{@"image":@"baogao_sudu",
+                                                                  @"name":@"平均速度",
+                                                                  @"data":[NSString stringWithFormat:@"%@km",[self changeStrWithData:msg[@"averageSpeed"]]]};
+                                          NSArray* array = @[lDic1,lDic2,lDic3,lDic4,lDic5];
+                                          NSString* cost = [NSString stringWithFormat:@"￥%@",[self changeStrWithData:msg[@"cost"]]];
+                                          [_groundView reloadData:array cost:cost];
+                                          
+                                      } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                      } else {
+                                          [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                      }
+                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      NSLog(@"one key error :%@",error);
+                                      [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                  }];
+    /*
     
 #if USENEWVERSION
     
@@ -809,7 +847,7 @@
     }];
     
 #endif
-    
+    */
     
 }
 //创建主界面视图

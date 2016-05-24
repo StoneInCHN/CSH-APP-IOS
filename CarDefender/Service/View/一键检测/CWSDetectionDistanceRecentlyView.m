@@ -40,21 +40,12 @@
     date = date - 60*60*24;
     NSDate *dateNew = [NSDate dateWithTimeIntervalSince1970:date];
     NSDateFormatter *form = [[NSDateFormatter alloc] init];
-    [form setDateFormat:@"MM-dd"];
+    [form setDateFormat:@"YYYY-MM-dd"];
     NSString *stringDate = [form stringFromDate:dateNew];
     self.dateLabel.text = stringDate;
     
 //    [self getData];
-//    NSDictionary *data = @{
-//                           @"totalMileAge": @0,
-//                           @"fuelConsumption": @30,
-//                           @"averageSpeed": @0,
-//                           @"averageFuelConsumption":@0,
-//                           @"mileAge": @1000,
-//                           @"runningTime": @0,
-//                           @"cost": @0
-//                           };
-    
+
     if ([self changeString:dataDic[@"fuelConsumption"]]) {
         self.thisOilLabel.text = [self changeString:dataDic[@"fuelConsumption"]];
     }
@@ -144,6 +135,7 @@
     
     NSLog(@"选择日期了！");
     CWSCarReportViewController* reportVc = [CWSCarReportViewController new];
+    reportVc.searchDate = self.dateLabel.text;
     [rootController.navigationController pushViewController:reportVc animated:YES];
     
 }
