@@ -8,12 +8,14 @@
 
 #import "CWSFindGasStationController.h"
 #import "CWSOilCell.h"
+#import "HttpHelper.h"
 
 @interface CWSFindGasStationController ()<BMKGeoCodeSearchDelegate>
 {
     BMKGeoCodeSearch*        _geocodesearch;
     BMKReverseGeoCodeOption* _reverseGeocodeSearchOption;
     CLLocationCoordinate2D   _carPoint;
+    UserInfo *userInfo;
 }
 @end
 
@@ -23,65 +25,106 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
     [MBProgressHUD showMessag:@"数据加载中..." toView:self.view];
-
+    userInfo = [UserInfo userDefault];
     _oldPt = coordinate;
-    _subCity = KManager.currentSubCity;
-    NSDictionary* dic;
-    if (KUserManager.uid != nil){
-        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
-                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
-                @"uid":KUserManager.uid,
-                @"cityName":[_subCity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                @"keyWord":[self.type stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                @"page":@"0",
-                @"size":@"20"};
-    }else{
-        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
-                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
-                @"cityName":[_subCity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                @"keyWord":[self.type stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                @"page":@"0",
-                @"size":@"20"};
-    }
+//    _subCity = KManager.currentSubCity;
+//    NSDictionary* dic;
+//    if (KUserManager.uid != nil){
+//        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
+//                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
+//                @"uid":KUserManager.uid,
+//                @"cityName":[_subCity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+//                @"keyWord":[self.type stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+//                @"page":@"0",
+//                @"size":@"20"};
+//    }else{
+//        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
+//                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
+//                @"cityName":[_subCity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+//                @"keyWord":[self.type stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+//                @"page":@"0",
+//                @"size":@"20"};
+//    }
     
-    [ModelTool httpGainGasWithParameter:dic success:^(id object) {
-        
-        NSDictionary* dic = object;
-        MyLog(@"%@",dic);
-        MyLog(@"%@",dic[@"data"][@"data"][@"message"]);
-        if ([dic[@"operationState"] isEqualToString:@"SUCCESS"]) {
-            [_dataArray removeAllObjects];
-            for (NSDictionary* ldic in dic[@"data"][@"data"][@"pointList"]) {
-                Interest* interest = [[Interest alloc] initWithDic:ldic];
-                interest.telephone = ldic[@"additionalInformation"][@"telephone"];
-                [_dataArray addObject:interest];
-            }
-            FindMapData* findMapData = [[FindMapData alloc] init];
-            findMapData.point = coordinate;
-            findMapData.nearbyCar = nearbyCar;
-            findMapData.coordArray = _dataArray;
-            
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_findMapView reloadData:findMapData type:type];
-                if (_dataArray.count > 0) {
-                    [self reloadFootView:_dataArray[0]];
-                }
-                [_tableView reloadData];
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            });
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        }else {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请稍后再试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
-        }
-        
-    } faile:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请稍后再试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }];
+    [HttpHelper searchGasolineStationWithUserId:userInfo.desc
+                                          token:userInfo.token
+                                        keyWord:@"加油站"
+                                      longitude:userInfo.longitude
+                                       latitude:userInfo.latitude
+                                        success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                            NSLog(@"加油站response :%@",responseObjcet);
+                                            NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                            NSString *code = dict[@"code"];
+                                            userInfo.token = dict[@"token"];
+                                            if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                                [_dataArray removeAllObjects];
+                                                for (NSDictionary* ldic in dict[@"msg"]) {
+                                                    Interest* interest = [[Interest alloc] initWithDic:ldic];
+                                                    interest.telephone = ldic[@"additionalInformation"][@"telephone"];
+                                                    [_dataArray addObject:interest];
+                                                }
+                                                FindMapData* findMapData = [[FindMapData alloc] init];
+                                                findMapData.point = coordinate;
+                                                findMapData.nearbyCar = nearbyCar;
+                                                findMapData.coordArray = _dataArray;
+                                                
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    [_findMapView reloadData:findMapData type:type];
+                                                    if (_dataArray.count > 0) {
+                                                        [self reloadFootView:_dataArray[0]];
+                                                    }
+                                                    [_tableView reloadData];
+                                                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                                });
+                                                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                            }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                            } else {
+                                                [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                            }
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                       }];
+    
+//    [ModelTool httpGainGasWithParameter:dic success:^(id object) {
+//        
+//        NSDictionary* dic = object;
+//        MyLog(@"%@",dic);
+//        MyLog(@"%@",dic[@"data"][@"data"][@"message"]);
+//        if ([dic[@"operationState"] isEqualToString:@"SUCCESS"]) {
+//            [_dataArray removeAllObjects];
+//            for (NSDictionary* ldic in dic[@"data"][@"data"][@"pointList"]) {
+//                Interest* interest = [[Interest alloc] initWithDic:ldic];
+//                interest.telephone = ldic[@"additionalInformation"][@"telephone"];
+//                [_dataArray addObject:interest];
+//            }
+//            FindMapData* findMapData = [[FindMapData alloc] init];
+//            findMapData.point = coordinate;
+//            findMapData.nearbyCar = nearbyCar;
+//            findMapData.coordArray = _dataArray;
+//            
+//            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [_findMapView reloadData:findMapData type:type];
+//                if (_dataArray.count > 0) {
+//                    [self reloadFootView:_dataArray[0]];
+//                }
+//                [_tableView reloadData];
+//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            });
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//        }else {
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请稍后再试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alert show];
+//        }
+//        
+//    } faile:^(NSError *err) {
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请稍后再试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//    }];
+    
 }
 
 

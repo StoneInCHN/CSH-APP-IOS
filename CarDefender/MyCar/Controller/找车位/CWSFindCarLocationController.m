@@ -10,7 +10,9 @@
 
 
 
-@interface CWSFindCarLocationController ()
+@interface CWSFindCarLocationController (){
+    UserInfo *userInfo;
+}
 @property (weak, nonatomic) IBOutlet UIView *headChangeView;
 @property (weak, nonatomic) IBOutlet UIButton *headMapButton;
 @property (weak, nonatomic) IBOutlet UIView *heafMapLineView;
@@ -19,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIView *footCellView;
 
 - (IBAction)headButtonClick:(UIButton *)sender;
+
 
 @end
 
@@ -75,6 +78,7 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
+    userInfo = [UserInfo userDefault];
     _dataArray = [NSMutableArray array];
 //    _fenLanView = [self creatFenLanView];
 //    self.headChangeView =_fenLanView;
@@ -94,23 +98,23 @@
 -(void)getPoint{
     
 #if USENEWVERSION
-    if (KUserManager.uid == nil) {
+    if (userInfo.desc == nil) {
         [self turnToLoginVC];
         return;
     }
     
-    if (KUserManager.userCID ==nil  || KUserManager.userDefaultVehicle[@"device"] == nil || [KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
-        UIButton* lBtn2 = (UIButton*)[self.view viewWithTag:11];
-        [lBtn2 setBackgroundImage:[UIImage imageNamed:@"chedongtai_myphone1"] forState:UIControlStateNormal];
-        UIButton* btn = (UIButton*)[self.view viewWithTag:lBtn2.tag-1];
-        [btn setBackgroundImage:[UIImage imageNamed:@"chedongtai_mycar1"] forState:UIControlStateNormal];
+//    if (KUserManager.userCID ==nil  || KUserManager.userDefaultVehicle[@"device"] == nil || [KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
+//        UIButton* lBtn2 = (UIButton*)[self.view viewWithTag:11];
+//        [lBtn2 setBackgroundImage:[UIImage imageNamed:@"chedongtai_myphone1"] forState:UIControlStateNormal];
+//        UIButton* btn = (UIButton*)[self.view viewWithTag:lBtn2.tag-1];
+//        [btn setBackgroundImage:[UIImage imageNamed:@"chedongtai_mycar1"] forState:UIControlStateNormal];
         //手机定位
         [self shouji];
-    }else{
-        NSLog(@"%@%@",KUserManager.userCID,KUserManager.uid);
-        //车辆定位
-        [self dingwei];
-    }
+//    }else{
+//        NSLog(@"%@%@",KUserManager.userCID,KUserManager.uid);
+//        //车辆定位
+//        [self dingwei];
+//    }
 #else
     
     if ([KUserManager.car.device isEqualToString:@""] || KUserManager.uid == nil) {

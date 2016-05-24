@@ -432,7 +432,7 @@
         failure(operation,error);
     }];
 }
-#pragma mark 找加油站
+#pragma mark 找加油站或停车场(keyWord="加油站" or "停车场")
 + (void)searchGasolineStationWithUserId:(NSString *)userId
                                   token:(NSString *)token
                                 keyWord:(NSString *)keyWord
@@ -449,7 +449,7 @@
     [parmDict setObject:latitude forKey:@"latitude"];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_AROUND_SEARCH_URL];
-    NSLog(@"logout url :%@",urlString);
+    NSLog(@"周边加油站 url :%@",urlString);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
