@@ -49,7 +49,7 @@
     NSString *searchDate = [self currentDateStr];
     [HttpHelper oneKeyDetectionWithUserId:userInfo.desc
                                     token:userInfo.token
-                                 deviceNo:userInfo.defaultVehiclePlate
+                                 deviceNo:userInfo.defaultDeviceNo
                                searchDate:searchDate
                                   success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -60,15 +60,16 @@
                                       NSString *code = dict[@"code"];
                                       if ([code isEqualToString:SERVICE_SUCCESS]) {
                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                  NSDictionary *data = @{
-                                                      @"totalMileAge": @"100",
-                                                      @"fuelConsumption": @"30",
-                                                      @"averageSpeed": @"50",
-                                                      @"averageFuelConsumption":@"20",
-                                                      @"mileAge": @"1000",
-                                                      @"runningTime": @"50",
-                                                      @"cost": @"0"
-                                                      };
+//                                                  NSDictionary *data = @{
+//                                                      @"totalMileAge": @"100",
+//                                                      @"fuelConsumption": @"30",
+//                                                      @"averageSpeed": @"50",
+//                                                      @"averageFuelConsumption":@"20",
+//                                                      @"mileAge": @"1000",
+//                                                      @"runningTime": @"50",
+//                                                      @"cost": @"0"
+//                                                      };
+                                              NSDictionary *data = dict[@"msg"];
                                                   detectionHeaderView = [[CWSDetectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 206) Data:nil];
                                                   detectionHeaderView.thyRootVc = self;
                                                   detectionHeaderView.senderDataArray = self.senderDataArray;

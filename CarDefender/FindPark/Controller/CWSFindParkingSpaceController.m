@@ -45,6 +45,7 @@ CGFloat SPACE = 20;
     UIButton                    *rightButton;
     NSInteger                   tag;//判断头部是否显示删除按钮
     UIView                       *headView;
+    UserInfo                   *userInfo;
 }
 //@property (assign, nonatomic) BN_NaviType naviType;
 
@@ -64,89 +65,93 @@ CGFloat SPACE = 20;
 
 @implementation CWSFindParkingSpaceController
 -(void)getHttpData:(CLLocationCoordinate2D)coordinate nearbyCar:(BOOL)nearbyCar City:(NSString*)city{
-    NSDictionary* dic;
-    NSRange lRang=[city rangeOfString:@"重庆"];
-    if (lRang.location==NSNotFound) {
-        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
-                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
-                @"type":@"qt"};
-        _isCQ = NO;
-    }else{
-        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
-                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
-                @"type":@"cq"};
-        _isCQ = YES;
-    }
-    [ModelTool httpGetParkWithParameter:dic success:^(id object) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        NSDictionary* dic = object;
-        MyLog(@"%@",dic);
-
-//        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([dic[@"operationState"] isEqualToString:@"SUCCESS"]) {
-                [_mainDataArray removeAllObjects];
-                [_minorDataArray removeAllObjects];
-                _findMapView.normalPoint = coordinate;
-                int temp = 0;
-                for (NSDictionary* ldic in dic[@"data"][@"data"][@"parkInfoList"]) {
-                    Park* interest = [[Park alloc] initWithDic:ldic];
-                    if (temp < 10) {
-                        [_mainDataArray addObject:interest];
-                    }else{
-                        [_minorDataArray addObject:interest];
-                    }
-                    temp ++;
-                }
-                if (_mainDataArray.count == 0) {
-                    [[[UIAlertView alloc] initWithTitle:@"提示" message:@"未获取到任何数据" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];return;
-                }
-                if (_findMapData == nil) {
-                    _findMapData = [[FindMapData alloc] init];
-                }
-                _findMapData.point = coordinate;
-                _findMapData.nearbyCar = nearbyCar;
-                _findMapData.coordArray = _mainDataArray;
-                _findMapData.minorCoordArray = _minorDataArray;
-                
-                [_findMapView reloadData:_findMapData type:1];
-                if (_findParkingSpaceMarkView == nil) {
-                    _findParkingSpaceMarkView = [[FindParkingSpaceMarkView alloc] initWithFrame:CGRectMake(0, SCROLLVIEW_Y - 10, kSizeOfScreen.width, SCROLLVIEW_HIGHT) Dictionary:@{@"list":_mainDataArray}];
-                    _findParkingSpaceMarkView.delegate = self;
-                    [self.view addSubview:_findParkingSpaceMarkView];
-                }else{
-                    [_findParkingSpaceMarkView reloadData:@{@"list":_mainDataArray}];
-                }
-                NSMutableArray* dataArray = [NSMutableArray arrayWithArray:_mainDataArray];
-                [dataArray addObjectsFromArray:_minorDataArray];
-                if (_parkTabelView == nil) {
-                    _parkTabelView = [[CWSParkTabelView alloc] initWithFrame:CGRectMake(0, kDockHeight + kSTATUS_BAR+40, kSizeOfScreen.width, kSizeOfScreen.height - kDockHeight-100) DataArray:dataArray];
-                    _parkTabelView.delegate = self;
-                    _parkTabelView.hidden = YES;
-                    [self.view addSubview:_parkTabelView];
-                }else{
-                    [_parkTabelView reloadData:dataArray];
-                }
-                if (_parkMarkView == nil) {
-                    _parkMarkView = [[ParkMarkView alloc] initWithFrame:CGRectMake(20, SCROLLVIEW_Y - 10, kUSER_SCROLLVIEW_WIDTH, SCROLLVIEW_HIGHT) Park:_minorDataArray[0]];
-                    _parkMarkView.hidden = YES;
-                    _parkMarkView.delegate = self;
-                    [Utils setViewRiders:_parkMarkView riders:4];
-                    [Utils setBianKuang:KGroundColor Wide:1 view:_parkMarkView];
-                    [self.view addSubview:_parkMarkView];
-                }
-                
-            }
-            else {
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"data"][@"msg"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                [alert show];
-            }
-//        });
-    } faile:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
+//    NSDictionary* dic;
+//    NSRange lRang=[city rangeOfString:@"重庆"];
+//    if (lRang.location==NSNotFound) {
+//        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
+//                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
+//                @"type":@"qt"};
+//        _isCQ = NO;
+//    }else{
+//        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
+//                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
+//                @"type":@"cq"};
+//        _isCQ = YES;
+//    }
+    
+    [HttpHelper searchGasolineStationWithUserId:userInfo.desc
+                                          token:userInfo.token
+                                        keyWord:@"停车场"
+                                      longitude:userInfo.longitude
+                                       latitude:userInfo.latitude
+                                        success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                            NSLog(@"停车场response :%@",responseObjcet);
+                                            NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                            NSString *code = dict[@"code"];
+                                            userInfo.token = dict[@"token"];
+                                            if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                                
+                                                [_mainDataArray removeAllObjects];
+                                                [_minorDataArray removeAllObjects];
+                                                _findMapView.normalPoint = coordinate;
+                                                int temp = 0;
+                                                for (NSDictionary* ldic in dict[@"msg"]) {
+                                                    Park* interest = [[Park alloc] initWithDic:ldic];
+                                                    if (temp < 10) {
+                                                        [_mainDataArray addObject:interest];
+                                                    }else{
+                                                        [_minorDataArray addObject:interest];
+                                                    }
+                                                    temp ++;
+                                                }
+                                                if (_mainDataArray.count == 0) {
+                                                    [[[UIAlertView alloc] initWithTitle:@"提示" message:@"未获取到任何数据" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];return;
+                                                }
+                                                if (_findMapData == nil) {
+                                                    _findMapData = [[FindMapData alloc] init];
+                                                }
+                                                _findMapData.point = coordinate;
+                                                _findMapData.nearbyCar = nearbyCar;
+                                                _findMapData.coordArray = _mainDataArray;
+                                                _findMapData.minorCoordArray = _minorDataArray;
+                                
+                                                [_findMapView reloadData:_findMapData type:1];
+                                                if (_findParkingSpaceMarkView == nil) {
+                                                    _findParkingSpaceMarkView = [[FindParkingSpaceMarkView alloc] initWithFrame:CGRectMake(0, SCROLLVIEW_Y - 10, kSizeOfScreen.width, SCROLLVIEW_HIGHT) Dictionary:@{@"list":_mainDataArray}];
+                                                    _findParkingSpaceMarkView.delegate = self;
+                                                    [self.view addSubview:_findParkingSpaceMarkView];
+                                                }else{
+                                                    [_findParkingSpaceMarkView reloadData:@{@"list":_mainDataArray}];
+                                                }
+                                                NSMutableArray* dataArray = [NSMutableArray arrayWithArray:_mainDataArray];
+                                                [dataArray addObjectsFromArray:_minorDataArray];
+                                                if (_parkTabelView == nil) {
+                                                    _parkTabelView = [[CWSParkTabelView alloc] initWithFrame:CGRectMake(0, kDockHeight + kSTATUS_BAR+40, kSizeOfScreen.width, kSizeOfScreen.height - kDockHeight-100) DataArray:dataArray];
+                                                    _parkTabelView.delegate = self;
+                                                    _parkTabelView.hidden = YES;
+                                                    [self.view addSubview:_parkTabelView];
+                                                }else{
+                                                    [_parkTabelView reloadData:dataArray];
+                                                }
+                                                if (_parkMarkView == nil) {
+                                                    _parkMarkView = [[ParkMarkView alloc] initWithFrame:CGRectMake(20, SCROLLVIEW_Y - 10, kUSER_SCROLLVIEW_WIDTH, SCROLLVIEW_HIGHT) Park:_minorDataArray[0]];
+                                                    _parkMarkView.hidden = YES;
+                                                    _parkMarkView.delegate = self;
+                                                    [Utils setViewRiders:_parkMarkView riders:4];
+                                                    [Utils setBianKuang:KGroundColor Wide:1 view:_parkMarkView];
+                                                    [self.view addSubview:_parkMarkView];
+                                                }
+                                            
+                                                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                            }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                            } else {
+                                                [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                            }
+                                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                        }];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -167,7 +172,7 @@ CGFloat SPACE = 20;
     [Utils changeBackBarButtonStyle:self];
     _mainDataArray = [NSMutableArray array];
     _minorDataArray = [NSMutableArray array];
-    
+    userInfo = [UserInfo userDefault];
     //2.设置UI
     [self setUI];
     //3.创建地图View

@@ -15,6 +15,7 @@
 		248D04981CF0A1A400FE1A46 /* ChangeCarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D04971CF0A1A400FE1A46 /* ChangeCarView.m */; };
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
+		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
 		3300F4A81ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */; };
 		3300F4A91ADFFD7B00B3D5B7 /* DailyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49C1ADFFD7B00B3D5B7 /* DailyCalendarView.m */; };
 		3300F4AA1ADFFD7B00B3D5B7 /* DayTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49E1ADFFD7B00B3D5B7 /* DayTitleLabel.m */; };
@@ -1250,6 +1251,7 @@
 		24B922001CE3762B004E558E /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		24E53A8C1CE1AE9E0037197B /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindGasStationHeadView.xib; sourceTree = "<group>"; };
 		3300F4991ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLWeeklyCalendarView.h; sourceTree = "<group>"; };
 		3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWeeklyCalendarView.m; sourceTree = "<group>"; };
 		3300F49B1ADFFD7B00B3D5B7 /* DailyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyCalendarView.h; sourceTree = "<group>"; };
@@ -4420,6 +4422,7 @@
 		335425A41B70AEB200FD23A5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */,
 				335425C11B70AFFD00FD23A5 /* CWSFindParkingSpaceController.h */,
 				335425C21B70AFFD00FD23A5 /* CWSFindParkingSpaceController.m */,
 				335425C31B70AFFD00FD23A5 /* CWSFindParkingSpaceController.xib */,
@@ -8192,6 +8195,7 @@
 				4CA0C2F31C1BCC3B0006BF3E /* pingjia_lingxing@3x.png in Resources */,
 				331565F11B280EB900369C78 /* baogao_weiyong@2x.png in Resources */,
 				331565E41B280EB900369C78 /* zuji_icon4@2x.png in Resources */,
+				2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */,
 				4CC892161C194B0100F6AB35 /* TryCalculateHeadView.xib in Resources */,
 				4CC8A37E1C0FE7ED000B00B2 /* saoyisao@3x.png in Resources */,
 				33C760101AC64EE200F4C3A4 /* CWSServiceController.xib in Resources */,

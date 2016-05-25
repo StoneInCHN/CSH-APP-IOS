@@ -43,27 +43,44 @@
     [form setDateFormat:@"YYYY-MM-dd"];
     NSString *stringDate = [form stringFromDate:dateNew];
     self.dateLabel.text = stringDate;
+    self.thisOilLabel.text = [self changeStringWithData:dataDic[@"fuelConsumption"]];
+    self.avgSpeedLabel.text = [self changeStringWithData:dataDic[@"averageSpeed"]];
+    self.avgConsumptionLabel.text = [NSString stringWithFormat:@"%@升/百公里",[self changeStringWithData:dataDic[@"averageFuelConsumption"]]];
+    self.distanceLabel.text = [NSString stringWithFormat:@"%@公里",[self changeStringWithData:dataDic[@"mileAge"]]];
+    self.timeLabel.text = [NSString stringWithFormat:@"%@分",[self changeStringWithData:dataDic[@"runningTime"]]];
+    //    [self getData];
     
-//    [self getData];
+}
+- (NSString *)changeStringWithData:(id)data {
+    if ([data isKindOfClass:[NSNull class]]) {
+        return @"-";
+    }
+    return [NSString stringWithFormat:@"%@",data];
+}
+#pragma mark - 日期选择
 
-    if ([self changeString:dataDic[@"fuelConsumption"]]) {
-        self.thisOilLabel.text = [self changeString:dataDic[@"fuelConsumption"]];
-    }
-    if ([self changeString:dataDic[@"averageSpeed"]]) {
-        self.avgSpeedLabel.text = [self changeString:dataDic[@"averageSpeed"]];
-    }
-    if ([self changeString:dataDic[@"averageFuelConsumption"]]) {
-        self.avgConsumptionLabel.text = [NSString stringWithFormat:@"%@升/百公里",[self changeString:dataDic[@"averageFuelConsumption"]]];
-    }
-    if ([self changeString:dataDic[@"mileAge"]]) {
-        self.distanceLabel.text = [NSString stringWithFormat:@"%@公里",[self changeString:dataDic[@"mileAge"]]];
-    }
-    if ([self changeString:dataDic[@"runningTime"]]) {
-        self.timeLabel.text = [NSString stringWithFormat:@"%@分",[self changeString:dataDic[@"runningTime"]]];
-    }
+- (IBAction)selectDateButtonClicked:(UIButton *)sender {
+    NSLog(@"选择日期了！");
+    CWSCarReportViewController* reportVc = [CWSCarReportViewController new];
+    reportVc.searchDate = self.dateLabel.text;
+    [rootController.navigationController pushViewController:reportVc animated:YES];
     
 }
 
+- (NSString *)changeTime:(NSDate *)date
+{
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM-dd"];
+    
+    
+    NSString *currentDateStr = [dateFormatter stringFromDate:date];
+    return currentDateStr;
+}
+
+
+
+//后面的方法没有用到 
 - (void)getData{
     [MBProgressHUD showMessag:@"正在加载..." toView:self];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -120,37 +137,12 @@
 }
 
 - (NSString *)changeString:(NSString *)string{
-    if (string == nil || [string isKindOfClass:[NSNull class]] || [string isEqualToString:@""]){
+    if (string == nil || [string isKindOfClass:[NSNull class]]){
         return @"-";
     }
     else {
         return string;
     }
 }
-
-#pragma mark - 日期选择
-
-- (IBAction)selectDateButtonClicked:(UIButton *)sender {
-    
-    
-    NSLog(@"选择日期了！");
-    CWSCarReportViewController* reportVc = [CWSCarReportViewController new];
-    reportVc.searchDate = self.dateLabel.text;
-    [rootController.navigationController pushViewController:reportVc animated:YES];
-    
-}
-
-- (NSString *)changeTime:(NSDate *)date
-{
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM-dd"];
-    
-    
-    NSString *currentDateStr = [dateFormatter stringFromDate:date];
-    return currentDateStr;
-}
-
-
 
 @end

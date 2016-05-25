@@ -707,22 +707,32 @@
                                           NSDictionary *msg = dict[@"msg"];
                                           NSDictionary* lDic1 = @{@"image":@"baogao_youhao",
                                                                   @"name":@"当日油耗",
-                                                                  @"data":[NSString stringWithFormat:@"%@Min",[self changeStrWithData:msg[@"fuelConsumption"]]]};
+                                                                  @"data":[NSString stringWithFormat:@"%@L",[self changeStrWithData:msg[@"fuelConsumption"]]]};
                                           NSDictionary* lDic2 = @{@"image":@"baogao_baigongli",
                                                                   @"name":@"平均油耗",
-                                                                  @"data":[NSString stringWithFormat:@"%@Min",[self changeStrWithData:msg[@"averageFuelConsumption"]]]};
+                                                                  @"data":[NSString stringWithFormat:@"%@L/100km",[self changeStrWithData:msg[@"averageFuelConsumption"]]]};
                                           NSDictionary* lDic3 = @{@"image":@"baogao_time",
                                                                   @"name":@"驾驶时间",
                                                                   @"data":[NSString stringWithFormat:@"%@Min",[self changeStrWithData:msg[@"runningTime"]]]};
                                           NSDictionary* lDic4 = @{@"image":@"baogao_licheng",
                                                                   @"name":@"当日里程",
-                                                                  @"data":[NSString stringWithFormat:@"%@km",[self changeStrWithData:msg[@"totalMileAge"]]]};
+                                                                  @"data":[NSString stringWithFormat:@"%@km",[self changeStrWithData:msg[@"mileAge"]]]};
                                           NSDictionary* lDic5 = @{@"image":@"baogao_sudu",
                                                                   @"name":@"平均速度",
-                                                                  @"data":[NSString stringWithFormat:@"%@km",[self changeStrWithData:msg[@"averageSpeed"]]]};
+                                                                  @"data":[NSString stringWithFormat:@"%@km/h",[self changeStrWithData:msg[@"averageSpeed"]]]};
                                           NSArray* array = @[lDic1,lDic2,lDic3,lDic4,lDic5];
                                           NSString* cost = [NSString stringWithFormat:@"￥%@",[self changeStrWithData:msg[@"cost"]]];
                                           [_groundView reloadData:array cost:cost];
+                                          if ([msg[@"totalMileAge"] floatValue] < 3) {
+                                              _normalLabel1.hidden = NO;
+                                              _normalLable.hidden = NO;
+                                          }else{
+                                              _normalLabel1.hidden = YES;
+                                              _normalLable.hidden = YES;
+                                          }
+//                                          _scoreLabel1.text = [NSString stringWithFormat:@"%@分",dataDic[@"drivingScore"]];
+//                                          _scoreLabel2.text = [NSString stringWithFormat:@"%@分",_costCurrentDic[@"drivingScore"]];
+                                          [_stopView removeFromSuperview];
                                           
                                       } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
@@ -732,6 +742,7 @@
                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                       NSLog(@"one key error :%@",error);
                                       [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                      [_stopView removeFromSuperview];
                                   }];
     /*
     

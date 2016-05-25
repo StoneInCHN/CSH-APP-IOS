@@ -125,10 +125,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CuD-9g-JXf">
-                            <rect key="frame" x="237" y="20" width="70" height="30"/>
+                            <rect key="frame" x="194" y="20" width="113" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="0UJ-Vu-S9M"/>
-                                <constraint firstAttribute="width" constant="70" id="Zcz-Vf-DDk"/>
+                                <constraint firstAttribute="width" constant="113" id="Zcz-Vf-DDk"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
                             <color key="textColor" red="0.21176470588235294" green="0.73725490196078436" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
