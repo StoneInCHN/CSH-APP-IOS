@@ -166,4 +166,48 @@
                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark 车辆品牌查询
++ (void)searchVehicleBrandWithUserID:(NSString *)userId
+                               token:(NSString *)token
+                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+#pragma mark 根据车辆品牌查询车系
++ (void)searchVehicleLineByBrandWithUserID:(NSString *)userId
+                                     token:(NSString *)token
+                                   brankId:(NSNumber*)brankId
+                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 根据车辆车系查询车型
++ (void)searchVehicleBrandDetailByLineWithUserID:(NSString *)userId
+                                           token:(NSString *)token
+                                         brankId:(NSNumber*)brankId
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+#pragma mark 车辆列表
++ (void)searchVehicleListWithUserID:(NSString *)userId
+                              token:(NSString *)token
+                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 添加车辆
++ (void)insertVehicleAddWithUserID:(NSDictionary *)vehicleDic
+                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 编辑车辆
++ (void)insertVehicleEditWithUserID:(NSDictionary *)vehicleDic
+                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 用户绑定车辆与设备
++ (void)insertBindDeviceWithUserDic:(NSDictionary *)vehicleDic
+                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 用户设置默认车辆
++ (void)insertDeviceSetDefaultWithUserDic:(NSDictionary *)vehicleDic
+                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

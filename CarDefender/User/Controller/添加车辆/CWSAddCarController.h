@@ -28,11 +28,14 @@
 //@property (weak, nonatomic) IBOutlet UITextField *carJiaNubText;
 @property (weak, nonatomic) IBOutlet UITextField *carCheXinLabel;
 @property (weak, nonatomic) IBOutlet UIButton *chooseCarBtn;
-@property (weak, nonatomic) IBOutlet UITextField *currentKiloText;
+@property (weak, nonatomic) IBOutlet UITextField *currentKiloText;//行驶里程
 //@property (weak, nonatomic) IBOutlet UITextField *hibitOilText;
-@property (weak, nonatomic) IBOutlet UITextField *nextCheckText;
+@property (weak, nonatomic) IBOutlet UITextField *nextCheckText;//下次年检
+@property (weak, nonatomic) IBOutlet UITextField *nextNianJian;//下次年检
+@property (weak, nonatomic) IBOutlet UITextField *jiaoqiangxian;//交强险
+@property (weak, nonatomic) IBOutlet UITextField *shangyexian;//商业险
 
-@property (weak, nonatomic) IBOutlet UITextField *lastKilomText;
+@property (weak, nonatomic) IBOutlet UITextField *lastKilomText;//上次保养
 //@property (weak, nonatomic) IBOutlet UIButton *carNubBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *carImage;
 //@property (weak, nonatomic) IBOutlet UITextField *carNubLabel;
@@ -45,13 +48,13 @@
 - (IBAction)btnClick:(UIButton *)sender;
 
 
-@property (strong, nonatomic) IBOutlet UILabel *carAreaLabel;
+@property (strong, nonatomic) IBOutlet UILabel *carAreaLabel; //车牌省
 
-@property (strong, nonatomic) IBOutlet UILabel *carLetterLabel;
+@property (strong, nonatomic) IBOutlet UILabel *carLetterLabel;//车牌市
 
-@property (strong, nonatomic) IBOutlet UITextField *carBoundIdTextFiled;
+@property (strong, nonatomic) IBOutlet UITextField *carBoundIdTextFiled;//设备id
 
-@property (weak, nonatomic) IBOutlet UITextField *carFrameField;
+@property (weak, nonatomic) IBOutlet UITextField *carFrameField;//车架号
 
 @property (weak, nonatomic) IBOutlet UIView *bindIDView;
 

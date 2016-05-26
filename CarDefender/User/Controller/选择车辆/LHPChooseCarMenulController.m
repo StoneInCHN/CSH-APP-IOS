@@ -27,6 +27,7 @@
     NSMutableDictionary*_allDicMg;
     UIButton*_backBtn;
     YCBJuhuaVew*_juhuaView;
+    NSArray *_allArrMsg;
 }
 @end
 
@@ -41,6 +42,8 @@
     _dicCarMsg=[NSMutableArray array];
     _allMsgDic=[NSMutableDictionary dictionary];
     _allDicMg=[NSMutableDictionary dictionary];
+    _allArrMsg = [NSArray array];
+    
     [self getData];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -51,8 +54,7 @@
 #pragma mark - 获取数据
 -(void)getData{
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-
-#if USENEWVERSION
+/*#if USENEWVERSION
     [ModelTool getVehicleBrandWithParameter:@{@"grade":@"1",@"parent":@"0"} andSuccess:^(id object) {
         MyLog(@"%@",object);
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -62,6 +64,7 @@
                     [_allDicMg setObject:tempDict[@"list"] forKey:tempDict[@"type"]];
                 }
                 _arrayZiMu = [[NSArray arrayWithArray:[_allDicMg allKeys]] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+                NSLog(@"%@",_arrayZiMu);
                 [self buildTableView];
             }else{
                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -110,7 +113,41 @@
     } faile:^(NSError *err) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
-#endif
+    
+#endif*/
+    UserInfo *userInfo = [UserInfo userDefault];
+    NSLog(@"%@\n%@",userInfo.desc,userInfo.token);
+    [HttpHelper searchVehicleBrandWithUserID:userInfo.desc token:userInfo.token success:^(AFHTTPRequestOperation *operation, id responseObjcet){
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSDictionary *carDic = (NSDictionary*)responseObjcet;
+        if (carDic) {
+            NSLog(@"%@",carDic);
+            NSArray *sectionArr = (NSArray*)[carDic valueForKey:@"msg"];
+            NSMutableArray *zimu = [NSMutableArray array];
+            NSLog(@"%@",sectionArr);
+            for (int i=0; i<sectionArr.count; i++) {
+                NSArray *Oarr= sectionArr[i];
+                NSLog(@"%@",Oarr);
+                if(Oarr.count!=0){
+                    NSDictionary *dic = (NSDictionary*)[Oarr objectAtIndex:0];
+                    NSString *str = [dic valueForKey:@"code"];
+                    [zimu addObject:str];
+                    [_allDicMg setObject:Oarr forKey:str];
+                }
+            }
+            _arrayZiMu = zimu;
+            [self buildTableView];
+            
+            
+        }else{
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message: carDic[@"desc"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+    }];
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -118,7 +155,9 @@
         if (buttonIndex==1) {
             [self getData];
         }
-    }
+}
+    
+   
 }
 #pragma mark - 创建列表
 -(void)buildTableView
@@ -180,6 +219,7 @@
 
 #if USENEWVERSION
     return [[_allDicMg valueForKey:_arrayZiMu[section]] count];
+   
 #else
     NSArray*array=_allDicMg[_arrayZiMu[section]][@"list"];
     return  [array count];
@@ -237,6 +277,7 @@
     
 #if USENEWVERSION
     NSDictionary* dict = [[_allDicMg valueForKey:_arrayZiMu[indexPath.section]] objectAtIndex:indexPath.row];
+    //NSLog(@"brand大发大发：%@",dict);
     [_allMsgDic setObject:dict forKey:@"brandCar"];
     [self buildModelViewWithDic:dict];
     _styleViewTopString=[NSString stringWithFormat:@"%@   %@",_arrayZiMu[indexPath.section],dict[@"name"]];
@@ -250,7 +291,7 @@
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    MyLog(@"tableview 滑动了%@",_modelView);
+    //MyLog(@"tableview 滑动了%@",_modelView);
     if (_modelView!=nil) {
         [_modelView removeFromSuperview];
         _modelView=nil;
@@ -270,7 +311,8 @@
     [_allMsgDic setObject:dic forKey:@"styleCar"];
     
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:self.notiKey object:_allMsgDic];
+    //[[NSNotificationCenter defaultCenter]postNotificationName:self.notiKey object:_allMsgDic];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"chooseCarBack" object:_allMsgDic];
     [self.navigationController popViewControllerAnimated:YES];
     
 }

@@ -60,6 +60,8 @@
     UIView  *helpBackView;
     UIView *helpPhotoView;
     NSDictionary*carBackDic;//车辆信息返回数据
+    
+    int identifier;  //标示年检和保险
 }
 @end
 
@@ -83,7 +85,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.carNumberTextField.keyboardType=UIKeyboardTypeDefault;
    
     
     [Utils changeBackBarButtonStyle:self];
@@ -129,7 +131,7 @@
         [self keboardAppearAndBaseViewMoveWithTextField:self.carBoundIdTextFiled withCGsize:kbSize];
     }
     else if ([self.carFrameField isFirstResponder]){
-        [self keboardAppearAndBaseViewMoveWithTextField:self.nextCheckText withCGsize:kbSize];
+        [self keboardAppearAndBaseViewMoveWithTextField:self.carFrameField withCGsize:kbSize];
     }
 }
 -(void)keboardAppearAndBaseViewMoveWithTextField:(UITextField*)textField withCGsize:(CGSize)kbSize
@@ -177,7 +179,7 @@
     
     if (self.carNubString) {//添加车牌号
         self.carNumberTextField.text = self.carNubString;
-        [_bodyDic setObject:[self.carNubString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"plate"];
+        [_bodyDic setObject:[self.carNubString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"plateNo"];
     }
     if ([self.noDeviceComeBackEdit isEqualToString:@"回来了"]) {
         _isEditing = NO;
@@ -244,7 +246,7 @@
 }
 #pragma mark - 创建试图
 -(void)buildUI{
-    self.scrollerView.scrollEnabled = NO;
+    self.scrollerView.scrollEnabled = YES;
     [self.sureBtn setTitle:@"保存" forState:UIControlStateNormal];
     [Utils setViewRiders:_carColorView riders:8];
     [Utils setBianKuang:[UIColor colorWithRed:(255)/255.0 green:(247)/255.0 blue:(25)/255.0 alpha:0.5] Wide:0.5 view:_carColorView];
@@ -284,8 +286,10 @@
 -(void)judgeAddOrEdit
 {
     //编辑
+    NSLog(@"edit=%@",self.editDic);
     if (self.editDic!=nil) {
-        if ([self.editDic[@"data"] length]) {
+        
+        if (1) {
             
             CGRect backViewFrame=self.groundView.frame;
             backViewFrame.origin.y=self.addCarHeadView.frame.size.height;
@@ -293,12 +297,12 @@
             
             self.scrollerView.contentSize=CGSizeMake(self.view.frame.size.width, self.groundView.frame.size.height+self.groundView.frame.origin.y);
             
-            NSString*url=[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseUrl"],self.editDic[@"brand"][@"brandIcon"]];
+            NSString*url=[NSString stringWithFormat:@"%@%@",kBaseUrl ,self.editDic[@"brandIcon"]];
             NSURL*logoImgUrl=[NSURL URLWithString:url];
             [self.carImage setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"normal_car_brand"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
         }
         
-        self.carCheXinLabel.text=[NSString stringWithFormat:@"%@-%@",self.editDic[@"brand"][@"seriesName"],self.editDic[@"brand"][@"series"]];
+        self.carCheXinLabel.text=[NSString stringWithFormat:@"%@",self.editDic[@"vehicleFullBrand"]];
         //车牌
         
         self.carNumberTextField.text = [self.editDic[@"plate"] substringFromIndex:2];
@@ -308,13 +312,21 @@
         
         //上次保养后行驶里程  MMile
         
-        self.lastKilomText.text=[NSString stringWithFormat:@"%@",self.editDic[@"brand"][@"maintain"]];
+        self.lastKilomText.text=[NSString stringWithFormat:@"%@",self.editDic[@"lastMaintainMileage"]];
         //当前里程  MMileage
         
-        self.currentKiloText.text=[NSString stringWithFormat:@"%@",self.editDic[@"brand"][@"mileage"]];
+        self.currentKiloText.text=[NSString stringWithFormat:@"%@",self.editDic[@"driveMileage"]];
         //下次年检时间  NInspect
         
-        self.nextCheckText.text=[NSString stringWithFormat:@"%@",self.editDic[@"brand"][@"inspection"]];
+        self.nextCheckText.text=[NSString stringWithFormat:@"%@",self.editDic[@"nextAnnualInspection"]];
+        
+        //下次交强险时间  NInspect
+        
+        self.jiaoqiangxian.text=[NSString stringWithFormat:@"%@",self.editDic[@"trafficInsuranceExpiration"]];
+        
+        //下次商业时间  NInspect
+        
+//        self.shangyexian.text=[NSString stringWithFormat:@"%@",self.editDic[@"commercialInsuranceExpiration"]];
         //设备ID
         if ([PublicUtils checkNSNullWithgetString:self.editDic[@"device"]] != nil) {
             self.carBoundIdTextFiled.text  = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:self.editDic[@"device"]]];
@@ -330,8 +342,8 @@
         }
         
         //车架号码
-        if ([PublicUtils checkNSNullWithgetString:self.editDic[@"vin"]]) {
-            self.carFrameField.text = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:self.editDic[@"vin"]]];
+        if ([PublicUtils checkNSNullWithgetString:self.editDic[@"vehicleNo"]]) {
+            self.carFrameField.text = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:self.editDic[@"vehicleNo"]]];
         }
         
     }else{
@@ -371,20 +383,21 @@
 {
     carBackDic = [NSDictionary dictionaryWithDictionary:sender.object];
     
-    
-    [_bodyDic setObject:carBackDic[@"brandCar"][@"id"] forKey:@"brand"];//车辆品牌
-    [_bodyDic setObject:carBackDic[@"modelCar"][@"id"] forKey:@"series"];//车系
-    [_bodyDic setObject:carBackDic[@"styleCar"][@"id"] forKey:@"module"];//车型
-    [_bodyDic setObject:@"black" forKey:@"color"];
-    
+    NSLog(@"sdfsdfs=%@",carBackDic);
+//    [_bodyDic setObject:carBackDic[@"brandCar"][@"id"] forKey:@"brand"];//车辆品牌
+//    [_bodyDic setObject:carBackDic[@"modelCar"][@"id"] forKey:@"series"];//车系
+//    [_bodyDic setObject:carBackDic[@"styleCar"][@"id"] forKey:@"module"];//车型
+//    [_bodyDic setObject:@"black" forKey:@"color"];
+    [_bodyDic setObject:carBackDic[@"styleCar"][@"id"] forKey:@"brandDetailId"];
     CGRect backViewFrame=self.groundView.frame;
     backViewFrame.origin.y=self.addCarHeadView.frame.size.height;
     self.groundView.frame=backViewFrame;
     
     self.scrollerView.contentSize=CGSizeMake(self.view.frame.size.width, self.groundView.frame.size.height+self.groundView.frame.origin.y);
-    
-    self.carCheXinLabel.text=[NSString stringWithFormat:@"%@-%@",carBackDic[@"brandCar"][@"name"],carBackDic[@"modelCar"][@"id"]];
-    NSString*url=[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseUrl"],carBackDic[@"brandCar"][@"icon"]];
+   
+    self.carCheXinLabel.text=[NSString stringWithFormat:@"%@-%@",carBackDic[@"brandCar"][@"name"],carBackDic[@"modelCar"][@"name"]];
+   
+    NSString*url=[NSString stringWithFormat:@"http://120.27.92.247:10001/csh-interface%@",carBackDic[@"brandCar"][@"icon"]];
     NSURL*logoImgUrl=[NSURL URLWithString:url];
     [self.carImage setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"normal_car_brand"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
 }
@@ -482,6 +495,31 @@
             _chooseCheckTime.delegate=self;
             [self.view addSubview:_chooseCheckTime];
             [self.view endEditing:YES];
+            identifier = 7;
+        }
+            break;
+        case 9://交强险
+        {
+            if (_chooseCheckTime==nil) {
+                _chooseCheckTime = [[CWSAddCarNexCheckView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            }
+            [_chooseCheckTime loadDatePickerView];
+            _chooseCheckTime.delegate=self;
+            [self.view addSubview:_chooseCheckTime];
+            [self.view endEditing:YES];
+            identifier = 9;
+        }
+            break;
+        case 10://商业险
+        {
+            if (_chooseCheckTime==nil) {
+                _chooseCheckTime = [[CWSAddCarNexCheckView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            }
+            [_chooseCheckTime loadDatePickerView];
+            _chooseCheckTime.delegate=self;
+            [self.view addSubview:_chooseCheckTime];
+            [self.view endEditing:YES];
+            identifier = 10;
         }
             break;
         case 8://车架号码帮助
@@ -513,18 +551,18 @@
     }
 
     
-    [_bodyDic setObject:KUserManager.uid forKey:@"uid"]; //uid
-    [_bodyDic setObject:KUserManager.mobile forKey:@"mobile"]; //电话
+    [_bodyDic setObject:KUserInfo.desc forKey:@"userId"]; //uid
+    [_bodyDic setObject:KUserInfo.token forKey:@"token"]; //电话
     
     if(self.carNumberTextField.text){  //车牌号码
         NSString* myPlate = [NSString stringWithFormat:@"%@%@%@",self.carAreaLabel.text,self.carLetterLabel.text,self.carNumberTextField.text];
        // NSString* myPlate = [temp stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        [_bodyDic setObject:myPlate forKey:@"plate"];
+        [_bodyDic setObject:myPlate forKey:@"plateNo"];
     }
     
     if (self.currentKiloText.text.length) {  //行驶里程
         if ([self.currentKiloText.text floatValue]>=0 && [self.currentKiloText.text floatValue]<1000001) {
-            [_bodyDic setObject:self.currentKiloText.text forKey:@"mileage"];
+            [_bodyDic setObject:self.currentKiloText.text forKey:@"driveMileage"];
         }else{
             [[[UIAlertView alloc]initWithTitle:@"提示" message:@"当前里程输入有误，其里程数应该为0-1000000km" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
             return;
@@ -532,11 +570,17 @@
     }
     
     if(self.lastKilomText.text.length){  //上次保养里程
-        [_bodyDic setObject:self.lastKilomText.text forKey:@"maintain"];
+        [_bodyDic setObject:self.lastKilomText.text forKey:@"lastMaintainMileage"];
+    }else{
+        [[[UIAlertView alloc]initWithTitle:@"提示" message:@"当前里程输入有误，其里程数应该为0-1000000km" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        return;
     }
     
     if (self.nextCheckText.text.length) {   //下次年检
-        [_bodyDic setObject:[self.nextCheckText.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"inspection"];
+        [_bodyDic setObject:[self.nextCheckText.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"nextAnnualInspection"];
+    }else{
+        [[[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入年检时间" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        return;
     }
     
     if (self.currentKiloText.text.length && self.lastKilomText.text.length) {
@@ -545,18 +589,26 @@
             return;
         }
     }
+    if (self.jiaoqiangxian.text.length) {   //交强险
+        [_bodyDic setObject:[self.jiaoqiangxian.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] forKey:@"trafficInsuranceExpiration"];
+    }else{
+        [[[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入交强险时间" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        return;
+    }
     
+  
 #pragma mark -====================================================参数验证
     if (self.carBoundIdTextFiled.text.length) { //绑定设备ID
         if (self.carBoundIdTextFiled.text.length==10) {
+            //[_bodyDic setObject:self.carBoundIdTextFiled.text forKey:@""];
         }else{
-            [[[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入正确的设备ID" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-            return;
+            //[[[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入正确的设备ID" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+            //return;
         }
     }
     
     if ([Utils checkNubOrLetter:self.carFrameField.text]) {//判断车架号是否符合字母和数字要求
-        [_bodyDic setObject:self.carFrameField.text forKey:@"vin"];
+        [_bodyDic setObject:self.carFrameField.text forKey:@"vehicleNo"];
     }else{
         if (self.carFrameField.text.length) {
             [[[UIAlertView alloc]initWithTitle:@"提示" message:@"车架号只能含有字母和数字" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
@@ -629,24 +681,30 @@
 //        } faile:^(NSError *err) {
 //            [self hideHud];
 //        }];
+        //车id
+        [_bodyDic setValue:self.editDic[@"id"] forKey:@"vehicleId"];
+//        [_bodyDic setValue:self.editDic[@"brand"][@"brand"] forKey:@"brand"];
+//        [_bodyDic setValue:self.editDic[@"brand"][@"series"] forKey:@"series"];
+//        [_bodyDic setValue:self.editDic[@"brand"][@"module"] forKey:@"module"];
+
         
-        [_bodyDic setValue:self.editDic[@"id"] forKey:@"cid"];
-        [_bodyDic setValue:self.editDic[@"brand"][@"brand"] forKey:@"brand"];
-        [_bodyDic setValue:self.editDic[@"brand"][@"series"] forKey:@"series"];
-        [_bodyDic setValue:self.editDic[@"brand"][@"module"] forKey:@"module"];
+        
         
         if ([self respondsToSelector:@selector(chooseCarMsgBack:)]) {
             if (carBackDic != nil) {
-                [_bodyDic setObject:carBackDic[@"brandCar"][@"id"] forKey:@"brand"];//车辆品牌
-                [_bodyDic setObject:carBackDic[@"modelCar"][@"id"] forKey:@"series"];//车系
-                [_bodyDic setObject:carBackDic[@"styleCar"][@"id"] forKey:@"module"];//车型
+//                [_bodyDic setObject:carBackDic[@"brandCar"][@"id"] forKey:@"brand"];//车辆品牌
+//                [_bodyDic setObject:carBackDic[@"modelCar"][@"id"] forKey:@"series"];//车系
+//                [_bodyDic setObject:carBackDic[@"styleCar"][@"id"] forKey:@"module"];//车型
+                [_bodyDic setObject:carBackDic[@"styleCar"][@"id"] forKey:@"brandDetailId"];//车型id
+                //[_bodyDic setObject:carBackDic[@"modelCar"][@"id"] forKey:@"vehicleId"];//车系
             }
             
         }
+        NSLog(@"%@",_bodyDic);
+        [self editCarDetail:_bodyDic];
+       // [_bodyDic setValue:@"black" forKey:@"color"];
         
-        
-        [_bodyDic setValue:@"black" forKey:@"color"];
-        [MBProgressHUD showMessag:@"编辑保存中..." toView:self.view];
+       /*[MBProgressHUD showMessag:@"编辑保存中..." toView:self.view];
         
         [ModelTool editVehicleInfoWithParameter:_bodyDic andSuccess:^(id object) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -685,72 +743,50 @@
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
-        }];
+        }];*/
         
     }else{//添加
-        [MBProgressHUD showMessag:@"添加中..." toView:self.view];
+        
         
 
 #if USENEWVERSION
-    MyLog(@"-------------添加的车辆信息-------------:%@",_bodyDic);
-    [ModelTool insertVehicleInfoWithParameter:_bodyDic andSuccess:^(id object) {
-        MyLog(@"------insert-------%@",object[@"message"]);
-        MyLog(@"------insert-------%@",object);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                if(object[@"data"][@"id"]){
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    if (!KUserManager.userCID) {
-                        NSString* userCid = object[@"data"][@"id"];
-                        NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
-                        [thyUserDefaults setValue:userCid forKey:@"cid"];
-                        [NSUserDefaults resetStandardUserDefaults];
-                        KUserManager.userCID = userCid;
-                        MyLog(@"我的CID：%@",KUserManager.userCID);
-                    }
-                    
-                    CWSBoundIDViewController *vc = [[CWSBoundIDViewController alloc] init];
-                    vc.idString = _bodyDic[@"cid"];
-                    [self.navigationController pushViewController:vc animated:YES];
-                    
-//                    [ModelTool insertBindVehicleInfoWithParameter:@{@"uid":_bodyDic[@"uid"],@"mobile":_bodyDic[@"mobile"],@"cid":KUserManager.userCID,@"device":self.carBoundIdTextFiled.text} andSuccess:^(id object) {
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-//                                MyLog(@"------bind----%@",object[@"message"]);
-//                                MyLog(@"------bind----%@",object);
-//                                [self hideHud];
-//                                [self.navigationController popViewControllerAnimated:YES];
-//                                
-//                            }else{
-//                                [self hideHud];
-//                                if ([object[@"message"] isEqualToString:@"设备效验失败，请联系销售商户，或拨打4007930888"]) {
-//                                    UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拨打", nil];
-//                                    [alert show];
-//                                    alert.tag=1110;
-//                                    return;
-//                                }else{
-//                                    UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                                    [alert show];
-//                                }
-//                            }
-//                        });
-//                        
-//                    } andFail:^(NSError *err) {
-//                        [self hideHud];
-//                        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                        [alert show];                    }];
-               }
-            }else {
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        });
-    } andFail:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
+//    MyLog(@"-------------添加的车辆信息-------------:%@",_bodyDic);
+//    [ModelTool insertVehicleInfoWithParameter:_bodyDic andSuccess:^(id object) {
+//        MyLog(@"------insert-------%@",object[@"message"]);
+//        MyLog(@"------insert-------%@",object);
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+//                if(object[@"data"][@"id"]){
+//                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                    if (!KUserManager.userCID) {
+//                        NSString* userCid = object[@"data"][@"id"];
+//                        NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
+//                        [thyUserDefaults setValue:userCid forKey:@"cid"];
+//                        [NSUserDefaults resetStandardUserDefaults];
+//                        KUserManager.userCID = userCid;
+//                        MyLog(@"我的CID：%@",KUserManager.userCID);
+//                    }
+//                    
+//                    CWSBoundIDViewController *vc = [[CWSBoundIDViewController alloc] init];
+//                    vc.idString = _bodyDic[@"cid"];
+//                    [self.navigationController pushViewController:vc animated:YES];
+//                    
+//             
+//               }
+//            }else {
+//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                [alert show];
+//            }
+//        });
+//    } andFail:^(NSError *err) {
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }];
+        NSLog(@"bodydic=%@",_bodyDic);
+        [self addCarDetail:_bodyDic];
+        
 #else
     [ModelTool httpGetAppAddCarWithParameter:_bodyDic success:^(id object) {
         MyLog(@"%@\n%@",object,object[@"data"]);
@@ -782,6 +818,90 @@
     }];
 #endif
     }
+}
+//编辑车辆
+
+-(void)editCarDetail:(NSDictionary*)dic{
+    [MBProgressHUD showMessag:@"编辑保存中..." toView:self.view];
+    [HttpHelper insertVehicleEditWithUserID:dic success:^(AFHTTPRequestOperation *operation,id object){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if([object[@"code"] isEqualToString:@"0000"]){
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                MyLog(@"------insert-------%@",object);
+                
+                //编辑的时候若没有显示设备ID可跳转页面
+                NSLog(@"%@",self.editDic);
+                NSString *deviceNo = [NSString stringWithFormat:@"%@",self.editDic[@"deviceNo"]];
+                NSLog(@"%@",deviceNo);
+//                NSLog(@"id=%@",self.editDic[@"id"]);
+//                NSLog(@"caid=%@",KUserManager.userCID);
+                if([deviceNo isEqualToString:@"<null>"]){
+                    CWSBoundIDViewController* boundIdVc = [[CWSBoundIDViewController alloc]init];
+                    boundIdVc.idString = self.editDic[@"id"];
+                    [self.navigationController pushViewController:boundIdVc animated:YES];
+                }else{
+                    [WCAlertView showAlertWithTitle:@"提示" message:@"保存成功!" customizationBlock:nil completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
+                        if(!buttonIndex){
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }
+                    } cancelButtonTitle:@"返回" otherButtonTitles:nil, nil];
+                }
+                
+                
+            }else {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        });
+
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    }];
+
+}
+//添加车辆的接口
+-(void)addCarDetail:(NSDictionary *)dic{
+    [MBProgressHUD showMessag:@"添加中..." toView:self.view];
+    [HttpHelper insertVehicleAddWithUserID:dic success:^(AFHTTPRequestOperation *operation,id object){
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSLog(@"object==%@",object);
+        if ([object[@"code"] isEqualToString:@"0000"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (!KUserManager.userCID) {
+                    NSString* userCid = object[@"desc"];
+                    NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
+                    [thyUserDefaults setValue:userCid forKey:@"cid"];
+                    [NSUserDefaults resetStandardUserDefaults];
+                    KUserManager.userCID = userCid;
+                    MyLog(@"我的CID：%@",KUserManager.userCID);
+                }
+                
+                CWSBoundIDViewController *vc = [[CWSBoundIDViewController alloc] init];
+                //vc.idString = _bodyDic[@"cid"];
+                vc.idString = object[@"desc"];
+                NSLog(@"%@",vc.idString);
+                [self.navigationController pushViewController:vc animated:YES];
+                
+                
+                
+                
+            });
+            
+        }else{
+            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:object[@"desc"]] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+
+        }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
+        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }];
+
 }
 -(void)getUserMsgWithFeed:(NSString*)feedMsg andWith:(NSString*)cidCarString withCarID:(NSString*)carID
 {
@@ -837,7 +957,13 @@
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     fmt.dateFormat = @"YYYY-MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
     NSString *time = [fmt stringFromDate:chooseDate];
-    self.nextCheckText.text=time;
+    if(identifier == 7){
+        self.nextCheckText.text=time;
+    }else if (identifier == 9){
+        self.jiaoqiangxian.text = time;
+    }else if (identifier == 10){
+        self.shangyexian.text = time;
+    }
 }
 -(void)setUserMsg:(NSDictionary*)dic
 {

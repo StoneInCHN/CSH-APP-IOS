@@ -149,6 +149,7 @@
  */
 #define kURL @"http://yunchebao.com.cn/index.php?m=api&c=v1"
 #define kPHOTOURL @"http://yunchebao.com.cn"
+#define kBaseUrl @"http://120.27.92.247:10001/csh-interface"
 
 /**
  *  城市地区选择 返回通知标识符
@@ -158,6 +159,7 @@
  *  用户设置
  */
 #define KUserManager [UserManager shareUserManagerInfo].user
+#define KUserInfo [UserInfo userDefault]
 /**
  *  用户设置
  */
