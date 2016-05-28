@@ -12,7 +12,7 @@
 -(void)setDicMsg:(NSDictionary *)dicMsg
 {
 
-    NSString*url=[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"baseUrl"],dicMsg[@"brand"][@"brandIcon"]];
+    NSString*url=[NSString stringWithFormat:@"%@%@",kBaseUrl,dicMsg[@"brandIcon"]];
     NSURL*logoImgUrl=[NSURL URLWithString:url];
     [self.carBrandImage setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
 //    self.clickImagView.hidden = YES;
@@ -33,7 +33,8 @@
 //        }
 //    }
     NSMutableAttributedString* carNumberAttributeString = nil;
-    if([[NSString stringWithFormat:@"%@",dicMsg[@"device"]] isEqualToString:@""]){
+    NSLog(@"device==%@",dicMsg[@"deviceNo"]);
+    if([[NSString stringWithFormat:@"%@",dicMsg[@"deviceNo"]] isEqualToString:@"<null>"]){
          carNumberAttributeString = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",dicMsg[@"plate"],@"(未绑定设备)"]];
         NSString* currentPlate = [NSString stringWithFormat:@"%@",dicMsg[@"plate"]];
         [carNumberAttributeString addAttributes:@{NSForegroundColorAttributeName : KBlueColor} range:NSMakeRange(currentPlate.length,carNumberAttributeString.length-currentPlate.length)];
@@ -42,11 +43,12 @@
     }
     
     self.carNumberLabel.attributedText = carNumberAttributeString;
-    self.carTypeLabel.text = [NSString stringWithFormat:@"%@%@",dicMsg[@"brand"][@"brandName"],dicMsg[@"brand"][@"moduleName"]];
+    //self.carTypeLabel.text = [NSString stringWithFormat:@"%@%@",dicMsg[@"brand"][@"brandName"],dicMsg[@"brand"][@"moduleName"]];
+    self.carTypeLabel.text = [NSString stringWithFormat:@"%@",dicMsg[@"vehicleFullBrand"]];
     
 //    self.defaultLabel.hidden = [dicMsg[@"isDefault"] integerValue] ? NO : YES;
-    
-        if([dicMsg[@"id"] integerValue] == [KUserManager.userCID integerValue]){
+ 
+        if([dicMsg[@"isDefault"]integerValue] ==1){
             self.defaultLabel.hidden = NO;
             self.defaultLabel.text = @"[默认]";
             self.selectButton.selected = YES;

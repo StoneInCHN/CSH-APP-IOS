@@ -35,7 +35,7 @@
 {
     [self buildJuhua];
     
-#if USENEWVERSION
+/*#if USENEWVERSION
     [ModelTool getVehicleBrandWithParameter:@{@"grade":@"3",@"parent":dic[@"id"]} andSuccess:^(id object) {
         MyLog(@"三级汽车信息:%@",object);
         [_juhuaView removeFromSuperview];
@@ -75,7 +75,24 @@
     } faile:^(NSError *err) {
         [_juhuaView removeFromSuperview];
     }];
-#endif
+#endif*/
+    
+    [HttpHelper searchVehicleBrandDetailByLineWithUserID:KUserInfo.desc token:KUserInfo.token brankId:dic[@"id"] success:^(AFHTTPRequestOperation *operation, id object){
+        MyLog(@"三级汽车信息:%@",object);
+        [_juhuaView removeFromSuperview];
+        if(object){
+            _styleArray = object[@"msg"];
+            if (_styleTableView==nil) {
+                [self buildTableViewWithDic:dic];
+            }else{
+                _topLabel.text=self.topString;
+                _carName.text=dic[@"name"];
+                [_styleTableView reloadData];
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error){
+    
+    }];
     
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

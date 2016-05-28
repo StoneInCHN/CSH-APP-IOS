@@ -53,7 +53,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    //NSLog(@"%@",KUserManager.userCID);
     _goBangDingCost=NO;
     cellSelectYN=YES;
     [Utils changeBackBarButtonStyle:self];
@@ -248,6 +248,86 @@
     }];
 #endif
 */
+    
+
+    [HttpHelper searchVehicleListWithUserID:KUserInfo.desc token:KUserInfo.token success:^(AFHTTPRequestOperation *operation,id object){
+        
+        MyLog(@"--------车辆管理获取信息-------%@",object);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if([object[@"code"] isEqualToString:@"0000"]){
+                _dataArray = object[@"msg"];
+                
+                if(_dataArray.count > 0){
+                    if(_dataArray.count == 3){
+                        self.navigationItem.rightBarButtonItem.title = @"";
+                        self.navigationItem.rightBarButtonItem.enabled = NO;
+                    }else{
+                        self.navigationItem.rightBarButtonItem.title = @"添加";
+                        self.navigationItem.rightBarButtonItem.enabled = YES;
+                    }
+                    //获取默认车辆
+                    NSString* userCid = [NSString string];
+                    NSLog(@"%@",_dataArray);
+                    for(NSDictionary *dateDic in _dataArray){
+                        if ([dateDic[@"isDefault"]integerValue]==1) {
+                            userCid = dateDic[@"id"];
+                        }
+                    }
+                    
+                    NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
+                    [thyUserDefaults setValue:userCid forKey:@"cid"];
+                    NSMutableDictionary *userDefaultVehicle = [NSMutableDictionary dictionaryWithDictionary:_dataArray[0]];
+                    //去除为空得值
+                    for (NSString* key in [userDefaultVehicle allKeys]) {
+                        if([[userDefaultVehicle valueForKey:key] isKindOfClass:[NSDictionary class]]){
+                            for (NSString* subKey in [[userDefaultVehicle valueForKey:key] allKeys]) {
+                                if([[[userDefaultVehicle valueForKey:key] valueForKey:subKey] isKindOfClass:[NSNull class]]){
+                                    [[userDefaultVehicle valueForKey:key] setObject:[PublicUtils checkNSNullWithgetString:[[userDefaultVehicle valueForKey:key] valueForKey:subKey]] forKey:subKey];
+                                }
+                            }
+                        }else{
+                            if([[userDefaultVehicle valueForKey:key] isKindOfClass:[NSNull class]]){
+                                [userDefaultVehicle setObject:[PublicUtils checkNSNullWithgetString:[userDefaultVehicle valueForKey:key]] forKey:key];
+                            }
+                        }
+                    }
+                    [thyUserDefaults setObject:userDefaultVehicle forKey:@"userDefaultVehicle"];
+                    [NSUserDefaults resetStandardUserDefaults];
+                    KUserManager.userCID = userCid;
+                    MyLog(@"我的CID：%@",KUserManager.userCID);
+                    //创建车辆列表
+                    if(_noCarView.subviews.count){
+                        [_noCarView removeFromSuperview];
+                    }
+                    if(!_isLoadTableView){
+                        [self creatTableView];
+                    }
+                    [_tableView reloadData];
+                    //[self uploadPoint];
+                }else{
+                    
+                    
+                    _noCarView = [[CWSNoDataView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height-kSTATUS_BAR)];
+                    _noCarView.noDataImageView.frame = CGRectMake((kSizeOfScreen.width-75)/2, 100, 75, 55);
+                    _noCarView.noDataImageView.image = [UIImage imageNamed:@"mycar_icon"];
+                    
+                    _noCarView.noDataTitleLabel.text = @"您还没有添加车辆";
+                    _noCarView.noDataTitleLabel.frame = CGRectMake((kSizeOfScreen.width-150)/2, CGRectGetMaxY(_noCarView.noDataImageView.frame)+30, 150, 20);
+                    _noCarView.noDataTitleLabel.textColor = [UIColor colorWithRed:0.733f green:0.733f blue:0.733f alpha:1.00f];
+                    _noCarView.backgroundColor = [UIColor colorWithRed:0.961f green:0.961f blue:0.961f alpha:1.00f];
+                    
+                    [self.view addSubview:_noCarView];
+                }
+            }else {
+                UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"desc"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        });
+
+    }failure:^(AFHTTPRequestOperation *operation,NSError *error){
+    
+    }];
 }
 -(void)uploadPoint{
     NSDictionary* dic = @{@"carId":KUserManager.car.carId,@"uid":KUserManager.uid,@"key":KUserManager.key,@"isMode":@"0"};
@@ -412,11 +492,74 @@
             }
             
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            [dic setValue:KUserManager.uid forKey:@"uid"];
-            [dic setValue:KUserManager.mobile forKey:@"mobile"];
-            [dic setValue:_dataArray[indexPath.row][@"id"] forKey:@"n_cid"];//新的默认车辆ID
-            [dic setValue:KUserManager.userCID forKey:@"o_cid"];//旧的默认车辆ID
+//            [dic setValue:KUserManager.uid forKey:@"uid"];
+//            [dic setValue:KUserManager.mobile forKey:@"mobile"];
+//            [dic setValue:_dataArray[indexPath.row][@"id"] forKey:@"n_cid"];//新的默认车辆ID
+//            [dic setValue:KUserManager.userCID forKey:@"o_cid"];//旧的默认车辆ID
+            NSLog(@"%@=%@",KUserManager.uid,KUserInfo.desc);
+            [dic setObject:KUserInfo.desc forKey:@"userId"];
+            [dic setObject:KUserInfo.token forKey:@"token"];
+            [dic setObject:_dataArray[indexPath.row][@"id"] forKey:@"vehicleId"];
+           
+            
+            //新接口
             [MBProgressHUD showMessag:@"更改默认车辆中..." toView:self.view];
+            [HttpHelper insertDeviceSetDefaultWithUserDic:dic success:^(AFHTTPRequestOperation*operation,id object){
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+               
+               
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if([object[@"code"] isEqualToString:@"0000"]){
+                        MyLog(@"-------------%@",object);
+                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                        //显示默认
+                        currentCell.selectButton.selected = YES;
+                        currentCell.defaultLabel.text = @"[默认]";
+                        currentCell.defaultLabel.hidden = NO;
+                        
+                        
+                        //更换UserDefaults中保存的默认车辆cid
+                        NSString* userCid = _dataArray[indexPath.row][@"id"];
+                        NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
+                        [thyUserDefaults setValue:userCid forKey:@"cid"];
+                        NSMutableDictionary *userDefaultVehicle = [NSMutableDictionary dictionaryWithDictionary:_dataArray[indexPath.row]];
+                        //去除为空得值
+                        for (NSString* key in [userDefaultVehicle allKeys]) {
+                            if([[userDefaultVehicle valueForKey:key] isKindOfClass:[NSDictionary class]]){
+                                for (NSString* subKey in [[userDefaultVehicle valueForKey:key] allKeys]) {
+                                    if([[[userDefaultVehicle valueForKey:key] valueForKey:subKey] isKindOfClass:[NSNull class]]){
+                                        [[userDefaultVehicle valueForKey:key] setObject:[PublicUtils checkNSNullWithgetString:[[userDefaultVehicle valueForKey:key] valueForKey:subKey]] forKey:subKey];
+                                    }
+                                }
+                            }else{
+                                if([[userDefaultVehicle valueForKey:key] isKindOfClass:[NSNull class]]){
+                                    [userDefaultVehicle setObject:[PublicUtils checkNSNullWithgetString:[userDefaultVehicle valueForKey:key]] forKey:key];
+                                }
+                            }
+                        }
+                        [thyUserDefaults setObject:userDefaultVehicle forKey:@"userDefaultVehicle"];
+                        [NSUserDefaults resetStandardUserDefaults];
+                        KUserManager.userCID = userCid;
+                        
+                        MyLog(@"我的CID：%@",KUserManager.userCID);
+                        
+                        
+                    }
+                    else {
+                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"desc"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                        [alert show];
+                    }
+                });
+                
+                
+            } failure:^(AFHTTPRequestOperation*operation,NSError *error){
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                
+            }];
+
+            
+           /* [MBProgressHUD showMessag:@"更改默认车辆中..." toView:self.view];
             
             [ModelTool changeDefaultCarWithParameter:dic andSuccess:^(id object) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -457,24 +600,28 @@
                         
                     }
                     else {
-                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                        [alert show];
-                    }
-                });
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+            }
+            });
             } andFail:^(NSError *err) {
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alert show];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
             }];
-        }else{
+            }else{
             [WCAlertView showAlertWithTitle:@"提示" message:@"该车辆未绑定设备!" customizationBlock:nil completionBlock:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+            }*/
         }
+        
+        
+        
     }
-    
-    
-
 }
+
+
+
 //-(void)
 //根据anntation生成对应的View
 - (BMKAnnotationView *)mapView:(BMKMapView *)view viewForAnnotation:(id <BMKAnnotation>)annotation

@@ -23,9 +23,12 @@
 #if USENEWVERSION
     self.carNameLabel.text = modelDicMsg[@"name"];
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    NSString*url=[NSString stringWithFormat:@"http://120.27.92.247:10001/csh-interface%@",modelDicMsg[@"icon"]];
+    NSURL*logoImgUrl=[NSURL URLWithString:url];
+    [self.carImage setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"normal_car_type"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
 #else
     self.carNameLabel.text=modelDicMsg[@"type"];
-    NSString*url=[NSString stringWithFormat:@"http://115.28.161.11:8080/XAI/appDownLoad/downLoadPhoto?path=%@",modelDicMsg[@"logo"]];
+    NSString*url=[NSString stringWithFormat:@"http://120.27.92.247:10001/csh-interface%@",modelDicMsg[@"icon"]];
     NSURL*logoImgUrl=[NSURL URLWithString:url];
     [self.carImage setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"normal_car_type"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
     int parent = [modelDicMsg[@"parent"] intValue];
