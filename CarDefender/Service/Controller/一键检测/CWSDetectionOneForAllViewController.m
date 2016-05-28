@@ -17,6 +17,7 @@
     CWSDetectionHeaderView* detectionHeaderView;
     
     CWSDetectionDistanceRecentlyView* detectionDistanceView;
+    UserInfo *userInfo;
 }
 
 @property (nonatomic,strong) NSArray* senderDataArray;
@@ -32,7 +33,8 @@
     self.view.backgroundColor = KGrayColor3;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"车辆列表" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonClicked:)];
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : kMainColor} forState:UIControlStateNormal];
-    [self getData];
+    userInfo = [UserInfo userDefault];
+    [self updateLoginCacheInfo];
 }
 #pragma mark -========================InitialData
 - (NSString *)currentDateStr {
@@ -42,9 +44,53 @@
     NSString *currentDateStr = [NSString stringWithFormat:@"%@",[formatter stringFromDate:currentDate]];
     return currentDateStr;
 }
-- (void)getData
-{
-    UserInfo *userInfo = [UserInfo userDefault];
+
+- (void)saveUserInfo:(NSDictionary *)info {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    for (NSString *key in [info allKeys]) {
+        if ([key isEqualToString:@"id"]) {
+            continue;
+        }
+        [userDefaults setObject:[PublicUtils checkNSNullWithgetString:[info objectForKey:key]] forKey:key];
+    }
+}
+- (void)updateUserInfo {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    userInfo.desc = [userDefaults objectForKey:@"desc"];
+    userInfo.nickName = [userDefaults objectForKey:@"nickName"];
+    userInfo.signature = [userDefaults objectForKey:@"signature"];
+    userInfo.userName = [userDefaults objectForKey:@"userName"];
+    userInfo.photo = [userDefaults objectForKey:@"photo"];
+    userInfo.defaultVehicle = [userDefaults objectForKey:@"defaultVehicle"];
+    userInfo.defaultVehiclePlate = [userDefaults objectForKey:@"defaultVehiclePlate"];
+    userInfo.defaultDeviceNo = [userDefaults objectForKey:@"defaultDeviceNo"];
+    userInfo.defaultVehicleIcon = [userDefaults objectForKey:@"defaultVehicleIcon"];
+}
+- (void)updateLoginCacheInfo {
+    [HttpHelper updateLoginCacheInfoWithUserId:userInfo.desc
+                                         token:userInfo.token
+                                       success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                           NSLog(@"update login cache :%@",responseObjcet);
+                                           NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                           userInfo.token = dict[@"token"];
+                                           userInfo.desc = dict[@"desc"];
+                                           NSString *code = dict[@"code"];
+                                           if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                               NSDictionary *data = dict[@"msg"];
+                                               [self saveUserInfo:data];
+                                               [self updateUserInfo];
+                                               [self oneKeyDetection];
+                                           } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                               [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                           } else {
+                                               [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                           }
+                                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           NSLog(@"update login cache :%@",error);
+                                           [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                       }];
+}
+- (void)oneKeyDetection {
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     NSString *searchDate = [self currentDateStr];
     [HttpHelper oneKeyDetectionWithUserId:userInfo.desc
@@ -60,25 +106,16 @@
                                       NSString *code = dict[@"code"];
                                       if ([code isEqualToString:SERVICE_SUCCESS]) {
                                           dispatch_async(dispatch_get_main_queue(), ^{
-//                                                  NSDictionary *data = @{
-//                                                      @"totalMileAge": @"100",
-//                                                      @"fuelConsumption": @"30",
-//                                                      @"averageSpeed": @"50",
-//                                                      @"averageFuelConsumption":@"20",
-//                                                      @"mileAge": @"1000",
-//                                                      @"runningTime": @"50",
-//                                                      @"cost": @"0"
-//                                                      };
                                               NSDictionary *data = dict[@"msg"];
-                                                  detectionHeaderView = [[CWSDetectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 206) Data:nil];
-                                                  detectionHeaderView.thyRootVc = self;
-                                                  detectionHeaderView.senderDataArray = self.senderDataArray;
-                                                  detectionHeaderView.backgroundColor = [UIColor whiteColor];
-                                              detectionHeaderView.carSimpleInfoLabel.text = [NSString stringWithFormat:@"总里程-%@km",data[@"totalMileAge"]];
-                                                  [self.view addSubview:detectionHeaderView];
-                                                  
-                                                  detectionDistanceView = [[CWSDetectionDistanceRecentlyView alloc] initWithFrame:CGRectMake(0, detectionHeaderView.endY, kSizeOfScreen.width, 251) controller:self data:data];
-                                                  [self.view addSubview:detectionDistanceView];
+                                              detectionHeaderView = [[CWSDetectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 206) Data:nil];
+                                              detectionHeaderView.thyRootVc = self;
+                                              detectionHeaderView.senderDataArray = self.senderDataArray;
+                                              detectionHeaderView.backgroundColor = [UIColor whiteColor];
+                                              detectionHeaderView.carSimpleInfoLabel.text = [NSString stringWithFormat:@"总里程%@km",data[@"totalMileAge"]];
+                                              [self.view addSubview:detectionHeaderView];
+                                              
+                                              detectionDistanceView = [[CWSDetectionDistanceRecentlyView alloc] initWithFrame:CGRectMake(0, detectionHeaderView.endY, kSizeOfScreen.width, 251) controller:self data:data];
+                                              [self.view addSubview:detectionDistanceView];
                                           });
                                       } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
@@ -90,7 +127,6 @@
                                       [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
                                   }];
 }
-
 #pragma mark -========================OtherCallBack
 -(void)rightBarButtonClicked:(UIBarButtonItem*)sender{
     CWSCarManageController* carManagerVc = [CWSCarManageController new];

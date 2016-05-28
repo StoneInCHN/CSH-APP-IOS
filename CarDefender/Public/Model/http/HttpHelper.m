@@ -27,12 +27,14 @@
 #define KHTTPHELPER_VIOLATION_RECORD_URL @"/csh-interface/illegalRecord/getIllegalRecords.jhtml" //车辆违章记录查询
 #define KHTTPHELPER_FEEDBACK_URL @"/csh-interface/feedback/add.jhtml" //意见反馈
 #define KHTTPHELPER_ONEKEEDETECTION_URL @"/csh-interface/obd/oneKeyDetection.jhtml" //一键检测
+#define KHTTPHELPER_MY_CAR_LIST_URL @"/csh-interface/vehicle/list.jhtml" //用户我的车辆列表
 #define KHTTPHELPER_AROUND_SEARCH_URL @"/csh-interface/aroundSearch/keyWordSearch.jhtml" //周边加油站
 #define KHTTPHELPER_CAR_TREND_URL @"/csh-interface/obd/vehicleTrends.jhtml" //车辆动态
 #define KHTTPHELPER_INIT_JPUSH_URL @"/csh-interface/jpush/setRegId.jhtml" //初始化极光推送
+#define KHTTPHELPER_UPDATE_LOGIN_CACHE_INFO_URL @"/csh-interface/endUser/updateLoginCacheInfo.jhtml" //更新用户登陆缓存信息
+
 
 @implementation HttpHelper
-
 #pragma mark 登陆
 + (void)userLoginWithUserName:(NSString *)userName
                      password:(NSString *)passwd
@@ -410,6 +412,25 @@
     }];
 }
 
+#pragma mark 更新登陆用户缓存信息
++ (void)updateLoginCacheInfoWithUserId:(NSString *)userId
+                                 token:(NSString *)token
+                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:userId forKey:@"userId"];
+    [parmDict setObject:token forKey:@"token"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_UPDATE_LOGIN_CACHE_INFO_URL];
+    NSLog(@"update login cache info url :%@",urlString);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(operation,responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation,error);
+    }];
+}
+
 #pragma mark 一键检测
 + (void)oneKeyDetectionWithUserId:(NSString *)userId
                             token:(NSString *)token
@@ -423,7 +444,7 @@
     [parmDict setObject:deviceNo forKey:@"deviceNo"];
     [parmDict setObject:searchDate forKey:@"searchDate"];
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_ONEKEEDETECTION_URL];
-    NSLog(@"logout url :%@",urlString);
+    NSLog(@"one key detection url :%@",urlString);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -432,6 +453,25 @@
         failure(operation,error);
     }];
 }
+#pragma mark 我的车辆
++ (void)myCarListWithUserId:(NSString *)userId
+                      token:(NSString *)token
+                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:userId forKey:@"userId"];
+    [parmDict setObject:token forKey:@"token"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_MY_CAR_LIST_URL];
+    NSLog(@"my car url :%@",urlString);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(operation,responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation,error);
+    }];
+}
+
 #pragma mark 找加油站或停车场(keyWord="加油站" or "停车场")
 + (void)searchGasolineStationWithUserId:(NSString *)userId
                                   token:(NSString *)token
@@ -471,7 +511,7 @@
     [parmDict setObject:[PublicUtils checkNSNullWithgetString:deviceNo] forKey:@"deviceNo"];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_CAR_TREND_URL];
-    NSLog(@"logout url :%@",urlString);
+    NSLog(@"car trends url :%@",urlString);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {

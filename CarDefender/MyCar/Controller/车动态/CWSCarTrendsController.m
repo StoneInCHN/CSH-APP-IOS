@@ -208,16 +208,19 @@
                             success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                 NSLog(@"car trends response :%@",responseObjcet);
                                 NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                userInfo.token = dict[@"token"];
                                 NSString *code = dict[@"code"];
                                 if ([code isEqualToString:SERVICE_SUCCESS]) {
                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                        _azimuth = dict[@"azimuth"];
                                         CLLocationCoordinate2D  lPoint = CLLocationCoordinate2DMake([dict[@"msg"][@"lat"] floatValue], [dict[@"msg"][@"lon"] floatValue]);
                                         [_locationDicArray addObject:@{@"latitude":[NSString stringWithFormat:@"%f",lPoint.latitude],@"longitude":[NSString stringWithFormat:@"%f",lPoint.longitude]}];
-                                        
+                                        NSLog(@"location dic array:%@",_locationDicArray);
                                         self.mileageLabel.text = [NSString stringWithFormat:@"%@km",dict[@"msg"][@"mileAge"]];
                                         self.timeLabel.text = [NSString stringWithFormat:@"%@s",dict[@"msg"][@"engineRuntime"]];
                                         self.speedLabel.text = [NSString stringWithFormat:@"%@km/h",dict[@"msg"][@"speed"]];
                                         self.oilLabel.text = [NSString stringWithFormat:@"%@/100km",dict[@"msg"][@"averageOil"]];
+                                        [self dingwei:lPoint];
                                     });
                                 } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
@@ -244,7 +247,8 @@
 {
 //    MyLog(@"刷新数据");
     self.notiDic=(NSDictionary*)sender.object;
-    [self GPSNewCarInfoRun];
+//    [self GPSNewCarInfoRun];
+    [self initWithData];
 }
 //-(void)viewWillDisappear:(BOOL)animated{
 //    [_timer invalidate];
@@ -384,6 +388,7 @@
     [self.navigationController pushViewController:lController animated:YES];
 }
 -(void)dingwei:(CLLocationCoordinate2D)point{
+    NSLog(@"longitude:%f,latitude%f",point.longitude,point.latitude);
     if (_geocodesearch == nil) {
         _geocodesearch = [[BMKGeoCodeSearch alloc]init];
         _geocodesearch.delegate = self;
@@ -405,8 +410,8 @@
     else
     {
         MyLog(@"反geo检索发送失败");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"地图检索出错，请稍后再试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"地图检索出错，请稍后再试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
     }
 }
 -(void)shouji{
@@ -469,10 +474,10 @@
         [self GPSNewCarInfoRun];
     }else{
         _shouji = YES;
-        [_locationDicArray removeAllObjects];
+//        [_locationDicArray removeAllObjects];
         MyLog(@"手机");
-        _backgroundView1.hidden = YES;
-        _backgroundView2.hidden = YES;
+//        _backgroundView1.hidden = YES;
+//        _backgroundView2.hidden = YES;
         UIButton* lBtn = (UIButton*)[self.view viewWithTag:11];
         [lBtn setBackgroundImage:[UIImage imageNamed:@"dongtai_myphone_click"] forState:UIControlStateNormal];
         UIButton* btn = (UIButton*)[self.view viewWithTag:lBtn.tag-1];
