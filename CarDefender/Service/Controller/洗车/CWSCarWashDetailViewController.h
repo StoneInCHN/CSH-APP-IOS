@@ -13,4 +13,6 @@
 
 @property (nonatomic,assign)NSInteger idNumber;
 
+@property (nonatomic,assign)NSInteger indexNumber;
+
 @end

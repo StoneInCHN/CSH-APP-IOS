@@ -220,4 +220,11 @@
                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark 租户详情
++ (void)getTenantDetailsWithUserId:(NSString *)userId
+                            token:(NSString *)token
+                         tenantId:(NSString *)tenantId
+                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

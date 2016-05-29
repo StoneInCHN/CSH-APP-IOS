@@ -19,16 +19,16 @@
             [realDict setValue:[PublicUtils checkNSNullWithgetString:[realDict valueForKey:key]] forKey:key];
         }
         
-        self.productName = realDict[@"goods_name"];
-        self.isRedPackageUseable = [realDict[@"support_red"] integerValue];
-        self.discountPrice = realDict[@"discount_price"];
+        self.productName = realDict[@"serviceName"];
+//        self.isRedPackageUseable = [realDict[@"support_red"] integerValue];
+        self.discountPrice = realDict[@"promotionPrice"];
         
         self.originalPrice = realDict[@"price"];
-//        self.productDetailName = lDic[@""];
+        self.productDetailName = lDic[@""];
         self.productID = [realDict[@"id"] integerValue];
-        self.merchantsID = [realDict[@"store_id"] integerValue];
-        self.merchantsName = realDict[@"store_name"];
-        self.isDiscount = [realDict[@"is_discount_price"] integerValue];
+//        self.merchantsID = [realDict[@"store_id"] integerValue];
+//        self.merchantsName = realDict[@"store_name"];
+//        self.isDiscount = [realDict[@"is_discount_price"] integerValue];
         
     }
     return self;

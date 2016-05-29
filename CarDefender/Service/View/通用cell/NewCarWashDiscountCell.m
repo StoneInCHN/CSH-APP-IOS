@@ -29,8 +29,8 @@
     }else{
         self.projectDetailNameLabel.hidden = YES;
     }
-    self.redPackageImageView.hidden = !discountModel.isRedPackageUseable;
-
+//    self.redPackageImageView.hidden = !discountModel.isRedPackageUseable;
+    self.redPackageImageView.hidden = YES;
                  
     //是否有优惠价
     self.discountMessageLabel.hidden = NO;
@@ -39,19 +39,19 @@
     
     self.discountPriceLabel.adjustsFontSizeToFitWidth = YES;
     NSString* priceString;
-    if(discountModel.isDiscount){
+//    if(discountModel.isDiscount){
         priceString = discountModel.discountPrice;
         self.discountPriceLabel.text = [NSString stringWithFormat:@"￥%@",priceString];
         priceString = discountModel.originalPrice;
         self.originalPriceLabel.text = [NSString stringWithFormat:@"￥%@",priceString];
-    }else {
-        priceString = [NSString stringWithFormat:@"￥%@",discountModel.originalPrice];
-        self.originalPriceLabel.text = priceString;
-        self.discountPriceLabel.text = priceString;
-      //  self.discountPriceLabelLead.constant += 33;
-    }
+//    }else {
+//        priceString = [NSString stringWithFormat:@"￥%@",discountModel.originalPrice];
+//        self.originalPriceLabel.text = priceString;
+//        self.discountPriceLabel.text = priceString;
+//      //  self.discountPriceLabelLead.constant += 33;
+//    }
     
-    if ([discountModel.merchantsName isEqualToString:@"养护"]) {
+    if ([discountModel.merchantsName isEqualToString:@"保养"]) {
         [self.payButton setTitleColor:KOrangeColor forState:UIControlStateNormal];
         self.payButton.layer.borderColor = KOrangeColor.CGColor;
         [self.payButton setTitle:@"预约" forState:UIControlStateNormal];

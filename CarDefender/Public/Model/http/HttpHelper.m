@@ -43,6 +43,7 @@
 
 #define KHTTPHELPER_VEHICLEBINDDEVICE_INSERT_URL @"/csh-interface/vehicle/bindDevice.jhtml"//用户绑定车辆与设备
 #define KHTTPHELPER_VEHICLESETDEFAULT_INSERT_URL @"/csh-interface/vehicle/setDefault.jhtml"//用户设置默认车辆
+#define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
 
 
 @implementation HttpHelper
@@ -706,6 +707,30 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(operation,error);
     }];
+}
+
+#pragma mark 租户详情
++ (void)getTenantDetailsWithUserId:(NSString *)userId
+                             token:(NSString *)token
+                          tenantId:(NSString *)tenantId
+                           success:(void (^)(AFHTTPRequestOperation *, id))success
+                           failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
+    
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:userId forKey:@"userId"];
+    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:tenantId forKey:@"tenantId"];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_TENANT_DETAILS_URL];
+    NSLog(@"租户详情url :%@",urlString);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(operation,responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation,error);
+    }];
+
 }
 
 @end
