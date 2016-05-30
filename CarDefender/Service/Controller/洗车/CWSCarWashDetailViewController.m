@@ -23,6 +23,7 @@
 //cell
 #import "NewCarWashDetailReviewCell.h"  //评论cell
 #import "NewCarWashDiscountCell.h"     //打折cell
+#import "CWSNewCarWashNormalCell.h"
 
 #define HEADER_HEIGHT 33.0f
 #define CELL_HEIGHT 40.f
@@ -42,13 +43,16 @@
     NSMutableDictionary *_dataDic;
     NSMutableArray *_goodsListArray;
     NSMutableArray *_sectionNameArray; //分段的名称
-//    NSMutableArray *_commentsArray;
-//    NSMutableArray *_normolWashArray;
-//    NSMutableArray *_fineWashArray;
-//    NSMutableArray *_BeautyArray;
-//    NSMutableArray *_maintenanceArray;
+    
+    NSMutableArray *_commentsArray;
+    NSMutableArray *_normolWashArray;
+    NSMutableArray *_fineWashArray;
+    NSMutableArray *_BeautyArray;
+    NSMutableArray *_maintenanceArray;
     
     NSString* _currentStoreName;
+    
+    UserInfo *userInfo;
 }
 
 @end
@@ -62,7 +66,9 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
+    self.indexNumber = 0;
     [Utils changeBackBarButtonStyle:self];
+    userInfo = [UserInfo userDefault];
     
     [self initialData];
     
@@ -85,164 +91,127 @@
         _dataDic = [NSMutableDictionary dictionary];
         _goodsListArray = [NSMutableArray array];
         _sectionNameArray = [NSMutableArray array];
-//        _commentsArray = [NSMutableArray array];
-//        _normolWashArray= [NSMutableArray array];
-//        _fineWashArray= [NSMutableArray array];
-//        _BeautyArray= [NSMutableArray array];
-//        _maintenanceArray= [NSMutableArray array];
+        
+        _commentsArray = [NSMutableArray array];
+        _normolWashArray= [NSMutableArray array];
+        _fineWashArray= [NSMutableArray array];
+        _BeautyArray= [NSMutableArray array];
+        _maintenanceArray= [NSMutableArray array];
     }
     
-    [self loadData];
+    [self getData];
 }
 
--(void)loadData{
+-(void)getData{
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-    [ModelTool getMerchantsDetailAndDoodsWithParameter:@{@"id":[NSString stringWithFormat:@"%ld",(long)self.idNumber]} andSuccess:^(id object) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            
-            if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
-                MyLog(@"----------商家详情信息-------%@",object);
-                _dataDic = [object[@"data"] mutableCopy];
-                
-                _currentStoreName = _dataDic[@"store_name"];
-                _goodsListArray = [_dataDic[@"type"] mutableCopy];
-                
-                
-                //添加数据源
-//                for (NSDictionary* typeDict in _goodsListArray) {
-//                    if([typeDict[@"typename"] isEqualToString:@"商家评价"]){
-//                        //这个留给以后商家评价分析
-//                        
-//                        [_sectionNameArray addObject:typeDict[@"typename"]];
-//                        NSMutableArray* reviewDataArray = [NSMutableArray array];
-//                        NSMutableDictionary* reviewDict = [NSMutableDictionary dictionaryWithObject:reviewDataArray forKey:typeDict[@"typename"]];
-//                        [dataArray addObject:reviewDict];
-//                    }else{
-//                        [_sectionNameArray addObject:typeDict[@"typename"]];
-//                        NSMutableArray* tempDataArray = [NSMutableArray array];
-//                        for (NSDictionary* tempGoodsDict in typeDict[@"goodsList"]) {
-//                            [tempDataArray addObject:tempGoodsDict];
-//                        }
-//                        NSMutableDictionary* dataDict = [NSDictionary dictionaryWithObject:tempDataArray forKey:typeDict[@"typename"]];
-//                        [dataArray addObject:dataDict];
-//                        tempDataArray = nil;
-//                    }
-//                }
-                
-                NSMutableDictionary* reviewDataDict = [NSMutableDictionary dictionary];
-                for (NSDictionary* typeDict in _goodsListArray) {
-                    if([typeDict[@"typename"] isEqualToString:@"商家评价"]){
-                        //这个留给以后商家评价分析
-
-             
-                        
-                    }else{
-                        [_sectionNameArray addObject:typeDict[@"typename"]];
-                        NSMutableArray* tempDataArray = [NSMutableArray array];
-                        for (NSMutableDictionary* tempGoodsDict in typeDict[@"goodsList"]) {
-                            [tempGoodsDict setObject:[tempGoodsDict valueForKey:@"productDetailName"] ? [NSString stringWithFormat:@"%f",DISCOUNTCELL_HEIGHT_INFO] : [NSString stringWithFormat:@"%f",DISCOUNTCELL_HEIGHT_NOINFO]  forKey:@"currentCellHeight"];
-                            [tempDataArray addObject:tempGoodsDict];
-                        }
-                        NSMutableDictionary* dataDict = [NSMutableDictionary dictionaryWithObject:tempDataArray forKey:typeDict[@"typename"]];
-                        [dataArray addObject:dataDict];
-                        tempDataArray = nil;
-                    }
-                }
-                
-                [_sectionNameArray insertObject:@"" atIndex:0];
-                [dataArray insertObject:reviewDataDict atIndex:0];
-                
-                
-      
-                
-//                //分别添加数据源
-//                NSMutableArray *sectionNameArray = [NSMutableArray array];
-//                for (NSDictionary *dic in _goodsListArray) {
-//                    [sectionNameArray addObject:dic[@"typename"]];
-//                    if ([dic[@"typename"] isEqualToString:@"商家评价"]) {
-//                        _commentsArray = dic[@"goodsList"];
-//                    }else if ([dic[@"typename"] isEqualToString:@"普洗"]){
-//                        _normolWashArray = dic[@"goodsList"];
-//                    }else if ([dic[@"typename"] isEqualToString:@"精洗"]){
-//                        _fineWashArray = dic[@"goodsList"];
-//                    }else if ([dic[@"typename"] isEqualToString:@"美容"]){
-//                        _BeautyArray= dic[@"goodsList"];
-//                    }else if ([dic[@"typename"] isEqualToString:@"养护"]){
-//                        _maintenanceArray= dic[@"goodsList"];
-//                    }
-//                }
-//
-//                //将数据源添加进model
-//                for (int i = 0; i<sectionNameArray.count; i++) {
-//                    CWSCarMaintainInfoModel* model = [CWSCarMaintainInfoModel new];
-//                    model.sectionName = sectionNameArray[i];
-//                    if([model.sectionName isEqualToString:@"商家评价"]){
-//
-//
-//                    }else if([model.sectionName isEqualToString:@"普洗"]){
-//                        
-//                        for(int j=0; j<_normolWashArray.count; j++){
-//                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_normolWashArray[j]];
-//                            [dic setValue:model.sectionName forKey:@"type"];
-//                            CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-//                            [model.realDataArray addObject:discountModel];
-//                            
-//                            CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
-//                            cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
-//                            [model.cellHeightArray addObject:cellHeightModel];
-//                        }
-//                    }else if([model.sectionName isEqualToString:@"精洗"]){
-//                        for(int j=0; j<_fineWashArray.count; j++){
-//                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_fineWashArray[j]];
-//                            [dic setValue:model.sectionName forKey:@"type"];
-//                            CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-//                            
-//                            [model.realDataArray addObject:discountModel];
-//                            CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
-//                            cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
-//                            [model.cellHeightArray addObject:cellHeightModel];
-//                        }
-//                    }else if([model.sectionName isEqualToString:@"养护"]){
-//                        for(int j=0; j<_maintenanceArray.count; j++){
-//                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_maintenanceArray[j]];
-//                            [dic setValue:model.sectionName forKey:@"type"];
-//                            CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-//                            
-//                            [model.realDataArray addObject:discountModel];
-//                            CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
-//                            cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
-//                            [model.cellHeightArray addObject:cellHeightModel];
-//                        }
-//                    }else if([model.sectionName isEqualToString:@"美容"]){
-//                        for(int j=0; j<_BeautyArray.count; j++){
-//                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_BeautyArray[j]];
-//                            [dic setValue:model.sectionName forKey:@"type"];
-//                            
-//                            CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-//                            
-//                            [model.realDataArray addObject:discountModel];
-//                            CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
-//                            cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
-//                            [model.cellHeightArray addObject:cellHeightModel];
-//                        }
-//                    }
-//                    
-//                    [dataArray addObject:model];
-//                   
-//                }
-                if (dataArray.count > 1) {
-                    [self createTableView];
-                }
-                
-            }
-            else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                [alert show];
-            }
-        });
-    } andFail:^(NSError *err) {
+    [HttpHelper getTenantDetailsWithUserId:userInfo.desc
+                                     token:userInfo.token tenantId:[NSString stringWithFormat:@"%ld", (long)_idNumber]
+                                   success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                       NSLog(@"租户详情:%@",responseObjcet);
+                                       NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                       NSString *code = dict[@"code"];
+                                       userInfo.token = dict[@"token"];
+                                       if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                           
+                                           _dataDic = [dict[@"msg"] mutableCopy];
+                                           _currentStoreName = _dataDic[@"tenantName"];
+                                           _goodsListArray = [_dataDic[@"carServices"] mutableCopy];
+                                           
+                                           //分别添加数据源
+                                           NSMutableArray *sectionNameArray = [NSMutableArray array];
+                                           for (NSDictionary *dic in _goodsListArray) {
+                                               [sectionNameArray addObject:dic[@"categoryName"]];
+                                               if ([dic[@"categoryName"] isEqualToString:@"保险"]) {
+                                                   _commentsArray = dic[@"subServices"];
+                                               }else if ([dic[@"categoryName"] isEqualToString:@"保养"]){
+                                                   _normolWashArray = dic[@"subServices"];
+                                               }else if ([dic[@"categoryName"] isEqualToString:@"紧急救援"]){
+                                                   _fineWashArray = dic[@"subServices"];
+                                               }else if ([dic[@"categoryName"] isEqualToString:@"洗车"]){
+                                                   _BeautyArray= dic[@"subServices"];
+                                               }else if ([dic[@"categoryName"] isEqualToString:@"美容"]){
+                                                   _maintenanceArray= dic[@"subServices"];
+                                               }
+                                           }
+                           
+                                           //将数据源添加进model
+                                           for (int i = 0; i<sectionNameArray.count; i++) {
+                                               CWSCarMaintainInfoModel* model = [CWSCarMaintainInfoModel new];
+                                               model.sectionName = sectionNameArray[i];
+                                               if([model.sectionName isEqualToString:@"保险"]){
+                                                   for(int j=0; j<_commentsArray.count; j++){
+                                                       NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_commentsArray[j]];
+                                                       [dic setValue:model.sectionName forKey:@"type"];
+                                                       CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                                                       [model.realDataArray addObject:discountModel];
+                                                       
+                                                       CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+                                                       cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+                                                       [model.cellHeightArray addObject:cellHeightModel];
+                                                   }
+                           
+                                               }else if([model.sectionName isEqualToString:@"保养"]){
+                           
+                                                   for(int j=0; j<_normolWashArray.count; j++){
+                                                       NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_normolWashArray[j]];
+                                                       [dic setValue:model.sectionName forKey:@"type"];
+                                                       CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                                                       [model.realDataArray addObject:discountModel];
+                           
+                                                       CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+                                                       cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+                                                       [model.cellHeightArray addObject:cellHeightModel];
+                                                   }
+                                               }else if([model.sectionName isEqualToString:@"紧急救援"]){
+                                                   for(int j=0; j<_fineWashArray.count; j++){
+                                                       NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_fineWashArray[j]];
+                                                       [dic setValue:model.sectionName forKey:@"type"];
+                                                       CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                           
+                                                       [model.realDataArray addObject:discountModel];
+                                                       CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+                                                       cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+                                                       [model.cellHeightArray addObject:cellHeightModel];
+                                                   }
+                                               }else if([model.sectionName isEqualToString:@"美容"]){
+                                                   for(int j=0; j<_maintenanceArray.count; j++){
+                                                       NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_maintenanceArray[j]];
+                                                       [dic setValue:model.sectionName forKey:@"type"];
+                                                       CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                                                       
+                                                       [model.realDataArray addObject:discountModel];
+                                                       CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+                                                       cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+                                                       [model.cellHeightArray addObject:cellHeightModel];
+                                                   }
+                                               }else if([model.sectionName isEqualToString:@"洗车"]){
+                                                   for(int j=0; j<_BeautyArray.count; j++){
+                                                       NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_BeautyArray[j]];
+                                                       [dic setValue:model.sectionName forKey:@"type"];
+                                                       
+                                                       CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                                                       
+                                                       [model.realDataArray addObject:discountModel];
+                                                       CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
+                                                       cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
+                                                       [model.cellHeightArray addObject:cellHeightModel];
+                                                   }
+                                               }
+                                               
+                                               [dataArray addObject:model];
+                                              
+                                           }
+                                           if (dataArray.count > 1) {
+                                               [self createTableView];
+                                           }
+                                           
+                                       }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                       } else {
+                                           [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                       }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -260,8 +229,8 @@
     myTableView.bounces = YES;
     myTableView.showsHorizontalScrollIndicator = NO;
     myTableView.showsVerticalScrollIndicator = NO;
-  //  myTableView.estimatedRowHeight = 2.0f;
-  //  myTableView.rowHeight = UITableViewAutomaticDimension;
+    myTableView.estimatedRowHeight = 2.0f;
+    myTableView.rowHeight = UITableViewAutomaticDimension;
     
 //    [myTableView registerNib:[UINib nibWithNibName:@"NewCarWashDetailReviewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"ThyReviewCell"];
 //    [myTableView registerNib:[UINib nibWithNibName:@"NewCarWashDiscountCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"DiscountCell"];
@@ -270,17 +239,16 @@
 }
 
 
-
-
 #pragma mark -================================TableViewDataSource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-
-//    return dataArray.count + 1;
-    return _sectionNameArray.count + 1;
+//    NSLog(@"numberOfSectionsInTableView is %ld", (dataArray.count + 1));
+    return dataArray.count + 1;
+//    return _sectionNameArray.count + 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+//    NSLog(@"section is %ld", (long)section);
     
     if(!section){
         return 0;
@@ -289,87 +257,90 @@
     }
     else{
     
-//        CWSCarMaintainInfoModel* model = dataArray[section-1];
-//        return model.realDataArray.count;
-        NSDictionary* dataDict = dataArray[section-1];
-        NSMutableArray* currentDataDictArr = dataDict[_sectionNameArray[section-1]];
-        return currentDataDictArr.count;
+        CWSCarMaintainInfoModel* model = dataArray[section-1];
+        return model.realDataArray.count;
+//        NSDictionary* dataDict = dataArray[section-1];
+//        NSMutableArray* currentDataDictArr = dataDict[_sectionNameArray[section-1]];
+//        return currentDataDictArr.count;
     }
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if(!indexPath.section){
-        return nil;
-    }
-        else if(indexPath.section == 1){
-        //添加评论
-        
-        return nil;
-    }
-    else{
-        
-        NSDictionary* currentDataDict = dataArray[indexPath.section-1];
-        NSMutableDictionary* dataDict = currentDataDict[_sectionNameArray[indexPath.section-1]][indexPath.row];
-        [dataDict setObject:_currentStoreName forKeyedSubscript:@"store_name"];
-        CWSCarWashDiscountModel* model = [[CWSCarWashDiscountModel alloc]initWithDic:dataDict];
-        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle] loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
-        cell.delegate = self;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell setDiscountModel:model];
-        return cell;
-    }
-    
-    
 //    if(!indexPath.section){
 //        return nil;
-//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"商家评价"]){
-//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
-//        NewCarWashDetailReviewCell* cell = [[[NSBundle mainBundle] loadNibNamed:@"NewCarWashDetailReviewCell" owner:self options:nil] lastObject];
-//        cell.userReviewStarView.hidden = YES;
-//        [cell setThyReviewModel:model.realDataArray[indexPath.row]];
-//         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-//
-//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"普洗"]){
-//        
-//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
-//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
-//        cell.delegate = self;
-//        
-//        [cell setDiscountModel:model.realDataArray[indexPath.row]];
-//         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-//        
-//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"精洗"]){
-//
-//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
-//        
-//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
-//        cell.delegate = self;
-//        [cell setDiscountModel:model.realDataArray[indexPath.row]];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"养护"]){
-//        
-//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
-//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
-//        cell.delegate = self;
-//        [cell setDiscountModel:model.realDataArray[indexPath.row]];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-//    }else if([[dataArray[indexPath.section-1] sectionName] isEqualToString:@"美容"]){
-//        
-//        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
-//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
-//        cell.delegate = self;
-//        [cell setDiscountModel:model.realDataArray[indexPath.row]];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
 //    }
-//    else {
+//        else if(indexPath.section == 1){
+//        //添加评论
+//        
 //        return nil;
 //    }
+//    else{
+//        
+//        NSDictionary* currentDataDict = dataArray[indexPath.section-1];
+//        NSMutableDictionary* dataDict = currentDataDict[_sectionNameArray[indexPath.section-1]][indexPath.row];
+//        [dataDict setObject:_currentStoreName forKeyedSubscript:@"tenantName"];
+//        CWSCarWashDiscountModel* model = [[CWSCarWashDiscountModel alloc]initWithDic:dataDict];
+//        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle] loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
+//        cell.delegate = self;
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        [cell setDiscountModel:model];
+//        return cell;
+//    }
+    
+    NSLog(@"indexPath.section is %ld", (long)indexPath.section);
+    NSInteger index = indexPath.section;
+//    if (indexPath.section == 4) {
+//        self.indexNumber = self.indexNumber + 1;
+//    }
+//    if (indexPath.section == 5) {
+//        index = 1;
+//    }
+//    if (self.indexNumber == 2) {
+//        index = index + 1;
+//        self.indexNumber = self.indexNumber + 1;
+//    }
+    if(!indexPath.section){
+        return nil;
+    }else if([[dataArray[index-1] sectionName] isEqualToString:@"保险"]){
+        CWSNewCarWashNormalCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"CWSNewCarWashNormalCell" owner:self options:nil] lastObject];
+        cell.productNameLabel.text = @"";
+        [cell.payButton setTitle:@"咨询" forState:UIControlStateNormal];
+        cell.priceLabel.hidden = YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else if([[dataArray[index-1] sectionName] isEqualToString:@"保养"]){
+        CWSNewCarWashNormalCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"CWSNewCarWashNormalCell" owner:self options:nil] lastObject];
+        cell.productNameLabel.text = @"";
+        [cell.payButton setTitle:@"预约" forState:UIControlStateNormal];
+        cell.priceLabel.hidden = YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else if([[dataArray[index-1] sectionName] isEqualToString:@"紧急救援"]){
+        CWSNewCarWashNormalCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"CWSNewCarWashNormalCell" owner:self options:nil] lastObject];
+        cell.productNameLabel.text = @"";
+        [cell.payButton setTitle:@"救援" forState:UIControlStateNormal];
+        cell.priceLabel.hidden = YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else if([[dataArray[index-1] sectionName] isEqualToString:@"洗车"]){
+        CWSCarMaintainInfoModel* model = dataArray[indexPath.section-1];
+        NewCarWashDiscountCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDiscountCell" owner:self options:nil] lastObject];
+        cell.delegate = self;
+        [cell setDiscountModel:model.realDataArray[indexPath.row]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else if([[dataArray[index-1] sectionName] isEqualToString:@"美容"]){
+        CWSNewCarWashNormalCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"CWSNewCarWashNormalCell" owner:self options:nil] lastObject];
+        cell.productNameLabel.text = @"";
+        [cell.payButton setTitle:@"预约" forState:UIControlStateNormal];
+        cell.priceLabel.hidden = YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+    else {
+        return nil;
+    }
 }
 
 
@@ -384,11 +355,11 @@
     }else  if(indexPath.section == 1){
         return 0;
     }else{
-//        CWSCellHeightModel* heightModel = [dataArray[indexPath.section-1] cellHeightArray][indexPath.row];
-//        thyRowHeight = [heightModel.currentCellHeight floatValue];
-        NSDictionary* currentDict = dataArray[indexPath.section-1];
-        NSArray* currentArray = [currentDict valueForKey:_sectionNameArray[indexPath.section-1]];
-        return [currentArray[indexPath.row][@"currentCellHeight"] floatValue];
+        CWSCellHeightModel* heightModel = [dataArray[indexPath.section-1] cellHeightArray][indexPath.row];
+        thyRowHeight = [heightModel.currentCellHeight floatValue];
+//        NSDictionary* currentDict = dataArray[indexPath.section-1];
+//        NSArray* currentArray = [currentDict valueForKey:_sectionNameArray[indexPath.section-1]];
+//        return [currentArray[indexPath.row][@"currentCellHeight"] floatValue];
     }
     
     return thyRowHeight;
@@ -436,8 +407,8 @@
         titleLabel.textAlignment = NSTextAlignmentLeft;
         titleLabel.font = [UIFont systemFontOfSize:17.0f];
         titleLabel.textColor = KBlueColor;
-//        titleLabel.text = [dataArray[section-1] sectionName];
-        titleLabel.text = _sectionNameArray[section-1];
+        titleLabel.text = [dataArray[section-1] sectionName];
+//        titleLabel.text = _sectionNameArray[section-1];
         [eachHeaderView addSubview:titleLabel];
         [titleLabel sizeToFit];
         

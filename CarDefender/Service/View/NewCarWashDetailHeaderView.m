@@ -25,24 +25,21 @@
         
         self = [[[NSBundle mainBundle]loadNibNamed:@"NewCarWashDetailHeaderView" owner:self options:nil] lastObject];
         
-        
-        [self.storeImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseUrl"],dic[@"image_1"]]] placeholderImage:[UIImage imageNamed:@"zhaochewei_img"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
-        
-        self.storeNameLabel.text = dic[@"store_name"];
-        self.storeBusinessHoursLabel.text = [NSString stringWithFormat:@"营业时间:%@",dic[@"business_time"]];
+        NSString*url=[NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS, dic[@"photo"]];
+        NSLog(@"租户logo地址：%@", url);
+        NSURL *logoImgUrl=[NSURL URLWithString:url];
+        [self.storeImageView setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"zhaochewei_img"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
+
+        self.storeNameLabel.text = dic[@"tenantName"];
+        self.storeBusinessHoursLabel.text = [NSString stringWithFormat:@"营业时间:%@",dic[@"businessTime"]];
         self.storeAddressLabel.text = dic[@"address"];
         
-        self.telString = dic[@"tel"];
-        self.pt = CLLocationCoordinate2DMake([dic[@"im_lat"] floatValue], [dic[@"im_lng"] floatValue]);
+        self.telString = dic[@"contactPhone"];
+        self.pt = CLLocationCoordinate2DMake([dic[@"latitude"] floatValue], [dic[@"longitude"] floatValue]);
         self.controller = controller;
     }
     return self;
 }
-
-
-
-
-
 
 - (IBAction)buttonClicked:(UIButton *)sender {
     sender.selected = !sender.selected;

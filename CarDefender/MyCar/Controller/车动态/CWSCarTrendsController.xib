@@ -164,7 +164,7 @@
                             <color key="backgroundColor" red="0.23529411759999999" green="0.59607843140000005" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HFk-jp-EsM">
                     <rect key="frame" x="282" y="377" width="30" height="35"/>

@@ -167,11 +167,12 @@
             [self.thyRootVc.navigationController pushViewController:beautyVc animated:YES];
     }
     else if ([whichService isEqualToString:@"车辆动态"]) {
-        if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]]) {
-            [MBProgressHUD showError:@"先绑定车牌吧" toView:self.thyRootVc.view];
-            CWSAddCarController* lController = [[CWSAddCarController alloc] init];
-            lController.title = @"添加车辆";
-            [self.thyRootVc.navigationController pushViewController:lController animated:YES];
+        if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""] ) {
+            [self alertShowWithMessage:@"先绑定车牌吧" ForConfirmEvent:^{
+                CWSAddCarController* lController = [[CWSAddCarController alloc] init];
+                lController.title = @"添加车辆";
+                [self.thyRootVc.navigationController pushViewController:lController animated:YES];
+            }];
         } else {
             CWSCarTrendsController*carTrend=[[CWSCarTrendsController alloc]initWithNibName:@"CWSCarTrendsController" bundle:nil];
             carTrend.title=@"车辆动态";
@@ -179,9 +180,15 @@
         }
     }
     else if ([whichService isEqualToString:@"一键检测"]) {
+        if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""]) {
+            [self alertShowWithMessage:@"请先绑定设备" ForConfirmEvent:^{
+                [MBProgressHUD showSuccess:@"binding" toView:self];
+            }];
+        } else {
             CWSDetectionOneForAllViewController* carDetectionVc = [CWSDetectionOneForAllViewController new];
             carDetectionVc.title = @"一键检测";
             [self.thyRootVc.navigationController pushViewController:carDetectionVc animated:YES];
+        }
     }
     else if ([whichService isEqualToString:@"找加油站"]) {
         CWSFindGasStationController* lController = [[CWSFindGasStationController alloc] initWithNibName:@"CWSFindCarLocationController" bundle:nil];
@@ -196,7 +203,17 @@
     }
 
 }
-
+- (void)alertShowWithMessage:(NSString *)message
+             ForConfirmEvent:(void (^)())onEvent {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *bindBtn = [UIAlertAction actionWithTitle:@"前往绑定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        onEvent();
+    }];
+    UIAlertAction *cancleBtn = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    [alert addAction:bindBtn];
+    [alert addAction:cancleBtn];
+    [self.thyRootVc presentViewController:alert animated:YES completion:nil];
+}
 #pragma mark - 中间按钮点击事件
 -(void)centerButtonClicked:(UIButton*)sender{
     NSLog(@"centerButton");

@@ -705,6 +705,7 @@
                                       NSString *code = dict[@"code"];
                                       if ([code isEqualToString:SERVICE_SUCCESS]) {
                                           NSDictionary *msg = dict[@"msg"];
+                                          _costCurrentDic = msg;
                                           NSDictionary* lDic1 = @{@"image":@"baogao_youhao",
                                                                   @"name":@"当日油耗",
                                                                   @"data":[NSString stringWithFormat:@"%@L",[self changeStrWithData:msg[@"fuelConsumption"]]]};
@@ -730,8 +731,16 @@
                                               _normalLabel1.hidden = YES;
                                               _normalLable.hidden = YES;
                                           }
-//                                          _scoreLabel1.text = [NSString stringWithFormat:@"%@分",dataDic[@"drivingScore"]];
-//                                          _scoreLabel2.text = [NSString stringWithFormat:@"%@分",_costCurrentDic[@"drivingScore"]];
+                                          NSString *drivingScore = msg[@"drivingScore"];
+                                          if ([drivingScore isKindOfClass:[NSNull class]]) {
+                                              drivingScore = @"0分";
+                                          } else if (![drivingScore isEqualToString:@"-"]){
+                                              drivingScore = @"99分";
+                                          } else {
+                                               drivingScore = @"-分";
+                                          }
+                                          _scoreLabel1.text = drivingScore;
+                                          _scoreLabel2.text = drivingScore;
                                           [_stopView removeFromSuperview];
                                           
                                       } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
@@ -1244,5 +1253,4 @@
     }
     
 }
-
 @end

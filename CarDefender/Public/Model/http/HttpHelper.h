@@ -135,6 +135,11 @@
                          token:(NSString *)token
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+#pragma mark 更新登陆用户缓存信息
++ (void)updateLoginCacheInfoWithUserId:(NSString *)userId
+                      token:(NSString *)token
+                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 #pragma mark 一键检测
 + (void)oneKeyDetectionWithUserId:(NSString *)userId
                             token:(NSString *)token
@@ -142,6 +147,11 @@
                        searchDate:(NSString *)searchDate
                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+#pragma mark 我的车辆
++ (void)myCarListWithUserId:(NSString *)userId
+                      token:(NSString *)token
+                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 #pragma mark 找加油站
 + (void)searchGasolineStationWithUserId:(NSString *)userId
                                   token:(NSString *)token
@@ -267,9 +277,10 @@
                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+
 #pragma mark 用户购买汽车服务列表：
 /**
- * 用户设置默认车辆
+ * 用户购买汽车服务列表
  *
  *  @param dic @{@"userId": ,@"token": ,@"pageNumber": ,@"pageSize"}
  *  @param modelsuccess 成功回调数据
@@ -281,7 +292,7 @@
 
 #pragma mark 用户购买汽车服务列表（订单列表）
 /**
- * 用户设置默认车辆
+ * 用户购买汽车服务列表
  *
  *  @param dic @{@"userId": ,@"token": ,@"recordId": }
  *  @param modelsuccess 成功回调数据
@@ -290,4 +301,13 @@
 + (void)searchCarServiceRecordDetailWithUserDic:(NSDictionary *)vehicleDic
                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 租户详情
++ (void)getTenantDetailsWithUserId:(NSString *)userId
+                            token:(NSString *)token
+                         tenantId:(NSString *)tenantId
+                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+
 @end
