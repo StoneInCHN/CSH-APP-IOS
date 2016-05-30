@@ -481,10 +481,12 @@
 //                if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
 //                    MyLog(@"-----------支付订单信息--------%@",object);
 //                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//                    CWSPayViewController* appointmentVc = [[CWSPayViewController alloc] init];
-//                    appointmentVc.washDiscountModel = thyModel;
-//                    [self.navigationController pushViewController:appointmentVc animated:YES];
-//                
+                    CWSPayViewController* appointmentVc = [[CWSPayViewController alloc] init];
+                    appointmentVc.washDiscountModel = thyModel;
+                    appointmentVc.isRedpackageUseable = YES;
+                    [appointmentVc setDataDict:dic];
+                    [self.navigationController pushViewController:appointmentVc animated:YES];
+//
 //                }
 //                else {
 //                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];

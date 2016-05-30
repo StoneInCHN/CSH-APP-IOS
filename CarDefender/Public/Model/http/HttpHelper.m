@@ -48,6 +48,7 @@
 #define KHTTPHELPER_VEHICLESERVICERECORDDETAIL_SEARCH_URL @"/csh-interface/carService/recordDetail.jhtml"//用户购买汽车服务记录详情（订单详情)
 
 #define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
+#define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//租户详情
 
 
 
@@ -724,5 +725,33 @@
 
 }
 
+#pragma mark 购买服务
++ (void)payServiceWithUserId:(NSString *)userId
+                       token:(NSString *)token
+                   serviceId:(NSString *)serviceId
+                 paymentType:(NSString *)paymentType
+                    recordId:(NSString *)recordId
+                    couponId:(NSString *)couponId
+                     success:(void (^)(AFHTTPRequestOperation *, id))success
+                     failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
+    
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:userId forKey:@"userId"];
+    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:serviceId forKey:@"serviceId"];
+    [parmDict setObject:paymentType forKey:@"paymentType"];
+    [parmDict setObject:recordId forKey:@"recordId"];
+    [parmDict setObject:couponId forKey:@"couponId"];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_PAY_SERVICE_URL];
+    NSLog(@"购买服务url :%@",urlString);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(operation,responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation,error);
+    }];
+}
 
 @end

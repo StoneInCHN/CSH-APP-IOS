@@ -309,5 +309,15 @@
                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark 购买服务
++ (void)payServiceWithUserId:(NSString *)userId
+                             token:(NSString *)token
+                         serviceId:(NSString *)serviceId
+                       paymentType:(NSString *)paymentType
+                          recordId:(NSString *)recordId
+                          couponId:(NSString *)couponId
+                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 @end

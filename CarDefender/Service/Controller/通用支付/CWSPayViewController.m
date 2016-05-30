@@ -56,6 +56,8 @@
     
     NSInteger payMethodNum; //0支付宝 1微信 2银联
     NSString* payMethodString;
+    
+    UserInfo *userInfo;
 }
 @property (nonatomic,strong) UIScrollView* myScrollView;
 @end
@@ -100,6 +102,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = KGrayColor3;
+    userInfo = [UserInfo userDefault];
     
     isAddHeight = YES;
     
@@ -121,11 +124,17 @@
 #pragma mark -=============================InitialData
 -(void)loadData{
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-    [ModelTool getWalletInfoWithParameter:@{@"uid":KUserManager.uid,@"mobile":KUserManager.mobile} andSuccess:^(id object) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                NSMutableDictionary* wallertDict = [NSMutableDictionary dictionaryWithDictionary:object[@"data"]];
+//    [ModelTool getWalletInfoWithParameter:@{@"uid":KUserManager.uid,@"mobile":KUserManager.mobile} andSuccess:^(id object) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+    [HttpHelper viewMyWalletWithUserId:userInfo.desc
+                                 token:userInfo.token
+                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+           if([responseObjcet[@"code"] isEqualToString:SERVICE_SUCCESS]){
+    
+                NSMutableDictionary* wallertDict = [NSMutableDictionary dictionaryWithDictionary:responseObjcet[@"msg"]];
                 for (NSString* key in [wallertDict allKeys]) {
                     [wallertDict setObject:[PublicUtils checkNSNullWithgetString:[wallertDict valueForKey:key]] forKeyedSubscript:key];
                 }
@@ -137,7 +146,7 @@
                 NSString* realPrice = [NSString stringWithFormat:@"%@",[self.dataDict[@"is_discount_price"] intValue] ? self.dataDict[@"discount_price"] : self.dataDict[@"price"]];
                 settleMoney = [realPrice floatValue];
                 payMethodString = @"";
-                MyLog(@"原价%@-余额%@-红包%@",realPrice,KUserManager.userWalletInfo[@"money"],KUserManager.userWalletInfo[@"red"]);
+                MyLog(@"原价%@-余额%@-红包%@",realPrice,KUserManager.userWalletInfo[@"balanceAmount"],KUserManager.userWalletInfo[@"giftAmount"]);
                 MyLog(@"%f",settleMoney);
                 /////////在这里进行判断//////////
                 if(self.isRedpackageUseable){
@@ -234,17 +243,23 @@
                 payMoney = settleMoney-redMoney-balanceMoney;
                 [self updateUI];
             }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:responseObjcet[@"desc"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
                 [self.navigationController popViewControllerAnimated:YES];
             }
-        });
-    } andFail:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+//        });
+//    } andFail:^(NSError *err) {
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }];
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         [alert show];
+         [self.navigationController popViewControllerAnimated:YES];
+     }];
 }
 
 
@@ -694,8 +709,10 @@
    
     
     NSDictionary* paramDict = @{
-                                @"uid":KUserManager.uid,
-                                @"mobile":KUserManager.mobile,
+//                                @"uid":KUserManager.uid,
+                                @"uid":userInfo.desc,
+//                                @"mobile":KUserManager.mobile,
+                                @"mobile":@"18280068114",
                                 @"appid":@"app_j5qbP4Dib5uHTe5C",
                                 @"amount":[NSString stringWithFormat:@"%d",(int)(payMoney*100)], //paymoney
                                 @"channel":payMethodString,
@@ -715,34 +732,47 @@
     if(payMoney){
         //在线支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-        [ModelTool getPayOrderCreateWithParameter:paramDict andSuccess:^(id object) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+//        [ModelTool getPayOrderCreateWithParameter:paramDict andSuccess:^(id object) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *paymentType;
+        if([payMethodString isEqualToString:@"wx"]){
+            paymentType = @"WECHAT";
+        }else{
+            paymentType = @"ALIPAY";
+        }
+        [HttpHelper payServiceWithUserId:userInfo.desc
+                                   token:userInfo.token
+                               serviceId:self.dataDict[@"goods_id"]
+                             paymentType:paymentType
+                                recordId:@""
+                                couponId:@""
+                                 success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+        
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
-                MyLog(@"----------充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
+                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:responseObjcet];
+//                MyLog(@"----------充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"msg"]]);
                 MyLog(@"----------充值返回信息-----------%@",rootDict);
-                if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+                if([rootDict[@"code"] isEqualToString:SERVICE_SUCCESS]){
                     
                     if([payMethodString isEqualToString:@"wx"]){
                         //使用微信支付
                         WXPay* thyWeiXinPay = [WXPay shareInstance];
                         thyWeiXinPay.isSuccess = NO;
-                        [self WXPayWithParamDict:rootDict[@"data"]];
+                        [self WXPayWithParamDict:rootDict[@"msg"]];
                         
                     }else{
                         //使用支付宝支付
-                        [self AlipayWithPrice:[NSString stringWithFormat:@"%.2f元",payMoney] andOrderNum:rootDict[@"data"][@"out_trade_no"]];
+                        [self AlipayWithPrice:[NSString stringWithFormat:@"%.2f元",payMoney] andOrderNum:rootDict[@"msg"][@"out_trade_no"]];
                     }
                     
                 }else{
-                    [self alert:@"温馨提示" msg:[PublicUtils showServiceReturnMessage:rootDict[@"message"]]];
+                    [self alert:@"温馨提示" msg:[PublicUtils showServiceReturnMessage:rootDict[@"desc"]]];
                 }
                 
-            });
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
-        }];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+             [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
+         }];
     }else{
         //使用红包或者余额支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];

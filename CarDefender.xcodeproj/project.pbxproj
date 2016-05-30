@@ -17,6 +17,7 @@
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
+		2E29F4ED1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */; };
 		3300F4A81ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */; };
 		3300F4A91ADFFD7B00B3D5B7 /* DailyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49C1ADFFD7B00B3D5B7 /* DailyCalendarView.m */; };
 		3300F4AA1ADFFD7B00B3D5B7 /* DayTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49E1ADFFD7B00B3D5B7 /* DayTitleLabel.m */; };
@@ -1253,6 +1254,7 @@
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		24E53A8C1CE1AE9E0037197B /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindGasStationHeadView.xib; sourceTree = "<group>"; };
+		2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
 		3300F4991ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLWeeklyCalendarView.h; sourceTree = "<group>"; };
 		3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWeeklyCalendarView.m; sourceTree = "<group>"; };
 		3300F49B1ADFFD7B00B3D5B7 /* DailyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyCalendarView.h; sourceTree = "<group>"; };
@@ -5073,6 +5075,7 @@
 		335C5C891AC12A47001EA2AC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */,
 				4C0952611C34D7890098BA4C /* NewCarWashTableHeaderView.h */,
 				4C0952621C34D7890098BA4C /* NewCarWashTableHeaderView.m */,
 				0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */,
@@ -7966,7 +7969,7 @@
 				TargetAttributes = {
 					335C5B8D1AC1062D001EA2AC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ZJMB8US8MQ;
+						DevelopmentTeam = Y638L9NEZ8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -8086,6 +8089,7 @@
 				339404241B4CF35F009CCEE2 /* CWSWeatherCell.xib in Resources */,
 				33CA11431AF216D400A1B5B1 /* gongneng_img.png in Resources */,
 				92B47F161BA2DE12001B2048 /* zhaochewei_location_click@2x.png in Resources */,
+				2E29F4ED1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib in Resources */,
 				4C0952601C34C0F90098BA4C /* HelpView.xib in Resources */,
 				331565E31B280EB900369C78 /* zuji_icon3@2x.png in Resources */,
 				335425E41B70B08300FD23A5 /* zhaochewei_jiantou@2x.png in Resources */,
@@ -9388,7 +9392,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9468,7 +9472,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
