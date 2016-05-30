@@ -19,7 +19,7 @@
 //        service_time：保养服务时间；
 //        finished_time：完成时间；
         
-        self.add_time = [NSString stringWithFormat:@"%@",dic[@"add_time"]];
+        self.add_time = [NSString stringWithFormat:@"%@",dic[@"tenantName"]];
         self.amount_paid = [NSString stringWithFormat:@"%@",dic[@"price"]];
         if ([PublicUtils checkNSNullWithgetString:dic[@"buyer_email"]] != nil) {
             self.buyer_email = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"buyer_email"]]];
@@ -31,20 +31,20 @@
         if ([PublicUtils checkNSNullWithgetString:dic[@"finished_time"]] != nil) {
             self.finished_time = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"finished_time"]]];
         }
-        self.goods_name = dic[@"goods_name"];
+        self.goods_name = dic[@"carService"][@"serviceName"];
         self.orderId = [NSString stringWithFormat:@"%@",dic[@"id"]];
-        self.order_sn = [NSString stringWithFormat:@"%@",dic[@"order_sn"]];
-        if ([PublicUtils checkNSNullWithgetString:dic[@"pay_time"]] != nil) {
-            self.pay_time = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"pay_time"]]];
+        self.order_sn = [NSString stringWithFormat:@"%@",dic[@"carService"][@"id"]];
+        if ([PublicUtils checkNSNullWithgetString:dic[@"carService"][@"serviceCategory"][@"modifyDate"]] != nil) {
+            self.pay_time = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"carService"][@"serviceCategory"][@"modifyDate"]]];
         }
-        self.seller_id = [NSString stringWithFormat:@"%@",dic[@"seller_id"]];
-        self.seller_name = [NSString stringWithFormat:@"%@",dic[@"seller_name"]];
-        self.service_time = dic[@"service_time"];
-        self.status = [NSString stringWithFormat:@"%@",dic[@"status"]];
+        self.seller_id = [NSString stringWithFormat:@"%@",dic[@"carService"][@"serviceCategory"][@"id"]];
+        self.seller_name = [NSString stringWithFormat:@"%@",dic[@"carService"][@"serviceCategory"][@"serviceCategory"]];
+        self.service_time = dic[@"carService"][@"serviceCategory"][@"createDate"];
+        self.status = [NSString stringWithFormat:@"%@",dic[@"chargeStatus"]];
         self.type = [NSString stringWithFormat:@"%@",dic[@"type"]];
         self.price = dic[@"price"];
         self.cate_id_2 = dic[@"cate_id_2"];
-        self.classification_name = dic[@"classification_name"];
+        self.classification_name = dic[@"carService"][@"serviceName"];
         
         
     }

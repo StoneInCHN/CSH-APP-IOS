@@ -121,7 +121,7 @@
         
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSDictionary *carDic = (NSDictionary*)responseObjcet;
-        if (carDic) {
+        if ([carDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
             NSLog(@"%@",carDic);
             NSArray *sectionArr = (NSArray*)[carDic valueForKey:@"msg"];
             NSMutableArray *zimu = [NSMutableArray array];

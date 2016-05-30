@@ -33,7 +33,7 @@
 //        }
 //    }
     NSMutableAttributedString* carNumberAttributeString = nil;
-    NSLog(@"device==%@",dicMsg[@"deviceNo"]);
+    
     if([[NSString stringWithFormat:@"%@",dicMsg[@"deviceNo"]] isEqualToString:@"<null>"]){
          carNumberAttributeString = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",dicMsg[@"plate"],@"(未绑定设备)"]];
         NSString* currentPlate = [NSString stringWithFormat:@"%@",dicMsg[@"plate"]];

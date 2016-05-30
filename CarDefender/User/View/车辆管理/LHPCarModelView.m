@@ -70,7 +70,7 @@
         
         NSDictionary *dataDic = (NSDictionary *)object;
         NSLog(@"datadic===%@",dataDic);
-        if (dataDic) {
+        if ([dataDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
             _modelArray=dataDic[@"msg"];
             //NSLog(@"modelarray===%@",_modelArray);
             if (_modelTableView==nil) {
@@ -78,6 +78,10 @@
             }else{
                 [_modelTableView reloadData];
             }
+        }else{
+            
+            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"desc"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
         }
 
     

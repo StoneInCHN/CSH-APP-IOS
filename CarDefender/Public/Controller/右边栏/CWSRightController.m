@@ -86,7 +86,9 @@
 #pragma mark - 获取数据
 -(void)getData
 {
-    [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+    //新接口
+    [self getCarData];
+    /*[MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     if (KUserManager.uid!=nil) {//登录
         [ModelTool httpGetAppGainCarsWithParameter:@{@"uid":KUserManager.uid,@"key":KUserManager.key,@"page":@"1"} success:^(id object) {
             MyLog(@"%@",object);
@@ -124,7 +126,44 @@
 //        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
 //        [self showHint:@"请先登录后再使用本功能"];
     }
-    
+    */
+}
+//新接口
+-(void)getCarData{
+    [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+    [HttpHelper searchVehicleListWithUserID:KUserInfo.desc token:KUserInfo.token success:^(AFHTTPRequestOperation *operation,id object){
+        
+        MyLog(@"%@",object);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+            if ([object[@"code"] isEqualToString:SERVICE_SUCCESS]) {
+                _dataArray = [NSMutableArray arrayWithArray:object[@"msg"]];
+                if (_dataArray.count>0) {
+                    [_dataDic setObject:_dataArray forKey:@"绑定车辆列表"];
+                    for (NSDictionary*dic in _dataArray) {
+                        if (dic[@"isDefault"] ) {
+                            [_dataDic setObject:dic forKey:@"默认车辆"];
+                        }
+                    }
+                    [_tableView reloadData];
+                    //                    [self uploadPoint];
+                }else{
+                    _dataArray=[NSMutableArray arrayWithArray:@[]];
+                    [_dataDic setObject:@{@"boundJson":@"sdklfjal",@"plate":@"绑定"} forKey:@"默认车辆"];
+                    [_dataDic setObject:_dataArray forKey:@"绑定车辆列表"];
+                    [_tableView reloadData];
+                }
+            }else{
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"data"][@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        });
+
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"获取失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }];
 }
 #pragma mark - tableView数据源协议
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -194,7 +233,7 @@
             imagName=@"";
             cell.carImgView.image=[UIImage imageNamed:nil];
         }else{
-            NSString*url=[NSString stringWithFormat:@"http://115.28.161.11:8080/XAI/appDownLoad/downLoadPhoto?path=%@",dic[@"boundJson"]];
+            NSString*url=[NSString stringWithFormat:@"%@%@",kBaseUrl, dic[@"brandIcon"]];
             NSURL*logoImgUrl=[NSURL URLWithString:url];
             [cell.carImgView setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:imagName] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
         }

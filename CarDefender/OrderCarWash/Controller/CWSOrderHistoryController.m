@@ -69,10 +69,59 @@
     [self.orderConfirmView  removeFromSuperview];
     [ModelTool stopAllOperation];
 }
+//新接口
+-(void)newGetDataPage:(int)page{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:KUserInfo.desc forKey:@"userId"];
+    [dic setValue:KUserInfo.token forKey:@"token"];
+    [dic setObject:@(page) forKey:@"pageNumber"];
+    [dic setObject:@20 forKey:@"pageSize"];
+    [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+    [HttpHelper searchCarServicePurchaseListWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
+        NSLog(@"----------我的订单信息---------%@",object);
+        NSDictionary *dataDic = (NSDictionary *)object;
+        dispatch_async(dispatch_get_main_queue(), ^{
+        if ([dataDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            for (NSDictionary* lDic in dataDic[@"msg"]) {
+                CWSHistoryOrder* oredr = [[CWSHistoryOrder alloc] initWithDic:lDic];
+                [_dataArray addObject:oredr];
+            }
+            
+            if (_dataArray.count == 0) {
+                
+                [self creatNoDataView];
+                self.navigationItem.rightBarButtonItem = nil;
+                
+            }
+            else {
+                [_noDataView removeFromSuperview];
+                //1.创建界面
+                [self creatTableView];
+            }
+            
+        }
+        else  {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            
+        }
+        
+        [_tableView reloadData];
+        [self loadShareDataInPage];
+    });
+     
 
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    }];
+}
 -(void)getDataWithPage:(int)page{
-    
-#if USENEWVERSION
+    [self newGetDataPage:page];
+/*#if USENEWVERSION
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:KUserManager.uid forKey:@"uid"];
     [dic setValue:KUserManager.mobile forKey:@"mobile"];
@@ -164,7 +213,7 @@
     
 #endif
     
-    
+  */
     
 }
 #pragma mark - 创建TableView
@@ -478,7 +527,7 @@
 #pragma mark - TabelView代理协议
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-#if USENEWVERSION
+//#if USENEWVERSION
     
     if (_dataArray.count>0) {
         _order = _dataArray[indexPath.row];
@@ -489,7 +538,8 @@
     NSDictionary* dic = @{@"uid":KUserManager.uid,
                           @"mobile":KUserManager.mobile,
                           @"orderId":_order.orderId};
-    
+    [self getOrderDetail:dic];
+    /*
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     [ModelTool getMyOrderDetaikWithParameter:dic andSuccess:^(id object) {
         
@@ -555,7 +605,7 @@
     }];
     
 #endif
-    
+  */
 }
 #pragma mark - tableView代理协议
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -570,7 +620,38 @@
     }
 }
 
-#pragma mark - delegate
+//新接口
+-(void)getOrderDetail:(NSDictionary*)dic{
+    [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+    [HttpHelper searchCarServiceRecordDetailWithUserDic:dic success:^(AFHTTPRequestOperation *operatrion,id object){
+        NSDictionary* dicData = object;
+        MyLog(@"%@",dic);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([dicData[@"code"] isEqualToString:SERVICE_SUCCESS]) {
+                OrderWash* orderWash = [[OrderWash alloc] initWithDic:dicData[@"msg"]];
+                CWSCarWashDetileController* lController = [[CWSCarWashDetileController alloc] init];
+                if ([_order.status integerValue]==1 ) {
+                    lController.state = 1;
+                    orderWash.washID = _order.orderId;
+                    //                    orderWash.uno = _order.uno;
+                    //                    orderWash.time = _order.date;
+                }
+                else {
+                    lController.state = 0;
+                }
+                lController.time = self.time;
+                lController.orderWash = orderWash;
+                [self.navigationController pushViewController:lController animated:YES];
+            }
+        });
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation,NSError *errot){
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        UIAlertView *alter = [[UIAlertView alloc]initWithTitle:@"提示" message:@"网络错误" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alter show];
+    }];
+
+}
 
 
 

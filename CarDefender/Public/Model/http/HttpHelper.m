@@ -39,6 +39,8 @@
 
 #define KHTTPHELPER_VEHICLEBINDDEVICE_INSERT_URL @"/csh-interface/vehicle/bindDevice.jhtml"//用户绑定车辆与设备
 #define KHTTPHELPER_VEHICLESETDEFAULT_INSERT_URL @"/csh-interface/vehicle/setDefault.jhtml"//用户设置默认车辆
+#define KHTTPHELPER_VEHICLESERVICEPURCHASELIST_SEARCH_URL @"/csh-interface/carService/purchaseList.jhtml"//用户购买汽车服务列表
+#define KHTTPHELPER_VEHICLESERVICERECORDDETAIL_SEARCH_URL @"/csh-interface/carService/recordDetail.jhtml"//用户购买汽车服务记录详情（订单详情)
 
 @implementation HttpHelper
 
@@ -528,13 +530,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLEBRAND_SEARCH_URL];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url :%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+    [self requestWithHttpURL:urlString andParamDict:parmDict andSuccess:success andFailer:failure];
 }
 #pragma mark 根据车辆品牌查询车系
 + (void)searchVehicleLineByBrandWithUserID:(NSString *)userId
@@ -550,13 +546,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLEBYBRAND_SEARCH_URL];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url :%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+    [self requestWithHttpURL:urlString andParamDict:parmDict andSuccess:success andFailer:failure];
 }
 
 #pragma mark 根据车辆车系查询车型
@@ -573,13 +563,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLEBYDETAILBRAND_SEARCH_URL];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url :%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+    [self requestWithHttpURL:urlString andParamDict:parmDict andSuccess:success andFailer:failure];
     
     
 }
@@ -594,13 +578,8 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLELIST_SEARCH_URL];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url 车辆列表:%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+    [self requestWithHttpURL:urlString andParamDict:parmDict andSuccess:success andFailer:failure];
+
 }
 
 #pragma mark 添加车辆
@@ -610,13 +589,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLEADD_SEARCH_URL];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url 添加车辆:%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:vehicleDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+   [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
     
 }
 #pragma mark 编辑车辆
@@ -626,13 +599,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLEEDIT_SEARCH_URL];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url 编辑车辆:%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:vehicleDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+    [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
 }
 
 #pragma mark 用户绑定车辆与设备
@@ -642,13 +609,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLEBINDDEVICE_INSERT_URL];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url用户绑定车辆与设备:%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:vehicleDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+    [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
 }
 #pragma mark 用户设置默认车辆
 + (void)insertDeviceSetDefaultWithUserDic:(NSDictionary *)vehicleDic
@@ -657,13 +618,37 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLESETDEFAULT_INSERT_URL];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url用户绑定车辆与设备:%@",urlString);
+   [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
+}
+#pragma mark 用户购买汽车服务列表
++ (void)searchCarServicePurchaseListWithUserDic:(NSDictionary *)parmDict
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLESERVICEPURCHASELIST_SEARCH_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"adertisment image url用户购买汽车服务列表:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:parmDict andSuccess:success andFailer:failure];
+
+}
+
+#pragma mark 用户购买汽车服务列表（订单列表）
+
++ (void)searchCarServiceRecordDetailWithUserDic:(NSDictionary *)parmDict
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLESERVICERECORDDETAIL_SEARCH_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"adertisment image url用户购买汽车服务列表:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:parmDict andSuccess:success andFailer:failure];
+}
+//post方法
++(void)requestWithHttpURL:(NSString*)urlString  andParamDict:(NSDictionary*)thyParamDict andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success andFailer:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:vehicleDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:thyParamDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(operation,responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(operation,error);
     }];
 }
-
 @end

@@ -74,7 +74,7 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSDictionary *objectDic = (NSDictionary*)object;
         NSLog(@"%@==%@",KUserManager.userCID,self.idString);
-        if ([objectDic[@"code"] isEqualToString:@"0000"]) {
+        if ([objectDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
             if (KUserManager.userCID == nil || [self.idString isEqualToString:[NSString stringWithFormat:@"%@",KUserManager.userCID]]) {
                 NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
                 NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[thyUserDefaults objectForKey:@"userDefaultVehicle"]];

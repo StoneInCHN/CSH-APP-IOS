@@ -826,7 +826,7 @@
     [HttpHelper insertVehicleEditWithUserID:dic success:^(AFHTTPRequestOperation *operation,id object){
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if([object[@"code"] isEqualToString:@"0000"]){
+            if([object[@"code"] isEqualToString:SERVICE_SUCCESS]){
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 MyLog(@"------insert-------%@",object);
                 
@@ -834,8 +834,7 @@
                 NSLog(@"%@",self.editDic);
                 NSString *deviceNo = [NSString stringWithFormat:@"%@",self.editDic[@"deviceNo"]];
                 NSLog(@"%@",deviceNo);
-//                NSLog(@"id=%@",self.editDic[@"id"]);
-//                NSLog(@"caid=%@",KUserManager.userCID);
+
                 if([deviceNo isEqualToString:@"<null>"]){
                     CWSBoundIDViewController* boundIdVc = [[CWSBoundIDViewController alloc]init];
                     boundIdVc.idString = self.editDic[@"id"];
@@ -867,7 +866,7 @@
     [HttpHelper insertVehicleAddWithUserID:dic success:^(AFHTTPRequestOperation *operation,id object){
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSLog(@"object==%@",object);
-        if ([object[@"code"] isEqualToString:@"0000"]) {
+        if ([object[@"code"] isEqualToString:SERVICE_SUCCESS]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 if (!KUserManager.userCID) {

@@ -255,7 +255,7 @@
         MyLog(@"--------车辆管理获取信息-------%@",object);
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if([object[@"code"] isEqualToString:@"0000"]){
+            if([object[@"code"] isEqualToString:SERVICE_SUCCESS]){
                 _dataArray = object[@"msg"];
                 
                 if(_dataArray.count > 0){
@@ -509,7 +509,7 @@
                
                
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if([object[@"code"] isEqualToString:@"0000"]){
+                    if([object[@"code"] isEqualToString:SERVICE_SUCCESS]){
                         MyLog(@"-------------%@",object);
                         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                         //显示默认

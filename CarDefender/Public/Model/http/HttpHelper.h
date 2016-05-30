@@ -167,11 +167,26 @@
                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark 车辆品牌查询
+
+/**
+ * 车辆品牌查询
+ *
+ *  @param  userId:用户ID   token: (登陆获取)
+ *  @param success 成功回调数据
+ *  @param failure 失败回调数据
+ */
 + (void)searchVehicleBrandWithUserID:(NSString *)userId
                                token:(NSString *)token
                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 #pragma mark 根据车辆品牌查询车系
+/**
+ * 根据车辆品牌查询车系
+ *
+ *  @param  userId:用户ID   token: (登陆获取)  brankId:品牌id
+ *  @param success 成功回调数据
+ *  @param failure 失败回调数据
+ */
 + (void)searchVehicleLineByBrandWithUserID:(NSString *)userId
                                      token:(NSString *)token
                                    brankId:(NSNumber*)brankId
@@ -179,35 +194,100 @@
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark 根据车辆车系查询车型
+/**
+ * 根据车辆品牌查询车系
+ *
+ *  @param  userId:用户ID   token: (登陆获取)  brankId:车系id
+ *  @param success 成功回调数据
+ *  @param failure 失败回调数据
+ */
 + (void)searchVehicleBrandDetailByLineWithUserID:(NSString *)userId
                                            token:(NSString *)token
                                          brankId:(NSNumber*)brankId
                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 #pragma mark 车辆列表
+/**
+ * 车辆品牌查询
+ *
+ *  @param  userId:用户ID   token: (登陆获取)
+ *  @param success 成功回调数据
+ *  @param failure 失败回调数据
+ */
 + (void)searchVehicleListWithUserID:(NSString *)userId
                               token:(NSString *)token
                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark 添加车辆
+/**
+ *  添加车辆
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"plateNo":,@"brandDetailId":,@"vehicleNo":,@"trafficInsuranceExpiration":,@"driveMileage":,@"nextAnnualInspection":,@"lastMaintainMileage":}  uid:用户ID   key:APP KEY(登陆获取)
+ *  @param success 成功回调数据
+ *  @param failure   失败回调数据
+ */
 + (void)insertVehicleAddWithUserID:(NSDictionary *)vehicleDic
                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark 编辑车辆
+/**
+ * 编辑车辆
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"plateNo":,@"brandDetailId":,@"vehicleNo":,@"trafficInsuranceExpiration":,@"driveMileage":,@"nextAnnualInspection":,@"lastMaintainMileage":}  )
+ *  @param success 成功回调数据
+ *  @param failure   失败回调数据
+ */
 + (void)insertVehicleEditWithUserID:(NSDictionary *)vehicleDic
                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark 用户绑定车辆与设备
+/**
+ * 用户绑定车辆与设备
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"deviceNo": ,@"vihicleId": }
+ *  @param modelsuccess 成功回调数据
+ *  @param modelfaile   失败回调数据
+ */
 + (void)insertBindDeviceWithUserDic:(NSDictionary *)vehicleDic
                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark 用户设置默认车辆
+/**
+ * 用户设置默认车辆
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"vihicleId": }
+ *  @param modelsuccess 成功回调数据
+ *  @param modelfaile   失败回调数据
+ */
 + (void)insertDeviceSetDefaultWithUserDic:(NSDictionary *)vehicleDic
                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark 用户购买汽车服务列表：
+/**
+ * 用户设置默认车辆
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"pageNumber": ,@"pageSize"}
+ *  @param modelsuccess 成功回调数据
+ *  @param modelfaile   失败回调数据
+ */
++ (void)searchCarServicePurchaseListWithUserDic:(NSDictionary *)vehicleDic
+                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 用户购买汽车服务列表（订单列表）
+/**
+ * 用户设置默认车辆
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"recordId": }
+ *  @param modelsuccess 成功回调数据
+ *  @param modelfaile   失败回调数据
+ */
++ (void)searchCarServiceRecordDetailWithUserDic:(NSDictionary *)vehicleDic
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end

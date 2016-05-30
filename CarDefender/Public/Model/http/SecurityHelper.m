@@ -19,7 +19,7 @@
     [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject :%@",responseObject);
         NSDictionary *dict = (NSDictionary *)responseObject;
-        if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
+        if ([[dict objectForKey:@"code"] isEqualToString:SERVICE_SUCCESS]) {
             success(operation,[dict objectForKey:@"desc"]);
         } else {
             failure(operation,[dict objectForKey:@"desc"]);

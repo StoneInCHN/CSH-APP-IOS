@@ -121,6 +121,7 @@
                                           [MBProgressHUD showError:@"登陆失败" toView:self.view];
                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                           self.loginBtn.userInteractionEnabled = YES;
+                                          
                                       }
                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                   [MBProgressHUD showError:@"登陆失败" toView:self.view];
