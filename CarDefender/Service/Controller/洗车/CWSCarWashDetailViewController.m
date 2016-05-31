@@ -460,7 +460,8 @@
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)selectedModel.productID ] forKey:@"goods_id"];
     [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.productName] forKey:@"goods_name"];
     [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.discountPrice] forKey:@"discount_price"];
-    [dic setValue:[NSString stringWithFormat:@"%d",selectedModel.isDiscount] forKey:@"is_discount_price"];
+//    [dic setValue:[NSString stringWithFormat:@"%d",selectedModel.isDiscount] forKey:@"is_discount_price"];
+    [dic setValue:[NSString stringWithFormat:@"%d",YES] forKey:@"is_discount_price"];
     [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.merchantsName] forKey:@"store_name"];
     //判断是否有优惠
     if(selectedModel.isDiscount){

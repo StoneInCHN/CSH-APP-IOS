@@ -309,18 +309,26 @@
 #pragma mark -===========================================================CellDelegate
 -(void)selectTableViewButtonClicked:(UIButton*)sender Red:(NSInteger)red ID:(NSInteger)idNumber andDataDict:(NSDictionary *)thyDict{
     if([sender.titleLabel.text isEqualToString:@"支付"]){
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:[NSString stringWithFormat:@"%ld",(long)thyDict[@"store_id"] ] forKey:@"store_id"];
+        [dic setValue:KUserManager.uid forKey:@"uid"];
+        [dic setValue:[NSString stringWithFormat:@"%ld",(long)thyDict[@"service_id"] ] forKey:@"goods_id"];
+        [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"serviceName"]] forKey:@"goods_name"];
+        [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"promotion_price"]] forKey:@"discount_price"];
+        [dic setValue:[NSString stringWithFormat:@"%d",YES] forKey:@"is_discount_price"];
+        [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"tenantName"]] forKey:@"store_name"];
         //tag为0表示红包标志为0，表示不能红包支付
         if(red){
             CWSPayViewController* payVc = [CWSPayViewController new];
             payVc.isRedpackageUseable = YES;
-            [payVc setDataDict:thyDict];
+            [payVc setDataDict:dic];
             [self.navigationController pushViewController:payVc animated:YES];
         }else{
 //            CWSPayWithoutRedPackageViewController* payWithoutRedPackageVc = [CWSPayWithoutRedPackageViewController new];
 //            [self.navigationController pushViewController:payWithoutRedPackageVc animated:YES];
             CWSPayViewController* payVc = [CWSPayViewController new];
             payVc.isRedpackageUseable = YES;
-            [payVc setDataDict:thyDict];
+            [payVc setDataDict:dic];
             [self.navigationController pushViewController:payVc animated:YES];
         }
     }else if([sender.titleLabel.text isEqualToString:@"预约"]){
