@@ -29,4 +29,11 @@
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     return confromTimespStr;
 }
+
++ (NSString *)convertNULLToString:(id)data {
+    if ([data isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return [NSString stringWithFormat:@"%@",data];
+}
 @end

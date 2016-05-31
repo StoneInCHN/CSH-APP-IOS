@@ -12,5 +12,6 @@
 
 + (BOOL)isStringEmpty:(NSString *)string;
 + (NSString *)convertDateViaTimeStamp:(double)timeStamp;
++ (NSString *)convertNULLToString:(id)data;
 
 @end

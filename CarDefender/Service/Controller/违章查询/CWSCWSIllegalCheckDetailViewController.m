@@ -29,16 +29,17 @@
 }
 - (void)updateUI {
     self.headCarImageView.image = [UIImage imageNamed:@"logo"];
+    self.headCarBrandLabel.text = [Helper convertNULLToString:self.dic[@"plate"]];
     self.headCarBrandLabel.text = [PublicUtils checkNSNullWithgetString:self.dic[@"plate"]];
     if ([self.dic[@"score"] isKindOfClass:[NSNull class]]) {
         self.gradeLabel.text = @"0";
     } else {
-        self.gradeLabel.text = self.dic[@"score"];
+        self.gradeLabel.text = [NSString stringWithFormat:@"%@",self.dic[@"score"]];
     }
     if ([self.dic[@"finesAmount"] isKindOfClass:[NSNull class]]) {
         self.moneyLabel.text = @"0";
     } else {
-        self.moneyLabel.text = self.dic[@"finesAmount"];
+        self.moneyLabel.text = [NSString stringWithFormat:@"%@",self.dic[@"finesAmount"]];
     }
     self.illegalLabel.text = [PublicUtils checkNSNullWithgetString:self.dic[@"illegalContent"]];
     self.addressLabel.text = [PublicUtils checkNSNullWithgetString:self.dic[@"illegalAddress"]];

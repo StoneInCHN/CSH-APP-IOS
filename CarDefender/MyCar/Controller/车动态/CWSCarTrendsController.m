@@ -202,35 +202,37 @@
 }
 - (void)initWithData {
     UserInfo *userInfo = [UserInfo userDefault];
-    [HttpHelper carTrendsWithUserId:userInfo.desc
-                              token:userInfo.token
-                           deviceNo:userInfo.defaultDeviceNo
-                            success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
-                                NSLog(@"car trends response :%@",responseObjcet);
-                                NSDictionary *dict = (NSDictionary *)responseObjcet;
-                                userInfo.token = dict[@"token"];
-                                NSString *code = dict[@"code"];
-                                if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        _azimuth = dict[@"azimuth"];
-                                        CLLocationCoordinate2D  lPoint = CLLocationCoordinate2DMake([dict[@"msg"][@"lat"] floatValue], [dict[@"msg"][@"lon"] floatValue]);
-                                        [_locationDicArray addObject:@{@"latitude":[NSString stringWithFormat:@"%f",lPoint.latitude],@"longitude":[NSString stringWithFormat:@"%f",lPoint.longitude]}];
-                                        NSLog(@"location dic array:%@",_locationDicArray);
-                                        self.mileageLabel.text = [NSString stringWithFormat:@"%@km",dict[@"msg"][@"mileAge"]];
-                                        self.timeLabel.text = [NSString stringWithFormat:@"%@s",dict[@"msg"][@"engineRuntime"]];
-                                        self.speedLabel.text = [NSString stringWithFormat:@"%@km/h",dict[@"msg"][@"speed"]];
-                                        self.oilLabel.text = [NSString stringWithFormat:@"%@/100km",dict[@"msg"][@"averageOil"]];
-                                        [self dingwei:lPoint];
-                                    });
-                                } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
-                                } else {
-                                    [MBProgressHUD showError:dict[@"desc"] toView:self.view];
-                                }
-                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                NSLog(@"one key error :%@",error);
-                                [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
-                            }];
+    if (!_shouji) {
+        [HttpHelper carTrendsWithUserId:userInfo.desc
+                                  token:userInfo.token
+                               deviceNo:userInfo.defaultDeviceNo
+                                success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                    NSLog(@"car trends response :%@",responseObjcet);
+                                    NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                    userInfo.token = dict[@"token"];
+                                    NSString *code = dict[@"code"];
+                                    if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            _azimuth = dict[@"azimuth"];
+                                            CLLocationCoordinate2D  lPoint = CLLocationCoordinate2DMake([dict[@"msg"][@"lat"] floatValue], [dict[@"msg"][@"lon"] floatValue]);
+                                            [_locationDicArray addObject:@{@"latitude":[NSString stringWithFormat:@"%f",lPoint.latitude],@"longitude":[NSString stringWithFormat:@"%f",lPoint.longitude]}];
+                                            NSLog(@"location dic array:%@",_locationDicArray);
+                                            self.mileageLabel.text = [NSString stringWithFormat:@"%@km",dict[@"msg"][@"mileAge"]];
+                                            self.timeLabel.text = [NSString stringWithFormat:@"%@s",dict[@"msg"][@"engineRuntime"]];
+                                            self.speedLabel.text = [NSString stringWithFormat:@"%@km/h",dict[@"msg"][@"speed"]];
+                                            self.oilLabel.text = [NSString stringWithFormat:@"%@/100km",dict[@"msg"][@"averageOil"]];
+                                            [self dingwei:lPoint];
+                                        });
+                                    } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                    } else {
+                                        [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                    }
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    NSLog(@"one key error :%@",error);
+                                    [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                }];
+    }
 }
 
 #pragma mark - 右键
@@ -471,10 +473,11 @@
         UIButton* btn = (UIButton*)[self.view viewWithTag:lBtn.tag+1];
         [btn setBackgroundImage:[UIImage imageNamed:@"dongtai_myphone"] forState:UIControlStateNormal];
         
-        [self GPSNewCarInfoRun];
+//        [self GPSNewCarInfoRun];
+        [self initWithData];
     }else{
         _shouji = YES;
-//        [_locationDicArray removeAllObjects];
+        [_locationDicArray removeAllObjects];
         MyLog(@"手机");
 //        _backgroundView1.hidden = YES;
 //        _backgroundView2.hidden = YES;
