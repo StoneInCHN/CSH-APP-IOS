@@ -58,6 +58,7 @@
     NSString* payMethodString;
     
     UserInfo *userInfo;
+    NSMutableDictionary* wallertDict;//钱包数据
 }
 @property (nonatomic,strong) UIScrollView* myScrollView;
 @end
@@ -134,7 +135,7 @@
            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
            if([responseObjcet[@"code"] isEqualToString:SERVICE_SUCCESS]){
     
-                NSMutableDictionary* wallertDict = [NSMutableDictionary dictionaryWithDictionary:responseObjcet[@"msg"]];
+                wallertDict = [NSMutableDictionary dictionaryWithDictionary:responseObjcet[@"msg"]];
                 for (NSString* key in [wallertDict allKeys]) {
                     [wallertDict setObject:[PublicUtils checkNSNullWithgetString:[wallertDict valueForKey:key]] forKeyedSubscript:key];
                 }
@@ -143,10 +144,11 @@
 //                NSDictionary* testDict = @{@"money":@"40",@"red":@"10"};
                 
                 KUserManager.userWalletInfo = wallertDict.mutableCopy;
+               
                 NSString* realPrice = [NSString stringWithFormat:@"%@",[self.dataDict[@"is_discount_price"] intValue] ? self.dataDict[@"discount_price"] : self.dataDict[@"price"]];
                 settleMoney = [realPrice floatValue];
                 payMethodString = @"";
-                MyLog(@"原价%@-余额%@-红包%@",realPrice,KUserManager.userWalletInfo[@"balanceAmount"],KUserManager.userWalletInfo[@"giftAmount"]);
+                MyLog(@"原价%@-余额%@-红包%@",realPrice, wallertDict[@"balanceAmount"], wallertDict[@"giftAmount"]);
                 MyLog(@"%f",settleMoney);
                 /////////在这里进行判断//////////
                 if(self.isRedpackageUseable){
@@ -190,15 +192,15 @@
 //                            balanceMoney = [KUserManager.userWalletInfo[@"money"] floatValue];
 //                        }
 //                    }
-                    if([self.dataDict[@"goods_name"] isEqualToString:@"普洗"]){
-                        if([KUserManager.userWalletInfo[@"red"] floatValue] >= settleMoney){
+//                    if([self.dataDict[@"goods_name"] isEqualToString:@"普洗"]){
+                        if([wallertDict[@"giftAmount"] floatValue] >= settleMoney){
                             payMethodView.hidden = YES;
                             balanceUsedView.hidden = YES;
                             totalHeight = totalHeight - (payMethodView.frame.size.height+balanceUsedView.frame.size.height);
                             redMoney = settleMoney;
                         }else{
-                            redMoney = [KUserManager.userWalletInfo[@"red"] floatValue];
-                            if([KUserManager.userWalletInfo[@"money"] floatValue] >= (settleMoney-redMoney)){
+                            redMoney = [wallertDict[@"giftAmount"] floatValue];
+                            if([wallertDict[@"balanceAmount"] floatValue] >= (settleMoney-redMoney)){
                                 balanceUsedView.hidden = NO;
                                 payMethodView.hidden = YES;
                                 totalHeight = totalHeight - payMethodView.frame.size.height;
@@ -209,24 +211,24 @@
                                 balanceMoney = 0.00f;
                             }
                         }
-                    }else{
-                        NSString* resultPrice = [NSString stringWithFormat:@"%f",0.15 * [realPrice floatValue]];
-                        if([KUserManager.userWalletInfo[@"red"] floatValue] >= [resultPrice floatValue]){
-                            redMoney = [resultPrice floatValue];
-                        }else{
-                            redMoney = [KUserManager.userWalletInfo[@"red"] floatValue];
-                        }
-                        if([KUserManager.userWalletInfo[@"money"] floatValue] >= (settleMoney-redMoney)){
-                            balanceUsedView.hidden = NO;
-                            payMethodView.hidden = YES;
-                            totalHeight -= payMethodView.frame.size.height;
-                            balanceMoney = settleMoney-redMoney;
-                        }else{
-                            payMethodView.hidden = NO;
-                            balanceUsedView.hidden = YES;
-                            balanceMoney = 0.00f;
-                        }
-                    }
+//                    }else{
+//                        NSString* resultPrice = [NSString stringWithFormat:@"%f",0.15 * [realPrice floatValue]];
+//                        if(tempRedMoney >= [resultPrice floatValue]){
+//                            redMoney = [resultPrice floatValue];
+//                        }else{
+//                            redMoney = tempRedMoney;
+//                        }
+//                        if(tempBalanceMoney >= (settleMoney-redMoney)){
+//                            balanceUsedView.hidden = NO;
+//                            payMethodView.hidden = YES;
+//                            totalHeight -= payMethodView.frame.size.height;
+//                            balanceMoney = settleMoney-redMoney;
+//                        }else{
+//                            payMethodView.hidden = NO;
+//                            balanceUsedView.hidden = YES;
+//                            balanceMoney = 0.00f;
+//                        }
+//                    }
 
 
                 }else{
@@ -623,19 +625,19 @@
                         balanceMoney = 0;
                     }
                     
-                    if(balanceUsedView.hidden){
-                        balanceUsedView.hidden = NO;
-                        totalHeight += balanceUsedView.frame.size.height;
-                    }
+//                    if(balanceUsedView.hidden){
+//                        balanceUsedView.hidden = NO;
+//                        totalHeight += balanceUsedView.frame.size.height;
+//                    }
                 }
                 
             }else{
                 tempRedMoney = redMoney;
-                if([KUserManager.userWalletInfo[@"money"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on && [KUserManager.userWalletInfo[@"money"] floatValue] != 0){
-                    if(balanceUsedView.hidden){
-                        balanceUsedView.hidden  = NO;
-                        totalHeight += balanceUsedView.frame.size.height;
-                    }
+                if([wallertDict[@"balanceAmount"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on && [wallertDict[@"balanceAmount"] floatValue] != 0){
+//                    if(balanceUsedView.hidden){
+//                        balanceUsedView.hidden  = NO;
+//                        totalHeight += balanceUsedView.frame.size.height;
+//                    }
                     balanceMoney += redMoney;
                     redMoney = 0;
                     isBalanceEnough = YES;
@@ -658,10 +660,10 @@
                 
                 balanceMoney = 0;
                 
-                balanceUsedView.hidden = YES;
-                totalHeight -= balanceUsedView.frame.size.height;
+//                balanceUsedView.hidden = YES;
+//                totalHeight -= balanceUsedView.frame.size.height;
                 isBalanceEnough = NO;
-                sender.on = YES;
+//                sender.on = YES;
             }
         }break;
         default:break;

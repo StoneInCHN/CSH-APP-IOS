@@ -11,13 +11,15 @@
 #import "IllegalCheckTableViewCell.h"
 #import "CWSCWSIllegalCheckDetailViewController.h"
 #import "UIImageView+WebCache.h"
-#import "ChangeCarView.h"
+#import "SFPopMenuViewManager.h"
 
 @interface CWSIllegalCheckViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UILabel *_messagelabel;
     NSMutableArray*  _dataArray;
     UserInfo *_userInfo;
+    NSMutableArray *_items;
+    NSString *_currentCarPlate;
 }
 @end
 
@@ -29,6 +31,8 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
     _userInfo = [UserInfo userDefault];
+    _currentCarPlate = _userInfo.defaultVehiclePlate;
+    _items = [NSMutableArray array];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"切换车辆" style:UIBarButtonItemStylePlain target:self action:@selector(changePlate)];
     [self.navigationItem.rightBarButtonItem setTintColor:[UIColor blueColor]];
     [self getData];
@@ -37,15 +41,20 @@
 -(void)getData
 {
     _dataArray = [NSMutableArray array];
+    [self getIllegalRecords];
+    [self getMyCarList];
+}
+- (void)getIllegalRecords {
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     [HttpHelper getIllegalRecordsWithUserId:_userInfo.desc
                                       token:_userInfo.token
-                                      plate:_userInfo.defaultVehiclePlate
+                                      plate:_currentCarPlate
                                     success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                         NSLog(@"get illegal records :%@",responseObjcet);
                                         NSDictionary *dict = (NSDictionary *)responseObjcet;
                                         if ([dict[@"code"] isEqualToString:SERVICE_SUCCESS]) {
+                                            [self.view removeSubviews];
                                             _dataArray = dict[@"msg"];
                                             if ([_dataArray isKindOfClass:[NSNull class]]) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -65,9 +74,29 @@
                                         MyLog(@"%@",error);
                                         [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
                                     }];
-
 }
-
+- (void)getMyCarList {
+    [HttpHelper myCarListWithUserId:_userInfo.desc
+                              token:_userInfo.token
+                            success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                NSLog(@"get my car list :%@",responseObjcet);
+                                NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                NSString *code = dict[@"code"];
+                                if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                    NSArray *msg = dict[@"msg"];
+                                    for (NSDictionary *car in msg) {
+                                        [_items addObject:[car objectForKey:@"plate"]];
+                                    }
+                                } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                } else {
+                                    [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                }
+                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                MyLog(@"%@",error);
+                                [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                            }];
+}
 #pragma mark - 界面
 - (void)initUIWithData
 {
@@ -94,16 +123,14 @@
     _messagelabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_messagelabel];
 }
+
 - (void)changePlate {
-//    NSLog(@"change plate");
-//    CGSize size  = [UIScreen mainScreen].bounds.size;
-//    ChangeCarView *view = [[ChangeCarView alloc] initWithFrame:CGRectMake(size.width - 70,64 , 60, 100)];
-//    view.backgroundColor = [UIColor whiteColor];
-//    view.layer.borderWidth = 1.0;
-//    [UIView animateWithDuration:5.0 animations:^{
-//        [self.view addSubview:view];
-//    }];
-    [MBProgressHUD showSuccess:@"切换车辆 " toView:self.view];
+    SFPopMenuViewManager *manager = [SFPopMenuViewManager manager];
+    [manager showPopMenuViewWithFrame:CGRectMake(self.view.frame.size.width - 60, 0, 110, 40 * _items.count) item:_items didSelected:^(NSInteger index) {
+        NSLog(@"index :%ld",(long)index);
+        _currentCarPlate = _items[index];
+        [self getIllegalRecords];
+    }];
 }
 
 #pragma mark - <UITableViewDataSource,UITableViewDelegate>

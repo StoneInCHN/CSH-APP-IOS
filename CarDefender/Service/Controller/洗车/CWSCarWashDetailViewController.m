@@ -144,6 +144,7 @@
                                                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_commentsArray[j]];
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                                                        
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
@@ -157,6 +158,7 @@
                                                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_normolWashArray[j]];
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                            
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
@@ -168,7 +170,7 @@
                                                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_fineWashArray[j]];
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-                           
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
                                                        cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
@@ -179,7 +181,7 @@
                                                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_maintenanceArray[j]];
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-                                                       
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
                                                        cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
@@ -191,7 +193,7 @@
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-                                                       
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
                                                        cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];

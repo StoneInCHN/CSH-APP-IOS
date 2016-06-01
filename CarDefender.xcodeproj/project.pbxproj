@@ -13,7 +13,9 @@
 		243AB0C51CDA746A00E9FD95 /* SecurityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */; };
 		244556DB1CE9B0D7007679CA /* CWSAdInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 244556D91CE9B0D7007679CA /* CWSAdInfoViewController.m */; };
 		244556DC1CE9B0D7007679CA /* CWSAdInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 244556DA1CE9B0D7007679CA /* CWSAdInfoViewController.xib */; };
-		248D04981CF0A1A400FE1A46 /* ChangeCarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D04971CF0A1A400FE1A46 /* ChangeCarView.m */; };
+		2477E8DC1CFF1B5E00CCC540 /* SFPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8D71CFF1B5E00CCC540 /* SFPopMenuView.m */; };
+		2477E8DD1CFF1B5E00CCC540 /* SFTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */; };
+		2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */; };
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
@@ -1247,8 +1249,12 @@
 		244556D81CE9B0D7007679CA /* CWSAdInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSAdInfoViewController.h; sourceTree = "<group>"; };
 		244556D91CE9B0D7007679CA /* CWSAdInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSAdInfoViewController.m; sourceTree = "<group>"; };
 		244556DA1CE9B0D7007679CA /* CWSAdInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSAdInfoViewController.xib; sourceTree = "<group>"; };
-		248D04961CF0A1A400FE1A46 /* ChangeCarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeCarView.h; sourceTree = "<group>"; };
-		248D04971CF0A1A400FE1A46 /* ChangeCarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeCarView.m; sourceTree = "<group>"; };
+		2477E8D61CFF1B5E00CCC540 /* SFPopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPopMenuView.h; sourceTree = "<group>"; };
+		2477E8D71CFF1B5E00CCC540 /* SFPopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPopMenuView.m; sourceTree = "<group>"; };
+		2477E8D81CFF1B5E00CCC540 /* SFTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTableViewDelegate.h; sourceTree = "<group>"; };
+		2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTableViewDelegate.m; sourceTree = "<group>"; };
+		2477E8DA1CFF1B5E00CCC540 /* SFPopMenuViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPopMenuViewManager.h; sourceTree = "<group>"; };
+		2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPopMenuViewManager.m; sourceTree = "<group>"; };
 		24B921FF1CE3762B004E558E /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		24B922001CE3762B004E558E /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
@@ -3318,6 +3324,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2477E8D51CFF1B5700CCC540 /* 切换车辆 */ = {
+			isa = PBXGroup;
+			children = (
+				2477E8D61CFF1B5E00CCC540 /* SFPopMenuView.h */,
+				2477E8D71CFF1B5E00CCC540 /* SFPopMenuView.m */,
+				2477E8D81CFF1B5E00CCC540 /* SFTableViewDelegate.h */,
+				2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */,
+				2477E8DA1CFF1B5E00CCC540 /* SFPopMenuViewManager.h */,
+				2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */,
+			);
+			path = "切换车辆";
+			sourceTree = "<group>";
+		};
 		24DB9F291CDB354A002B7BD0 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -5075,12 +5094,11 @@
 		335C5C891AC12A47001EA2AC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2477E8D51CFF1B5700CCC540 /* 切换车辆 */,
 				2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */,
 				4C0952611C34D7890098BA4C /* NewCarWashTableHeaderView.h */,
 				4C0952621C34D7890098BA4C /* NewCarWashTableHeaderView.m */,
 				0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */,
-				248D04961CF0A1A400FE1A46 /* ChangeCarView.h */,
-				248D04971CF0A1A400FE1A46 /* ChangeCarView.m */,
 				4CECD2651C22880B0069754C /* 活动专区 */,
 				4CECD2691C22880B0069754C /* 积分商城 */,
 				4C6079101C1EC8B200BDBCE3 /* 一键检测 */,
@@ -8647,6 +8665,7 @@
 				4C21BFC41C31621D00028D56 /* UserAdvertisementInfo.m in Sources */,
 				928A62FE1ACCF3BA0013C666 /* XHMessageTextView.m in Sources */,
 				33507B531AD40C3C00F1F236 /* CarManagerMsg.m in Sources */,
+				2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */,
 				928A62BD1ACCE9C50013C666 /* UIImageView+EMWebCache.m in Sources */,
 				3347093F1AF89424006A5660 /* CWSAboutUsDetailsController.m in Sources */,
 				337798121AEE16C500DAB1A1 /* LHPChooseCarMenulController.m in Sources */,
@@ -8791,6 +8810,7 @@
 				4CB73B2B1C1810F1003A80A1 /* CWSCWSIllegalCheckDetailViewController.m in Sources */,
 				33507BE01AD40CA800F1F236 /* SDImageCache.m in Sources */,
 				4CECD2631C2287EF0069754C /* CWSRecordShopViewController.m in Sources */,
+				2477E8DC1CFF1B5E00CCC540 /* SFPopMenuView.m in Sources */,
 				928A63D01ACCF3F00013C666 /* CreateGroupViewController.m in Sources */,
 				4CDDD1A21C15262600128318 /* CWSCarMaintainInfoModel.m in Sources */,
 				4CC8A3681C0FE4B2000B00B2 /* CWSPurchaseRecomHeaderView.m in Sources */,
@@ -8822,7 +8842,6 @@
 				33C7600A1AC64E4000F4C3A4 /* CWSCarFriendController.m in Sources */,
 				928A62311ACCE96D0013C666 /* NSDate+Category.m in Sources */,
 				4C55D36B1C0C263D00F22902 /* IQUIWindow+Hierarchy.m in Sources */,
-				248D04981CF0A1A400FE1A46 /* ChangeCarView.m in Sources */,
 				4C6079161C1ED3D900BDBCE3 /* CWSDetectionDistanceRecentlyView.m in Sources */,
 				4CD0614E1C3A06A900136B27 /* MJRefreshAutoNormalFooter.m in Sources */,
 				335978251AD696FC0058B6BF /* TSLocateView.m in Sources */,
@@ -9170,6 +9189,7 @@
 				33CA8F2E1B1EFA4600B4BEEE /* CWSMessageCancelBtn.m in Sources */,
 				334708741AF86ACE006A5660 /* CWSRightController.m in Sources */,
 				337113901AD7A40400FF3D54 /* CWSPhoneController.m in Sources */,
+				2477E8DD1CFF1B5E00CCC540 /* SFTableViewDelegate.m in Sources */,
 				3367BC221AD4CD1B0061399C /* RepairCell.m in Sources */,
 				928A62F81ACCF3BA0013C666 /* EMTextView.m in Sources */,
 				3347086A1AF86ACE006A5660 /* CWSLoginController.m in Sources */,
