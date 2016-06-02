@@ -372,10 +372,10 @@
         NSString *evaluation = [NSString stringWithFormat:@"%@",_order.evaluation];
         if ([evaluation isEqualToString:@"<null>"]) {
             [cell.ecaluation setTitle:@"评价" forState:UIControlStateNormal];
-            cell.ecaluation.enabled = YES;
+            cell.ecaluation.hidden = NO;
         }else{
             [cell.ecaluation setTitle:@"已评价" forState:UIControlStateNormal];
-            cell.ecaluation.enabled = NO;
+            cell.ecaluation.hidden = YES;
         }
         
         
