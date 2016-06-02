@@ -144,6 +144,7 @@
                                                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_commentsArray[j]];
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                                                        
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
@@ -157,6 +158,7 @@
                                                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_normolWashArray[j]];
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                            
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
@@ -168,7 +170,7 @@
                                                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_fineWashArray[j]];
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-                           
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
                                                        cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
@@ -179,7 +181,7 @@
                                                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_maintenanceArray[j]];
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-                                                       
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
                                                        cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
@@ -191,7 +193,7 @@
                                                        [dic setValue:model.sectionName forKey:@"type"];
                                                        
                                                        CWSCarWashDiscountModel* discountModel = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
-                                                       
+                                                       discountModel.merchantsName = _currentStoreName;
                                                        [model.realDataArray addObject:discountModel];
                                                        CWSCellHeightModel* cellHeightModel = [[CWSCellHeightModel alloc]init];
                                                        cellHeightModel.currentCellHeight =   [NSString stringWithFormat:@"%f",discountModel.productDetailName ? DISCOUNTCELL_HEIGHT_INFO : DISCOUNTCELL_HEIGHT_NOINFO];
@@ -460,7 +462,8 @@
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)selectedModel.productID ] forKey:@"goods_id"];
     [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.productName] forKey:@"goods_name"];
     [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.discountPrice] forKey:@"discount_price"];
-    [dic setValue:[NSString stringWithFormat:@"%d",selectedModel.isDiscount] forKey:@"is_discount_price"];
+//    [dic setValue:[NSString stringWithFormat:@"%d",selectedModel.isDiscount] forKey:@"is_discount_price"];
+    [dic setValue:[NSString stringWithFormat:@"%d",YES] forKey:@"is_discount_price"];
     [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.merchantsName] forKey:@"store_name"];
     //判断是否有优惠
     if(selectedModel.isDiscount){
@@ -481,10 +484,12 @@
 //                if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
 //                    MyLog(@"-----------支付订单信息--------%@",object);
 //                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//                    CWSPayViewController* appointmentVc = [[CWSPayViewController alloc] init];
-//                    appointmentVc.washDiscountModel = thyModel;
-//                    [self.navigationController pushViewController:appointmentVc animated:YES];
-//                
+                    CWSPayViewController* appointmentVc = [[CWSPayViewController alloc] init];
+                    appointmentVc.washDiscountModel = thyModel;
+                    appointmentVc.isRedpackageUseable = YES;
+                    [appointmentVc setDataDict:dic];
+                    [self.navigationController pushViewController:appointmentVc animated:YES];
+//
 //                }
 //                else {
 //                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];

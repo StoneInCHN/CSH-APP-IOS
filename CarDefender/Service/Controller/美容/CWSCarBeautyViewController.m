@@ -311,16 +311,24 @@
 //}
 -(void)selectTableViewButtonClicked:(UIButton*)sender Red:(NSInteger)red ID:(NSInteger)idNumber andDataDict:(NSDictionary *)thyDict{
     if([sender.titleLabel.text isEqualToString:@"支付"]){
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:[NSString stringWithFormat:@"%ld",(long)thyDict[@"store_id"] ] forKey:@"store_id"];
+        [dic setValue:KUserManager.uid forKey:@"uid"];
+        [dic setValue:[NSString stringWithFormat:@"%ld",(long)thyDict[@"service_id"] ] forKey:@"goods_id"];
+        [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"serviceName"]] forKey:@"goods_name"];
+        [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"promotion_price"]] forKey:@"discount_price"];
+        [dic setValue:[NSString stringWithFormat:@"%d",YES] forKey:@"is_discount_price"];
+        [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"tenantName"]] forKey:@"store_name"];
         //tag为0表示红包标志为0，表示不能红包支付
         if(red){
             CWSPayViewController* payVc = [CWSPayViewController new];
-            [payVc setDataDict:thyDict];
+            [payVc setDataDict:dic];
             payVc.isRedpackageUseable = YES;
             [self.navigationController pushViewController:payVc animated:YES];
         }else{
             
             CWSPayViewController* payVc = [CWSPayViewController new];
-            [payVc setDataDict:thyDict];
+            [payVc setDataDict:dic];
             payVc.isRedpackageUseable = NO;
             [self.navigationController pushViewController:payVc animated:YES];
         }

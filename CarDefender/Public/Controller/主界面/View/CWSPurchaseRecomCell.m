@@ -39,9 +39,9 @@
 
 - (IBAction)payClicked:(UIButton *)sender {
     
-//    if([self.delegate respondsToSelector:@selector(selectTableViewButtonClicked:Red:ID:andDataDict:)]){
-//        [self.delegate selectTableViewButtonClicked:sender Red:[self.thyCommodityDict[@"support_red"] integerValue] ID:[self.thyCommodityDict[@"id"] integerValue] andDataDict:self.thyCommodityDict];
-//    }
+    if([self.delegate respondsToSelector:@selector(selectTableViewButtonClicked:Red:ID:andDataDict:)]){
+        [self.delegate selectTableViewButtonClicked:sender Red:[self.thyCommodityDict[@"support_red"] integerValue] ID:[self.thyCommodityDict[@"id"] integerValue] andDataDict:self.thyCommodityDict];
+    }
     
 }
 

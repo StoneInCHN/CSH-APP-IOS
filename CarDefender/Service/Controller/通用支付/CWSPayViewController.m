@@ -56,6 +56,9 @@
     
     NSInteger payMethodNum; //0支付宝 1微信 2银联
     NSString* payMethodString;
+    
+    UserInfo *userInfo;
+    NSMutableDictionary* wallertDict;//钱包数据
 }
 @property (nonatomic,strong) UIScrollView* myScrollView;
 @end
@@ -100,6 +103,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = KGrayColor3;
+    userInfo = [UserInfo userDefault];
     
     isAddHeight = YES;
     
@@ -123,12 +127,18 @@
 #pragma mark -=============================InitialData
 -(void)loadData{
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-    NSLog(@"%@%@",KUserManager.uid,KUserManager.mobile);
-    [ModelTool getWalletInfoWithParameter:@{@"uid":KUserInfo.desc,@"mobile":KUserInfo.token} andSuccess:^(id object) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                NSMutableDictionary* wallertDict = [NSMutableDictionary dictionaryWithDictionary:object[@"data"]];
+
+//    [ModelTool getWalletInfoWithParameter:@{@"uid":KUserManager.uid,@"mobile":KUserManager.mobile} andSuccess:^(id object) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+    [HttpHelper viewMyWalletWithUserId:userInfo.desc
+                                 token:userInfo.token
+                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+           if([responseObjcet[@"code"] isEqualToString:SERVICE_SUCCESS]){
+    
+                wallertDict = [NSMutableDictionary dictionaryWithDictionary:responseObjcet[@"msg"]];
                 for (NSString* key in [wallertDict allKeys]) {
                     [wallertDict setObject:[PublicUtils checkNSNullWithgetString:[wallertDict valueForKey:key]] forKeyedSubscript:key];
                 }
@@ -137,10 +147,11 @@
 //                NSDictionary* testDict = @{@"money":@"40",@"red":@"10"};
                 
                 KUserManager.userWalletInfo = wallertDict.mutableCopy;
+               
                 NSString* realPrice = [NSString stringWithFormat:@"%@",[self.dataDict[@"is_discount_price"] intValue] ? self.dataDict[@"discount_price"] : self.dataDict[@"price"]];
                 settleMoney = [realPrice floatValue];
                 payMethodString = @"";
-                MyLog(@"原价%@-余额%@-红包%@",realPrice,KUserManager.userWalletInfo[@"money"],KUserManager.userWalletInfo[@"red"]);
+                MyLog(@"原价%@-余额%@-红包%@",realPrice, wallertDict[@"balanceAmount"], wallertDict[@"giftAmount"]);
                 MyLog(@"%f",settleMoney);
                 /////////在这里进行判断//////////
                 if(self.isRedpackageUseable){
@@ -184,15 +195,15 @@
 //                            balanceMoney = [KUserManager.userWalletInfo[@"money"] floatValue];
 //                        }
 //                    }
-                    if([self.dataDict[@"goods_name"] isEqualToString:@"普洗"]){
-                        if([KUserManager.userWalletInfo[@"red"] floatValue] >= settleMoney){
+//                    if([self.dataDict[@"goods_name"] isEqualToString:@"普洗"]){
+                        if([wallertDict[@"giftAmount"] floatValue] >= settleMoney){
                             payMethodView.hidden = YES;
                             balanceUsedView.hidden = YES;
                             totalHeight = totalHeight - (payMethodView.frame.size.height+balanceUsedView.frame.size.height);
                             redMoney = settleMoney;
                         }else{
-                            redMoney = [KUserManager.userWalletInfo[@"red"] floatValue];
-                            if([KUserManager.userWalletInfo[@"money"] floatValue] >= (settleMoney-redMoney)){
+                            redMoney = [wallertDict[@"giftAmount"] floatValue];
+                            if([wallertDict[@"balanceAmount"] floatValue] >= (settleMoney-redMoney)){
                                 balanceUsedView.hidden = NO;
                                 payMethodView.hidden = YES;
                                 totalHeight = totalHeight - payMethodView.frame.size.height;
@@ -203,24 +214,24 @@
                                 balanceMoney = 0.00f;
                             }
                         }
-                    }else{
-                        NSString* resultPrice = [NSString stringWithFormat:@"%f",0.15 * [realPrice floatValue]];
-                        if([KUserManager.userWalletInfo[@"red"] floatValue] >= [resultPrice floatValue]){
-                            redMoney = [resultPrice floatValue];
-                        }else{
-                            redMoney = [KUserManager.userWalletInfo[@"red"] floatValue];
-                        }
-                        if([KUserManager.userWalletInfo[@"money"] floatValue] >= (settleMoney-redMoney)){
-                            balanceUsedView.hidden = NO;
-                            payMethodView.hidden = YES;
-                            totalHeight -= payMethodView.frame.size.height;
-                            balanceMoney = settleMoney-redMoney;
-                        }else{
-                            payMethodView.hidden = NO;
-                            balanceUsedView.hidden = YES;
-                            balanceMoney = 0.00f;
-                        }
-                    }
+//                    }else{
+//                        NSString* resultPrice = [NSString stringWithFormat:@"%f",0.15 * [realPrice floatValue]];
+//                        if(tempRedMoney >= [resultPrice floatValue]){
+//                            redMoney = [resultPrice floatValue];
+//                        }else{
+//                            redMoney = tempRedMoney;
+//                        }
+//                        if(tempBalanceMoney >= (settleMoney-redMoney)){
+//                            balanceUsedView.hidden = NO;
+//                            payMethodView.hidden = YES;
+//                            totalHeight -= payMethodView.frame.size.height;
+//                            balanceMoney = settleMoney-redMoney;
+//                        }else{
+//                            payMethodView.hidden = NO;
+//                            balanceUsedView.hidden = YES;
+//                            balanceMoney = 0.00f;
+//                        }
+//                    }
 
 
                 }else{
@@ -237,17 +248,23 @@
                 payMoney = settleMoney-redMoney-balanceMoney;
                 [self updateUI];
             }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:responseObjcet[@"desc"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 [alert show];
                 [self.navigationController popViewControllerAnimated:YES];
             }
-        });
-    } andFail:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+//        });
+//    } andFail:^(NSError *err) {
+//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }];
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+         [alert show];
+         [self.navigationController popViewControllerAnimated:YES];
+     }];
 }
 
 
@@ -612,19 +629,19 @@
                         balanceMoney = 0;
                     }
                     
-                    if(balanceUsedView.hidden){
-                        balanceUsedView.hidden = NO;
-                        totalHeight += balanceUsedView.frame.size.height;
-                    }
+//                    if(balanceUsedView.hidden){
+//                        balanceUsedView.hidden = NO;
+//                        totalHeight += balanceUsedView.frame.size.height;
+//                    }
                 }
                 
             }else{
                 tempRedMoney = redMoney;
-                if([KUserManager.userWalletInfo[@"money"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on && [KUserManager.userWalletInfo[@"money"] floatValue] != 0){
-                    if(balanceUsedView.hidden){
-                        balanceUsedView.hidden  = NO;
-                        totalHeight += balanceUsedView.frame.size.height;
-                    }
+                if([wallertDict[@"balanceAmount"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on && [wallertDict[@"balanceAmount"] floatValue] != 0){
+//                    if(balanceUsedView.hidden){
+//                        balanceUsedView.hidden  = NO;
+//                        totalHeight += balanceUsedView.frame.size.height;
+//                    }
                     balanceMoney += redMoney;
                     redMoney = 0;
                     isBalanceEnough = YES;
@@ -647,10 +664,10 @@
                 
                 balanceMoney = 0;
                 
-                balanceUsedView.hidden = YES;
-                totalHeight -= balanceUsedView.frame.size.height;
+//                balanceUsedView.hidden = YES;
+//                totalHeight -= balanceUsedView.frame.size.height;
                 isBalanceEnough = NO;
-                sender.on = YES;
+//                sender.on = YES;
             }
         }break;
         default:break;
@@ -698,8 +715,10 @@
    
     
     NSDictionary* paramDict = @{
-                                @"uid":KUserInfo.desc,
-                                @"mobile":KUserInfo.token,
+//                                @"uid":KUserManager.uid,
+                                @"uid":userInfo.desc,
+//                                @"mobile":KUserManager.mobile,
+                                @"mobile":@"18280068114",
                                 @"appid":@"app_j5qbP4Dib5uHTe5C",
                                 @"amount":[NSString stringWithFormat:@"%d",(int)(payMoney*100)], //paymoney
                                 @"channel":payMethodString,
@@ -719,34 +738,47 @@
     if(payMoney){
         //在线支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-        [ModelTool getPayOrderCreateWithParameter:paramDict andSuccess:^(id object) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+//        [ModelTool getPayOrderCreateWithParameter:paramDict andSuccess:^(id object) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *paymentType;
+        if([payMethodString isEqualToString:@"wx"]){
+            paymentType = @"WECHAT";
+        }else{
+            paymentType = @"ALIPAY";
+        }
+        [HttpHelper payServiceWithUserId:userInfo.desc
+                                   token:userInfo.token
+                               serviceId:self.dataDict[@"goods_id"]
+                             paymentType:paymentType
+                                recordId:@""
+                                couponId:@""
+                                 success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+        
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
-                MyLog(@"----------充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
+                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:responseObjcet];
+//                MyLog(@"----------充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"msg"]]);
                 MyLog(@"----------充值返回信息-----------%@",rootDict);
-                if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+                if([rootDict[@"code"] isEqualToString:SERVICE_SUCCESS]){
                     
                     if([payMethodString isEqualToString:@"wx"]){
                         //使用微信支付
                         WXPay* thyWeiXinPay = [WXPay shareInstance];
                         thyWeiXinPay.isSuccess = NO;
-                        [self WXPayWithParamDict:rootDict[@"data"]];
+                        [self WXPayWithParamDict:rootDict[@"msg"]];
                         
                     }else{
                         //使用支付宝支付
-                        [self AlipayWithPrice:[NSString stringWithFormat:@"%.2f元",payMoney] andOrderNum:rootDict[@"data"][@"out_trade_no"]];
+                        [self AlipayWithPrice:[NSString stringWithFormat:@"%.2f元",payMoney] andOrderNum:rootDict[@"msg"][@"out_trade_no"]];
                     }
                     
                 }else{
-                    [self alert:@"温馨提示" msg:[PublicUtils showServiceReturnMessage:rootDict[@"message"]]];
+                    [self alert:@"温馨提示" msg:[PublicUtils showServiceReturnMessage:rootDict[@"desc"]]];
                 }
                 
-            });
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
-        }];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+             [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
+         }];
     }else{
         //使用红包或者余额支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];

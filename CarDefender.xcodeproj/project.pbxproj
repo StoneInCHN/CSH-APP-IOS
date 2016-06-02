@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D64DDC91D001B0300DF51AA /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D64DDC81D001B0300DF51AA /* NewCarWashTableHeaderView.xib */; };
+		0D0487891CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */; };
+		0D64DDCB1D00220900DF51AA /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */; };
+		0D64DDCD1D00226E00DF51AA /* CWSPayInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D64DDCC1D00226E00DF51AA /* CWSPayInfoView.xib */; };
 		243AB0BF1CDA524100E9FD95 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0BE1CDA524100E9FD95 /* HttpHelper.m */; };
 		243AB0C21CDA738900E9FD95 /* HBRSAHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C11CDA738900E9FD95 /* HBRSAHandler.m */; };
 		243AB0C51CDA746A00E9FD95 /* SecurityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */; };
 		244556DB1CE9B0D7007679CA /* CWSAdInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 244556D91CE9B0D7007679CA /* CWSAdInfoViewController.m */; };
 		244556DC1CE9B0D7007679CA /* CWSAdInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 244556DA1CE9B0D7007679CA /* CWSAdInfoViewController.xib */; };
-		248D04981CF0A1A400FE1A46 /* ChangeCarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D04971CF0A1A400FE1A46 /* ChangeCarView.m */; };
+		2477E8DC1CFF1B5E00CCC540 /* SFPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8D71CFF1B5E00CCC540 /* SFPopMenuView.m */; };
+		2477E8DD1CFF1B5E00CCC540 /* SFTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */; };
+		2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */; };
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
@@ -849,7 +853,6 @@
 		4CA0C2F41C1BCC3B0006BF3E /* pingjia_wuxing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA0C2F21C1BCC3B0006BF3E /* pingjia_wuxing@3x.png */; };
 		4CA0C2F81C1BF4CC0006BF3E /* CWSPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C2F71C1BF4CC0006BF3E /* CWSPayViewController.m */; };
 		4CA0C2FC1C1BF5F60006BF3E /* CWSPayInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C2FB1C1BF5F60006BF3E /* CWSPayInfoView.m */; };
-		4CA0C2FE1C1BF6040006BF3E /* CWSPayInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CA0C2FD1C1BF6040006BF3E /* CWSPayInfoView.xib */; };
 		4CA0C3011C1BFCDB0006BF3E /* CWSPayMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C3001C1BFCDB0006BF3E /* CWSPayMethodView.m */; };
 		4CA0C3031C1BFCE80006BF3E /* CWSPayMethodView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CA0C3021C1BFCE80006BF3E /* CWSPayMethodView.xib */; };
 		4CA0C3071C1C236E0006BF3E /* CWSFindParkSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C3051C1C236E0006BF3E /* CWSFindParkSearchViewController.m */; };
@@ -1236,7 +1239,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D64DDC81D001B0300DF51AA /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
+		0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableViewCell.xib; sourceTree = "<group>"; };
+		0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
+		0D64DDCC1D00226E00DF51AA /* CWSPayInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSPayInfoView.xib; sourceTree = "<group>"; };
 		243AB0BD1CDA524100E9FD95 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		243AB0BE1CDA524100E9FD95 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		243AB0C01CDA738900E9FD95 /* HBRSAHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBRSAHandler.h; sourceTree = "<group>"; };
@@ -1246,8 +1251,12 @@
 		244556D81CE9B0D7007679CA /* CWSAdInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSAdInfoViewController.h; sourceTree = "<group>"; };
 		244556D91CE9B0D7007679CA /* CWSAdInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSAdInfoViewController.m; sourceTree = "<group>"; };
 		244556DA1CE9B0D7007679CA /* CWSAdInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSAdInfoViewController.xib; sourceTree = "<group>"; };
-		248D04961CF0A1A400FE1A46 /* ChangeCarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeCarView.h; sourceTree = "<group>"; };
-		248D04971CF0A1A400FE1A46 /* ChangeCarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeCarView.m; sourceTree = "<group>"; };
+		2477E8D61CFF1B5E00CCC540 /* SFPopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPopMenuView.h; sourceTree = "<group>"; };
+		2477E8D71CFF1B5E00CCC540 /* SFPopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPopMenuView.m; sourceTree = "<group>"; };
+		2477E8D81CFF1B5E00CCC540 /* SFTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTableViewDelegate.h; sourceTree = "<group>"; };
+		2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTableViewDelegate.m; sourceTree = "<group>"; };
+		2477E8DA1CFF1B5E00CCC540 /* SFPopMenuViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPopMenuViewManager.h; sourceTree = "<group>"; };
+		2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPopMenuViewManager.m; sourceTree = "<group>"; };
 		24B921FF1CE3762B004E558E /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		24B922001CE3762B004E558E /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
@@ -2422,7 +2431,6 @@
 		4CA0C2F71C1BF4CC0006BF3E /* CWSPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSPayViewController.m; sourceTree = "<group>"; };
 		4CA0C2FA1C1BF5F60006BF3E /* CWSPayInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSPayInfoView.h; sourceTree = "<group>"; };
 		4CA0C2FB1C1BF5F60006BF3E /* CWSPayInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSPayInfoView.m; sourceTree = "<group>"; };
-		4CA0C2FD1C1BF6040006BF3E /* CWSPayInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSPayInfoView.xib; sourceTree = "<group>"; };
 		4CA0C2FF1C1BFCDB0006BF3E /* CWSPayMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSPayMethodView.h; sourceTree = "<group>"; };
 		4CA0C3001C1BFCDB0006BF3E /* CWSPayMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSPayMethodView.m; sourceTree = "<group>"; };
 		4CA0C3021C1BFCE80006BF3E /* CWSPayMethodView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSPayMethodView.xib; sourceTree = "<group>"; };
@@ -3316,6 +3324,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2477E8D51CFF1B5700CCC540 /* 切换车辆 */ = {
+			isa = PBXGroup;
+			children = (
+				2477E8D61CFF1B5E00CCC540 /* SFPopMenuView.h */,
+				2477E8D71CFF1B5E00CCC540 /* SFPopMenuView.m */,
+				2477E8D81CFF1B5E00CCC540 /* SFTableViewDelegate.h */,
+				2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */,
+				2477E8DA1CFF1B5E00CCC540 /* SFPopMenuViewManager.h */,
+				2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */,
+			);
+			path = "切换车辆";
+			sourceTree = "<group>";
+		};
 		24DB9F291CDB354A002B7BD0 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -5073,11 +5094,11 @@
 		335C5C891AC12A47001EA2AC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0D64DDC81D001B0300DF51AA /* NewCarWashTableHeaderView.xib */,
+				0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */,
+				2477E8D51CFF1B5700CCC540 /* 切换车辆 */,
 				4C0952611C34D7890098BA4C /* NewCarWashTableHeaderView.h */,
 				4C0952621C34D7890098BA4C /* NewCarWashTableHeaderView.m */,
-				248D04961CF0A1A400FE1A46 /* ChangeCarView.h */,
-				248D04971CF0A1A400FE1A46 /* ChangeCarView.m */,
+				0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */,
 				4CECD2651C22880B0069754C /* 活动专区 */,
 				4CECD2691C22880B0069754C /* 积分商城 */,
 				4C6079101C1EC8B200BDBCE3 /* 一键检测 */,
@@ -6229,6 +6250,7 @@
 		4CA0C2F51C1BF4A90006BF3E /* 通用支付 */ = {
 			isa = PBXGroup;
 			children = (
+				0D64DDCC1D00226E00DF51AA /* CWSPayInfoView.xib */,
 				4CA0C2F61C1BF4CC0006BF3E /* CWSPayViewController.h */,
 				4CA0C2F71C1BF4CC0006BF3E /* CWSPayViewController.m */,
 				4CF30A641C1E503E0079FA42 /* CWSPayWithoutRedPackageViewController.h */,
@@ -6237,7 +6259,6 @@
 				4C6078FA1C1E849400BDBCE3 /* CWSPaySuccessViewController.m */,
 				4CA0C2FA1C1BF5F60006BF3E /* CWSPayInfoView.h */,
 				4CA0C2FB1C1BF5F60006BF3E /* CWSPayInfoView.m */,
-				4CA0C2FD1C1BF6040006BF3E /* CWSPayInfoView.xib */,
 				4CA0C2FF1C1BFCDB0006BF3E /* CWSPayMethodView.h */,
 				4CA0C3001C1BFCDB0006BF3E /* CWSPayMethodView.m */,
 				4CA0C3021C1BFCE80006BF3E /* CWSPayMethodView.xib */,
@@ -7966,7 +7987,7 @@
 				TargetAttributes = {
 					335C5B8D1AC1062D001EA2AC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ZJMB8US8MQ;
+						DevelopmentTeam = Y638L9NEZ8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -8086,6 +8107,7 @@
 				339404241B4CF35F009CCEE2 /* CWSWeatherCell.xib in Resources */,
 				33CA11431AF216D400A1B5B1 /* gongneng_img.png in Resources */,
 				92B47F161BA2DE12001B2048 /* zhaochewei_location_click@2x.png in Resources */,
+				0D64DDCB1D00220900DF51AA /* NewCarWashTableHeaderView.xib in Resources */,
 				4C0952601C34C0F90098BA4C /* HelpView.xib in Resources */,
 				331565E31B280EB900369C78 /* zuji_icon3@2x.png in Resources */,
 				335425E41B70B08300FD23A5 /* zhaochewei_jiantou@2x.png in Resources */,
@@ -8225,7 +8247,6 @@
 				337E906B1B4FC8DE00B66060 /* infor_moren@2x.png in Resources */,
 				331565251B280E8700369C78 /* call_jian9@2x.png in Resources */,
 				4CC8921D1C19569F00F6AB35 /* NewCarWashDiscountCell.xib in Resources */,
-				0D64DDC91D001B0300DF51AA /* NewCarWashTableHeaderView.xib in Resources */,
 				331565E01B280EB900369C78 /* zuji_dian@2x.png in Resources */,
 				33EF6EE91BCE293B007B5A22 /* company_name.png in Resources */,
 				334708451AF86056006A5660 /* qiandao_kuang@2x.png in Resources */,
@@ -8266,10 +8287,12 @@
 				4CB912871C433A80002D93BB /* AlipaySDK.bundle in Resources */,
 				927A0EA51B914B6D00FA497F /* CWSMyMonyController.xib in Resources */,
 				338E3FD61B467E4D00CD5BE5 /* set_logo@2x.png in Resources */,
+				0D64DDCD1D00226E00DF51AA /* CWSPayInfoView.xib in Resources */,
 				331565151B280E8700369C78 /* register_yan1@2x.png in Resources */,
 				4CB73B141C17B8E6003A80A1 /* MaintainReviewTableViewCell.xib in Resources */,
 				334708C21AF87590006A5660 /* CWSNavController.xib in Resources */,
 				4CC367661C20F5810098A6C7 /* CWSOrderHistoryController.xib in Resources */,
+				0D0487891CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib in Resources */,
 				332127B41ADF8FD500649491 /* umeng_fb_audio_play_02@2x.png in Resources */,
 				331565EA1B280EB900369C78 /* zuji_ren_zuji@2x.png in Resources */,
 				33B78CF01B71E21800E077CB /* zhaochewei_mudidi@2x.png in Resources */,
@@ -8334,7 +8357,6 @@
 				333524191B4E55B1004246C5 /* chedongtai_mycar@2x.png in Resources */,
 				4CDDD1B81C15741000128318 /* CWSBuyCarInsuranceViewController.xib in Resources */,
 				92B48B011B959DA2005AA8F7 /* xiche_time@2x.png in Resources */,
-				4CA0C2FE1C1BF6040006BF3E /* CWSPayInfoView.xib in Resources */,
 				4CECD26B1C22880B0069754C /* CWSActivityTableViewCell.xib in Resources */,
 				4CC892001C19066500F6AB35 /* NewCarWashDetailHeaderView.xib in Resources */,
 				335425EC1B70B08300FD23A5 /* zhaochewei_sousuo@2x.png in Resources */,
@@ -8643,6 +8665,7 @@
 				4C21BFC41C31621D00028D56 /* UserAdvertisementInfo.m in Sources */,
 				928A62FE1ACCF3BA0013C666 /* XHMessageTextView.m in Sources */,
 				33507B531AD40C3C00F1F236 /* CarManagerMsg.m in Sources */,
+				2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */,
 				928A62BD1ACCE9C50013C666 /* UIImageView+EMWebCache.m in Sources */,
 				3347093F1AF89424006A5660 /* CWSAboutUsDetailsController.m in Sources */,
 				337798121AEE16C500DAB1A1 /* LHPChooseCarMenulController.m in Sources */,
@@ -8787,6 +8810,7 @@
 				4CB73B2B1C1810F1003A80A1 /* CWSCWSIllegalCheckDetailViewController.m in Sources */,
 				33507BE01AD40CA800F1F236 /* SDImageCache.m in Sources */,
 				4CECD2631C2287EF0069754C /* CWSRecordShopViewController.m in Sources */,
+				2477E8DC1CFF1B5E00CCC540 /* SFPopMenuView.m in Sources */,
 				928A63D01ACCF3F00013C666 /* CreateGroupViewController.m in Sources */,
 				4CDDD1A21C15262600128318 /* CWSCarMaintainInfoModel.m in Sources */,
 				4CC8A3681C0FE4B2000B00B2 /* CWSPurchaseRecomHeaderView.m in Sources */,
@@ -8818,7 +8842,6 @@
 				33C7600A1AC64E4000F4C3A4 /* CWSCarFriendController.m in Sources */,
 				928A62311ACCE96D0013C666 /* NSDate+Category.m in Sources */,
 				4C55D36B1C0C263D00F22902 /* IQUIWindow+Hierarchy.m in Sources */,
-				248D04981CF0A1A400FE1A46 /* ChangeCarView.m in Sources */,
 				4C6079161C1ED3D900BDBCE3 /* CWSDetectionDistanceRecentlyView.m in Sources */,
 				4CD0614E1C3A06A900136B27 /* MJRefreshAutoNormalFooter.m in Sources */,
 				335978251AD696FC0058B6BF /* TSLocateView.m in Sources */,
@@ -9166,6 +9189,7 @@
 				33CA8F2E1B1EFA4600B4BEEE /* CWSMessageCancelBtn.m in Sources */,
 				334708741AF86ACE006A5660 /* CWSRightController.m in Sources */,
 				337113901AD7A40400FF3D54 /* CWSPhoneController.m in Sources */,
+				2477E8DD1CFF1B5E00CCC540 /* SFTableViewDelegate.m in Sources */,
 				3367BC221AD4CD1B0061399C /* RepairCell.m in Sources */,
 				928A62F81ACCF3BA0013C666 /* EMTextView.m in Sources */,
 				3347086A1AF86ACE006A5660 /* CWSLoginController.m in Sources */,
@@ -9388,7 +9412,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9468,7 +9492,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
