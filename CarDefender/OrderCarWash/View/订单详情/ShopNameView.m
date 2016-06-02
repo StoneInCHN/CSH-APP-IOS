@@ -51,9 +51,9 @@
     }
     
     
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseUrl"],dataDic[@"image_1"]]] placeholderImage:[UIImage imageNamed:@"zhaochewei_img"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
-    self.shopNameLabel.text = dataDic[@"store_name"];
-    self.addressLabel.text = dataDic[@"address"];
+    [self.headImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kBaseUrl,dataDic[@"tenantInfo"][@"photo"]]] placeholderImage:[UIImage imageNamed:@"zhaochewei_img"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
+    self.shopNameLabel.text = dataDic[@"tenantInfo"][@"tenantName"];
+    self.addressLabel.text = dataDic[@"tenantInfo"][@"address"];
     [self.phoneButtton addTarget:self action:@selector(phoneButttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.locationButton addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -63,7 +63,7 @@
 {
     
     
-    NSString *string = [NSString stringWithFormat:@"%@",dataDic[@"mobile"]];
+    NSString *string = [NSString stringWithFormat:@"%@",dataDic[@"tenantInfo"][@"contactPhone"]];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:string delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拨打", nil];
     [alert show];
     
@@ -75,14 +75,18 @@
 - (void)locationButtonClick:(UIButton *)sender
 {
     MyLog(@"-----------%f %f",KManager.currentPt.latitude,KManager.currentPt.longitude);
-    CLLocationCoordinate2D pt = CLLocationCoordinate2DMake([dataDic[@"im_lat"] floatValue], [dataDic[@"im_lng"] floatValue]);
-    [theController startNaviWithNewPoint:pt OldPoint:KManager.currentPt];
+    NSString *latitude = [NSString stringWithFormat:@"%@",dataDic[@"tenantInfo"][@"latitude"]] ;
+    NSString *longitude = [NSString stringWithFormat:@"%@",dataDic[@"tenantInfo"][@"longitude"]];
+    if(![latitude isEqualToString:@"<null>"]&&![longitude isEqualToString:@"<null>"]){
+        CLLocationCoordinate2D pt = CLLocationCoordinate2DMake([dataDic[@"tenantInfo"][@"latitude"] floatValue], [dataDic[@"tenantInfo"][@"longitude"] floatValue]);
+        [theController startNaviWithNewPoint:pt OldPoint:KManager.currentPt];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",dataDic[@"mobile"]]]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",dataDic[@"tenantInfo"][@"contactPhone"]]]];
     }
 }
 

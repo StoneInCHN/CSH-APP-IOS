@@ -93,6 +93,8 @@
  *  把null转换成@“”
  */
 +(NSString *)checkNSNullWithgetString:(NSObject*)lStr;
+#pragma mark - 转换时间戳  ----------------------------------------------------- 其他
++(NSString *)conversionTimeStamp:(NSString*)lStr;
 #pragma mark - 其他  ------------------------------------------------------------ 其他
 /*
  AppDelegate

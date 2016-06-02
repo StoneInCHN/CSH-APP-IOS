@@ -40,18 +40,26 @@
 //    finished_time：完成时间
     
 //    status：0: 取消; 1: 未付款; 2: 预约中; 3: 完成 4:已过期  12进行中
-    
-    if ([PublicUtils checkNSNullWithgetString:dataDic[@"add_time"]] != nil) {
-        self.firstTimeLabel.text = [self changeTime:[PublicUtils checkNSNullWithgetString:dataDic[@"add_time"]]];
+    NSString *createDate1 = [NSString stringWithFormat:@"%@",dataDic[@"createDate"]];
+    if (![createDate1 isEqualToString:@"<null>"]) {
+        self.firstTimeLabel.text =  [PublicUtils conversionTimeStamp:[PublicUtils checkNSNullWithgetString:dataDic[@"createDate"]]];
     }
+    NSString *paymentDate1 = [NSString stringWithFormat:@"%@",dataDic[@"paymentDate"]];
     
-    if ([PublicUtils checkNSNullWithgetString:dataDic[@"service_time"]] !=nil) {
-        self.secondTimeLabel.text = [self changeTime:[PublicUtils checkNSNullWithgetString:dataDic[@"service_time"]]];
+    if (![paymentDate1 isEqualToString:@"<null>"]) {
+        self.secondTimeLabel.text = [PublicUtils conversionTimeStamp:[PublicUtils checkNSNullWithgetString:paymentDate1]];
+        self.secondImageView.image = [UIImage imageNamed:@"dingdanxiangqing_baoyang1"];
+        self.secondTitleLabel.textColor =[UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
+        self.secondTimeLabel.textColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
         
     }
-    
-    if ([PublicUtils checkNSNullWithgetString:dataDic[@"finished_time"]] !=nil) {
-        self.thirdTimeLabel.text = [self changeTime:[PublicUtils checkNSNullWithgetString:dataDic[@"finished_time"]]];
+    NSString *finishiData1 = [NSString stringWithFormat:@"%@",dataDic[@"finishDate"]];
+    if (![finishiData1 isEqualToString:@"<null>"]) {
+        self.thirdTimeLabel.text = [PublicUtils conversionTimeStamp:[PublicUtils checkNSNullWithgetString:finishiData1]];
+        self.thirdImageView.image = [UIImage imageNamed:@"dingdanxiangqing_pay1"];
+        self.thirdTimeLabel.textColor =[UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
+        self.thirdTitleLabel.textColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
+        self.line2.backgroundColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
    
     }
     

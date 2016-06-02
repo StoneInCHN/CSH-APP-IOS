@@ -111,8 +111,10 @@
     _myScrollView.showsHorizontalScrollIndicator = NO;
     _myScrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_myScrollView];
-    
-    [self loadData];
+    NSString *money = [NSString stringWithFormat:@"%@",self.dataDict[@"price"]];
+    settleMoney = [money floatValue];
+    [self createUI];
+    //[self loadData];
     
     MyLog(@"------确认信息----%@",self.dataDict);
 }
@@ -121,7 +123,8 @@
 #pragma mark -=============================InitialData
 -(void)loadData{
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-    [ModelTool getWalletInfoWithParameter:@{@"uid":KUserManager.uid,@"mobile":KUserManager.mobile} andSuccess:^(id object) {
+    NSLog(@"%@%@",KUserManager.uid,KUserManager.mobile);
+    [ModelTool getWalletInfoWithParameter:@{@"uid":KUserInfo.desc,@"mobile":KUserInfo.token} andSuccess:^(id object) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
@@ -325,6 +328,7 @@
     totalCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalLabel.frame), 15, kSizeOfScreen.width, 15)];
     totalCountLabel.font = [UIFont systemFontOfSize:14.0f];
     totalCountLabel.textColor = KRedColor;
+    payMoney = settleMoney-redMoney-balanceMoney;
     totalCountLabel.text = [NSString stringWithFormat:@"￥%.2f",payMoney];
     totalCountLabel.textAlignment = NSTextAlignmentLeft;
     [totalCountView addSubview:totalCountLabel];
@@ -694,8 +698,8 @@
    
     
     NSDictionary* paramDict = @{
-                                @"uid":KUserManager.uid,
-                                @"mobile":KUserManager.mobile,
+                                @"uid":KUserInfo.desc,
+                                @"mobile":KUserInfo.token,
                                 @"appid":@"app_j5qbP4Dib5uHTe5C",
                                 @"amount":[NSString stringWithFormat:@"%d",(int)(payMoney*100)], //paymoney
                                 @"channel":payMethodString,

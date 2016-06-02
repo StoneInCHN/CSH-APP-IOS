@@ -16,7 +16,10 @@
 @property (strong, nonatomic) NSString* buyer_email;          //买家email
 @property (strong, nonatomic) NSString* cate_id_2;             //用于判断是什么类别 30是普洗 31是精洗 23 美容 25养护
 @property (strong, nonatomic) NSString* classification_name;   //分类名字
+
 @property (strong, nonatomic) NSString* evaluation_time;       //评论时间
+@property (strong, nonatomic) NSString* evaluation_modifyDate; //评论完时间
+@property (strong, nonatomic) NSString* evaluation; //评论完时间
 @property (strong, nonatomic) NSString* finished_time;          //订单完成时间
 @property (strong, nonatomic) NSString* goods_name;             //商品名
 @property (strong, nonatomic) NSString* orderId;     //订单ID
@@ -24,11 +27,12 @@
 @property (strong, nonatomic) NSString* pay_time;      //支付时间
 @property (strong, nonatomic) NSString*price;        
 @property (strong, nonatomic) NSString* seller_id;       //商家ID
+@property (strong, nonatomic) NSString* tenantPhoto;       //商家图片
 @property (strong, nonatomic) NSString* seller_name;       //商家名称
 @property (strong, nonatomic) NSString* service_time;      //服务时间
 @property (nonatomic,copy) NSString *status;             //状态
 @property (nonatomic,copy) NSString *type;
-
+@property (nonatomic,strong) NSString *categoryName;   //服务类别
 -(instancetype)initWithDic:(NSDictionary*)dic;
 
 #else

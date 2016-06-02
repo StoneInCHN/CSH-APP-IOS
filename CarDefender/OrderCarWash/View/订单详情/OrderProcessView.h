@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *thirdImageView;
 @property (weak, nonatomic) IBOutlet UILabel *thirdTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *thirdTimeLabel;
+@property (weak, nonatomic) IBOutlet UIView *line2;
 - (instancetype)initWithFrame:(CGRect)frame Data:(NSDictionary *)dic;
 
 @end

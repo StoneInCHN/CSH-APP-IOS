@@ -109,7 +109,18 @@
             return [NSString stringWithFormat:@"%@",lStr];
     }
 }
-#pragma mark - 其他 -------------------------------------------------------------- 其他
+
+#pragma mark - 转换时间戳  ----------------------------------------------------- 其他
++(NSString *)conversionTimeStamp:(NSString*)lStr{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"MM-dd HH:MM"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[lStr doubleValue]/1000.0];
+    NSString *dateStr = [formatter stringFromDate:date];
+    return dateStr;
+}
+#pragma mark - 其他 ------------------------------------------------------------- 其他
 // AppDelegate
 + (AppDelegate *)applicationDelegate
 {

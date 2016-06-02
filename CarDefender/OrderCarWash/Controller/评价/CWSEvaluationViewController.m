@@ -7,8 +7,8 @@
 //
 
 #import "CWSEvaluationViewController.h"
-
-@interface CWSEvaluationViewController ()<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextViewDelegate>
+#import "UIImageView+WebCache.h"
+@interface CWSEvaluationViewController ()<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextViewDelegate,UIAlertViewDelegate>
 {
     int _count;//图片张数
     NSMutableArray *imagViewArry;
@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewHeight;
+@property (weak, nonatomic) IBOutlet UIImageView *tenantPhoto;
 - (IBAction)starButtonClick:(UIButton *)sender;
 
 
@@ -62,9 +63,11 @@
 - (void)initalizeUserInterface
 {
     self.storeNameLabel.text = self.order.seller_name;
-    self.serviceNameLabel.text = self.order.seller_name;
-    self.ordeMoneyLabel.text = [NSString stringWithFormat:@"%@",self.order.price];
-    
+    self.serviceNameLabel.text = self.order.categoryName;
+    self.ordeMoneyLabel.text = [NSString stringWithFormat:@"%@",self.order.price]; 
+    NSString*url=[NSString stringWithFormat:@"%@%@",kBaseUrl ,self.order.tenantPhoto];
+    NSURL*logoImgUrl=[NSURL URLWithString:url];
+    [self.tenantPhoto setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"normal_car_brand"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
     
     self.textView.delegate = self;
     
@@ -73,6 +76,8 @@
     self.addPhotoButton.layer.borderWidth = 1.0;
     self.addPhotoButton.layer.borderColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1].CGColor;
     [self.addPhotoButton addTarget:self action:@selector(addPhotoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     //发表评论
     self.addEvaluationButton = (UIButton *)[self.view viewWithTag:21];
@@ -121,10 +126,34 @@
 #pragma mark - 发表评论按钮
 - (void)addEvaluationButtonPressed:(UIButton *)sender
 {
-    if (firstStarSelectNumder != 0 && secondStarSelectNumder != 0 && thirdStarSelectNumder != 0) {
-        [self.navigationController popViewControllerAnimated:YES];
+    
+    
+    if (firstStarSelectNumder != 0 ) {
+        
+        NSNumber *selectNumber = [NSNumber numberWithInteger:firstStarSelectNumder];
+        [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+        NSDictionary *dic = @{@"userId":KUserInfo.desc,@"token":KUserInfo.token,@"tenantId":self.order.seller_id,@"recordId":self.order.orderId,@"score":selectNumber};
+        [HttpHelper insertTenantEvaluateDoRateWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
+            NSDictionary *dataDic = (NSDictionary *)object;
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if ([dataDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadDataArray" object:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"评论成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] ;
+                [alert show];
+                
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:dataDic[@"desc"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] ;
+                [alert show];
+            }
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        }];
+        
+        
     }
     else {
+        
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择服务评价星级" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] ;
         [alert show];
         
@@ -372,8 +401,13 @@
     }
     
 }
-
-
+#pragma mark - alertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"%d",buttonIndex);
+    if (buttonIndex==1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 #pragma mark - 星级按钮
 - (IBAction)starButtonClick:(UIButton *)sender {
     

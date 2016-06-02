@@ -150,35 +150,33 @@
     }
     
     
-    if (self.tag == 1) {
-        [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-        NSDictionary* dic= @{@"uid":KUserManager.uid,
-                             @"mobile":KUserManager.mobile,
-                             @"orderId":self.dataDict[@"order_id"]};
-        [ModelTool getMyOrderDetaikWithParameter:dic andSuccess:^(id object) {
-            
-           dispatch_async(dispatch_get_main_queue(), ^{
-               if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
-                   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                   self.dataDict = [NSDictionary dictionaryWithDictionary:object[@"data"]];
-                   dataDic = [NSDictionary dictionaryWithDictionary:object[@"data"]];
-                   [self createUI];
-               }else {
-                   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                   [alert show];
-               }
-           });
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
-        }];
-    }else{
+    
+    [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+    NSDictionary* dic= @{@"userId":KUserInfo.desc,
+                         @"token":KUserInfo.token,
+                         @"recordId":self.order.orderId};
+    [HttpHelper searchCarServiceRecordDetailWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"object=%@",object);
+            if ([object[@"code"] isEqualToString:SERVICE_SUCCESS]) {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                self.dataDict = [NSDictionary dictionaryWithDictionary:object[@"msg"]];
+                dataDic = [NSDictionary dictionaryWithDictionary:object[@"msg"]];
+                [self createUI];
+            }else {
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
+            }
+        });
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
         
-       [self createUI];
-        
-    }
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }];
+    
+    
     
 }
 
@@ -194,6 +192,8 @@
     //过程视图
     orderProcessView = [[OrderProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,screenWidth ,76 ) Data:dataDic];
     [scrollView addSubview:orderProcessView];
+    
+    
     
     //    status：0: 取消; 1: 未付款; 2: 预约中; 3: 完成 4:已过期 12进行中
     if (self.myOrderDetailModel != nil) {
@@ -256,61 +256,55 @@
         }
         
     }else {
-        //预约和美容点过来的
-        switch ([self.dataDict[@"status"] integerValue]) {
-            case 0:{
-                [orderProcessView removeFromSuperview];
-                orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,[UIScreen mainScreen].bounds.size.width ,76 ) Data:dataDic];
-                [scrollView addSubview:orderCancleProcessView];
-                [scrollView bringSubviewToFront:orderCancleProcessView];
-                
-                orderStatusView.centerConstraint.constant += 60;
-                orderStatusView.statusImageView.image = [UIImage imageNamed:@"dingdanxiangqing_cancel"];
-                orderStatusView.statusLabel.text = @"订单已取消";
-                orderStatusView.statusLabel.textColor = kCOLOR(247, 71, 82);
-                self.navigationItem.rightBarButtonItem = nil;
-            }
-                break;
-            case 1:{
-                orderStatusView.statusLabel.text = @"请在15分钟之内确认付款";
-            }
-                break;
-            case 2:{
-                
-                rightBtn=[[UIBarButtonItem alloc]initWithTitle:@"取消订单" style:UIBarButtonItemStylePlain target:self action:@selector(cancleOrderButtonPressed:)];
-                rightBtn.tintColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1];
-                self.navigationItem.rightBarButtonItem=rightBtn;
-            }
-                break;
-            case 3:{
-                orderStatusView.statusLabel.text = @"已完成";
-                orderStatusView.centerConstraint.constant += 60;
-            }
-                break;
-            case 4:{
-                [orderProcessView removeFromSuperview];
-                orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,[UIScreen mainScreen].bounds.size.width ,76 ) Data:dataDic];
-                orderCancleProcessView.secondTitleLabel.text = @"已过期";
-                [scrollView addSubview:orderCancleProcessView];
-                [scrollView bringSubviewToFront:orderCancleProcessView];
-                
-                orderStatusView.centerConstraint.constant += 60;
-                orderStatusView.statusImageView.image = [UIImage imageNamed:@"dingdanxiangqing_cancel"];
-                orderStatusView.statusLabel.text = @"订单已过期";
-                orderStatusView.statusLabel.textColor = kCOLOR(247, 71, 82);
-                self.navigationItem.rightBarButtonItem = nil;
-            }
-                break;
-            case 12:{
-//                rightBtn=[[UIBarButtonItem alloc]initWithTitle:@"取消订单" style:UIBarButtonItemStylePlain target:self action:@selector(cancleOrderButtonPressed:)];
-//                rightBtn.tintColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1];
-//                self.navigationItem.rightBarButtonItem=rightBtn;
-                
-            }
-                break;
-            default:
-                break;
+        //预约和美容点过来的  订单详情查询
+        NSString *chargeStatus = self.dataDict[@"chargeStatus"];
+        if([chargeStatus isEqualToString:@"RESERVATION_FAIL"]){
+            [orderProcessView removeFromSuperview];
+            orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,[UIScreen mainScreen].bounds.size.width ,76 ) Data:dataDic];
+            [scrollView addSubview:orderCancleProcessView];
+            [scrollView bringSubviewToFront:orderCancleProcessView];
+            
+            orderStatusView.centerConstraint.constant += 60;
+            orderStatusView.statusImageView.image = [UIImage imageNamed:@"dingdanxiangqing_cancel"];
+            orderStatusView.statusLabel.text = @"预约失败";
+            orderStatusView.statusLabel.textColor = kCOLOR(247, 71, 82);
+            self.navigationItem.rightBarButtonItem = nil;
+        }else if ([chargeStatus isEqualToString:@"UNPAID"])
+        {
+            orderStatusView.statusLabel.text = @"请在15分钟之内确认付款";
         }
+        
+        else if([chargeStatus isEqualToString:@"RESERVATION"]){
+            
+            rightBtn=[[UIBarButtonItem alloc]initWithTitle:@"取消订单" style:UIBarButtonItemStylePlain target:self action:@selector(cancleOrderButtonPressed:)];
+            rightBtn.tintColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1];
+            self.navigationItem.rightBarButtonItem=rightBtn;
+        }
+        
+        else if([chargeStatus isEqualToString:@"FINISH"]){
+            orderStatusView.statusLabel.text = @"已完成";
+            orderStatusView.centerConstraint.constant += 60;
+        }else if ([chargeStatus isEqualToString:@"OVERDUE"])
+            
+        {
+            [orderProcessView removeFromSuperview];
+            orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,[UIScreen mainScreen].bounds.size.width ,76 ) Data:dataDic];
+            orderCancleProcessView.secondTitleLabel.text = @"已过期";
+            [scrollView addSubview:orderCancleProcessView];
+            [scrollView bringSubviewToFront:orderCancleProcessView];
+            
+            orderStatusView.centerConstraint.constant += 60;
+            orderStatusView.statusImageView.image = [UIImage imageNamed:@"dingdanxiangqing_cancel"];
+            orderStatusView.statusLabel.text = @"订单已过期";
+            orderStatusView.statusLabel.textColor = kCOLOR(247, 71, 82);
+            self.navigationItem.rightBarButtonItem = nil;
+        }
+        
+        else if([chargeStatus isEqualToString:@"RESERVATION_SUCCESS"]){
+            
+            orderStatusView.statusLabel.text = @"预约成功";
+        }
+        
         
         
     }
@@ -318,6 +312,7 @@
     
     //店铺视图
     shopNameView = [[ShopNameView alloc] initWithFrame:CGRectMake(0, orderProcessView.endY+20,screenWidth ,70 ) Data:dataDic controller:self];
+  
     [scrollView addSubview:shopNameView];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, shopNameView.endY+20, screenWidth, (goodArray.count+1)*40) style:UITableViewStylePlain];
@@ -357,6 +352,7 @@
 #pragma mark - <UITableViewDataSource,UITableViewDelegate>
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    
     return goodArray.count+1;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -392,18 +388,20 @@
     if (indexPath.row == goodArray.count) {
         cell.recordLabel.alpha = 0;
         cell.dateLabel.textColor = kCOLOR(254, 98, 112);
-        NSInteger count = 0;
-        for (NSDictionary *dic in goodArray) {
-            count += [dic[@"price"] integerValue];
-        }
-        cell.dateLabel.text = [NSString stringWithFormat:@"￥%ld",(long)count];
+//        NSInteger count = 0;
+//        for (NSDictionary *dic in goodArray) {
+//            count += [dic[@"price"] integerValue];
+//        }
+//        NSLog(@"%ld",count);
+        NSString *price = self.dataDict[@"price"];
+        cell.dateLabel.text = [NSString stringWithFormat:@"￥%@",price];
         cell.titleLabel.textColor = KBlackMainColor;
         cell.titleLabel.text = @"订单金额";
     }else {
         cell.recordLabel.alpha = 0;
         cell.dateLabel.textColor = KBlackMainColor;
-        cell.titleLabel.text = goodArray[indexPath.row][@"goods_name"];
-        cell.dateLabel.text = [NSString stringWithFormat:@"￥%@",goodArray[indexPath.row][@"price"]];
+        cell.titleLabel.text = self.dataDict[@"tenantInfo"][@"tenantName"];
+        cell.dateLabel.text = [NSString stringWithFormat:@"￥%@",self.dataDict[@"price"]];
 
     }
     

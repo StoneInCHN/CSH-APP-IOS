@@ -40,12 +40,15 @@
     
     //    status：0: 取消; 1: 未付款; 2: 预约中; 3: 完成 4:已过期
     
-    if ([PublicUtils checkNSNullWithgetString:dataDic[@"add_time"]] != nil) {
-        self.firstTimeLabel.text = [self changeTime:[PublicUtils checkNSNullWithgetString:dataDic[@"add_time"]]];
+    if ([PublicUtils checkNSNullWithgetString:dataDic[@"createDate"]] != nil) {
+        
+        self.secondTimeLabel.text = [PublicUtils conversionTimeStamp:[PublicUtils checkNSNullWithgetString:dataDic[@"createDate"]]];
     }
     
-    if ([PublicUtils checkNSNullWithgetString:dataDic[@"finished_time"]] != nil) {
-        self.secondTimeLabel.text = [self changeTime:[PublicUtils checkNSNullWithgetString:dataDic[@"finished_time"]]];
+    if ([PublicUtils checkNSNullWithgetString:dataDic[@"finishDate"]] != nil) {
+        
+        self.secondTimeLabel.text = [PublicUtils conversionTimeStamp:[PublicUtils checkNSNullWithgetString:dataDic[@"finishDate"]]];
+        
     }
     
     

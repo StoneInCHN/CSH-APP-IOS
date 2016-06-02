@@ -46,6 +46,7 @@
 
 #define KHTTPHELPER_VEHICLESERVICEPURCHASELIST_SEARCH_URL @"/csh-interface/carService/purchaseList.jhtml"//用户购买汽车服务列表
 #define KHTTPHELPER_VEHICLESERVICERECORDDETAIL_SEARCH_URL @"/csh-interface/carService/recordDetail.jhtml"//用户购买汽车服务记录详情（订单详情)
+#define KHTTPHELPER_TENANTEVALUATEDORATE_INSERT_URL @"/csh-interface/tenantEvaluate/doRate.jhtml"//用户对商户打分：
 
 #define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
 
@@ -686,6 +687,18 @@
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url用户购买汽车服务列表:%@",urlString);
     [self requestWithHttpURL:urlString andParamDict:parmDict andSuccess:success andFailer:failure];
+}
+
+#pragma mark 用户对商户打分：
++ (void)insertTenantEvaluateDoRateWithUserDic:(NSDictionary *)parmDict
+                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_TENANTEVALUATEDORATE_INSERT_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"adertisment image url用户对商户打分:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:parmDict andSuccess:success andFailer:failure];
+    
 }
 //post方法
 +(void)requestWithHttpURL:(NSString*)urlString  andParamDict:(NSDictionary*)thyParamDict andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success andFailer:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{

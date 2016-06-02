@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BMNavController.h"
-
+#import "CWSHistoryOrder.h"
 @interface ShopNameView : UIView
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *shopNameLabel;
@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *phoneButtton;
 @property (weak, nonatomic) IBOutlet UIButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIView *storeReviewView;
+
 - (instancetype)initWithFrame:(CGRect)frame Data:(NSDictionary *)dic controller:(BMNavController *)controller;
 @end

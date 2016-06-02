@@ -49,18 +49,19 @@
     self.view.backgroundColor = kCOLOR(245, 245, 245);
 //    rightBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"message_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick:)];
 //    self.navigationItem.rightBarButtonItem = rightBarItem;
-    
+    [self getDataWithPage:_page];
     //1.初始化数据
+    [self creatTableView];
     [self initData];
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadDataArray:) name:@"reloadDataArray" object:nil];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [_dataArray removeAllObjects];
+    //[_dataArray removeAllObjects];
     _page = 1;
-    [self getDataWithPage:_page];
+    
     
 }
 
@@ -98,13 +99,13 @@
             else {
                 [_noDataView removeFromSuperview];
                 //1.创建界面
-                [self creatTableView];
+                //[self creatTableView];
             }
             
         }
         else  {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"desc"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             
         }
@@ -345,83 +346,127 @@
     
     NSString* orderStatus = [NSString stringWithFormat:@"%@",currentOrder.status];
     
-
+    /*** 预约中
+     RESERVATION,
+     预约成功
+     RESERVATION_SUCCESS,
+     预约失败
+     RESERVATION_FAIL,
+     未支付
+     UNPAID,
+     已支付
+     PAID,
+     完成
+     FINISH,
+     过期
+     OVERDUE,
+     */
+    [cell.actionButton setTitle:@"查看详情" forState:UIControlStateNormal];
     
-    
-
-    
-    if ([orderStatus isEqualToString:@"3"]) {
-       cell.statueLabel.text = @"订单完成";
-       cell.statueLabel.textColor = KOrangeColor;
-//       [cell.actionButton setTitle:@"评价" forState:UIControlStateNormal];
-        cell.actionButton.hidden = YES;
+    if ([orderStatus isEqualToString:@"FINISH"]) {
+        cell.statueLabel.text = @"订单完成";
+        cell.statueLabel.textColor = KOrangeColor;
+        cell.actionButton.hidden = NO;
+        cell.ecaluation.hidden = NO;
+        //判断是否已经评价
+        NSString *evaluation = [NSString stringWithFormat:@"%@",_order.evaluation];
+        if ([evaluation isEqualToString:@"<null>"]) {
+            [cell.ecaluation setTitle:@"评价" forState:UIControlStateNormal];
+            cell.ecaluation.enabled = YES;
+        }else{
+            [cell.ecaluation setTitle:@"已评价" forState:UIControlStateNormal];
+            cell.ecaluation.enabled = NO;
+        }
+        
+        
+        
+        //[cell.actionButton setTitle:@"评价" forState:UIControlStateNormal];
+        
         if ([PublicUtils checkNSNullWithgetString:_order.finished_time] != nil) {
-            cell.payTimeLabel.text = [PublicUtils checkNSNullWithgetString:_order.finished_time];
+            cell.payTimeLabel.text = [PublicUtils  conversionTimeStamp:_order.finished_time];
         }
         
         cell.payTimeTitleLabel.text= @"支付时间";
         
+        
     }
     //预约中
-    else if ([orderStatus isEqualToString:@"2"])
+    else if ([orderStatus isEqualToString:@"RESERVATION"])
     {
         cell.statueLabel.text = @"预约中";
         cell.statueLabel.textColor = kCOLOR(54, 188, 153);
 
-        cell.actionButton.hidden = YES;
+        cell.actionButton.hidden = NO;
         if ([PublicUtils checkNSNullWithgetString:_order.add_time] != nil) {
-            cell.payTimeLabel.text = [PublicUtils checkNSNullWithgetString:_order.add_time];
+            cell.payTimeLabel.text = [PublicUtils  conversionTimeStamp:_order.add_time];
         }
        
         cell.payTimeTitleLabel.text= @"下单时间";
     }
     //未付款
-    else if ([orderStatus isEqualToString:@"1"])
+    else if ([orderStatus isEqualToString:@"UNPAID"])
     {
         cell.statueLabel.text = @"未付款";
         cell.statueLabel.textColor = kCOLOR(249, 98, 102);
         if ([PublicUtils checkNSNullWithgetString:_order.add_time] != nil) {
-            cell.payTimeLabel.text = [PublicUtils checkNSNullWithgetString:_order.add_time];
+            cell.payTimeLabel.text = [PublicUtils  conversionTimeStamp:_order.add_time];
         }
         
         [cell.actionButton setTitle:@"确认付款" forState:UIControlStateNormal];
+       
         cell.payTimeTitleLabel.text= @"下单时间";
     }
     //取消
-    else if ([orderStatus isEqualToString:@"0"])
+    else if ([orderStatus isEqualToString:@"PAID"])
         
     {
-        cell.statueLabel.text = @"已取消";
+        cell.statueLabel.text = @"已支付";
         cell.statueLabel.textColor = [UIColor lightGrayColor];
-        if ([PublicUtils checkNSNullWithgetString:_order.finished_time] != nil) {
-            cell.payTimeLabel.text = [PublicUtils checkNSNullWithgetString:_order.finished_time];
+        if ([PublicUtils checkNSNullWithgetString:_order.add_time] != nil) {
+            cell.payTimeLabel.text = [PublicUtils  conversionTimeStamp:_order.add_time];
         }
         
-        cell.actionButton.hidden = YES;
-        cell.payTimeTitleLabel.text= @"取消时间";
+        cell.actionButton.hidden = NO;
+        cell.payTimeTitleLabel.text= @"付款时间";
     }
     //过期
-    else if ([orderStatus isEqualToString:@"4"]){
+    else if ([orderStatus isEqualToString:@"OVERDUE"]){
         cell.statueLabel.text = @"订单过期";
         cell.statueLabel.textColor = [UIColor lightGrayColor];
         cell.actionButton.hidden = YES;
         cell.payTimeTitleLabel.text= @"过期时间";
-        if ([PublicUtils checkNSNullWithgetString:_order.finished_time] != nil) {
-            cell.payTimeLabel.text = [PublicUtils checkNSNullWithgetString:_order.finished_time];
+//        if ([PublicUtils checkNSNullWithgetString:_order.add_time] != nil) {
+//            cell.payTimeLabel.text = [PublicUtils checkNSNullWithgetString:_order.add_time];
+//        }
+        if ([PublicUtils checkNSNullWithgetString:_order.add_time] != nil) {
+            cell.payTimeLabel.text = [PublicUtils  conversionTimeStamp:_order.add_time];
         }
         
     }
-    //进行中
-    else if ([orderStatus isEqualToString:@"12"]){
-        cell.statueLabel.text = @"进行中";
+    //预约成功
+    else if ([orderStatus isEqualToString:@"RESERVATION_SUCCESS"]){
+        cell.statueLabel.text = @"预约成功";
         cell.statueLabel.textColor = kCOLOR(54, 188, 153);
         
-        cell.actionButton.hidden = YES;
+        cell.actionButton.hidden = NO;
         if ([PublicUtils checkNSNullWithgetString:_order.add_time] != nil) {
-            cell.payTimeLabel.text = [PublicUtils checkNSNullWithgetString:_order.add_time];
+            cell.payTimeLabel.text = [PublicUtils  conversionTimeStamp:_order.add_time];
         }
         
         cell.payTimeTitleLabel.text= @"下单时间";
+        
+    }
+    //预约失败
+    else if ([orderStatus isEqualToString:@"RESERVATION_SUCCESS"]){
+        cell.statueLabel.text = @"预约失败";
+        cell.statueLabel.textColor = kCOLOR(54, 188, 153);
+        
+        cell.actionButton.hidden = NO;
+        if ([PublicUtils checkNSNullWithgetString:_order.add_time] != nil) {
+            cell.payTimeLabel.text = [PublicUtils  conversionTimeStamp:_order.add_time];
+        }
+        
+        cell.payTimeTitleLabel.text= @"失败时间";
         
     }
     
@@ -462,6 +507,7 @@
     }
     else if ([sender.currentTitle isEqualToString:@"查看详情"]){
         CWSCarWashDetileController* lController = [[CWSCarWashDetileController alloc] init];
+        lController.order = thyModel;
         [self.navigationController pushViewController:lController animated:YES];
     }else if ([sender.currentTitle isEqualToString:@"确认付款"]){
 
@@ -525,20 +571,20 @@
 
 
 #pragma mark - TabelView代理协议
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//#if USENEWVERSION
-    
-    if (_dataArray.count>0) {
-        _order = _dataArray[indexPath.row];
-    }
-    _currentIndex = indexPath;
-    MyLog(@"%@",_order.orderId);
-    
-    NSDictionary* dic = @{@"uid":KUserManager.uid,
-                          @"mobile":KUserManager.mobile,
-                          @"orderId":_order.orderId};
-    [self getOrderDetail:dic];
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+////#if USENEWVERSION
+//    
+//    if (_dataArray.count>0) {
+//        _order = _dataArray[indexPath.row];
+//    }
+//    _currentIndex = indexPath;
+//    MyLog(@"%@",_order.orderId);
+//    
+//    NSDictionary* dic = @{@"uid":KUserManager.uid,
+//                          @"mobile":KUserManager.mobile,
+//                          @"orderId":_order.orderId};
+//    [self getOrderDetail:dic];
     /*
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     [ModelTool getMyOrderDetaikWithParameter:dic andSuccess:^(id object) {
@@ -606,7 +652,7 @@
     
 #endif
   */
-}
+//}
 #pragma mark - tableView代理协议
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 174;
@@ -653,7 +699,10 @@
 
 }
 
-
+//通知事件
+-(void)reloadDataArray:(NSNotification*)notification{
+    [self getDataWithPage:_page];
+}
 
 
 
