@@ -154,6 +154,7 @@
                 <outlet property="firstLineView" destination="dRl-4X-bbM" id="0zZ-Fv-wXe"/>
                 <outlet property="firstTimeLabel" destination="vSk-f0-LT6" id="WfZ-il-NYV"/>
                 <outlet property="firstTitleLabel" destination="ymH-NI-78g" id="vcP-Dt-P2a"/>
+                <outlet property="line1" destination="dRl-4X-bbM" id="MxC-YR-osM"/>
                 <outlet property="line2" destination="Php-uh-ufj" id="Ihc-FI-kAI"/>
                 <outlet property="secondImageView" destination="dzX-p6-ZMe" id="lRt-XI-Xln"/>
                 <outlet property="secondTimeLabel" destination="FLc-R6-eXX" id="ngY-vY-Kjw"/>

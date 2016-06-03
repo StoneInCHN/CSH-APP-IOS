@@ -51,6 +51,7 @@
         self.secondImageView.image = [UIImage imageNamed:@"dingdanxiangqing_baoyang1"];
         self.secondTitleLabel.textColor =[UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
         self.secondTimeLabel.textColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
+        self.line1.backgroundColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
         
     }
     NSString *finishiData1 = [NSString stringWithFormat:@"%@",dataDic[@"finishDate"]];
