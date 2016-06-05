@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -67,15 +67,15 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ai-bY-3a5" userLabel="支付宝的按钮">
-                            <rect key="frame" x="260" y="2" width="60" height="50"/>
+                            <rect key="frame" x="280" y="19" width="20" height="20"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="60" id="3qc-Qj-VCv"/>
-                                <constraint firstAttribute="height" constant="50" id="Thy-7b-HEa"/>
+                                <constraint firstAttribute="width" constant="20" id="3qc-Qj-VCv"/>
+                                <constraint firstAttribute="height" constant="20" id="Thy-7b-HEa"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="30" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="20"/>
-                            <state key="normal">
+                            <state key="normal" backgroundImage="mycar_click">
                                 <color key="titleColor" red="0.95686274510000002" green="0.28627450980000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <state key="selected" image="mycar_click"/>
@@ -83,7 +83,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="7ai-bY-3a5" secondAttribute="trailing" id="5ZV-Rq-qnv"/>
+                        <constraint firstAttribute="trailing" secondItem="7ai-bY-3a5" secondAttribute="trailing" constant="20" symbolic="YES" id="5ZV-Rq-qnv"/>
                         <constraint firstItem="ty5-83-JmU" firstAttribute="leading" secondItem="1LV-Ue-35c" secondAttribute="trailing" constant="10" id="9Pj-dJ-lhP"/>
                         <constraint firstItem="F8o-0c-JAr" firstAttribute="top" secondItem="ty5-83-JmU" secondAttribute="bottom" constant="5" id="H9K-fT-iPZ"/>
                         <constraint firstItem="7ai-bY-3a5" firstAttribute="leading" secondItem="YFV-gD-tEJ" secondAttribute="leading" id="I4C-er-bsM"/>
@@ -95,13 +95,15 @@
                         <constraint firstItem="F8o-0c-JAr" firstAttribute="leading" secondItem="1LV-Ue-35c" secondAttribute="trailing" constant="10" id="ZFe-UT-mvb"/>
                         <constraint firstItem="eat-v0-eby" firstAttribute="top" secondItem="YFV-gD-tEJ" secondAttribute="top" id="c6q-cL-5rJ"/>
                         <constraint firstItem="eat-v0-eby" firstAttribute="leading" secondItem="YFV-gD-tEJ" secondAttribute="leading" constant="10" id="cQI-PD-gpS"/>
+                        <constraint firstItem="7ai-bY-3a5" firstAttribute="centerY" secondItem="YFV-gD-tEJ" secondAttribute="centerY" id="iHU-zA-KiU"/>
                         <constraint firstItem="1LV-Ue-35c" firstAttribute="leading" secondItem="YFV-gD-tEJ" secondAttribute="leading" constant="10" id="kkL-J7-nhO"/>
-                        <constraint firstItem="7ai-bY-3a5" firstAttribute="top" secondItem="eat-v0-eby" secondAttribute="bottom" constant="1" id="wsI-9d-S6M"/>
+                        <constraint firstItem="7ai-bY-3a5" firstAttribute="top" secondItem="eat-v0-eby" secondAttribute="bottom" constant="16" id="wsI-9d-S6M"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="I4C-er-bsM"/>
                             <exclude reference="Wk8-nQ-pBZ"/>
+                            <exclude reference="wsI-9d-S6M"/>
                         </mask>
                     </variation>
                 </view>
@@ -140,10 +142,19 @@
                             <color key="textColor" red="0.51945233580000005" green="0.51945233580000005" blue="0.51945233580000005" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mjd-1c-fwU">
+                            <rect key="frame" x="280" y="19" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="Bc5-FG-iYt"/>
+                                <constraint firstAttribute="height" constant="20" id="bin-kD-arU"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="mycar_noclick"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="yX5-Xq-4pu" firstAttribute="leading" secondItem="d6i-7s-nus" secondAttribute="leading" constant="10" id="4k2-JU-bFJ"/>
+                        <constraint firstItem="Mjd-1c-fwU" firstAttribute="centerY" secondItem="d6i-7s-nus" secondAttribute="centerY" id="6hZ-K2-PKJ"/>
                         <constraint firstItem="zI5-lH-ckr" firstAttribute="top" secondItem="d6i-7s-nus" secondAttribute="top" constant="12" id="EN8-ky-szZ"/>
                         <constraint firstItem="zI5-lH-ckr" firstAttribute="leading" secondItem="yX5-Xq-4pu" secondAttribute="trailing" constant="10" id="Ik1-v9-FWM"/>
                         <constraint firstAttribute="trailing" secondItem="OpQ-XA-yed" secondAttribute="trailing" constant="10" id="LNP-Aw-97d"/>
@@ -152,6 +163,7 @@
                         <constraint firstItem="yX5-Xq-4pu" firstAttribute="centerY" secondItem="d6i-7s-nus" secondAttribute="centerY" id="bjX-ss-ICp"/>
                         <constraint firstAttribute="height" constant="58" id="bmB-H8-jyI"/>
                         <constraint firstItem="FQO-XQ-aiB" firstAttribute="top" secondItem="zI5-lH-ckr" secondAttribute="bottom" constant="5" id="djK-lC-fAI"/>
+                        <constraint firstAttribute="trailing" secondItem="Mjd-1c-fwU" secondAttribute="trailing" constant="20" symbolic="YES" id="gdc-ne-aEi"/>
                         <constraint firstItem="OpQ-XA-yed" firstAttribute="top" secondItem="d6i-7s-nus" secondAttribute="top" id="p5z-MK-8sV"/>
                     </constraints>
                 </view>
@@ -172,13 +184,15 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="alipayButton" destination="7ai-bY-3a5" id="xsa-Gi-1cc"/>
+                <outlet property="wxPayButton" destination="Mjd-1c-fwU" id="2ev-iu-b4R"/>
                 <outlet property="wxView" destination="d6i-7s-nus" id="Tvf-CB-cYV"/>
             </connections>
-            <point key="canvasLocation" x="241" y="301.5"/>
+            <point key="canvasLocation" x="157" y="232.5"/>
         </view>
     </objects>
     <resources>
         <image name="mycar_click" width="14" height="14"/>
+        <image name="mycar_noclick" width="14" height="14"/>
         <image name="weixin.png" width="36" height="36"/>
         <image name="zhufu.png" width="36" height="36"/>
     </resources>

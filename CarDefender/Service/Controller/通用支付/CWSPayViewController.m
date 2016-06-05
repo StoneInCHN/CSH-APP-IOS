@@ -34,8 +34,9 @@
     UILabel* redLabel;  //红包抵用金额标签
     
     UILabel* balanceLabel; // 余额抵用金额标签
-    
-    
+    UIButton* zhifubaoButton;
+    UIButton* weixinButton;
+    UIView *discountCouponView; // 优惠劵实图
     CGFloat totalHeight;  //总高度
     
     CGFloat totalHeightCopy;
@@ -65,11 +66,6 @@
 
 @implementation CWSPayViewController
 
-//-(void)viewWillAppear:(BOOL)animated{
-//    
-//
-//}
-
 -(instancetype)init{
     
     if(self = [super init]){
@@ -80,7 +76,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
     if(isPaySuccess){
         [WCAlertView showAlertWithTitle:nil message:@"您已完成付款" customizationBlock:nil completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
             
@@ -115,10 +110,8 @@
     _myScrollView.showsHorizontalScrollIndicator = NO;
     _myScrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_myScrollView];
-    NSString *money = [NSString stringWithFormat:@"%@",self.dataDict[@"price"]];
-    settleMoney = [money floatValue];
-    [self createUI];
-    //[self loadData];
+    
+    [self loadData];
     
     MyLog(@"------确认信息----%@",self.dataDict);
 }
@@ -127,7 +120,6 @@
 #pragma mark -=============================InitialData
 -(void)loadData{
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-
 //    [ModelTool getWalletInfoWithParameter:@{@"uid":KUserManager.uid,@"mobile":KUserManager.mobile} andSuccess:^(id object) {
 //        dispatch_async(dispatch_get_main_queue(), ^{
 //            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -270,32 +262,33 @@
 
 -(void)updateUI{
     totalCountLabel.text = [NSString stringWithFormat:@"￥%.2f",payMoney];
-    redLabel.text = [NSString stringWithFormat:@"可使用红包抵用%.2f元",redMoney];
-    balanceLabel.text = [NSString stringWithFormat:@"可使用余额抵用%.2f元",balanceMoney];
-    
+//    redLabel.text = [NSString stringWithFormat:@"可使用红包抵用%.2f元",redMoney];
+//    balanceLabel.text = [NSString stringWithFormat:@"可使用余额抵用%.2f元",balanceMoney];
+    redLabel.text = [NSString stringWithFormat:@"使用优惠劵抵用"];
+    balanceLabel.text = [NSString stringWithFormat:@"使用账户余额抵用"];
 //    CGRectGetMaxY(payInfoView.frame)+payMethodView.frame.size.height
 //    CGRectGetMaxY(payInfoView.frame)+payMethodView.frame.size.height+redPackageUsedView.frame.size.height+1
     CGRect redViewY = redPackageUsedView.frame;
     CGRect balanceViewY = balanceUsedView.frame;
     
-    if(payMethodView.hidden){
-        redViewY.origin.y = CGRectGetMaxY(payInfoView.frame);
-        balanceViewY.origin.y = CGRectGetMaxY(payInfoView.frame)+redPackageUsedView.frame.size.height+1;
-        if(!isAddHeight){
-            totalHeight -= payMethodView.frame.size.height;
-            isAddHeight = YES;
-        }
-    }else{
+//    if(payMethodView.hidden){
+//        redViewY.origin.y = CGRectGetMaxY(payInfoView.frame);
+//        balanceViewY.origin.y = CGRectGetMaxY(payInfoView.frame)+redPackageUsedView.frame.size.height+1;
+//        if(!isAddHeight){
+//            totalHeight -= payMethodView.frame.size.height;
+//            isAddHeight = YES;
+//        }
+//    }else{
         redViewY.origin.y = CGRectGetMaxY(payInfoView.frame)+payMethodView.frame.size.height;
-        balanceViewY.origin.y = CGRectGetMaxY(payInfoView.frame)+payMethodView.frame.size.height+redPackageUsedView.frame.size.height+1;
+        balanceViewY.origin.y = CGRectGetMaxY(payInfoView.frame)+payMethodView.frame.size.height+redPackageUsedView.frame.size.height+1 + discountCouponView.frame.size.height;
         if(isAddHeight){
             totalHeight += payMethodView.frame.size.height;
             isAddHeight = NO;
         }
-    }
+//    }
+//    
     
-    
-    
+    payMethodView.hidden = NO;
     redPackageUsedView.frame = redViewY;
     balanceUsedView.frame = balanceViewY;
     
@@ -345,7 +338,6 @@
     totalCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalLabel.frame), 15, kSizeOfScreen.width, 15)];
     totalCountLabel.font = [UIFont systemFontOfSize:14.0f];
     totalCountLabel.textColor = KRedColor;
-    payMoney = settleMoney-redMoney-balanceMoney;
     totalCountLabel.text = [NSString stringWithFormat:@"￥%.2f",payMoney];
     totalCountLabel.textAlignment = NSTextAlignmentLeft;
     [totalCountView addSubview:totalCountLabel];
@@ -363,7 +355,7 @@
         payMethodView.backgroundColor = KGrayColor3;
         totalHeight += payMethodView.frame.size.height;
         [_myScrollView addSubview:payMethodView];
-        
+
         //标题view
         UIView* titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 15, kSizeOfScreen.width, 40)];
         titleView.backgroundColor = [UIColor whiteColor];
@@ -393,7 +385,7 @@
         [zhifubaoView addSubview:viewImgLabel2];
         [viewImgLabel2 sizeToFit];
         
-        UIButton* zhifubaoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        zhifubaoButton = [UIButton buttonWithType:UIButtonTypeCustom];
         zhifubaoButton.frame = CGRectMake(0, 1, kSizeOfScreen.width, 58);
         zhifubaoButton.selected = YES;
         payMethodNum = 0; //默认为支付宝支付
@@ -428,7 +420,7 @@
         [wxView addSubview:view2ImgLabel2];
         [view2ImgLabel2 sizeToFit];
         
-        UIButton* weixinButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        weixinButton = [UIButton buttonWithType:UIButtonTypeCustom];
         weixinButton.frame = CGRectMake(0, 1, kSizeOfScreen.width, 58);
         [weixinButton setTitle:@"wx" forState:UIControlStateNormal];
         [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
@@ -488,13 +480,14 @@
         redLabel.textColor = KRedColor;
         redLabel.font = [UIFont systemFontOfSize:14.0f];
         redLabel.textAlignment = NSTextAlignmentLeft;
-        redLabel.text = [NSString stringWithFormat:@"可使用红包抵用%.2f元",redMoney];
+//        redLabel.text = [NSString stringWithFormat:@"可使用红包抵用%.2f元",redMoney];
+        redLabel.text = [NSString stringWithFormat:@"使用优惠劵抵用"];
         [selectedRedPackageView addSubview:redLabel];
         
         UISwitch* redSwitch = [[UISwitch alloc]init];
         redSwitch.tag = 300;
         redSwitch.frame = CGRectMake(kSizeOfScreen.width-10-redSwitch.size.width, 10, redSwitch.size.width, redSwitch.size.height);
-        redSwitch.on = YES;
+        redSwitch.on = NO;
         [redSwitch addTarget:self action:@selector(switchClicked:) forControlEvents:UIControlEventValueChanged];
         [selectedRedPackageView addSubview:redSwitch];
 }
@@ -509,13 +502,14 @@
         balanceLabel.textColor = KRedColor;
         balanceLabel.font = [UIFont systemFontOfSize:14.0f];
         balanceLabel.textAlignment = NSTextAlignmentLeft;
-        balanceLabel.text = [NSString stringWithFormat:@"可使用余额抵用%.2f元",balanceMoney];
+//        balanceLabel.text = [NSString stringWithFormat:@"可使用余额抵用%.2f元",balanceMoney];
+        balanceLabel.text = [NSString stringWithFormat:@"使用账户余额抵用"];
         [balanceUsedView addSubview:balanceLabel];
         
         UISwitch* balanceSwitch = [[UISwitch alloc]init];
         balanceSwitch.tag = 301;
         balanceSwitch.frame = CGRectMake(kSizeOfScreen.width-10-balanceSwitch.size.width, 10, balanceSwitch.size.width, balanceSwitch.size.height);
-        balanceSwitch.on = YES;
+        balanceSwitch.on = NO;
         [balanceSwitch addTarget:self action:@selector(switchClicked:) forControlEvents:UIControlEventValueChanged];
         [balanceUsedView addSubview:balanceSwitch];
 }
@@ -523,35 +517,76 @@
 -(void)initialScrollView{
     _myScrollView.contentSize = CGSizeMake(kSizeOfScreen.width, totalHeight);
 }
-
+- (void)changePayBtnSelectedIcon:(UIButton *)btn {
+    if (btn.selected) {
+        [btn setImage:[UIImage imageNamed:@"mycar_click"] forState:UIControlStateNormal];
+    } else {
+        [btn setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
+    }
+}
 #pragma mark -=============================OtherCallBack
 /**支付按钮*/
 -(void)payButtonClicked:(UIButton*)sender{
-    for(int i=0; i<PAYMETHOD; i++){
-        UIButton* button = (UIButton*)[self.view viewWithTag:200+i];
-        button.selected = NO;
-    }
+//    for(int i=0; i<PAYMETHOD; i++){
+//        UIButton* button = (UIButton*)[self.view viewWithTag:200+i];
+//        button.selected = NO;
+//    }
     payMethodNum = sender.tag-200;
     payMethodString = sender.titleLabel.text;
+    
     switch(payMethodNum){
         case 0:{
-            sender.selected = YES;
+//            sender.selected = YES;
             MyLog(@"%@",sender.titleLabel.text);
-            
+            zhifubaoButton.selected = YES;
+            weixinButton.selected = NO;
+            [self changePayBtnSelectedIcon:weixinButton];
+            [self changePayBtnSelectedIcon:zhifubaoButton];
         }break;
         case 1:{
-            sender.selected = YES;
+//            sender.selected = YES;
             MyLog(@"%@",sender.titleLabel.text);
-            
+            zhifubaoButton.selected = NO;
+            weixinButton.selected = YES;
+            [self changePayBtnSelectedIcon:zhifubaoButton];
+            [self changePayBtnSelectedIcon:weixinButton];
         }break;
-        case 2:{
-            sender.selected = YES;
-            MyLog(@"%@",sender.titleLabel.text);
-        }break;
+//        case 2:{
+//            sender.selected = YES;
+//            MyLog(@"%@",sender.titleLabel.text);
+//        }break;
         default:break;
     }
 }
-
+- (void)useDiscountCoupon {
+    discountCouponView = [[UIView alloc] initWithFrame:CGRectMake(5,CGRectGetMaxY(redPackageUsedView.frame), kSizeOfScreen.width, 60)];
+    discountCouponView.backgroundColor = [UIColor redColor];
+    UIImageView *discountCouponImage = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, discountCouponView.frame.size.width-75, 50)];
+    discountCouponImage.image = [UIImage imageNamed:@"b7o.9"];
+    discountCouponImage.contentMode = UIViewContentModeScaleToFill;
+    discountCouponImage.backgroundColor = [UIColor greenColor];
+    [discountCouponView addSubview:discountCouponImage];
+    
+    UIButton *discountCouponBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(discountCouponImage.frame)+10, 10, 40, 40)];
+//    discountCouponBtn setImage: forState:
+    [discountCouponBtn setTitle:@"yh" forState:UIControlStateNormal];
+    [discountCouponBtn setTintColor:[UIColor redColor]];
+    [discountCouponBtn addTarget:self action:@selector(selecteDiscountCoupon:) forControlEvents:UIControlEventTouchUpInside];
+    discountCouponBtn.backgroundColor = [UIColor blueColor];
+    [discountCouponView addSubview:discountCouponBtn];
+    
+    totalHeight += discountCouponView.frame.size.height;
+    [_myScrollView addSubview:discountCouponView];
+}
+- (void)nonUseDiscountCoupon {
+    CGRect frame = CGRectMake(0, 0, kSizeOfScreen.width, 0);
+    discountCouponView.frame = frame;
+    [discountCouponView removeSubviews];
+}
+#pragma mark 选择优惠劵按钮点击事件
+- (void)selecteDiscountCoupon:(UIButton *)sender {
+    [MBProgressHUD showSuccess:@"seleted!" toView:self.view];
+}
 /**抵用按钮选择*/
 -(void)switchClicked:(UISwitch*)sender{
     
@@ -634,7 +669,7 @@
 //                        totalHeight += balanceUsedView.frame.size.height;
 //                    }
                 }
-                
+                [self useDiscountCoupon];
             }else{
                 tempRedMoney = redMoney;
                 if([wallertDict[@"balanceAmount"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on && [wallertDict[@"balanceAmount"] floatValue] != 0){
@@ -649,17 +684,22 @@
                     isBalanceEnough = NO;
                     redMoney = 0;
                 }
-                
+                [self nonUseDiscountCoupon];
             }
         }break;
         case 1:{
             MyLog(@"余额%@",sender.on ? @"开" : @"关");
             if(sender.on){
-                
+                weixinButton.selected = NO;
+                [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
+                zhifubaoButton.selected = NO;
+                [zhifubaoButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
                 balanceMoney = tempBalanceMoney-tempRedMoney;
                 
                 tempBalanceMoney = 0;
             }else{
+                zhifubaoButton.selected = YES;
+                [zhifubaoButton setImage:[UIImage imageNamed:@"mycar_click"] forState:UIControlStateNormal];
                 tempBalanceMoney = balanceMoney;
                 
                 balanceMoney = 0;
@@ -687,17 +727,17 @@
 //        isAddHeight = NO;
 //    }
     
-    if(payMoney){
-        if(payMethodView.hidden){
-            isAddHeight = YES;
-        }
-        payMethodView.hidden = NO;
-    }else{
-        if(!payMethodView.hidden){
-            isAddHeight = NO;
-        }
-        payMethodView.hidden = YES;
-    }
+//    if(payMoney){
+//        if(payMethodView.hidden){
+//            isAddHeight = YES;
+//        }
+//        payMethodView.hidden = NO;
+//    }else{
+//        if(!payMethodView.hidden){
+//            isAddHeight = NO;
+//        }
+//        payMethodView.hidden = YES;
+//    }
     
     [self updateUI];
 }

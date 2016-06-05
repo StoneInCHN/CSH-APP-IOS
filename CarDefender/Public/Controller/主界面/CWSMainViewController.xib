@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -39,12 +39,12 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdF-ko-YsG">
-                            <rect key="frame" x="562" y="30" width="33" height="26"/>
+                            <rect key="frame" x="564" y="23" width="28" height="32"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="33" id="Y5K-lK-qQw"/>
-                                <constraint firstAttribute="height" constant="26" id="aVG-eh-at8"/>
+                                <constraint firstAttribute="width" constant="28" id="Y5K-lK-qQw"/>
+                                <constraint firstAttribute="height" constant="32" id="aVG-eh-at8"/>
                             </constraints>
-                            <state key="normal" backgroundImage="message"/>
+                            <state key="normal" backgroundImage="message_center_icon"/>
                             <connections>
                                 <action selector="onMessageCenterBtn:" destination="-1" eventType="touchUpInside" id="QR1-vG-9JQ"/>
                             </connections>
@@ -61,13 +61,13 @@
                         <constraint firstItem="KIm-R1-thQ" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="25" id="BjG-y5-AJ9"/>
                         <constraint firstItem="2xc-XP-elB" firstAttribute="leading" secondItem="Jyt-h1-2K6" secondAttribute="leading" constant="5" id="Eg8-Oc-TBu"/>
                         <constraint firstItem="KIm-R1-thQ" firstAttribute="centerX" secondItem="Jyt-h1-2K6" secondAttribute="centerX" id="HMl-0k-uti"/>
-                        <constraint firstAttribute="trailing" secondItem="PdF-ko-YsG" secondAttribute="trailing" constant="5" id="KJw-dg-QWW"/>
+                        <constraint firstAttribute="trailing" secondItem="PdF-ko-YsG" secondAttribute="trailing" constant="8" id="KJw-dg-QWW"/>
                         <constraint firstAttribute="bottom" secondItem="KIm-R1-thQ" secondAttribute="bottom" constant="10" id="M35-Mi-uAZ"/>
                         <constraint firstAttribute="trailing" secondItem="jSE-jq-2Zm" secondAttribute="trailing" constant="8" id="OgZ-1T-7mm"/>
                         <constraint firstItem="2xc-XP-elB" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="30" id="Pf5-lw-vM3"/>
                         <constraint firstAttribute="height" constant="64" id="diu-ie-t1z"/>
-                        <constraint firstItem="PdF-ko-YsG" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="30" id="iUL-3V-ITd"/>
-                        <constraint firstItem="PdF-ko-YsG" firstAttribute="top" secondItem="jSE-jq-2Zm" secondAttribute="bottom" constant="-10" id="olZ-tO-Uso"/>
+                        <constraint firstItem="PdF-ko-YsG" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="23" id="iUL-3V-ITd"/>
+                        <constraint firstItem="PdF-ko-YsG" firstAttribute="top" secondItem="jSE-jq-2Zm" secondAttribute="bottom" constant="-17" id="olZ-tO-Uso"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3yg-Hq-UGM">
@@ -94,11 +94,11 @@
                 <constraint firstItem="Jyt-h1-2K6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o5p-l5-vXG"/>
                 <constraint firstItem="9Wp-rt-TVW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="omr-aB-Tpp"/>
             </constraints>
-            <point key="canvasLocation" x="340" y="376"/>
+            <point key="canvasLocation" x="486" y="365"/>
         </view>
     </objects>
     <resources>
         <image name="logo.png" width="100" height="41"/>
-        <image name="message" width="20" height="20"/>
+        <image name="message_center_icon" width="49" height="50"/>
     </resources>
 </document>

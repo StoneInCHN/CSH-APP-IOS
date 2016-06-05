@@ -10,6 +10,7 @@
 
 @interface CWSPayMethodView : UIView
 
+@property (weak, nonatomic) IBOutlet UIButton *wxPayButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *alipayButton;
 
