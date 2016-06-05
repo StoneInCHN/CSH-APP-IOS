@@ -67,23 +67,6 @@
                                     <constraint firstAttribute="width" constant="2" id="lCQ-T1-hsT"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="knN-kC-5bg">
-                                <rect key="frame" x="8" y="26" width="40" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="QR9-Uz-wFc"/>
-                                    <constraint firstAttribute="height" constant="50" id="i5B-I0-ghP"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="lHc-zS-FPi"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="lXQ-rd-HEK"/>
-                                    <constraint firstAttribute="width" constant="40" id="zUP-Zs-6zR"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="i5B-I0-ghP"/>
-                                        <exclude reference="lHc-zS-FPi"/>
-                                        <exclude reference="lXQ-rd-HEK"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="扣分" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yr9-eX-fSr">
                                 <rect key="frame" x="81" y="20" width="81" height="16"/>
                                 <constraints>
@@ -125,6 +108,23 @@
                                     <constraint firstAttribute="width" constant="3" id="yUx-Rx-zvB"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chepai_moren" translatesAutoresizingMaskIntoConstraints="NO" id="knN-kC-5bg">
+                                <rect key="frame" x="8" y="17" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="QR9-Uz-wFc"/>
+                                    <constraint firstAttribute="height" constant="50" id="i5B-I0-ghP"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="lHc-zS-FPi"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="lXQ-rd-HEK"/>
+                                    <constraint firstAttribute="width" constant="40" id="zUP-Zs-6zR"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="i5B-I0-ghP"/>
+                                        <exclude reference="lHc-zS-FPi"/>
+                                        <exclude reference="lXQ-rd-HEK"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -214,10 +214,10 @@
                 <outlet property="illegalTimeLabel" destination="oOw-Lq-Omk" id="rdf-r9-HXH"/>
                 <outlet property="pointLabel" destination="hpM-Lq-Jn8" id="arL-9F-xln"/>
             </connections>
-            <point key="canvasLocation" x="466" y="337.5"/>
+            <point key="canvasLocation" x="544" y="315.5"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="kuang.png" width="14" height="14"/>
+        <image name="chepai_moren" width="25" height="25"/>
     </resources>
 </document>

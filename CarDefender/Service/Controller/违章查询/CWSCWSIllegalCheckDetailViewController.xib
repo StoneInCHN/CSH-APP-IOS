@@ -29,8 +29,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhh-gl-NAv" userLabel="headView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kuang.png" translatesAutoresizingMaskIntoConstraints="NO" id="x1S-I6-0CV">
-                            <rect key="frame" x="10" y="20" width="40" height="34"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chepai_moren" translatesAutoresizingMaskIntoConstraints="NO" id="x1S-I6-0CV">
+                            <rect key="frame" x="10" y="20" width="40" height="39"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="5f4-Zh-CmS"/>
                             </constraints>
@@ -98,7 +98,7 @@
                         <constraint firstAttribute="trailing" secondItem="Rj8-gS-C2J" secondAttribute="trailing" constant="33" id="mSQ-na-Skh"/>
                         <constraint firstItem="9fU-8K-Pdb" firstAttribute="centerY" secondItem="bhh-gl-NAv" secondAttribute="centerY" id="nmu-8I-ODX"/>
                         <constraint firstItem="i7e-m2-0aV" firstAttribute="top" secondItem="bhh-gl-NAv" secondAttribute="top" constant="30" id="pUh-NZ-UIK"/>
-                        <constraint firstItem="x1S-I6-0CV" firstAttribute="centerY" secondItem="bhh-gl-NAv" secondAttribute="centerY" id="pt7-TL-89z"/>
+                        <constraint firstItem="x1S-I6-0CV" firstAttribute="centerY" secondItem="bhh-gl-NAv" secondAttribute="centerY" constant="2.5" id="pt7-TL-89z"/>
                         <constraint firstItem="PKG-uw-2rL" firstAttribute="top" secondItem="bhh-gl-NAv" secondAttribute="top" constant="31" id="sM2-eW-6qw"/>
                         <constraint firstItem="i7e-m2-0aV" firstAttribute="firstBaseline" secondItem="TRn-y5-lMQ" secondAttribute="firstBaseline" id="sya-ZF-oce"/>
                         <constraint firstItem="i7e-m2-0aV" firstAttribute="leading" secondItem="9fU-8K-Pdb" secondAttribute="trailing" constant="8" symbolic="YES" id="u1U-JW-TgA"/>
@@ -246,10 +246,10 @@
                     <exclude reference="2De-eH-TYL"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="635" y="124"/>
+            <point key="canvasLocation" x="681" y="112"/>
         </view>
     </objects>
     <resources>
-        <image name="kuang.png" width="14" height="14"/>
+        <image name="chepai_moren" width="25" height="25"/>
     </resources>
 </document>

@@ -16,7 +16,7 @@
 {
 
     self.addressLabe.text = [PublicUtils checkNSNullWithgetString:dicMsg[@"illegalAddress"]];
-    self.headImageView.image = [UIImage imageNamed:@"logo"];
+//    self.headImageView.image = [UIImage imageNamed:@"logo"];
     self.carBrandLabel.text = [PublicUtils checkNSNullWithgetString:dicMsg[@"plate"]];
     self.illegalTimeLabel.text = [PublicUtils checkNSNullWithgetString:dicMsg[@"illegalDate"]];
     if ([dicMsg[@"finesAmount"] isKindOfClass:[NSNull class]]) {

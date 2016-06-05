@@ -28,7 +28,7 @@
     [self updateUI];
 }
 - (void)updateUI {
-    self.headCarImageView.image = [UIImage imageNamed:@"logo"];
+//    self.headCarImageView.image = [UIImage imageNamed:@"logo"];
     self.headCarBrandLabel.text = [Helper convertNULLToString:self.dic[@"plate"]];
     self.headCarBrandLabel.text = [PublicUtils checkNSNullWithgetString:self.dic[@"plate"]];
     if ([self.dic[@"score"] isKindOfClass:[NSNull class]]) {
