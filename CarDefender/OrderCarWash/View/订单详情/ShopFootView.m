@@ -35,7 +35,7 @@
 - (void)showUI
 {
     self.carLabel.text = KUserManager.userDefaultVehicle[@"plate"];
-    self.orderNumberLabel.text = dataDic[@"order_sn"];
+    self.orderNumberLabel.text = dataDic[@"recordNo"];
     
     if ([dataDic[@"barcodes"] stringValue].length) {
         UIImage *qrcode = [self createNonInterpolatedUIImageFormCIImage:[self createQRForString:dataDic[@"barcodes"]] withSize:250.0f];

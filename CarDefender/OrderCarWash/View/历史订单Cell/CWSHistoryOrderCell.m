@@ -24,10 +24,14 @@
     self.moneyLabel = (UILabel *)[self viewWithTag:4];
     self.payTimeLabel = (UILabel *)[self viewWithTag:5];
     self.actionButton = (UIButton *)[self viewWithTag:6];
+    //self.ecaluation = (UIButton *)[self viewWithTag:7];
     self.actionButton.layer.borderWidth = 1.0;
-    
+    self.ecaluation.layer.borderWidth = 1.0;
     self.actionButton.layer.borderColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1].CGColor;
     [self.actionButton addTarget:self action:@selector(actionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    self.ecaluation.layer.borderColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1].CGColor;
+    [self.ecaluation addTarget:self action:@selector(actionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
 
@@ -43,6 +47,7 @@
 //    if([self.delegate respondsToSelector:@selector(selectTableViewButtonClicked:Red:ID:andDataDict:)]){
 //        [self.delegate selectTableViewButtonClicked:sender Red:0 ID:[self.dataDic[@"merchantsID"] integerValue] andDataDict:self.dataDic];
 //    }
+   
     if([self.delegate respondsToSelector:@selector(selectTableViewButtonClicked:andOrderHistoryModel:)]){
         [self.delegate selectTableViewButtonClicked:sender andOrderHistoryModel:self.order];
     }

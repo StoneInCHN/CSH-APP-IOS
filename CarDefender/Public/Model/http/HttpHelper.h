@@ -258,8 +258,8 @@
  * 用户绑定车辆与设备
  *
  *  @param dic @{@"userId": ,@"token": ,@"deviceNo": ,@"vihicleId": }
- *  @param modelsuccess 成功回调数据
- *  @param modelfaile   失败回调数据
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
  */
 + (void)insertBindDeviceWithUserDic:(NSDictionary *)vehicleDic
                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
@@ -270,8 +270,8 @@
  * 用户设置默认车辆
  *
  *  @param dic @{@"userId": ,@"token": ,@"vihicleId": }
- *  @param modelsuccess 成功回调数据
- *  @param modelfaile   失败回调数据
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
  */
 + (void)insertDeviceSetDefaultWithUserDic:(NSDictionary *)vehicleDic
                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
@@ -283,8 +283,8 @@
  * 用户购买汽车服务列表
  *
  *  @param dic @{@"userId": ,@"token": ,@"pageNumber": ,@"pageSize"}
- *  @param modelsuccess 成功回调数据
- *  @param modelfaile   失败回调数据
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
  */
 + (void)searchCarServicePurchaseListWithUserDic:(NSDictionary *)vehicleDic
                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
@@ -295,10 +295,21 @@
  * 用户购买汽车服务列表
  *
  *  @param dic @{@"userId": ,@"token": ,@"recordId": }
- *  @param modelsuccess 成功回调数据
- *  @param modelfaile   失败回调数据
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
  */
 + (void)searchCarServiceRecordDetailWithUserDic:(NSDictionary *)vehicleDic
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+#pragma mark 用户对商户打分：
+/**
+ * 用户对商户打分：
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"recordId": @"tenantId",@"score"}
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
+ */
++ (void)insertTenantEvaluateDoRateWithUserDic:(NSDictionary *)vehicleDic
                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 

@@ -10,8 +10,10 @@
 
 @interface OrderStatusView : UIView
 @property (nonatomic,strong)UIImageView *statusImageView;
-@property (nonatomic,strong)UILabel *statusLabel;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
 
 - (instancetype)initWithFrame:(CGRect)frame Data:(NSDictionary *)dic;
 @end

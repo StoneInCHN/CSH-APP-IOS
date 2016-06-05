@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0D0487891CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */; };
+		0D64DDCB1D00220900DF51AA /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */; };
+		0D64DDCD1D00226E00DF51AA /* CWSPayInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D64DDCC1D00226E00DF51AA /* CWSPayInfoView.xib */; };
 		243AB0BF1CDA524100E9FD95 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0BE1CDA524100E9FD95 /* HttpHelper.m */; };
 		243AB0C21CDA738900E9FD95 /* HBRSAHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C11CDA738900E9FD95 /* HBRSAHandler.m */; };
 		243AB0C51CDA746A00E9FD95 /* SecurityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */; };
@@ -19,7 +21,6 @@
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
-		2E29F4ED1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */; };
 		3300F4A81ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */; };
 		3300F4A91ADFFD7B00B3D5B7 /* DailyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49C1ADFFD7B00B3D5B7 /* DailyCalendarView.m */; };
 		3300F4AA1ADFFD7B00B3D5B7 /* DayTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49E1ADFFD7B00B3D5B7 /* DayTitleLabel.m */; };
@@ -852,7 +853,6 @@
 		4CA0C2F41C1BCC3B0006BF3E /* pingjia_wuxing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA0C2F21C1BCC3B0006BF3E /* pingjia_wuxing@3x.png */; };
 		4CA0C2F81C1BF4CC0006BF3E /* CWSPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C2F71C1BF4CC0006BF3E /* CWSPayViewController.m */; };
 		4CA0C2FC1C1BF5F60006BF3E /* CWSPayInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C2FB1C1BF5F60006BF3E /* CWSPayInfoView.m */; };
-		4CA0C2FE1C1BF6040006BF3E /* CWSPayInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CA0C2FD1C1BF6040006BF3E /* CWSPayInfoView.xib */; };
 		4CA0C3011C1BFCDB0006BF3E /* CWSPayMethodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C3001C1BFCDB0006BF3E /* CWSPayMethodView.m */; };
 		4CA0C3031C1BFCE80006BF3E /* CWSPayMethodView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CA0C3021C1BFCE80006BF3E /* CWSPayMethodView.xib */; };
 		4CA0C3071C1C236E0006BF3E /* CWSFindParkSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0C3051C1C236E0006BF3E /* CWSFindParkSearchViewController.m */; };
@@ -1240,6 +1240,8 @@
 
 /* Begin PBXFileReference section */
 		0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableViewCell.xib; sourceTree = "<group>"; };
+		0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
+		0D64DDCC1D00226E00DF51AA /* CWSPayInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSPayInfoView.xib; sourceTree = "<group>"; };
 		243AB0BD1CDA524100E9FD95 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		243AB0BE1CDA524100E9FD95 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		243AB0C01CDA738900E9FD95 /* HBRSAHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBRSAHandler.h; sourceTree = "<group>"; };
@@ -1260,7 +1262,6 @@
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		24E53A8C1CE1AE9E0037197B /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindGasStationHeadView.xib; sourceTree = "<group>"; };
-		2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
 		3300F4991ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLWeeklyCalendarView.h; sourceTree = "<group>"; };
 		3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWeeklyCalendarView.m; sourceTree = "<group>"; };
 		3300F49B1ADFFD7B00B3D5B7 /* DailyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyCalendarView.h; sourceTree = "<group>"; };
@@ -2430,7 +2431,6 @@
 		4CA0C2F71C1BF4CC0006BF3E /* CWSPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSPayViewController.m; sourceTree = "<group>"; };
 		4CA0C2FA1C1BF5F60006BF3E /* CWSPayInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSPayInfoView.h; sourceTree = "<group>"; };
 		4CA0C2FB1C1BF5F60006BF3E /* CWSPayInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSPayInfoView.m; sourceTree = "<group>"; };
-		4CA0C2FD1C1BF6040006BF3E /* CWSPayInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSPayInfoView.xib; sourceTree = "<group>"; };
 		4CA0C2FF1C1BFCDB0006BF3E /* CWSPayMethodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSPayMethodView.h; sourceTree = "<group>"; };
 		4CA0C3001C1BFCDB0006BF3E /* CWSPayMethodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSPayMethodView.m; sourceTree = "<group>"; };
 		4CA0C3021C1BFCE80006BF3E /* CWSPayMethodView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSPayMethodView.xib; sourceTree = "<group>"; };
@@ -5094,8 +5094,8 @@
 		335C5C891AC12A47001EA2AC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */,
 				2477E8D51CFF1B5700CCC540 /* 切换车辆 */,
-				2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */,
 				4C0952611C34D7890098BA4C /* NewCarWashTableHeaderView.h */,
 				4C0952621C34D7890098BA4C /* NewCarWashTableHeaderView.m */,
 				0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */,
@@ -6250,6 +6250,7 @@
 		4CA0C2F51C1BF4A90006BF3E /* 通用支付 */ = {
 			isa = PBXGroup;
 			children = (
+				0D64DDCC1D00226E00DF51AA /* CWSPayInfoView.xib */,
 				4CA0C2F61C1BF4CC0006BF3E /* CWSPayViewController.h */,
 				4CA0C2F71C1BF4CC0006BF3E /* CWSPayViewController.m */,
 				4CF30A641C1E503E0079FA42 /* CWSPayWithoutRedPackageViewController.h */,
@@ -6258,7 +6259,6 @@
 				4C6078FA1C1E849400BDBCE3 /* CWSPaySuccessViewController.m */,
 				4CA0C2FA1C1BF5F60006BF3E /* CWSPayInfoView.h */,
 				4CA0C2FB1C1BF5F60006BF3E /* CWSPayInfoView.m */,
-				4CA0C2FD1C1BF6040006BF3E /* CWSPayInfoView.xib */,
 				4CA0C2FF1C1BFCDB0006BF3E /* CWSPayMethodView.h */,
 				4CA0C3001C1BFCDB0006BF3E /* CWSPayMethodView.m */,
 				4CA0C3021C1BFCE80006BF3E /* CWSPayMethodView.xib */,
@@ -8107,7 +8107,7 @@
 				339404241B4CF35F009CCEE2 /* CWSWeatherCell.xib in Resources */,
 				33CA11431AF216D400A1B5B1 /* gongneng_img.png in Resources */,
 				92B47F161BA2DE12001B2048 /* zhaochewei_location_click@2x.png in Resources */,
-				2E29F4ED1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib in Resources */,
+				0D64DDCB1D00220900DF51AA /* NewCarWashTableHeaderView.xib in Resources */,
 				4C0952601C34C0F90098BA4C /* HelpView.xib in Resources */,
 				331565E31B280EB900369C78 /* zuji_icon3@2x.png in Resources */,
 				335425E41B70B08300FD23A5 /* zhaochewei_jiantou@2x.png in Resources */,
@@ -8287,6 +8287,7 @@
 				4CB912871C433A80002D93BB /* AlipaySDK.bundle in Resources */,
 				927A0EA51B914B6D00FA497F /* CWSMyMonyController.xib in Resources */,
 				338E3FD61B467E4D00CD5BE5 /* set_logo@2x.png in Resources */,
+				0D64DDCD1D00226E00DF51AA /* CWSPayInfoView.xib in Resources */,
 				331565151B280E8700369C78 /* register_yan1@2x.png in Resources */,
 				4CB73B141C17B8E6003A80A1 /* MaintainReviewTableViewCell.xib in Resources */,
 				334708C21AF87590006A5660 /* CWSNavController.xib in Resources */,
@@ -8356,7 +8357,6 @@
 				333524191B4E55B1004246C5 /* chedongtai_mycar@2x.png in Resources */,
 				4CDDD1B81C15741000128318 /* CWSBuyCarInsuranceViewController.xib in Resources */,
 				92B48B011B959DA2005AA8F7 /* xiche_time@2x.png in Resources */,
-				4CA0C2FE1C1BF6040006BF3E /* CWSPayInfoView.xib in Resources */,
 				4CECD26B1C22880B0069754C /* CWSActivityTableViewCell.xib in Resources */,
 				4CC892001C19066500F6AB35 /* NewCarWashDetailHeaderView.xib in Resources */,
 				335425EC1B70B08300FD23A5 /* zhaochewei_sousuo@2x.png in Resources */,

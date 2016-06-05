@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *payTimeTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headImageViewWidth;
+@property (weak, nonatomic) IBOutlet UIButton *ecaluation;
 @property (nonatomic,strong)CWSHistoryOrder*      order;
 @property (nonatomic,assign) id <CWSTableViewButtonCellDelegate>delegate;
 

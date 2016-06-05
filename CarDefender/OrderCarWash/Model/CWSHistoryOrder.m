@@ -19,33 +19,41 @@
 //        service_time：保养服务时间；
 //        finished_time：完成时间；
         
-        self.add_time = [NSString stringWithFormat:@"%@",dic[@"tenantName"]];
+        self.add_time = [NSString stringWithFormat:@"%@",dic[@"createDate"]];
         self.amount_paid = [NSString stringWithFormat:@"%@",dic[@"price"]];
         if ([PublicUtils checkNSNullWithgetString:dic[@"buyer_email"]] != nil) {
             self.buyer_email = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"buyer_email"]]];
         }
-        if ([PublicUtils checkNSNullWithgetString:dic[@"evaluation_time"]] != nil) {
-            self.evaluation_time = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"evaluation_time"]]];
+        NSString *evaluation = [NSString stringWithFormat:@"%@",dic[@"tenantEvaluate"]];
+        if (![evaluation isEqualToString:@"<null>"]) {
+            self.evaluation_time = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"tenantEvaluate"][@"createDate"]]];
+        }
+        if (![evaluation isEqualToString:@"<null>"]) {
+            self.evaluation_modifyDate = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"tenantEvaluate"][@"modifyDate"]]];
         }
         
-        if ([PublicUtils checkNSNullWithgetString:dic[@"finished_time"]] != nil) {
-            self.finished_time = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"finished_time"]]];
+        if ([PublicUtils checkNSNullWithgetString:dic[@"paymentDate"]] != nil) {
+            self.finished_time = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"paymentDate"]]];
         }
+        self.evaluation = dic[@"tenantEvaluate"];
         self.goods_name = dic[@"carService"][@"serviceName"];
         self.orderId = [NSString stringWithFormat:@"%@",dic[@"id"]];
         self.order_sn = [NSString stringWithFormat:@"%@",dic[@"carService"][@"id"]];
         if ([PublicUtils checkNSNullWithgetString:dic[@"carService"][@"serviceCategory"][@"modifyDate"]] != nil) {
             self.pay_time = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:dic[@"carService"][@"serviceCategory"][@"modifyDate"]]];
         }
-        self.seller_id = [NSString stringWithFormat:@"%@",dic[@"carService"][@"serviceCategory"][@"id"]];
-        self.seller_name = [NSString stringWithFormat:@"%@",dic[@"carService"][@"serviceCategory"][@"serviceCategory"]];
+        self.seller_id = [NSString stringWithFormat:@"%@",dic[@"tenantID"]];
+        self.seller_name = [NSString stringWithFormat:@"%@",dic[@"tenantName"]];
+        
         self.service_time = dic[@"carService"][@"serviceCategory"][@"createDate"];
+        self.tenantPhoto = dic[@"tenantPhoto"];
         self.status = [NSString stringWithFormat:@"%@",dic[@"chargeStatus"]];
+        
         self.type = [NSString stringWithFormat:@"%@",dic[@"type"]];
         self.price = dic[@"price"];
         self.cate_id_2 = dic[@"cate_id_2"];
         self.classification_name = dic[@"carService"][@"serviceName"];
-        
+        self.categoryName = dic[@"carService"][@"serviceCategory"][@"categoryName"];
         
     }
     return self;
