@@ -7,7 +7,7 @@
 //
 
 #import "CWSQRScanViewController.h"
-
+#import "CWSSelectCarViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
 static const CGFloat KBorderWidth = 100;
@@ -311,21 +311,46 @@ static const CGFloat KMargin = 30;
 
 #pragma mark -=============================扫描的代理
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
+    NSLog(@"object=%@",metadataObjects);
     
+ 
+
     if(metadataObjects.count){
         
         [_captureSession stopRunning];
         AVMetadataMachineReadableCodeObject* metaDataObject = [metadataObjects objectAtIndex:0];
         
 //        UIAlertView* alertView = [[UIAlertView alloc]initWithTitle:@"扫描结果" message:metaDataObject.stringValue delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"重新扫描", nil];
-//        [alertView show];
+//      [alertView show];
         
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:metaDataObject.stringValue]];
-
+        
+        NSLog(@"%@",metaDataObject.stringValue);
+        NSData *data = [metaDataObject.stringValue dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dataDic);
+        [self bindMerchantOrDevice:dataDic];
+        
     }
     [_captureSession startRunning];
 }
 
+#pragma mark ===========扫面二维码后进行绑定商家或者设备选择车辆
+-(void)bindMerchantOrDevice:(NSDictionary *)stringValueDic{
+
+    if (stringValueDic[@"flag"]) {
+        CWSSelectCarViewController *carList = [[CWSSelectCarViewController alloc]init];
+        carList.dataDic = stringValueDic;
+        if(stringValueDic[@"tenantInfo"]){
+        
+            carList.title = @"绑定租户" ;
+        
+        }else{
+            carList.title = @"绑定设备" ;
+        }
+        [self.navigationController pushViewController:carList animated:YES];
+    }
+}
 
 #pragma mark -=============================相册拾取器代理
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{

@@ -131,15 +131,17 @@
     if (firstStarSelectNumder != 0 ) {
         
         NSNumber *selectNumber = [NSNumber numberWithInteger:firstStarSelectNumder];
-        [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+        [MBProgressHUD showMessag:@"正在提交..." toView:self.view];
         NSDictionary *dic = @{@"userId":KUserInfo.desc,@"token":KUserInfo.token,@"tenantId":self.order.seller_id,@"recordId":self.order.orderId,@"score":selectNumber};
         [HttpHelper insertTenantEvaluateDoRateWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
             NSDictionary *dataDic = (NSDictionary *)object;
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([dataDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadDataArray" object:nil];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"评论成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] ;
-                [alert show];
+                
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"评论成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] ;
+//                alert.tag = 111;
+//                [alert show];
+                [self tiaozhuangViewController];
                 
             }else{
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:dataDic[@"desc"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil] ;
@@ -159,6 +161,12 @@
         
     }
 }
+//评论完跳转页面
+-(void)tiaozhuangViewController{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadDataArray" object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 #pragma -mark actionSheet
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -403,10 +411,12 @@
 }
 #pragma mark - alertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"%d",buttonIndex);
-    if (buttonIndex==1) {
+    
+    if (alertView.tag==111) {
         [self.navigationController popViewControllerAnimated:YES];
+
     }
+    
 }
 #pragma mark - 星级按钮
 - (IBAction)starButtonClick:(UIButton *)sender {

@@ -375,7 +375,10 @@
             cell.ecaluation.hidden = NO;
         }else{
             [cell.ecaluation setTitle:@"已评价" forState:UIControlStateNormal];
-            cell.ecaluation.hidden = YES;
+            cell.ecaluation.hidden = NO;
+            cell.ecaluation.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            [cell.ecaluation setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            cell.ecaluation.enabled = NO;
         }
         
         
@@ -701,7 +704,8 @@
 
 //通知事件
 -(void)reloadDataArray:(NSNotification*)notification{
-    [self getDataWithPage:_page];
+    [_dataArray removeAllObjects];
+    [self getDataWithPage:1];
 }
 
 
