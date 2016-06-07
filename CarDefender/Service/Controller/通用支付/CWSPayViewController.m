@@ -534,6 +534,9 @@
     payMethodNum = sender.tag-200;
     payMethodString = sender.titleLabel.text;
     
+    UISwitch* balanceSwitch = (UISwitch *)[self.view viewWithTag:300];
+    balanceSwitch.on = NO;
+    
     switch(payMethodNum){
         case 0:{
 //            sender.selected = YES;
@@ -698,6 +701,8 @@
                 
                 tempBalanceMoney = 0;
             }else{
+                weixinButton.selected = NO;
+                [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
                 zhifubaoButton.selected = YES;
                 [zhifubaoButton setImage:[UIImage imageNamed:@"mycar_click"] forState:UIControlStateNormal];
                 tempBalanceMoney = balanceMoney;
