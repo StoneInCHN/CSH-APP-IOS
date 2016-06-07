@@ -731,7 +731,7 @@
                                               _normalLabel1.hidden = YES;
                                               _normalLable.hidden = YES;
                                           }
-                                          NSString *drivingScore = msg[@"drivingScore"];
+                                          NSString *drivingScore = [NSString stringWithFormat:@"%@",msg[@"drivingScore"]];
                                           if ([drivingScore isKindOfClass:[NSNull class]]) {
                                               drivingScore = @"0分";
                                           } else if (![drivingScore isEqualToString:@"-"]){
