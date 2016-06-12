@@ -155,7 +155,7 @@
                 <outlet property="purchaseTitleLabel" destination="937-Mh-Il1" id="aee-RL-Owx"/>
                 <outlet property="redImageView" destination="s5r-Xc-Qms" id="fsM-Du-uLl"/>
             </connections>
-            <point key="canvasLocation" x="68.5" y="201"/>
+            <point key="canvasLocation" x="227.5" y="113"/>
         </tableViewCell>
     </objects>
     <resources>

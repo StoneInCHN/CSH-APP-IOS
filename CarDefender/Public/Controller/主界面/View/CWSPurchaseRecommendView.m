@@ -160,12 +160,14 @@
             CWSPayViewController* payVc = [CWSPayViewController new];
             payVc.isRedpackageUseable = YES;
             [payVc setDataDict:dic];
+            payVc.serviceId = [NSString stringWithFormat:@"%@",thyDict[@"service_id"]];
             [self.rootVc.navigationController pushViewController:payVc animated:YES];
             
         }else{
             CWSPayViewController* payVc = [CWSPayViewController new];
             payVc.isRedpackageUseable = YES;
             [payVc setDataDict:dic];
+            payVc.serviceId = [NSString stringWithFormat:@"%@",thyDict[@"service_id"]];
             [self.rootVc.navigationController pushViewController:payVc animated:YES];
         }
     }else{
