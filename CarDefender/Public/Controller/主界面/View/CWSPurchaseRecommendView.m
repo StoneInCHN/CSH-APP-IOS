@@ -146,9 +146,9 @@
     MyLog(@"-----支付商品信息---%@",thyDict);
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:[NSString stringWithFormat:@"%ld",(long)thyDict[@"store_id"] ] forKey:@"store_id"];
+    [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"store_id"] ] forKey:@"store_id"];
     [dic setValue:KUserManager.uid forKey:@"uid"];
-    [dic setValue:[NSString stringWithFormat:@"%ld",(long)thyDict[@"service_id"] ] forKey:@"goods_id"];
+    [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"service_id"] ] forKey:@"goods_id"];
     [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"serviceName"]] forKey:@"goods_name"];
     [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"promotion_price"]] forKey:@"discount_price"];
     [dic setValue:[NSString stringWithFormat:@"%d",YES] forKey:@"is_discount_price"];

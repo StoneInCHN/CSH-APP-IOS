@@ -574,7 +574,7 @@
 - (void)getCoupons {
     [HttpHelper discountCouponListWithUserId:userInfo.desc
                                        token:userInfo.token
-                                   serviceId:self.serviceId
+                                   serviceId:self.dataDict[@"goods_id"]
                                      success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                          NSLog(@"优惠劵列表 :%@",responseObjcet);
                                          NSDictionary *dict = (NSDictionary *)responseObjcet;
@@ -853,38 +853,37 @@
     
    
     
-    NSDictionary* paramDict = @{
-//                                @"uid":KUserManager.uid,
-                                @"uid":userInfo.desc,
-//                                @"mobile":KUserManager.mobile,
-                                @"mobile":@"18280068114",
-                                @"appid":@"app_j5qbP4Dib5uHTe5C",
-                                @"amount":[NSString stringWithFormat:@"%d",(int)(payMoney*100)], //paymoney
-                                @"channel":payMethodString,
-                                @"currency":@"cny",
-                                @"subject":self.dataDict[@"goods_name"],
-                                @"body":[NSString stringWithFormat:@"车生活%@服务支付",self.dataDict[@"goods_name"]],
-                                @"red":[NSString stringWithFormat:@"%d",(int)(redMoney*100)],//redmoney
-                                @"money":[NSString stringWithFormat:@"%d",(int)(balanceMoney*100)], //balancemoney
-                                @"order_sn":[NSString stringWithFormat:@""],
-                                @"store_id":self.dataDict[@"store_id"],
-                                @"goods_id":self.dataDict[@"goods_id"],
-                                @"price":[NSString stringWithFormat:@"%d",(int)(settleMoney*100)] //settlemoney
-                                        };
-    
-    MyLog(@"-------------生成支付订单的参数-------------%@",paramDict);
-    MyLog(@"支付方式:%@-支付金额:%.2f",payMethodString,payMoney);
+//    NSDictionary* paramDict = @{
+////                                @"uid":KUserManager.uid,
+//                                @"uid":userInfo.desc,
+////                                @"mobile":KUserManager.mobile,
+//                                @"mobile":@"18280068114",
+//                                @"appid":@"app_j5qbP4Dib5uHTe5C",
+//                                @"amount":[NSString stringWithFormat:@"%d",(int)(payMoney*100)], //paymoney
+//                                @"channel":payMethodString,
+//                                @"currency":@"cny",
+//                                @"subject":self.dataDict[@"goods_name"],
+//                                @"body":[NSString stringWithFormat:@"车生活%@服务支付",self.dataDict[@"goods_name"]],
+//                                @"red":[NSString stringWithFormat:@"%d",(int)(redMoney*100)],//redmoney
+//                                @"money":[NSString stringWithFormat:@"%d",(int)(balanceMoney*100)], //balancemoney
+//                                @"order_sn":[NSString stringWithFormat:@""],
+//                                @"store_id":self.dataDict[@"store_id"],
+//                                @"goods_id":self.dataDict[@"goods_id"],
+//                                @"price":[NSString stringWithFormat:@"%d",(int)(settleMoney*100)] //settlemoney
+//                                        };
+//    
+//    MyLog(@"-------------生成支付订单的参数-------------%@",paramDict);
+//    MyLog(@"支付方式:%@-支付金额:%.2f",payMethodString,payMoney);
     if(payMoney){
         //在线支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-//        [ModelTool getPayOrderCreateWithParameter:paramDict andSuccess:^(id object) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
         NSString *paymentType;
         if([payMethodString isEqualToString:@"wx"]){
             paymentType = @"WECHAT";
         }else{
             paymentType = @"ALIPAY";
         }
+        NSLog(@"goods_id is %@", self.dataDict[@"goods_id"]);
         [HttpHelper payServiceWithUserId:userInfo.desc
                                    token:userInfo.token
                                serviceId:self.dataDict[@"goods_id"]
@@ -921,26 +920,26 @@
     }else{
         //使用红包或者余额支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-        [ModelTool getPayByRedAndBalaceWithParameter:paramDict andSuccess:^(id object) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
-                MyLog(@"----------红包或余额充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
-                MyLog(@"----------红包或余额充值返回信息-----------%@",rootDict);
-                if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                    isPaySuccess = YES;
-                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
-                    [paySuccessVc setDataDict:rootDict[@"data"][@"return"]];
-                    [self.navigationController pushViewController:paySuccessVc animated:YES];
-                }else{
-
-                    [WCAlertView showAlertWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:rootDict[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                }
-            });
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
-        }];
+//        [ModelTool getPayByRedAndBalaceWithParameter:paramDict andSuccess:^(id object) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
+//                MyLog(@"----------红包或余额充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
+//                MyLog(@"----------红包或余额充值返回信息-----------%@",rootDict);
+//                if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+//                    isPaySuccess = YES;
+//                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
+//                    [paySuccessVc setDataDict:rootDict[@"data"][@"return"]];
+//                    [self.navigationController pushViewController:paySuccessVc animated:YES];
+//                }else{
+//
+//                    [WCAlertView showAlertWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:rootDict[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                }
+//            });
+//        } andFail:^(NSError *err) {
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
+//        }];
     }
 
 /*
