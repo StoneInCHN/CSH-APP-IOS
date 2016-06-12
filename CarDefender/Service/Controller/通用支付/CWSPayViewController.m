@@ -794,6 +794,7 @@
                 balanceMoney = tempBalanceMoney-tempRedMoney;
                 
                 tempBalanceMoney = 0;
+                payMethodString = @"yue";
             }else{
                 weixinButton.selected = NO;
                 [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
@@ -880,8 +881,10 @@
         NSString *paymentType;
         if([payMethodString isEqualToString:@"wx"]){
             paymentType = @"WECHAT";
-        }else{
+        }else if([payMethodString isEqualToString:@"alipay"]){
             paymentType = @"ALIPAY";
+        }else if([payMethodString isEqualToString:@"yue"]){
+            paymentType = @"WALLET";
         }
         NSLog(@"goods_id is %@", self.dataDict[@"goods_id"]);
         [HttpHelper payServiceWithUserId:userInfo.desc
@@ -904,9 +907,23 @@
                         thyWeiXinPay.isSuccess = NO;
                         [self WXPayWithParamDict:rootDict[@"msg"]];
                         
-                    }else{
+                    }else if([payMethodString isEqualToString:@"alipay"]){
                         //使用支付宝支付
                         [self AlipayWithPrice:[NSString stringWithFormat:@"%.2f元",payMoney] andOrderNum:rootDict[@"msg"][@"out_trade_no"]];
+                    }else  if([payMethodString isEqualToString:@"yue"]){
+                        CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
+                        NSLog(@"dataDict is %@", self.dataDict);
+                        NSDictionary *successData = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                     @"store_name",[NSString stringWithFormat:@"%@", self.dataDict[@"store_name"]],
+                                                     @"goods_name",[NSString stringWithFormat:@"%@", self.dataDict[@"goods_name"]],
+                                                     @"price",[NSString stringWithFormat:@"%@", self.dataDict[@"discount_price"]],
+                                                     @"order_sn",rootDict[@"msg"][@"out_trade_no"],
+                                                     nil];
+                        
+//                        NSMutableDictionary *successMutableData = [NSMutableDictionary dictionary];
+//                        [successMutableData setValue:self.dataDict[@"store_name"] forKey:
+                        [paySuccessVc setDataDict:successData];
+                        [self.navigationController pushViewController:paySuccessVc animated:YES];
                     }
                     
                 }else{
