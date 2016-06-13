@@ -149,11 +149,18 @@
         dataDic = [NSDictionary dictionaryWithDictionary:self.dataDict];
     }
     
+    
+  
     //
     NSString * orserID = [NSString string];
+    
+    
     if (self.order) {
         //历史订单条状获取orderID
         orserID = self.order.orderId;
+    }else if (self.tag==101){
+        //支付成功页面，成功后 tag设置101 
+        orserID = self.dataDict[@"orderId"];
     }else{
         //预约跳转此页后  直接获取orderID
         orserID = self.orderID;

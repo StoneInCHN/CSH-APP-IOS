@@ -338,6 +338,23 @@
                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark 更新购买汽车服务记录状态
+/**
+ * 更新购买汽车服务记录状态
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"recordId": @"chargeStatus"}
+ *  @param chargeStatus  付款状态
+ *** 预约       RESERVATION,*
+ ** 未支付        UNPAID,*
+ ** 已支付          PAID *
+
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
+ */
++ (void)updateCarServicePayStatusWithUserDic:(NSDictionary *)vehicleDic
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 #pragma mark 租户详情
 + (void)getTenantDetailsWithUserId:(NSString *)userId
