@@ -223,7 +223,7 @@
     NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
     [parmDict setObject:userId forKey:@"userId"];
     [parmDict setObject:serviceID forKey:@"serviceCategoryId"];
-    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:token] forKey:@"token"];
     [parmDict setObject:[PublicUtils checkNSNullWithgetString:latitude] forKey:@"latitude"];
     [parmDict setObject:[PublicUtils checkNSNullWithgetString:longitude] forKey:@"longitude"];
     [parmDict setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
@@ -293,7 +293,7 @@
     
     NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
     [parmDict setObject:userId forKey:@"userId"];
-    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:token] forKey:@"token"];
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_AD_LIST];
     NSLog(@"adertisment image url :%@",urlString);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -313,8 +313,8 @@
                          failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
     
     NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
-    [parmDict setObject:userId forKey:@"userId"];
-    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:userId] forKey:@"userId"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:token] forKey:@"token"];
     [parmDict setObject:pageNumber forKey:@"pageNumber"];
     [parmDict setObject:pageSize forKey:@"pageSize"];
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_MESSAGE_LIST];
@@ -551,7 +551,7 @@
                     failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
     NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
     [parmDict setObject:userId forKey:@"userId"];
-    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:token] forKey:@"token"];
     [parmDict setObject:versionCode forKey:@"versionCode"];
     [parmDict setObject:regId forKey:@"regId"];
     [parmDict setObject:appPlatform forKey:@"appPlatform"];

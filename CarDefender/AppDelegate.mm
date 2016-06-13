@@ -386,6 +386,7 @@ BMKMapManager* _mapManager;
     } else {
         UserInfo *userInfo = [UserInfo userDefault];
         userInfo.token = [userDefaults objectForKey:@"token"];
+        NSLog(@"userInfo.token :%@",userInfo.token);
         userInfo.desc = [userDefaults objectForKey:@"desc"];
         userInfo.nickName = [userDefaults objectForKey:@"nickName"];
         userInfo.signature = [userDefaults objectForKey:@"signature"];
