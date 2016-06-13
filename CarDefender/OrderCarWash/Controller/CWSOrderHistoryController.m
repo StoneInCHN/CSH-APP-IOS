@@ -472,11 +472,29 @@
         cell.payTimeTitleLabel.text= @"失败时间";
         
     }
+    NSString *goodName = [NSString stringWithFormat:@"%@",_order.goods_name];
+    NSString *shopName = [NSString stringWithFormat:@"%@",_order.seller_name];
+    NSString *money = [NSString stringWithFormat:@"￥%@",_order.price];
+    if (![goodName isEqualToString:@"<null>"]) {
+        cell.titleLabel.text = _order.goods_name;
+    }else{
+        cell.titleLabel.text = @"汽车服务";
+    }
     
-    cell.titleLabel.text = _order.goods_name;
-    cell.shopNameLabel.text = _order.seller_name;
-    cell.moneyLabel.text = [NSString stringWithFormat:@"￥%@",_order.price];
+    if (![shopName isEqualToString:@"<null>"]) {
+        cell.shopNameLabel.text = shopName;
+    }else{
+        cell.shopNameLabel.text = @"附近商家";
+    }
     
+    if (![money isEqualToString:@"<null>"]) {
+        cell.moneyLabel.text = money;
+    }else{
+        cell.titleLabel.text = @"￥0";
+    }
+    
+   
+//    
     //普洗和精洗
     if ([_order.cate_id_2 integerValue] == 30 || [_order.cate_id_2 integerValue] == 31) {
         cell.headImageViewWidth.constant = 18;
@@ -489,7 +507,7 @@
         //美容
         cell.headImageView.image = [UIImage imageNamed:@"dingdan_meirong"];
     }
-    
+//
     
 //    [cell.actionButton addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 //    _order = _dataArray[indexPath.row];
