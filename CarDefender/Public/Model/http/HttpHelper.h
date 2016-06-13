@@ -325,6 +325,18 @@
                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark 用户预约汽车服务：
+/**
+ * 手机扫描商家二维码时用户车辆与商家绑定：
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"serviceId": @"price"}
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
+ */
++ (void)insertVehicleSubscribeServiceWithUserDic:(NSDictionary *)vehicleDic
+                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark 租户详情
 + (void)getTenantDetailsWithUserId:(NSString *)userId
                             token:(NSString *)token

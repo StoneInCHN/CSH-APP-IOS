@@ -48,6 +48,7 @@
 #define KHTTPHELPER_VEHICLESERVICERECORDDETAIL_SEARCH_URL @"/csh-interface/carService/recordDetail.jhtml"//用户购买汽车服务记录详情（订单详情)
 #define KHTTPHELPER_TENANTEVALUATEDORATE_INSERT_URL @"/csh-interface/tenantEvaluate/doRate.jhtml"//用户对商户打分：
 #define KHTTPHELPER_BINDTENANT_INSERT_URL @"/csh-interface/vehicle/bindTenant.jhtml"//手机扫描商家二维码时用户车辆与商家绑定：
+#define KHTTPHELPER_SUBSCRIBESERVICE_INSERT_URL @"/csh-interface/carService/subscribeService.jhtml"//用户预约汽车服务：
 #define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
 #define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//租户详情
 
@@ -711,6 +712,19 @@
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"adertisment image url手机扫描商家二维码时用户车辆与商家绑定:%@",urlString);
     [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
+}
+
+#pragma mark 用户预约汽车服务：
+
++ (void)insertVehicleSubscribeServiceWithUserDic:(NSDictionary *)vehicleDic
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_SUBSCRIBESERVICE_INSERT_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"adertisment image url手机扫描商家二维码时用户车辆与商家绑定:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
+
 }
 //post方法
 +(void)requestWithHttpURL:(NSString*)urlString  andParamDict:(NSDictionary*)thyParamDict andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success andFailer:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{

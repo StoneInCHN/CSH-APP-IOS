@@ -149,12 +149,20 @@
         dataDic = [NSDictionary dictionaryWithDictionary:self.dataDict];
     }
     
-    
+    //
+    NSString * orserID = [NSString string];
+    if (self.order) {
+        //历史订单条状获取orderID
+        orserID = self.order.orderId;
+    }else{
+        //预约跳转此页后  直接获取orderID
+        orserID = self.orderID;
+    }
     
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     NSDictionary* dic= @{@"userId":KUserInfo.desc,
                          @"token":KUserInfo.token,
-                         @"recordId":self.order.orderId};
+                         @"recordId":orserID};
     [HttpHelper searchCarServiceRecordDetailWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"object=%@",object);

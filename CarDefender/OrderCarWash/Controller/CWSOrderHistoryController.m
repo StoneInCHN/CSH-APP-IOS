@@ -330,7 +330,7 @@
     CWSHistoryOrder* currentOrder = (CWSHistoryOrder*)_dataArray[indexPath.row];
     [cell setOrder:currentOrder];
     cell.delegate = self;
-
+    
     _order = _dataArray[indexPath.row];
     
     

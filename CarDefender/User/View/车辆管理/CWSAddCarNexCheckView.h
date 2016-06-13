@@ -15,8 +15,9 @@
 @interface CWSAddCarNexCheckView : UIView
 {
     NSDate *chooseDate;
-    UIDatePicker*_datePicker;
+    //UIDatePicker*_datePicker;
 }
+@property (nonatomic,strong)UIDatePicker *datePicker;
 @property (assign, nonatomic) id<CWSAddCarNexCheckViewDelegate>delegate;
 
 -(void)loadDatePickerView;
