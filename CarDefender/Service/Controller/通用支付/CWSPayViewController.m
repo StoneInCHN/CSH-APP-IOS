@@ -60,6 +60,8 @@
     
     UserInfo *userInfo;
     NSMutableDictionary* wallertDict;//钱包数据
+    NSMutableArray *_coupons;
+    NSMutableArray *_couponsSelectedBtn;
 }
 @property (nonatomic,strong) UIScrollView* myScrollView;
 @end
@@ -112,8 +114,10 @@
     [self.view addSubview:_myScrollView];
     
     [self loadData];
+    [self getCoupons];
     
     MyLog(@"------确认信息----%@",self.dataDict);
+    NSLog(@"service id :%@",self.serviceId);
 }
 
 
@@ -261,11 +265,15 @@
 
 
 -(void)updateUI{
-    totalCountLabel.text = [NSString stringWithFormat:@"￥%.2f",payMoney];
+//    totalCountLabel.text = [NSString stringWithFormat:@"￥%.2f",payMoney];
 //    redLabel.text = [NSString stringWithFormat:@"可使用红包抵用%.2f元",redMoney];
 //    balanceLabel.text = [NSString stringWithFormat:@"可使用余额抵用%.2f元",balanceMoney];
-    redLabel.text = [NSString stringWithFormat:@"使用优惠劵抵用"];
+    totalCountLabel.text = payInfoView.priceLabel.text;
+    redLabel.text = [NSString stringWithFormat:@"使用优惠劵抵用%.2f元",redMoney];
     balanceLabel.text = [NSString stringWithFormat:@"使用账户余额抵用"];
+    payMoney = [[payInfoView.priceLabel.text substringFromIndex:1] floatValue];
+    
+
 //    CGRectGetMaxY(payInfoView.frame)+payMethodView.frame.size.height
 //    CGRectGetMaxY(payInfoView.frame)+payMethodView.frame.size.height+redPackageUsedView.frame.size.height+1
     CGRect redViewY = redPackageUsedView.frame;
@@ -344,7 +352,6 @@
 
     [self initialScrollView];
     
-    
 }
 
 
@@ -398,7 +405,8 @@
         [zhifubaoButton addTarget:self action:@selector(payButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         zhifubaoButton.tag = 200;
         [zhifubaoView addSubview:zhifubaoButton];
-        
+    
+    
     if ([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]){
     
         //微信view
@@ -531,10 +539,11 @@
 //        UIButton* button = (UIButton*)[self.view viewWithTag:200+i];
 //        button.selected = NO;
 //    }
+    payMoney = [[payInfoView.priceLabel.text substringFromIndex:1] floatValue];
     payMethodNum = sender.tag-200;
     payMethodString = sender.titleLabel.text;
     
-    UISwitch* balanceSwitch = (UISwitch *)[self.view viewWithTag:300];
+    UISwitch* balanceSwitch = (UISwitch *)[self.view viewWithTag:301];
     balanceSwitch.on = NO;
     
     switch(payMethodNum){
@@ -561,34 +570,115 @@
         default:break;
     }
 }
-- (void)useDiscountCoupon {
-    discountCouponView = [[UIView alloc] initWithFrame:CGRectMake(5,CGRectGetMaxY(redPackageUsedView.frame), kSizeOfScreen.width, 60)];
-    discountCouponView.backgroundColor = [UIColor redColor];
-    UIImageView *discountCouponImage = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, discountCouponView.frame.size.width-75, 50)];
-    discountCouponImage.image = [UIImage imageNamed:@"b7o.9"];
-    discountCouponImage.contentMode = UIViewContentModeScaleToFill;
-    discountCouponImage.backgroundColor = [UIColor greenColor];
-    [discountCouponView addSubview:discountCouponImage];
+#pragma mark 使用优惠劵
+- (void)getCoupons {
+    [HttpHelper discountCouponListWithUserId:userInfo.desc
+                                       token:userInfo.token
+                                   serviceId:self.dataDict[@"goods_id"]
+                                     success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                         NSLog(@"优惠劵列表 :%@",responseObjcet);
+                                         NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                         NSString *code = dict[@"code"];
+                                         userInfo.token = dict[@"token"];
+                                         if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                             _coupons = dict[@"msg"];
+                                         } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                         } else {
+                                             [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                         }
+                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                     }];
+}
+- (void)createDiscountCouponUI:(NSArray *)couponList {
+    discountCouponView = [[UIView alloc] initWithFrame:CGRectMake(5,CGRectGetMaxY(redPackageUsedView.frame), kSizeOfScreen.width, 60 * couponList.count)];
     
-    UIButton *discountCouponBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(discountCouponImage.frame)+10, 10, 40, 40)];
-//    discountCouponBtn setImage: forState:
-    [discountCouponBtn setTitle:@"yh" forState:UIControlStateNormal];
-    [discountCouponBtn setTintColor:[UIColor redColor]];
-    [discountCouponBtn addTarget:self action:@selector(selecteDiscountCoupon:) forControlEvents:UIControlEventTouchUpInside];
-    discountCouponBtn.backgroundColor = [UIColor blueColor];
-    [discountCouponView addSubview:discountCouponBtn];
-    
+    for (int i = 0; i < couponList.count; i++) {
+        UIImageView *discountCouponImageLeft = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10 + i*60 , discountCouponView.frame.size.width * 0.5, 40)];
+        discountCouponImageLeft.image = [UIImage imageNamed:@"lightCoupon"];
+        discountCouponImageLeft.contentMode = UIViewContentModeScaleToFill;
+        UILabel *couponMoney = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, discountCouponImageLeft.frame.size.width, 20)];
+        couponMoney.text = [NSString stringWithFormat:@"%@ 元",_coupons[i][@"coupon"][@"amount"]];
+        couponMoney.textAlignment = NSTextAlignmentLeft;
+        couponMoney.font = [UIFont systemFontOfSize:12];
+        couponMoney.textColor = [UIColor whiteColor];
+        UILabel *bottomLeft = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, discountCouponImageLeft.frame.size.width, 20)];
+        bottomLeft.text = @"全场通用优惠劵";
+        bottomLeft.textAlignment = NSTextAlignmentLeft;
+        bottomLeft.font = [UIFont systemFontOfSize:12];
+        bottomLeft.textColor = [UIColor whiteColor];
+        [discountCouponImageLeft addSubview:couponMoney];
+        [discountCouponImageLeft addSubview:bottomLeft];
+        [discountCouponView addSubview:discountCouponImageLeft];
+        
+        UIImageView *discountCouponImageRight = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(discountCouponImageLeft.frame)+1, 10 + i*60, discountCouponView.frame.size.width * 0.3, 40)];
+        discountCouponImageRight.image = [UIImage imageNamed:@"darkCoupon"];
+        discountCouponImageRight.contentMode = UIViewContentModeScaleToFill;
+        UILabel *couponTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, discountCouponImageRight.frame.size.width, 40)];
+        couponTypeLabel.textAlignment = NSTextAlignmentCenter;
+        couponTypeLabel.font = [UIFont systemFontOfSize:12];
+        couponTypeLabel.textColor = [UIColor whiteColor];
+        NSString *couponType = [NSString stringWithFormat:@"%@",_coupons[i][@"coupon"][@"type"]];
+        if ([couponType isEqualToString:@"SPECIFY"]) {
+            couponTypeLabel.text = @"特殊优惠劵";
+        } else {
+           couponTypeLabel.text = @"通用优惠劵";
+        }
+        [discountCouponImageRight addSubview:couponTypeLabel];
+        [discountCouponView addSubview:discountCouponImageRight];
+        
+        UIButton *discountCouponBtn = [[UIButton alloc] init];
+        discountCouponBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        discountCouponBtn.frame = CGRectMake(0, 1 + i*58, kSizeOfScreen.width, 58);
+        [discountCouponBtn setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
+        [discountCouponBtn setImage:[UIImage imageNamed:@"mycar_click"] forState:UIControlStateSelected];
+        [discountCouponBtn setImageEdgeInsets:UIEdgeInsetsMake(0, kSizeOfScreen.width-65, 0, 0)];
+        discountCouponBtn.tag = 1000 + i;
+        [discountCouponBtn addTarget:self action:@selector(selecteDiscountCoupon:) forControlEvents:UIControlEventTouchUpInside];
+        [discountCouponView addSubview:discountCouponBtn];
+        [_couponsSelectedBtn addObject:discountCouponBtn];
+        
+        UIView *spaceView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(discountCouponImageLeft.frame) + 9, kSizeOfScreen.width, 1)];
+        spaceView.backgroundColor = [UIColor whiteColor];
+        [discountCouponView addSubview:spaceView];
+    }
     totalHeight += discountCouponView.frame.size.height;
     [_myScrollView addSubview:discountCouponView];
+}
+- (void)useDiscountCoupon {
+    [self createDiscountCouponUI:_coupons];
+    NSLog(@"useDiscountCoupon");
 }
 - (void)nonUseDiscountCoupon {
     CGRect frame = CGRectMake(0, 0, kSizeOfScreen.width, 0);
     discountCouponView.frame = frame;
     [discountCouponView removeSubviews];
+    NSLog(@"nonUseDiscountCoupon");
 }
 #pragma mark 选择优惠劵按钮点击事件
 - (void)selecteDiscountCoupon:(UIButton *)sender {
-    [MBProgressHUD showSuccess:@"seleted!" toView:self.view];
+    //重新选择优惠劵，复原确认订单钱的UI信息
+    [payInfoView setDataDict:self.dataDict];
+    totalCountLabel.text = payInfoView.priceLabel.text;
+    redMoney = 0;
+    redLabel.text = [NSString stringWithFormat:@"使用优惠劵抵用%.2f元",redMoney];
+    
+    for(int i=0; i<_coupons.count; i++){
+        UIButton* button = (UIButton*)[self.view viewWithTag:1000+i];
+        button.selected = NO;
+    }
+    sender.selected = YES;
+    int index = (int)sender.tag - 1000;
+    
+    redMoney = [[NSString stringWithFormat:@"%@",_coupons[index][@"coupon"][@"amount"]] floatValue];
+    redLabel.text = [NSString stringWithFormat:@"使用优惠劵抵用%.2f元",redMoney];
+    NSLog(@"coupon pay %f",redMoney);
+    payMoney = [[payInfoView.priceLabel.text substringFromIndex:1] floatValue];
+    payMoney = payMoney - redMoney;
+    NSLog(@"pay :%f",payMoney);
+    payInfoView.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",payMoney];
+    totalCountLabel.text = payInfoView.priceLabel.text;
 }
 /**抵用按钮选择*/
 -(void)switchClicked:(UISwitch*)sender{
@@ -688,6 +778,10 @@
                     redMoney = 0;
                 }
                 [self nonUseDiscountCoupon];
+                //不使用优惠劵时，恢复现场
+                [payInfoView setDataDict:self.dataDict];
+                totalCountLabel.text = payInfoView.priceLabel.text;
+                
             }
         }break;
         case 1:{
@@ -700,6 +794,7 @@
                 balanceMoney = tempBalanceMoney-tempRedMoney;
                 
                 tempBalanceMoney = 0;
+                payMethodString = @"yue";
             }else{
                 weixinButton.selected = NO;
                 [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
@@ -759,38 +854,39 @@
     
    
     
-    NSDictionary* paramDict = @{
-//                                @"uid":KUserManager.uid,
-                                @"uid":userInfo.desc,
-//                                @"mobile":KUserManager.mobile,
-                                @"mobile":@"18280068114",
-                                @"appid":@"app_j5qbP4Dib5uHTe5C",
-                                @"amount":[NSString stringWithFormat:@"%d",(int)(payMoney*100)], //paymoney
-                                @"channel":payMethodString,
-                                @"currency":@"cny",
-                                @"subject":self.dataDict[@"goods_name"],
-                                @"body":[NSString stringWithFormat:@"车生活%@服务支付",self.dataDict[@"goods_name"]],
-                                @"red":[NSString stringWithFormat:@"%d",(int)(redMoney*100)],//redmoney
-                                @"money":[NSString stringWithFormat:@"%d",(int)(balanceMoney*100)], //balancemoney
-                                @"order_sn":[NSString stringWithFormat:@""],
-                                @"store_id":self.dataDict[@"store_id"],
-                                @"goods_id":self.dataDict[@"goods_id"],
-                                @"price":[NSString stringWithFormat:@"%d",(int)(settleMoney*100)] //settlemoney
-                                        };
-    
-    MyLog(@"-------------生成支付订单的参数-------------%@",paramDict);
-    MyLog(@"支付方式:%@-支付金额:%.2f",payMethodString,payMoney);
+//    NSDictionary* paramDict = @{
+////                                @"uid":KUserManager.uid,
+//                                @"uid":userInfo.desc,
+////                                @"mobile":KUserManager.mobile,
+//                                @"mobile":@"18280068114",
+//                                @"appid":@"app_j5qbP4Dib5uHTe5C",
+//                                @"amount":[NSString stringWithFormat:@"%d",(int)(payMoney*100)], //paymoney
+//                                @"channel":payMethodString,
+//                                @"currency":@"cny",
+//                                @"subject":self.dataDict[@"goods_name"],
+//                                @"body":[NSString stringWithFormat:@"车生活%@服务支付",self.dataDict[@"goods_name"]],
+//                                @"red":[NSString stringWithFormat:@"%d",(int)(redMoney*100)],//redmoney
+//                                @"money":[NSString stringWithFormat:@"%d",(int)(balanceMoney*100)], //balancemoney
+//                                @"order_sn":[NSString stringWithFormat:@""],
+//                                @"store_id":self.dataDict[@"store_id"],
+//                                @"goods_id":self.dataDict[@"goods_id"],
+//                                @"price":[NSString stringWithFormat:@"%d",(int)(settleMoney*100)] //settlemoney
+//                                        };
+//    
+//    MyLog(@"-------------生成支付订单的参数-------------%@",paramDict);
+//    MyLog(@"支付方式:%@-支付金额:%.2f",payMethodString,payMoney);
     if(payMoney){
         //在线支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-//        [ModelTool getPayOrderCreateWithParameter:paramDict andSuccess:^(id object) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
         NSString *paymentType;
         if([payMethodString isEqualToString:@"wx"]){
             paymentType = @"WECHAT";
-        }else{
+        }else if([payMethodString isEqualToString:@"alipay"]){
             paymentType = @"ALIPAY";
+        }else if([payMethodString isEqualToString:@"yue"]){
+            paymentType = @"WALLET";
         }
+        NSLog(@"goods_id is %@", self.dataDict[@"goods_id"]);
         [HttpHelper payServiceWithUserId:userInfo.desc
                                    token:userInfo.token
                                serviceId:self.dataDict[@"goods_id"]
@@ -811,9 +907,23 @@
                         thyWeiXinPay.isSuccess = NO;
                         [self WXPayWithParamDict:rootDict[@"msg"]];
                         
-                    }else{
+                    }else if([payMethodString isEqualToString:@"alipay"]){
                         //使用支付宝支付
                         [self AlipayWithPrice:[NSString stringWithFormat:@"%.2f元",payMoney] andOrderNum:rootDict[@"msg"][@"out_trade_no"]];
+                    }else  if([payMethodString isEqualToString:@"yue"]){
+                        CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
+                        NSLog(@"dataDict is %@", self.dataDict);
+                        NSDictionary *successData = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                     @"store_name",[NSString stringWithFormat:@"%@", self.dataDict[@"store_name"]],
+                                                     @"goods_name",[NSString stringWithFormat:@"%@", self.dataDict[@"goods_name"]],
+                                                     @"price",[NSString stringWithFormat:@"%@", self.dataDict[@"discount_price"]],
+                                                     @"order_sn",rootDict[@"msg"][@"out_trade_no"],
+                                                     nil];
+                        
+//                        NSMutableDictionary *successMutableData = [NSMutableDictionary dictionary];
+//                        [successMutableData setValue:self.dataDict[@"store_name"] forKey:
+                        [paySuccessVc setDataDict:successData];
+                        [self.navigationController pushViewController:paySuccessVc animated:YES];
                     }
                     
                 }else{
@@ -827,26 +937,26 @@
     }else{
         //使用红包或者余额支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-        [ModelTool getPayByRedAndBalaceWithParameter:paramDict andSuccess:^(id object) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
-                MyLog(@"----------红包或余额充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
-                MyLog(@"----------红包或余额充值返回信息-----------%@",rootDict);
-                if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                    isPaySuccess = YES;
-                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
-                    [paySuccessVc setDataDict:rootDict[@"data"][@"return"]];
-                    [self.navigationController pushViewController:paySuccessVc animated:YES];
-                }else{
-
-                    [WCAlertView showAlertWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:rootDict[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                }
-            });
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
-        }];
+//        [ModelTool getPayByRedAndBalaceWithParameter:paramDict andSuccess:^(id object) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
+//                MyLog(@"----------红包或余额充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
+//                MyLog(@"----------红包或余额充值返回信息-----------%@",rootDict);
+//                if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+//                    isPaySuccess = YES;
+//                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
+//                    [paySuccessVc setDataDict:rootDict[@"data"][@"return"]];
+//                    [self.navigationController pushViewController:paySuccessVc animated:YES];
+//                }else{
+//
+//                    [WCAlertView showAlertWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:rootDict[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                }
+//            });
+//        } andFail:^(NSError *err) {
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
+//        }];
     }
 
 /*

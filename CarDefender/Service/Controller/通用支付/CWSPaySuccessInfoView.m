@@ -31,8 +31,9 @@
         self.orderIdLabel = (UILabel *)[self viewWithTag:4];
         self.orderIdLabel.text = dataDict[@"order_sn"];
         
-        self.orderValidityPeriodLabel = (UILabel *)[self viewWithTag:5];
-        self.orderValidityPeriodLabel.text = dataDict[@"effectiveTime"];
+        self.orderValidityPeriodLabel.hidden = YES;
+//        self.orderValidityPeriodLabel = (UILabel *)[self viewWithTag:5];
+//        self.orderValidityPeriodLabel.text = dataDict[@"effectiveTime"];
         
     }
     return self;

@@ -47,12 +47,18 @@
 #define KHTTPHELPER_VEHICLESERVICEPURCHASELIST_SEARCH_URL @"/csh-interface/carService/purchaseList.jhtml"//用户购买汽车服务列表
 #define KHTTPHELPER_VEHICLESERVICERECORDDETAIL_SEARCH_URL @"/csh-interface/carService/recordDetail.jhtml"//用户购买汽车服务记录详情（订单详情)
 #define KHTTPHELPER_TENANTEVALUATEDORATE_INSERT_URL @"/csh-interface/tenantEvaluate/doRate.jhtml"//用户对商户打分：
+
 #define KHTTPHELPER_BINDTENANT_INSERT_URL @"/csh-interface/vehicle/bindTenant.jhtml"//手机扫描商家二维码时用户车辆与商家绑定：
 #define KHTTPHELPER_SUBSCRIBESERVICE_INSERT_URL @"/csh-interface/carService/subscribeService.jhtml"//用户预约汽车服务：
 #define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
 #define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//租户详情
 
 
+#define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
+#define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//支付调用
+
+#define KHTTPHELPER_BINDTENANT_INSERT_URL @"/csh-interface/vehicle/bindTenant.jhtml"//手机扫描商家二维码时用户车辆与商家绑定
+#define KHTTPHELPER_DISCOUNT_COUPON_URL @"/csh-interface/coupon/getCouponForPay.jhtml" //支付时可用优惠券列表
 
 @implementation HttpHelper
 #pragma mark 登陆
@@ -703,6 +709,7 @@
     
 }
 
+
 #pragma mark 手机扫描商家二维码时用户车辆与商家绑定：
 
 + (void)insertVehicleBindTenantWithUserDic:(NSDictionary *)vehicleDic
@@ -726,6 +733,7 @@
     [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
 
 }
+
 //post方法
 +(void)requestWithHttpURL:(NSString*)urlString  andParamDict:(NSDictionary*)thyParamDict andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success andFailer:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -792,4 +800,26 @@
     }];
 }
 
+#pragma mark 优惠券列表
++ (void)discountCouponListWithUserId:(NSString *)userId
+                               token:(NSString *)token
+                           serviceId:(NSString *)serviceId
+                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:userId forKey:@"userId"];
+    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:serviceId forKey:@"serviceId"];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_DISCOUNT_COUPON_URL];
+    NSLog(@"优惠券列表url :%@",urlString);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(operation,responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation,error);
+    }];
+}
 @end

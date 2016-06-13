@@ -105,7 +105,8 @@
 -(void)getData{
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     [HttpHelper getTenantDetailsWithUserId:userInfo.desc
-                                     token:userInfo.token tenantId:[NSString stringWithFormat:@"%ld", (long)_idNumber]
+                                     token:userInfo.token
+                                  tenantId:[NSString stringWithFormat:@"%ld", (long)_idNumber]
                                    success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                        NSLog(@"租户详情:%@",responseObjcet);
@@ -488,6 +489,7 @@
                     appointmentVc.washDiscountModel = thyModel;
                     appointmentVc.isRedpackageUseable = YES;
                     [appointmentVc setDataDict:dic];
+                    appointmentVc.serviceId = [NSString stringWithFormat:@"%ld",(long)selectedModel.productID ];
                     [self.navigationController pushViewController:appointmentVc animated:YES];
 //
 //                }

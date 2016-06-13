@@ -18,5 +18,5 @@
 @property (nonatomic,assign) BOOL isRedpackageUseable;
 
 @property (nonatomic,strong) NSDictionary* dataDict;
-
+@property (nonatomic, strong) NSString *serviceId;
 @end
