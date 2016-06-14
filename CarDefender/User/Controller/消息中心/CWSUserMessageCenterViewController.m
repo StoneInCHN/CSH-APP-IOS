@@ -26,7 +26,6 @@
     UIBarButtonItem* currentLeftBarButtonItem;
     UIView* toolView;
     UILabel* deleteCountLabel;
-    NSMutableArray *models;
     
     int deleteCount;
     CWSNoDataView* _noCarView;
@@ -52,27 +51,6 @@
     currentLeftBarButtonItem = self.navigationItem.leftBarButtonItem;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"message_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteAllMessage)];
 //    [self customizeNavigationItem];
-    [self getMessageList];
-}
-- (void)getMessageList {
-    [HttpHelper getMessageListWithUserId:userInfo.desc
-                                   token:userInfo.token
-                              pageNumber:@"10"
-                                pageSize:@"5"
-                                 success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
-                                     NSDictionary *dict = (NSDictionary *)responseObjcet;
-                                     NSString *code = dict[@"code"];
-                                     userInfo.token = dict[@"token"];
-                                     if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                         dataArray = dict[@"msg"];
-                                     } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
-                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
-                                     } else {
-                                         [MBProgressHUD showError:dict[@"desc"] toView:self.view];
-                                     }
-                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                     [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
-                                 }];
 }
 #pragma mark 删除所有信息
 - (void)deleteAllMessage {
@@ -265,7 +243,6 @@
     CWSUserMessageInfoCell* cell = [tableView dequeueReusableCellWithIdentifier:@"MessageInfoCell"];
     CWSUserMessageCenterModel *model =  [[CWSUserMessageCenterModel alloc] initWithDict:dataArray[indexPath.row]];
     [cell setUserMessageModel:model];
-    [models addObject:model];
     if(myTableView.editing){
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     }else{
@@ -274,33 +251,10 @@
     return cell;
 }
 
-- (void)readMessage:(NSDictionary *)detailDic withIndexPath:(NSIndexPath *)indexPath{
-    BOOL isRead = [[NSString stringWithFormat:@"%@",detailDic[@"isRead"]] isEqualToString:@"0"] ? NO : YES;
-    if (!isRead) {
-        NSString *itemId = [NSString stringWithFormat:@"%@",detailDic[@"id"]];
-        [HttpHelper changeMessageStateWithUserId:userInfo.desc
-                                           token:userInfo.token
-                                           msgId:itemId
-                                         success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
-                                             NSLog(@"change message status :%@",responseObjcet);
-                                             NSDictionary *dict = (NSDictionary *)responseObjcet;
-                                             userInfo.token = dict[@"token"];
-                                             NSString *code = dict[@"code"];
-                                             if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                                 
-                                             } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
-                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
-                                             } else {
-                                             }
-                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                         }];
-    }
-}
+
 #pragma mark -================================TableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self readMessage:dataArray[indexPath.row] withIndexPath:indexPath];
-    
     CWSMessageDetailViewController *messageDetailVC = [[CWSMessageDetailViewController alloc] init];
     messageDetailVC.detailDic = dataArray[indexPath.row];
     [self.navigationController pushViewController:messageDetailVC animated:YES];

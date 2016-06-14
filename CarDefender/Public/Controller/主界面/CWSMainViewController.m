@@ -198,7 +198,6 @@
     [self.myIndexScrollView addSubview:purchaseRecomView];
     self.myIndexScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(updateIndexPageData)];
     self.badgeValueLabel.text = @"";//没有网络时显示
-    self.badgeImage.hidden = YES;
     totalHeight -= 100;
 }
 
@@ -224,7 +223,7 @@
                                 NSLog(@"init jpush failure");
                             }];
 }
-//获取右上角消息列表
+//获取右上角消息列表(此处应该不需要吧？要显示未读消息啊，必须拿到返回的desc)
 - (void)getMessageList {
     [HttpHelper getMessageListWithUserId:userInfo.desc
                                    token:userInfo.token
@@ -237,16 +236,10 @@
                                      NSString *code = dict[@"code"];
                                      userInfo.token = dict[@"token"];
                                      if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                         NSString *badgeValue = dict[@"desc"];
-                                         if ([badgeValue isEqualToString:@"0"]) {
+                                         if ([dict[@"desc"] isEqualToString:@"0"]) {
                                              [self.badgeValueLabel removeFromSuperview];
                                          } else {
-                                             self.badgeImage.hidden = NO;
-                                             if ([badgeValue integerValue] >= 100) {
-                                                 self.badgeValueLabel.text = @"99+";
-                                             } else {
-                                                 self.badgeValueLabel.text = badgeValue;
-                                             }
+                                             self.badgeValueLabel.text = dict[@"desc"];
                                          }
                                          _messageList = dict[@"msg"];
                                      } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
@@ -391,14 +384,28 @@
 
 #pragma mark 首页左右按钮点击事件
 - (IBAction)UserIconButtonClicked:(UIButton *)sender {
-    CWSLeftController* userInfoVc = [CWSLeftController new];
-    [self.navigationController pushViewController:userInfoVc animated:YES];
+    
+    if(![UserInfo userDefault].desc){ //未登录
+        _navIsHidden = NO;
+        [self turnToLoginVC];
+        return;
+    }else{
+        CWSLeftController* userInfoVc = [CWSLeftController new];
+        [self.navigationController pushViewController:userInfoVc animated:YES];
+
+    }
 }
 
 - (IBAction)onMessageCenterBtn:(id)sender {
-    CWSUserMessageCenterViewController *userMessageCenterVC = [CWSUserMessageCenterViewController new];
-    userMessageCenterVC.messageList = _messageList;
-    [self.navigationController pushViewController:userMessageCenterVC animated:YES];
+    if (![UserInfo userDefault].desc) {
+        _navIsHidden = NO;
+        [self turnToLoginVC];
+        return;
+    } else {
+        CWSUserMessageCenterViewController *userMessageCenterVC = [CWSUserMessageCenterViewController new];
+        userMessageCenterVC.messageList = _messageList;
+        [self.navigationController pushViewController:userMessageCenterVC animated:YES];
+    }
 }
 
 -(void)titleButtonClicked:(UIButton*)sender{

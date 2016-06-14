@@ -11,7 +11,6 @@
 @interface CWSMainViewController : CWSBasicViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *badgeValueLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *badgeImage;
 
 @property (weak, nonatomic) IBOutlet UIButton *UserIconButton;
 

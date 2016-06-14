@@ -25,7 +25,6 @@
 /**预约按钮*/
 @property (strong, nonatomic) IBOutlet UIButton *subscribeButton;
 
-@property (strong,nonatomic)NSDictionary *orderDic; //订单信息
 
 @property(nonatomic,copy) NSString* testString;
 

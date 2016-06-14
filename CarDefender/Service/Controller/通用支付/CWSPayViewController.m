@@ -911,11 +911,19 @@
                         //使用支付宝支付
                         [self AlipayWithPrice:[NSString stringWithFormat:@"%.2f元",payMoney] andOrderNum:rootDict[@"msg"][@"out_trade_no"]];
                     }else  if([payMethodString isEqualToString:@"yue"]){
+                        CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
+                        NSLog(@"dataDict is %@", self.dataDict);
+                        NSDictionary *successData = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                     @"store_name",[NSString stringWithFormat:@"%@", self.dataDict[@"store_name"]],
+                                                     @"goods_name",[NSString stringWithFormat:@"%@", self.dataDict[@"goods_name"]],
+                                                     @"price",[NSString stringWithFormat:@"%@", self.dataDict[@"discount_price"]],
+                                                     @"order_sn",rootDict[@"msg"][@"out_trade_no"],
+                                                     nil];
                         
-                        //余额支付成功后回调
-                        [self updateCarServicePayStatus:rootDict];
-                        
-                        
+//                        NSMutableDictionary *successMutableData = [NSMutableDictionary dictionary];
+//                        [successMutableData setValue:self.dataDict[@"store_name"] forKey:
+                        [paySuccessVc setDataDict:successData];
+                        [self.navigationController pushViewController:paySuccessVc animated:YES];
                     }
                     
                 }else{
@@ -1034,43 +1042,8 @@
 //    }];
     
 }
-#pragma mark =======================余额支付成功后回调
 
--(void)updateCarServicePayStatus:(NSDictionary *)rootDict{
-    
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:KUserInfo.desc,@"userId",KUserInfo.token,@"token",rootDict[@"desc"],@"recordId",@"PAID",@"chargeStatus", nil];
-    [MBProgressHUD showMessag:@"正在生成订单..." toView:self.view];
-    [HttpHelper updateCarServicePayStatusWithUserDic:dic success:^(AFHTTPRequestOperation*operation, id object){
-        NSLog(@"正在生成订单%@",object);
-        NSDictionary *dataD = (NSDictionary *)object;
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if([dataD[@"code"] isEqualToString:SERVICE_SUCCESS]){
-            CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
-           
-            NSDictionary *successData = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [NSString stringWithFormat:@"%@", self.dataDict[@"store_name"]],
-                                         @"store_name",
-                                         [NSString stringWithFormat:@"%@", self.dataDict[@"goods_name"]],
-                                         @"goods_name",
-                                         [NSString stringWithFormat:@"%@", self.dataDict[@"discount_price"]],
-                                         @"price",
-                                         rootDict[@"msg"][@"out_trade_no"],
-                                         @"order_sn",
-                                         rootDict[@"desc"],
-                                         @"orderId",
-                                         nil];
-            
-            
-            [paySuccessVc setDataDict:successData];
-            [self.navigationController pushViewController:paySuccessVc animated:YES];
-        }else{
-            [self alert:@"温馨提示" msg:[PublicUtils showServiceReturnMessage:dataD[@"desc"]]];
-        }
-    } failure:^(AFHTTPRequestOperation *operation ,NSError *error){
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
-    }];
-}
+
 #pragma mark -======================支付的方法回调
 /**新版微信支付*/
 -(void)WXPayWithParamDict:(NSDictionary*)thyDict{

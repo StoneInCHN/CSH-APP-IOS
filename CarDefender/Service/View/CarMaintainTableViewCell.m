@@ -84,7 +84,7 @@
 
 - (IBAction)firstButtonClicked:(UIButton *)sender {
     if([self.delegate respondsToSelector:@selector(selectTableViewButtonClicked:Red:ID:andDataDict:)]){
-        [self.delegate selectTableViewButtonClicked:sender Red:0 ID:[self.dataDic[@"merchantsID"] integerValue] andDataDict:self.dataDic ];
+        [self.delegate selectTableViewButtonClicked:sender Red:0 ID:[self.dataDic[@"merchantsID"] integerValue] andDataDict:self.dataDic];
     }
 }
 
