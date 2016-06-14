@@ -56,7 +56,7 @@
     [self.view addSubview:lineView];
     
     UIButton* comfimButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    comfimButton.frame = CGRectMake((kSizeOfScreen.width-145)/2, CGRectGetMaxY(paySuccessInfoVc.frame)+30, 145, 45);
+    comfimButton.frame = CGRectMake((kSizeOfScreen.width-145)/2, CGRectGetMaxY(paySuccessInfoVc.frame)+30, 145, 40);
     comfimButton.layer.masksToBounds = YES;
     comfimButton.layer.borderColor = KBlueColor.CGColor;
     comfimButton.layer.borderWidth = 1.0f;
@@ -75,7 +75,7 @@
 
     CWSCarWashDetileController* detailVc = [CWSCarWashDetileController new];
     [detailVc setDataDict:self.dataDict];
-    detailVc.tag = 1;
+    detailVc.tag = 101;
     [self.navigationController pushViewController:detailVc animated:YES];
 }
 

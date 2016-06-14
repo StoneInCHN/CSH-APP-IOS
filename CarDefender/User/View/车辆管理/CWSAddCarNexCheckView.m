@@ -9,7 +9,7 @@
 #import "CWSAddCarNexCheckView.h"
 
 @implementation CWSAddCarNexCheckView
-
+@synthesize datePicker = _datePicker;
 -(void)loadDatePickerView
 {
     chooseDate=[NSDate date];
