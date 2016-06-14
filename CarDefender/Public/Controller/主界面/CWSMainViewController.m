@@ -198,6 +198,7 @@
     [self.myIndexScrollView addSubview:purchaseRecomView];
     self.myIndexScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(updateIndexPageData)];
     self.badgeValueLabel.text = @"";//没有网络时显示
+    self.badgeImage.hidden = YES;
     totalHeight -= 100;
 }
 
@@ -240,6 +241,7 @@
                                          if ([badgeValue isEqualToString:@"0"]) {
                                              [self.badgeValueLabel removeFromSuperview];
                                          } else {
+                                             self.badgeImage.hidden = NO;
                                              if ([badgeValue integerValue] >= 100) {
                                                  self.badgeValueLabel.text = @"99+";
                                              } else {

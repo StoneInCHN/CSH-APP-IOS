@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CWSMainViewController">
             <connections>
                 <outlet property="UserIconButton" destination="2xc-XP-elB" id="4S2-zi-WEo"/>
+                <outlet property="badgeImage" destination="AjT-1u-pla" id="1Xd-pI-lL8"/>
                 <outlet property="badgeValueLabel" destination="jSE-jq-2Zm" id="311-aC-ZUJ"/>
                 <outlet property="myIndexScrollView" destination="9Wp-rt-TVW" id="aWf-wt-9Me"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -49,26 +50,56 @@
                                 <action selector="onMessageCenterBtn:" destination="-1" eventType="touchUpInside" id="QR1-vG-9JQ"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jSE-jq-2Zm">
-                            <rect key="frame" x="582" y="22" width="10" height="18"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <color key="textColor" red="0.9152866005897522" green="0.24655312299728394" blue="0.20107686519622803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="badge" translatesAutoresizingMaskIntoConstraints="NO" id="AjT-1u-pla">
+                            <rect key="frame" x="569" y="15" width="24" height="24"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="31" id="FLX-6w-QBW"/>
+                                <constraint firstAttribute="width" constant="24" id="GHf-IY-tzO"/>
+                                <constraint firstAttribute="height" constant="24" id="jQI-4j-P2l"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="FLX-6w-QBW"/>
+                                </mask>
+                            </variation>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jSE-jq-2Zm">
+                            <rect key="frame" x="564" y="15" width="35" height="25"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="jSE-jq-2Zm" firstAttribute="height" secondItem="AjT-1u-pla" secondAttribute="height" constant="1" id="1kS-2y-8vK"/>
+                        <constraint firstItem="AjT-1u-pla" firstAttribute="centerX" secondItem="jSE-jq-2Zm" secondAttribute="centerX" id="36Z-dj-cMz"/>
                         <constraint firstItem="KIm-R1-thQ" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="25" id="BjG-y5-AJ9"/>
+                        <constraint firstAttribute="trailing" secondItem="AjT-1u-pla" secondAttribute="trailing" constant="7" id="CHq-oa-cBA"/>
                         <constraint firstItem="2xc-XP-elB" firstAttribute="leading" secondItem="Jyt-h1-2K6" secondAttribute="leading" constant="5" id="Eg8-Oc-TBu"/>
                         <constraint firstItem="KIm-R1-thQ" firstAttribute="centerX" secondItem="Jyt-h1-2K6" secondAttribute="centerX" id="HMl-0k-uti"/>
                         <constraint firstAttribute="trailing" secondItem="PdF-ko-YsG" secondAttribute="trailing" constant="8" id="KJw-dg-QWW"/>
+                        <constraint firstItem="jSE-jq-2Zm" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="20" id="LUC-Gz-YYM"/>
                         <constraint firstAttribute="bottom" secondItem="KIm-R1-thQ" secondAttribute="bottom" constant="10" id="M35-Mi-uAZ"/>
-                        <constraint firstAttribute="trailing" secondItem="jSE-jq-2Zm" secondAttribute="trailing" constant="8" id="OgZ-1T-7mm"/>
                         <constraint firstItem="2xc-XP-elB" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="30" id="Pf5-lw-vM3"/>
+                        <constraint firstItem="jSE-jq-2Zm" firstAttribute="trailing" secondItem="AjT-1u-pla" secondAttribute="trailing" constant="6" id="VHg-8e-KOS"/>
+                        <constraint firstItem="jSE-jq-2Zm" firstAttribute="width" secondItem="AjT-1u-pla" secondAttribute="width" constant="11" id="Zkg-c6-mHH"/>
+                        <constraint firstItem="jSE-jq-2Zm" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="15" id="a5t-MV-dOF"/>
+                        <constraint firstAttribute="bottom" secondItem="AjT-1u-pla" secondAttribute="bottom" constant="25" id="dEW-uh-p8H"/>
                         <constraint firstAttribute="height" constant="64" id="diu-ie-t1z"/>
+                        <constraint firstAttribute="bottom" secondItem="jSE-jq-2Zm" secondAttribute="bottom" constant="24" id="fzr-Rl-3Nw"/>
+                        <constraint firstItem="jSE-jq-2Zm" firstAttribute="leading" secondItem="AjT-1u-pla" secondAttribute="leading" constant="-5" id="hV8-Z7-4Up"/>
                         <constraint firstItem="PdF-ko-YsG" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="23" id="iUL-3V-ITd"/>
-                        <constraint firstItem="PdF-ko-YsG" firstAttribute="top" secondItem="jSE-jq-2Zm" secondAttribute="bottom" constant="-17" id="olZ-tO-Uso"/>
+                        <constraint firstItem="AjT-1u-pla" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="15" id="ljH-rU-3dS"/>
+                        <constraint firstItem="jSE-jq-2Zm" firstAttribute="width" secondItem="AjT-1u-pla" secondAttribute="width" constant="11" id="nFa-4v-4I4"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="36Z-dj-cMz"/>
+                            <exclude reference="LUC-Gz-YYM"/>
+                        </mask>
+                    </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3yg-Hq-UGM">
                     <rect key="frame" x="0.0" y="64" width="600" height="1"/>
@@ -94,10 +125,11 @@
                 <constraint firstItem="Jyt-h1-2K6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o5p-l5-vXG"/>
                 <constraint firstItem="9Wp-rt-TVW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="omr-aB-Tpp"/>
             </constraints>
-            <point key="canvasLocation" x="486" y="365"/>
+            <point key="canvasLocation" x="461" y="63"/>
         </view>
     </objects>
     <resources>
+        <image name="badge" width="461" height="463"/>
         <image name="logo.png" width="100" height="41"/>
         <image name="message_center_icon" width="49" height="50"/>
     </resources>
