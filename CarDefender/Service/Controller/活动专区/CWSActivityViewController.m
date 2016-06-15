@@ -10,8 +10,10 @@
 #import "CWSNoDataView.h"
 #import "CWSActivityTableViewCell.h"
 #import "CWSActivityDetailViewController.h"
+#import "SFActivityTableViewCell.h"
+#import "SFActivityCellDelegate.h"
 
-@interface CWSActivityViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface CWSActivityViewController ()<UITableViewDelegate,UITableViewDataSource,SFActivityCellDelegate>
 {
     UITableView *_tableView;
     NSMutableArray *_dataArray;
@@ -24,14 +26,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"活动专区";
+    self.title = @"优惠劵中心";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = kCOLOR(245, 245, 245);
     [Utils changeBackBarButtonStyle:self];
-    [self initDataSource];
-    [self getDataWithPage:_temp];
+    [self initalizeUserInterface];
+    [self initData];
+//    [self getDataWithPage:_temp];
 }
-
+- (void)initData {
+    _temp = 1;
+    _dataArray = [[NSMutableArray alloc] init];
+    UserInfo *userInfo = [UserInfo userDefault];
+    [HttpHelper couponListWithUserId:userInfo.desc
+                               token:userInfo.token
+                            pageSize:@"10"
+                          pageNumber:@"1"
+                             success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                 NSLog(@"优惠劵列表 :%@",responseObjcet);
+                                 NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                 NSString *code = dict[@"code"];
+                                 userInfo.token = dict[@"token"];
+                                 if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                     _dataArray = dict[@"msg"];
+                                     [_tableView reloadData];
+                                 } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
+                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                 } else {
+                                     [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                 }
+                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                 [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                             }];
+}
 #pragma mark - 数据源
 - (void)initDataSource
 {
@@ -42,16 +69,14 @@
 #pragma mark - 界面
 - (void)initalizeUserInterface
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-5) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.height-5) style:UITableViewStylePlain];
     _tableView.backgroundColor = kCOLOR(245, 245, 245);
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableFooterView = [[UIView alloc] init];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
-    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];
-
 }
 
 #pragma mark - 下拉刷新方法
@@ -149,39 +174,42 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return _dataArray.count;
-    return 3;
+    return _dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    return 353;
-    
+    return 100;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    UINib *nib = [UINib nibWithNibName:@"CWSActivityTableViewCell" bundle:[NSBundle mainBundle]];
+    UINib *nib = [UINib nibWithNibName:@"SFActivityTableViewCell" bundle:[NSBundle mainBundle]];
     [tableView registerNib:nib forCellReuseIdentifier:@"activityTableViewCell"];
-    CWSActivityTableViewCell *cell = [[CWSActivityTableViewCell alloc] init];
-    cell = [tableView dequeueReusableCellWithIdentifier:@"activityTableViewCell" forIndexPath:indexPath];
-    cell.backgroundColor = kCOLOR(245, 245, 245);
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-//    NSDictionary* dic = _dataArray[indexPath.row];
-    
+    SFActivityTableViewCell *cell = [[SFActivityTableViewCell alloc] init];
+    cell  = [tableView dequeueReusableCellWithIdentifier:@"activityTableViewCell" forIndexPath:indexPath];
+    cell.delegate = self;
+    cell.tag = indexPath.row;
     return cell;
-    
-   
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CWSActivityDetailViewController *vc = [[CWSActivityDetailViewController alloc] init];
+    vc.htmlString = _dataArray[indexPath.row][@"remark"];
     [self.navigationController pushViewController:vc animated:YES];
 }
-
+#pragma mark SFActivityCellDelegate
+- (void)onDetailInfo:(id)sender {
+    SFActivityTableViewCell *cell = (SFActivityTableViewCell *)sender;
+    CWSActivityDetailViewController *vc = [[CWSActivityDetailViewController alloc] init];
+    vc.htmlString = _dataArray[cell.tag][@"remark"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)getDiscountCoupon:(id)sender {
+    SFActivityTableViewCell *cell = (SFActivityTableViewCell *)sender;
+    cell.couponSelectedImageView.hidden = NO;
+    [cell.discountCouponBtn removeFromSuperview];
+    [cell.displayLabel removeFromSuperview];
+    [cell.discountCouponCounter removeFromSuperview];
+}
 @end

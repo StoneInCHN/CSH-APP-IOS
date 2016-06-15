@@ -14,6 +14,7 @@
 #import "CWSPhoneMoneyViewController.h"
 #import "CWSInternetPhoneViewController.h"
 #import "HttpHelper.h"
+#import "CWSActivityViewController.h"
 
 @interface CWSMyWalletViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -51,8 +52,8 @@
 //    _messageArray = @[@"元",@"元",@"分",@""];
 //    _headImageArray = @[@"qianbao_yue",@"qianbao_hogbao",@"qianbao_jifen",@"qianbao_dianhua"];
     
-    _titleArray = @[@"余额",@"红包",@"积分",@"网络电话"];
-    _messageArray = @[@"元",@"元",@"分",@""];
+    _titleArray = @[@"余额",@"优惠劵",@"积分",@"网络电话"];
+    _messageArray = @[@"元",@"",@"分",@""];
     _headImageArray = @[@"qianbao_yue",@"qianbao_hogbao",@"qianbao_jifen",@"qianbao_dianhua"];
     
 }
@@ -158,13 +159,13 @@
             break;
             //红包
         case 1:{
-//            cell.moneyLabel.text = @"500.67";
+            cell.moneyLabel.text = @"";
             
-                if([PublicUtils checkNSNullWithgetString:_dataDic[@"giftAmount"]] != nil){
-                    cell.moneyLabel.text = [NSString stringWithFormat:@"%.1f",[[PublicUtils checkNSNullWithgetString:_dataDic[@"giftAmount"]] floatValue]];
-                }else{
-                    cell.moneyLabel.text = @"0";
-                }
+//                if([PublicUtils checkNSNullWithgetString:_dataDic[@"giftAmount"]] != nil){
+//                    cell.moneyLabel.text = [NSString stringWithFormat:@"%.1f",[[PublicUtils checkNSNullWithgetString:_dataDic[@"giftAmount"]] floatValue]];
+//                }else{
+//                    cell.moneyLabel.text = @"0";
+//                }
             
             
         }
@@ -236,8 +237,8 @@
 //            }
 //            
 //            [self.navigationController pushViewController:vc animated:YES];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"敬请期待" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
+            CWSActivityViewController *couponVC = [[CWSActivityViewController alloc] init];
+            [self.navigationController pushViewController:couponVC animated:YES];
         }
             break;
             //积分

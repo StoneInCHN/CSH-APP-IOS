@@ -52,7 +52,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"slide" object:@"1"];
-    if (KUserManager.uid!=nil) {
+    if (userInfo.desc!=nil) {
         [self.loginOrOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     }else{
         [self.loginOrOutBtn setTitle:@"登录" forState:UIControlStateNormal];

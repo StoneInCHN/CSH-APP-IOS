@@ -133,15 +133,15 @@
     }];
 }
 
-
 #pragma mark -================================================服务按钮回调
 -(void)serviceButtonClicked:(UIButton*)sender{
     UserInfo *userInfo = [UserInfo userDefault];
     NSString* whichService = sender.titleLabel.text;
     NSLog(@"%@",whichService);
     if([whichService isEqualToString:@"买车险"]) {
-            CWSBuyCarInsuranceViewController *vc = [[CWSBuyCarInsuranceViewController alloc] init];
-            [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+//            CWSBuyCarInsuranceViewController *vc = [[CWSBuyCarInsuranceViewController alloc] init];
+//            [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+        [MBProgressHUD showError:@"此功能暂未开放" toView:self];
     }
     else if([whichService isEqualToString:@"洗车"]) {
             CWSCarWashViewController* lController = [[CWSCarWashViewController alloc] init];

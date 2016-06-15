@@ -1,4 +1,4 @@
-
+//
 //
 //  CWSMainViewController.m
 //  carLife
@@ -186,7 +186,7 @@
     totalHeight += classicView.frame.size.height;
     
     /**创建留白View*/
-    UIView* trimView2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(AdScrollView.frame), kSizeOfScreen.width, 15)];
+    UIView* trimView2 = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(classicView.frame), kSizeOfScreen.width, 15)];
     trimView2.backgroundColor = [UIColor grayColor];
     trimView2.alpha = 0.1f;
     [self.myIndexScrollView addSubview:trimView2];
@@ -198,7 +198,7 @@
     [self.myIndexScrollView addSubview:purchaseRecomView];
     self.myIndexScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(updateIndexPageData)];
     self.badgeValueLabel.text = @"";//没有网络时显示
-    totalHeight -= 100;
+    self.badgeImage.hidden = YES;
 }
 
 //初始化极光推送
@@ -223,12 +223,12 @@
                                 NSLog(@"init jpush failure");
                             }];
 }
-//获取右上角消息列表(此处应该不需要吧？要显示未读消息啊，必须拿到返回的desc)
+//获取右上角消息列表
 - (void)getMessageList {
     [HttpHelper getMessageListWithUserId:userInfo.desc
                                    token:userInfo.token
-                              pageNumber:@"10"
-                                pageSize:@"5"
+                              pageNumber:@"1"
+                                pageSize:@"10"
                                  success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                      [self.myIndexScrollView.mj_header endRefreshing];
                                      NSLog(@"message :%@",responseObjcet);
@@ -236,10 +236,16 @@
                                      NSString *code = dict[@"code"];
                                      userInfo.token = dict[@"token"];
                                      if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                         if ([dict[@"desc"] isEqualToString:@"0"]) {
+                                         NSString *badgeValue = dict[@"desc"];
+                                         if ([badgeValue isEqualToString:@"0"]) {
                                              [self.badgeValueLabel removeFromSuperview];
                                          } else {
-                                             self.badgeValueLabel.text = dict[@"desc"];
+                                             self.badgeImage.hidden = NO;
+                                             if ([badgeValue integerValue] >= 100) {
+                                                 self.badgeValueLabel.text = @"99+";
+                                             } else {
+                                                 self.badgeValueLabel.text = badgeValue;
+                                             }
                                          }
                                          _messageList = dict[@"msg"];
                                      } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
@@ -384,28 +390,14 @@
 
 #pragma mark 首页左右按钮点击事件
 - (IBAction)UserIconButtonClicked:(UIButton *)sender {
-    
-    if(![UserInfo userDefault].desc){ //未登录
-        _navIsHidden = NO;
-        [self turnToLoginVC];
-        return;
-    }else{
-        CWSLeftController* userInfoVc = [CWSLeftController new];
-        [self.navigationController pushViewController:userInfoVc animated:YES];
-
-    }
+    CWSLeftController* userInfoVc = [CWSLeftController new];
+    [self.navigationController pushViewController:userInfoVc animated:YES];
 }
 
 - (IBAction)onMessageCenterBtn:(id)sender {
-    if (![UserInfo userDefault].desc) {
-        _navIsHidden = NO;
-        [self turnToLoginVC];
-        return;
-    } else {
-        CWSUserMessageCenterViewController *userMessageCenterVC = [CWSUserMessageCenterViewController new];
-        userMessageCenterVC.messageList = _messageList;
-        [self.navigationController pushViewController:userMessageCenterVC animated:YES];
-    }
+    CWSUserMessageCenterViewController *userMessageCenterVC = [CWSUserMessageCenterViewController new];
+    userMessageCenterVC.messageList = _messageList;
+    [self.navigationController pushViewController:userMessageCenterVC animated:YES];
 }
 
 -(void)titleButtonClicked:(UIButton*)sender{

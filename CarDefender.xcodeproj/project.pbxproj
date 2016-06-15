@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0D0487891CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */; };
+		0D5C2BA11D06B07C00DE7B64 /* ChoseDatePikerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5C2BA01D06B07C00DE7B64 /* ChoseDatePikerView.m */; };
+		0D8504051D051824009191C2 /* CWSSelectCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D8504041D051824009191C2 /* CWSSelectCarViewController.m */; };
 		243AB0BF1CDA524100E9FD95 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0BE1CDA524100E9FD95 /* HttpHelper.m */; };
 		243AB0C21CDA738900E9FD95 /* HBRSAHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C11CDA738900E9FD95 /* HBRSAHandler.m */; };
 		243AB0C51CDA746A00E9FD95 /* SecurityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */; };
@@ -16,8 +18,9 @@
 		2477E8DC1CFF1B5E00CCC540 /* SFPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8D71CFF1B5E00CCC540 /* SFPopMenuView.m */; };
 		2477E8DD1CFF1B5E00CCC540 /* SFTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */; };
 		2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */; };
+		24A241851D11688C00BBD549 /* SFActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A241831D11688C00BBD549 /* SFActivityTableViewCell.m */; };
+		24A241861D11688C00BBD549 /* SFActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */; };
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
-		24D283691D0C561300DF7C02 /* CWSSelectCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D283681D0C561300DF7C02 /* CWSSelectCarViewController.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
 		2E29F4ED1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */; };
@@ -1241,6 +1244,11 @@
 
 /* Begin PBXFileReference section */
 		0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableViewCell.xib; sourceTree = "<group>"; };
+		0D5C2B9F1D06B07C00DE7B64 /* ChoseDatePikerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseDatePikerView.h; sourceTree = "<group>"; };
+		0D5C2BA01D06B07C00DE7B64 /* ChoseDatePikerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseDatePikerView.m; sourceTree = "<group>"; };
+		0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
+		0D8504031D051824009191C2 /* CWSSelectCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSSelectCarViewController.h; sourceTree = "<group>"; };
+		0D8504041D051824009191C2 /* CWSSelectCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSelectCarViewController.m; sourceTree = "<group>"; };
 		243AB0BD1CDA524100E9FD95 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		243AB0BE1CDA524100E9FD95 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		243AB0C01CDA738900E9FD95 /* HBRSAHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBRSAHandler.h; sourceTree = "<group>"; };
@@ -1256,10 +1264,13 @@
 		2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTableViewDelegate.m; sourceTree = "<group>"; };
 		2477E8DA1CFF1B5E00CCC540 /* SFPopMenuViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPopMenuViewManager.h; sourceTree = "<group>"; };
 		2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPopMenuViewManager.m; sourceTree = "<group>"; };
+		24A241821D11688C00BBD549 /* SFActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFActivityTableViewCell.h; sourceTree = "<group>"; };
+		24A241831D11688C00BBD549 /* SFActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFActivityTableViewCell.m; sourceTree = "<group>"; };
+		24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SFActivityTableViewCell.xib; sourceTree = "<group>"; };
+		24A241871D11725100BBD549 /* SFActivityCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFActivityCellDelegate.h; sourceTree = "<group>"; };
+		24A241881D117EDA00BBD549 /* HttpURLMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpURLMacro.h; sourceTree = "<group>"; };
 		24B921FF1CE3762B004E558E /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		24B922001CE3762B004E558E /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
-		24D283671D0C561300DF7C02 /* CWSSelectCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSSelectCarViewController.h; sourceTree = "<group>"; };
-		24D283681D0C561300DF7C02 /* CWSSelectCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSelectCarViewController.m; sourceTree = "<group>"; };
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		24E53A8C1CE1AE9E0037197B /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindGasStationHeadView.xib; sourceTree = "<group>"; };
@@ -3327,6 +3338,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D5C2B9E1D06AF9E00DE7B64 /* 预约选择时间 */ = {
+			isa = PBXGroup;
+			children = (
+				0D5C2B9F1D06B07C00DE7B64 /* ChoseDatePikerView.h */,
+				0D5C2BA01D06B07C00DE7B64 /* ChoseDatePikerView.m */,
+			);
+			name = "预约选择时间";
+			sourceTree = "<group>";
+		};
 		2477E8D51CFF1B5700CCC540 /* 切换车辆 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3760,6 +3780,7 @@
 				243AB0BE1CDA524100E9FD95 /* HttpHelper.m */,
 				243AB0C31CDA746A00E9FD95 /* SecurityHelper.h */,
 				243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */,
+				24A241881D117EDA00BBD549 /* HttpURLMacro.h */,
 			);
 			path = http;
 			sourceTree = "<group>";
@@ -5097,10 +5118,12 @@
 		335C5C891AC12A47001EA2AC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0D5C2B9E1D06AF9E00DE7B64 /* 预约选择时间 */,
 				2477E8D51CFF1B5700CCC540 /* 切换车辆 */,
 				2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */,
 				4C0952611C34D7890098BA4C /* NewCarWashTableHeaderView.h */,
 				4C0952621C34D7890098BA4C /* NewCarWashTableHeaderView.m */,
+				0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */,
 				0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */,
 				4CECD2651C22880B0069754C /* 活动专区 */,
 				4CECD2691C22880B0069754C /* 积分商城 */,
@@ -6597,10 +6620,10 @@
 		4CC367691C2145E30098A6C7 /* 扫一扫 */ = {
 			isa = PBXGroup;
 			children = (
-				24D283671D0C561300DF7C02 /* CWSSelectCarViewController.h */,
-				24D283681D0C561300DF7C02 /* CWSSelectCarViewController.m */,
 				4CC367901C2151B10098A6C7 /* CWSQRScanViewController.h */,
 				4CC367911C2151B10098A6C7 /* CWSQRScanViewController.m */,
+				0D8504031D051824009191C2 /* CWSSelectCarViewController.h */,
+				0D8504041D051824009191C2 /* CWSSelectCarViewController.m */,
 			);
 			path = "扫一扫";
 			sourceTree = "<group>";
@@ -7007,6 +7030,7 @@
 				4CECD2591C2287EF0069754C /* CWSActivityViewController.h */,
 				4CECD25A1C2287EF0069754C /* CWSActivityViewController.m */,
 				4CECD25B1C2287EF0069754C /* CWSActivityViewController.xib */,
+				24A241871D11725100BBD549 /* SFActivityCellDelegate.h */,
 			);
 			path = "活动专区";
 			sourceTree = "<group>";
@@ -7027,6 +7051,9 @@
 				4CECD2661C22880B0069754C /* CWSActivityTableViewCell.h */,
 				4CECD2671C22880B0069754C /* CWSActivityTableViewCell.m */,
 				4CECD2681C22880B0069754C /* CWSActivityTableViewCell.xib */,
+				24A241821D11688C00BBD549 /* SFActivityTableViewCell.h */,
+				24A241831D11688C00BBD549 /* SFActivityTableViewCell.m */,
+				24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */,
 			);
 			path = "活动专区";
 			sourceTree = "<group>";
@@ -8364,6 +8391,7 @@
 				4CA0C2FE1C1BF6040006BF3E /* CWSPayInfoView.xib in Resources */,
 				4CECD26B1C22880B0069754C /* CWSActivityTableViewCell.xib in Resources */,
 				4CC892001C19066500F6AB35 /* NewCarWashDetailHeaderView.xib in Resources */,
+				24A241861D11688C00BBD549 /* SFActivityTableViewCell.xib in Resources */,
 				335425EC1B70B08300FD23A5 /* zhaochewei_sousuo@2x.png in Resources */,
 				3335244A1B4E7D29004246C5 /* icon.png in Resources */,
 				335978241AD696FC0058B6BF /* city.plist in Resources */,
@@ -8670,6 +8698,7 @@
 				4C21BFC41C31621D00028D56 /* UserAdvertisementInfo.m in Sources */,
 				928A62FE1ACCF3BA0013C666 /* XHMessageTextView.m in Sources */,
 				33507B531AD40C3C00F1F236 /* CarManagerMsg.m in Sources */,
+				24A241851D11688C00BBD549 /* SFActivityTableViewCell.m in Sources */,
 				2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */,
 				928A62BD1ACCE9C50013C666 /* UIImageView+EMWebCache.m in Sources */,
 				3347093F1AF89424006A5660 /* CWSAboutUsDetailsController.m in Sources */,
@@ -9077,6 +9106,7 @@
 				4C1587F51C0D762700DE5262 /* JPushNote.m in Sources */,
 				335425BC1B70AFB100FD23A5 /* FindParkSearchCell.m in Sources */,
 				33CA8F321B1EFB0400B4BEEE /* CWSMessageDetailViewController.m in Sources */,
+				0D5C2BA11D06B07C00DE7B64 /* ChoseDatePikerView.m in Sources */,
 				4CC367891C214C950098A6C7 /* MASLayoutConstraint.m in Sources */,
 				4CBDA63F1C142FCF00BB0C69 /* CarMaintainDetailHeaderView.m in Sources */,
 				33D7B5E41B72F07300748904 /* CWSAlarmController.m in Sources */,
@@ -9110,7 +9140,7 @@
 				928A62F61ACCF3BA0013C666 /* BaseTableViewCell.m in Sources */,
 				33B78CF51B71FBFD00E077CB /* Park.m in Sources */,
 				928A63CF1ACCF3F00013C666 /* ContactView.m in Sources */,
-				24D283691D0C561300DF7C02 /* CWSSelectCarViewController.m in Sources */,
+				0D8504051D051824009191C2 /* CWSSelectCarViewController.m in Sources */,
 				928A62E01ACCE9E70013C666 /* MBProgressHUD.m in Sources */,
 				4CF77D531C16B59F0050B7E2 /* ShopFootView.m in Sources */,
 				4CD061571C3A06A900136B27 /* MJRefreshConst.m in Sources */,

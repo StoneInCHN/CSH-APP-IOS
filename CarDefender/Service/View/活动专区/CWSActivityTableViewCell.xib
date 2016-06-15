@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -28,12 +28,6 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ti-hi-5NH">
                         <rect key="frame" x="10" y="43" width="355" height="309"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbao_zuo" translatesAutoresizingMaskIntoConstraints="NO" id="dvf-ab-jjO">
-                                <rect key="frame" x="0.0" y="0.0" width="355" height="160"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="160" id="WCL-BT-Cbi"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="千只口罩千只口罩千只口罩" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2k0-jy-ddf">
                                 <rect key="frame" x="10" y="176" width="335" height="15"/>
                                 <constraints>
@@ -74,6 +68,12 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="PVL-rP-ir6"/>
                                     <constraint firstAttribute="width" constant="10" id="iu4-qS-sa2"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hongbao_zuo" translatesAutoresizingMaskIntoConstraints="NO" id="dvf-ab-jjO">
+                                <rect key="frame" x="0.0" y="0.0" width="355" height="160"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="WCL-BT-Cbi"/>
                                 </constraints>
                             </imageView>
                         </subviews>

@@ -73,11 +73,6 @@
         rightButton.frame = view2.frame;
         [self addSubview:rightButton];
         [rightButton addTarget:self action:@selector(rightButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        
-        
-        
-    
     }
     return self;
 }
@@ -85,18 +80,14 @@
 
 #pragma mark -============================回调方法
 -(void)leftButtonClicked:(UIButton*)sender{
-    NSLog(@"leftButton");
-    //活动专区
-//    CWSActivityViewController *vc = [[CWSActivityViewController alloc] init];
-//    [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+    CWSActivityViewController *vc = [[CWSActivityViewController alloc] init];
+    [self.thyRootVc.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)rightButtonClicked:(UIButton*)sender{
-
-    NSLog(@"rightButton");
     //积分商城
-//    CWSRecordShopViewController *vc = [[CWSRecordShopViewController alloc] init];
-//    [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+    CWSRecordShopViewController *vc = [[CWSRecordShopViewController alloc] init];
+    [self.thyRootVc.navigationController pushViewController:vc animated:YES];
 }
 
 
