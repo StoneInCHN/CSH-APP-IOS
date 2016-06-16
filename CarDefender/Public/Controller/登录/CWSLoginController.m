@@ -98,13 +98,12 @@
                                  password:passwd
                               deviceToken:[SvUDIDTools UDID]
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                       NSLog(@"user login response :%@",responseObject);
                                       NSDictionary *responseDic = (NSDictionary *)responseObject;
                                       if ([[responseDic objectForKey:@"code"] isEqualToString:SERVICE_SUCCESS]) {
                                           
                                           [MBProgressHUD showSuccess:@"登陆成功" toView:self.view];
-                                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                          
                                           [self saveUserInfo:responseDic];
                                           
                                           UserInfo *userInfo = [UserInfo userDefault];
@@ -119,13 +118,12 @@
                                           
                                       } else {
                                           [MBProgressHUD showError:@"登陆失败" toView:self.view];
-                                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                           self.loginBtn.userInteractionEnabled = YES;
                                           
                                       }
                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  [MBProgressHUD showError:@"登陆失败" toView:self.view];
                                   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                  [MBProgressHUD showError:@"登陆失败" toView:self.view];
                                   NSLog(@"error :%@",error);
                               }];
 

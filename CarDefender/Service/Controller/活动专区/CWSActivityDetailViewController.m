@@ -8,7 +8,9 @@
 
 #import "CWSActivityDetailViewController.h"
 
-@interface CWSActivityDetailViewController ()
+@interface CWSActivityDetailViewController () {
+    UIWebView *_webViw;
+}
 
 @end
 
@@ -16,17 +18,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"活动专区详情";
+    self.title = @"优惠劵详情";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = kCOLOR(245, 245, 245);
     [Utils changeBackBarButtonStyle:self];
+    [self setupUI];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)setupUI {
+     _webViw = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height)];
+    [_webViw loadHTMLString:self.htmlString baseURL:nil];
+    [self.view addSubview:_webViw];
 }
-
-
 
 @end

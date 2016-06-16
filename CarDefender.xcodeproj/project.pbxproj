@@ -22,6 +22,8 @@
 		2477E8DC1CFF1B5E00CCC540 /* SFPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8D71CFF1B5E00CCC540 /* SFPopMenuView.m */; };
 		2477E8DD1CFF1B5E00CCC540 /* SFTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */; };
 		2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */; };
+		24A241851D11688C00BBD549 /* SFActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A241831D11688C00BBD549 /* SFActivityTableViewCell.m */; };
+		24A241861D11688C00BBD549 /* SFActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */; };
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
@@ -1272,6 +1274,11 @@
 		2477E8D91CFF1B5E00CCC540 /* SFTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTableViewDelegate.m; sourceTree = "<group>"; };
 		2477E8DA1CFF1B5E00CCC540 /* SFPopMenuViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPopMenuViewManager.h; sourceTree = "<group>"; };
 		2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPopMenuViewManager.m; sourceTree = "<group>"; };
+		24A241821D11688C00BBD549 /* SFActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFActivityTableViewCell.h; sourceTree = "<group>"; };
+		24A241831D11688C00BBD549 /* SFActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFActivityTableViewCell.m; sourceTree = "<group>"; };
+		24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SFActivityTableViewCell.xib; sourceTree = "<group>"; };
+		24A241871D11725100BBD549 /* SFActivityCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFActivityCellDelegate.h; sourceTree = "<group>"; };
+		24A241881D117EDA00BBD549 /* HttpURLMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpURLMacro.h; sourceTree = "<group>"; };
 		24B921FF1CE3762B004E558E /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		24B922001CE3762B004E558E /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
@@ -3792,6 +3799,7 @@
 				243AB0BE1CDA524100E9FD95 /* HttpHelper.m */,
 				243AB0C31CDA746A00E9FD95 /* SecurityHelper.h */,
 				243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */,
+				24A241881D117EDA00BBD549 /* HttpURLMacro.h */,
 			);
 			path = http;
 			sourceTree = "<group>";
@@ -7046,6 +7054,7 @@
 				4CECD2591C2287EF0069754C /* CWSActivityViewController.h */,
 				4CECD25A1C2287EF0069754C /* CWSActivityViewController.m */,
 				4CECD25B1C2287EF0069754C /* CWSActivityViewController.xib */,
+				24A241871D11725100BBD549 /* SFActivityCellDelegate.h */,
 			);
 			path = "活动专区";
 			sourceTree = "<group>";
@@ -7066,6 +7075,9 @@
 				4CECD2661C22880B0069754C /* CWSActivityTableViewCell.h */,
 				4CECD2671C22880B0069754C /* CWSActivityTableViewCell.m */,
 				4CECD2681C22880B0069754C /* CWSActivityTableViewCell.xib */,
+				24A241821D11688C00BBD549 /* SFActivityTableViewCell.h */,
+				24A241831D11688C00BBD549 /* SFActivityTableViewCell.m */,
+				24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */,
 			);
 			path = "活动专区";
 			sourceTree = "<group>";
@@ -8031,7 +8043,7 @@
 				TargetAttributes = {
 					335C5B8D1AC1062D001EA2AC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ZJMB8US8MQ;
+						DevelopmentTeam = Y638L9NEZ8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -8404,6 +8416,7 @@
 				4CA0C2FE1C1BF6040006BF3E /* CWSPayInfoView.xib in Resources */,
 				4CECD26B1C22880B0069754C /* CWSActivityTableViewCell.xib in Resources */,
 				4CC892001C19066500F6AB35 /* NewCarWashDetailHeaderView.xib in Resources */,
+				24A241861D11688C00BBD549 /* SFActivityTableViewCell.xib in Resources */,
 				335425EC1B70B08300FD23A5 /* zhaochewei_sousuo@2x.png in Resources */,
 				3335244A1B4E7D29004246C5 /* icon.png in Resources */,
 				335978241AD696FC0058B6BF /* city.plist in Resources */,
@@ -8711,6 +8724,7 @@
 				4C21BFC41C31621D00028D56 /* UserAdvertisementInfo.m in Sources */,
 				928A62FE1ACCF3BA0013C666 /* XHMessageTextView.m in Sources */,
 				33507B531AD40C3C00F1F236 /* CarManagerMsg.m in Sources */,
+				24A241851D11688C00BBD549 /* SFActivityTableViewCell.m in Sources */,
 				2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */,
 				928A62BD1ACCE9C50013C666 /* UIImageView+EMWebCache.m in Sources */,
 				3347093F1AF89424006A5660 /* CWSAboutUsDetailsController.m in Sources */,
@@ -9462,7 +9476,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9542,7 +9556,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";

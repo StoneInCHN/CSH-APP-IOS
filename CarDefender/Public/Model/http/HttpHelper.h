@@ -426,4 +426,12 @@
                           serviceId:(NSString *)serviceId
                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 可选优惠券列表－活动页面
++ (void)couponListWithUserId:(NSString *)userId
+                               token:(NSString *)token
+                           pageSize:(NSString *)pageSize
+                         pageNumber:(NSString *)pageNumber
+                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end

@@ -10,4 +10,6 @@
 
 @interface CWSActivityDetailViewController : UIViewController
 
+@property(strong, nonatomic) NSString *htmlString;
+
 @end
