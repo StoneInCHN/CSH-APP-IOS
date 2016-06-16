@@ -25,6 +25,7 @@
 
 @property (nonatomic,strong)  CWSCarWashNormalModel* normalModel;
 
+@property (nonatomic,strong) CWSCarWashDiscountModel* discountModel;
 
 @property (nonatomic,assign) id <CWSTableViewButtonCellDelegate> delegate;
 

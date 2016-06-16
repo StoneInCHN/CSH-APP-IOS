@@ -436,7 +436,6 @@
     else if ([orderStatus isEqualToString:@"OVERDUE"]){
         cell.statueLabel.text = @"订单过期";
         cell.statueLabel.textColor = [UIColor lightGrayColor];
-        cell.actionButton.hidden = YES;
         cell.payTimeTitleLabel.text= @"过期时间";
 //        if ([PublicUtils checkNSNullWithgetString:_order.add_time] != nil) {
 //            cell.payTimeLabel.text = [PublicUtils checkNSNullWithgetString:_order.add_time];

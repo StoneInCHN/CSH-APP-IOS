@@ -9,6 +9,7 @@
 #import "CWSQRScanViewController.h"
 #import "CWSSelectCarViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "CWSPurchaseDeviceViewController.h"
 
 static const CGFloat KBorderWidth = 100;
 static const CGFloat KMargin = 30;
@@ -30,12 +31,14 @@ static const CGFloat KMargin = 30;
     [super viewWillAppear:animated];
   //  self.navigationController.navigationBarHidden = YES;
     [self resumeAnimation];
+    [_captureSession startRunning];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
 
     [super viewWillDisappear:animated];
 //    self.navigationController.navigationBarHidden = NO;
+    [_captureSession stopRunning];
     
 }
 
@@ -311,28 +314,61 @@ static const CGFloat KMargin = 30;
 
 #pragma mark -=============================扫描的代理
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
-    NSLog(@"object=%@",metadataObjects);
     
- 
-
-    if(metadataObjects.count){
+    [_captureSession stopRunning];
+    AVMetadataMachineReadableCodeObject* metaDataObject = [metadataObjects objectAtIndex:0];
+    
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:metaDataObject.stringValue]];
+    
+    
+    NSData *data = [metaDataObject.stringValue dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSString *deviceNo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSLog(@"%@",deviceNo);
+    NSLog(@"string=%@",metaDataObject.stringValue);
+    if (self.identifier == 158) {
+        //购买设备扫一扫
+        [self purDevicePageGetPrice:metaDataObject.stringValue];
         
-        [_captureSession stopRunning];
-        AVMetadataMachineReadableCodeObject* metaDataObject = [metadataObjects objectAtIndex:0];
+    }else{
+        //洗车服务绑定设备扫一扫
         
-//        UIAlertView* alertView = [[UIAlertView alloc]initWithTitle:@"扫描结果" message:metaDataObject.stringValue delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"重新扫描", nil];
-//      [alertView show];
-        
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:metaDataObject.stringValue]];
-        
-        NSLog(@"%@",metaDataObject.stringValue);
-        NSData *data = [metaDataObject.stringValue dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dataDic);
         [self bindMerchantOrDevice:dataDic];
         
     }
-    [_captureSession startRunning];
+    
+}
+#pragma mark ===========购买设备充值页面
+-(void)purDevicePageGetPrice:(NSString*)deviceNo{
+    NSDictionary *userDic = @{@"userId":KUserInfo.desc,@"token":KUserInfo.token};
+    [MBProgressHUD showMessag:@"获取信息..." toView:self.view];
+    [HttpHelper getPurDevicePageWithUserDic:userDic success:^(AFHTTPRequestOperation *operation, id object){
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        NSDictionary *dataDic = (NSDictionary*)object;
+        
+        MyLog(@"priceobject=%@",dataDic);
+        [_captureSession stopRunning];
+        if ([dataDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
+            MyLog(@"priceobject=%@",dataDic);
+            
+            CWSPurchaseDeviceViewController * purchaseView = [CWSPurchaseDeviceViewController new];
+            purchaseView.devicePrice = dataDic[@"msg"][@"devicePrice"];
+            purchaseView.deviceNo = deviceNo;
+            [self.navigationController pushViewController:purchaseView animated:YES];
+            
+        }else{
+            UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"提示" message:dataDic[@"desc"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error){
+        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        
+    }];
 }
 
 #pragma mark ===========扫面二维码后进行绑定商家或者设备选择车辆

@@ -11,13 +11,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dingdanxiangqing_chenggong" translatesAutoresizingMaskIntoConstraints="NO" id="WeC-TF-1qW">
-                    <rect key="frame" x="77" y="10" width="26" height="26"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="26" id="bm7-7L-VWx"/>
-                        <constraint firstAttribute="width" constant="26" id="ijP-Db-Zy5"/>
-                    </constraints>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预约成功，等待商家接单......" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3jl-EI-pfp">
                     <rect key="frame" x="113" y="16" width="200" height="13"/>
                     <constraints>
@@ -28,6 +21,13 @@
                     <color key="textColor" red="0.17647058823529413" green="0.75294117647058822" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="dingdanxiangqing_chenggong" translatesAutoresizingMaskIntoConstraints="NO" id="WeC-TF-1qW">
+                    <rect key="frame" x="79" y="10" width="26" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="bm7-7L-VWx"/>
+                        <constraint firstAttribute="width" constant="26" id="ijP-Db-Zy5"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -39,9 +39,10 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="centerConstraint" destination="HAt-nR-YpF" id="prq-fn-keA"/>
+                <outlet property="statusImage" destination="WeC-TF-1qW" id="mqe-Fa-KRW"/>
                 <outlet property="statusLabel" destination="3jl-EI-pfp" id="PAi-ae-4cl"/>
             </connections>
-            <point key="canvasLocation" x="371.5" y="318.5"/>
+            <point key="canvasLocation" x="264.5" y="318.5"/>
         </view>
     </objects>
     <resources>

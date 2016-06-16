@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *statusImage;
 
 - (instancetype)initWithFrame:(CGRect)frame Data:(NSDictionary *)dic;
 @end

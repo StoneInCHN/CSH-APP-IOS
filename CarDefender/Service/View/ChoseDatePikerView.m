@@ -131,9 +131,9 @@
 -(void)doPickerUpBtnClick:(UIButton*)sender{
     
     [self removeFromSuperview];
-    if (sender.tag == 102) {
-        [self.delegate sureBtnCommitOrderButton:sender goodDic:self.goodDic ];
-    }
+    
+    [self.delegate sureBtnCommitOrderButton:sender goodDic:self.goodDic ];
+    
     
 }
 

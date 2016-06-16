@@ -36,9 +36,9 @@
 
 
 - (IBAction)payButtonClicked:(UIButton *)sender {
-    if([self.delegate respondsToSelector:@selector(selectTableViewButtonClicked:andNormalModel:)]){
-        [self.delegate selectTableViewButtonClicked:sender andNormalModel:self.normalModel];
-    }
+    
+        [self.delegate selectTableViewButtonClicked:sender andDiscountModel:self.discountModel];
+    
     
 }
 

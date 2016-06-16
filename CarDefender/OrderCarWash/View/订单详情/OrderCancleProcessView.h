@@ -13,6 +13,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *firstTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *firstTitilLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *payImageV;
+@property (weak, nonatomic) IBOutlet UIImageView *doneImageV;
+@property (weak, nonatomic) IBOutlet UIView *line;
 
 - (instancetype)initWithFrame:(CGRect)frame Data:(NSDictionary *)dic;
 @end

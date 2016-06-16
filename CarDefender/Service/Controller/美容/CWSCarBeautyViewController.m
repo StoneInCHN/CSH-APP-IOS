@@ -31,6 +31,7 @@
     NSDictionary  *currentDic;
     CWSNoDataView *_noDataView;
     UserInfo *userInfo;
+    UIView *chooseBgView;
 }
 
 @end
@@ -68,8 +69,8 @@
     [HttpHelper searchRenterListWithServiceCategoryId:@"5"
                                                userId:userInfo.desc
                                                 token:userInfo.token
-                                             latitude:@"30.55513"
-                                            longitude:@"104.077245"
+                                             latitude:userInfo.latitude
+                                            longitude:userInfo.longitude
                                              pageSize:_pageSize
                                            pageNumber:_page
                                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
@@ -350,13 +351,16 @@
         
         //时间选择器
         myTableView.userInteractionEnabled = YES;
+        chooseBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        chooseBgView.backgroundColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:.5];
+        [self.view addSubview:chooseBgView];
         ChoseDatePikerView *chooseDate = [[ChoseDatePikerView alloc]initWithFrame:CGRectMake(20, 70, self.view.frame.size.width-40, 280)];
         chooseDate.delegate = self;
         chooseDate.layer.cornerRadius = 5;
         chooseDate.goodDic = thyDict;
         
         
-        [self.view addSubview:chooseDate];
+        [chooseBgView addSubview:chooseDate];
      
         
         
@@ -368,6 +372,8 @@
     }
 }
 -(void)sureBtnCommitOrderButton:(UIButton*)button goodDic:(NSDictionary*)goodDic{
+    [chooseBgView removeFromSuperview];
+    if(button.tag ==102){
     if (goodDic[@"service_id"]&&goodDic[@"price"]) {
         NSDictionary *dic = @{@"userId":KUserInfo.desc,@"token":KUserInfo.token,@"serviceId":goodDic[@"service_id"],@"price":goodDic[@"price"]};
         [MBProgressHUD showMessag:@"正在预约" toView:self.view];
@@ -398,6 +404,7 @@
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
+    }
     }
     
    

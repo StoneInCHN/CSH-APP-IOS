@@ -521,7 +521,167 @@
         [balanceSwitch addTarget:self action:@selector(switchClicked:) forControlEvents:UIControlEventValueChanged];
         [balanceUsedView addSubview:balanceSwitch];
 }
-
+/**抵用按钮选择*/
+-(void)switchClicked:(UISwitch*)sender{
+    
+    
+    UISwitch* switchBalance = (UISwitch*)[self.view viewWithTag:301];
+    
+    
+    //    if()
+    
+    //    switch(sender.tag-300){
+    //        case 0:{
+    //            MyLog(@"红包%@",sender.on ? @"开" : @"关");
+    //            if(sender.on){
+    //
+    //                redMoney = tempRedMoney;
+    //
+    //                tempRedMoney = 0;
+    //
+    //                if(isBalanceEnough){
+    //                    if(switchBalance.on){
+    //                        balanceMoney -= redMoney;
+    //                    }else{
+    //                        tempBalanceMoney -= redMoney;
+    //                        balanceMoney = 0;
+    //                    }
+    //                }
+    //
+    //            }else{
+    //                tempRedMoney = redMoney;
+    //                if([KUserManager.userWalletInfo[@"money"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on){
+    //                    if(balanceUsedView.hidden){
+    //                        balanceUsedView.hidden  = NO;
+    //                        totalHeight += balanceUsedView.frame.size.height;
+    //                    }
+    //                    balanceMoney += redMoney;
+    //                    redMoney = 0;
+    //                    isBalanceEnough = YES;
+    //                }else{
+    //                    isBalanceEnough = NO;
+    //                    redMoney = 0;
+    //                }
+    //
+    //            }
+    //        }break;
+    //        case 1:{
+    //            MyLog(@"余额%@",sender.on ? @"开" : @"关");
+    //            if(sender.on){
+    //
+    //                balanceMoney = tempBalanceMoney-tempRedMoney;
+    //
+    //                tempBalanceMoney = 0;
+    //            }else{
+    //                tempBalanceMoney = balanceMoney;
+    //
+    //                balanceMoney = 0;
+    //            }
+    //        }break;
+    //        default:break;
+    //    }
+    
+    switch(sender.tag-300){
+        case 0:{
+            MyLog(@"红包%@",sender.on ? @"开" : @"关");
+            if(sender.on){
+                
+                redMoney = tempRedMoney;
+                
+                tempRedMoney = 0;
+                
+                if(isBalanceEnough){
+                    if(switchBalance.on){
+                        balanceMoney -= redMoney;
+                    }else{
+                        tempBalanceMoney -= redMoney;
+                        balanceMoney = 0;
+                    }
+                    
+                    //                    if(balanceUsedView.hidden){
+                    //                        balanceUsedView.hidden = NO;
+                    //                        totalHeight += balanceUsedView.frame.size.height;
+                    //                    }
+                }
+                [self useDiscountCoupon];
+            }else{
+                tempRedMoney = redMoney;
+                if([wallertDict[@"balanceAmount"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on && [wallertDict[@"balanceAmount"] floatValue] != 0){
+                    //                    if(balanceUsedView.hidden){
+                    //                        balanceUsedView.hidden  = NO;
+                    //                        totalHeight += balanceUsedView.frame.size.height;
+                    //                    }
+                    balanceMoney += redMoney;
+                    redMoney = 0;
+                    isBalanceEnough = YES;
+                }else{
+                    isBalanceEnough = NO;
+                    redMoney = 0;
+                }
+                [self nonUseDiscountCoupon];
+                //不使用优惠劵时，恢复现场
+                [payInfoView setDataDict:self.dataDict];
+                totalCountLabel.text = payInfoView.priceLabel.text;
+                
+            }
+        }break;
+        case 1:{
+            MyLog(@"余额%@",sender.on ? @"开" : @"关");
+            if(sender.on){
+                weixinButton.selected = NO;
+                [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
+                zhifubaoButton.selected = NO;
+                [zhifubaoButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
+                balanceMoney = tempBalanceMoney-tempRedMoney;
+                
+                tempBalanceMoney = 0;
+                payMethodString = @"yue";
+            }else{
+                weixinButton.selected = NO;
+                [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
+                zhifubaoButton.selected = YES;
+                [zhifubaoButton setImage:[UIImage imageNamed:@"mycar_click"] forState:UIControlStateNormal];
+                tempBalanceMoney = balanceMoney;
+                
+                balanceMoney = 0;
+                
+                //                balanceUsedView.hidden = YES;
+                //                totalHeight -= balanceUsedView.frame.size.height;
+                isBalanceEnough = NO;
+                //                sender.on = YES;
+            }
+        }break;
+        default:break;
+    }
+    
+    
+    payMoney = settleMoney-redMoney-balanceMoney;
+    
+    //    if(payMoney != 0 && !isAddHeight){
+    //        payMethodView.hidden = NO;
+    //        totalHeight += payMethodView.frame.size.height;
+    //        isAddHeight = YES;
+    //    }
+    //    if(payMoney == 0 && isAddHeight){
+    //        payMethodView.hidden = YES;
+    //        totalHeight -= payMethodView.frame.size.height;
+    //        isAddHeight = NO;
+    //    }
+    
+    //    if(payMoney){
+    //        if(payMethodView.hidden){
+    //            isAddHeight = YES;
+    //        }
+    //        payMethodView.hidden = NO;
+    //    }else{
+    //        if(!payMethodView.hidden){
+    //            isAddHeight = NO;
+    //        }
+    //        payMethodView.hidden = YES;
+    //    }
+    
+    [self updateUI];
+}
 -(void)initialScrollView{
     _myScrollView.contentSize = CGSizeMake(kSizeOfScreen.width, totalHeight);
 }
@@ -679,167 +839,6 @@
     NSLog(@"pay :%f",payMoney);
     payInfoView.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",payMoney];
     totalCountLabel.text = payInfoView.priceLabel.text;
-}
-/**抵用按钮选择*/
--(void)switchClicked:(UISwitch*)sender{
-    
-
-    UISwitch* switchBalance = (UISwitch*)[self.view viewWithTag:301];
-    
-    
-//    if()
-    
-//    switch(sender.tag-300){
-//        case 0:{
-//            MyLog(@"红包%@",sender.on ? @"开" : @"关");
-//            if(sender.on){
-//                
-//                redMoney = tempRedMoney;
-//                
-//                tempRedMoney = 0;
-//                
-//                if(isBalanceEnough){
-//                    if(switchBalance.on){
-//                        balanceMoney -= redMoney;
-//                    }else{
-//                        tempBalanceMoney -= redMoney;
-//                        balanceMoney = 0;
-//                    }
-//                }
-//                
-//            }else{
-//                tempRedMoney = redMoney;
-//                if([KUserManager.userWalletInfo[@"money"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on){
-//                    if(balanceUsedView.hidden){
-//                        balanceUsedView.hidden  = NO;
-//                        totalHeight += balanceUsedView.frame.size.height;
-//                    }
-//                    balanceMoney += redMoney;
-//                    redMoney = 0;
-//                    isBalanceEnough = YES;
-//                }else{
-//                    isBalanceEnough = NO;
-//                    redMoney = 0;
-//                }
-//               
-//            }
-//        }break;
-//        case 1:{
-//            MyLog(@"余额%@",sender.on ? @"开" : @"关");
-//            if(sender.on){
-//                
-//                balanceMoney = tempBalanceMoney-tempRedMoney;
-//                
-//                tempBalanceMoney = 0;
-//            }else{
-//                tempBalanceMoney = balanceMoney;
-//                
-//                balanceMoney = 0;
-//            }
-//        }break;
-//        default:break;
-//    }
-    
-    switch(sender.tag-300){
-        case 0:{
-            MyLog(@"红包%@",sender.on ? @"开" : @"关");
-            if(sender.on){
-                
-                redMoney = tempRedMoney;
-                
-                tempRedMoney = 0;
-                
-                if(isBalanceEnough){
-                    if(switchBalance.on){
-                        balanceMoney -= redMoney;
-                    }else{
-                        tempBalanceMoney -= redMoney;
-                        balanceMoney = 0;
-                    }
-                    
-//                    if(balanceUsedView.hidden){
-//                        balanceUsedView.hidden = NO;
-//                        totalHeight += balanceUsedView.frame.size.height;
-//                    }
-                }
-                [self useDiscountCoupon];
-            }else{
-                tempRedMoney = redMoney;
-                if([wallertDict[@"balanceAmount"] floatValue] >= (balanceMoney+redMoney) && switchBalance.on && [wallertDict[@"balanceAmount"] floatValue] != 0){
-//                    if(balanceUsedView.hidden){
-//                        balanceUsedView.hidden  = NO;
-//                        totalHeight += balanceUsedView.frame.size.height;
-//                    }
-                    balanceMoney += redMoney;
-                    redMoney = 0;
-                    isBalanceEnough = YES;
-                }else{
-                    isBalanceEnough = NO;
-                    redMoney = 0;
-                }
-                [self nonUseDiscountCoupon];
-                //不使用优惠劵时，恢复现场
-                [payInfoView setDataDict:self.dataDict];
-                totalCountLabel.text = payInfoView.priceLabel.text;
-                
-            }
-        }break;
-        case 1:{
-            MyLog(@"余额%@",sender.on ? @"开" : @"关");
-            if(sender.on){
-                weixinButton.selected = NO;
-                [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
-                zhifubaoButton.selected = NO;
-                [zhifubaoButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
-                balanceMoney = tempBalanceMoney-tempRedMoney;
-                
-                tempBalanceMoney = 0;
-                payMethodString = @"yue";
-            }else{
-                weixinButton.selected = NO;
-                [weixinButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
-                zhifubaoButton.selected = YES;
-                [zhifubaoButton setImage:[UIImage imageNamed:@"mycar_click"] forState:UIControlStateNormal];
-                tempBalanceMoney = balanceMoney;
-                
-                balanceMoney = 0;
-                
-//                balanceUsedView.hidden = YES;
-//                totalHeight -= balanceUsedView.frame.size.height;
-                isBalanceEnough = NO;
-//                sender.on = YES;
-            }
-        }break;
-        default:break;
-    }
-
-    
-    payMoney = settleMoney-redMoney-balanceMoney;
-    
-//    if(payMoney != 0 && !isAddHeight){
-//        payMethodView.hidden = NO;
-//        totalHeight += payMethodView.frame.size.height;
-//        isAddHeight = YES;
-//    }
-//    if(payMoney == 0 && isAddHeight){
-//        payMethodView.hidden = YES;
-//        totalHeight -= payMethodView.frame.size.height;
-//        isAddHeight = NO;
-//    }
-    
-//    if(payMoney){
-//        if(payMethodView.hidden){
-//            isAddHeight = YES;
-//        }
-//        payMethodView.hidden = NO;
-//    }else{
-//        if(!payMethodView.hidden){
-//            isAddHeight = NO;
-//        }
-//        payMethodView.hidden = YES;
-//    }
-    
-    [self updateUI];
 }
 
 /**确认订单按钮*/

@@ -834,8 +834,12 @@
                 NSLog(@"%@",self.editDic);
                 NSString *deviceNo = [NSString stringWithFormat:@"%@",self.editDic[@"deviceNo"]];
                 NSLog(@"%@",deviceNo);
-
-                if([deviceNo isEqualToString:@"<null>"]){
+                NSMutableDictionary* realDict = [NSMutableDictionary dictionaryWithDictionary:self.editDic];
+                for (NSString* key in [realDict allKeys]) {
+                    [realDict setValue:[PublicUtils checkNSNullWithgetString:[realDict valueForKey:key]] forKey:key];
+                }
+                self.editDic = realDict.copy;
+                if([self.editDic[@"deviceNo"] isEqualToString:@""]){
                     CWSBoundIDViewController* boundIdVc = [[CWSBoundIDViewController alloc]init];
                     boundIdVc.idString = self.editDic[@"id"];
                     [self.navigationController pushViewController:boundIdVc animated:YES];

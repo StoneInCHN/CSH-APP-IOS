@@ -18,7 +18,8 @@
         for (NSString* key in [realDict allKeys]) {
             [realDict setValue:[PublicUtils checkNSNullWithgetString:[realDict valueForKey:key]] forKey:key];
         }
-        
+        self.dataDic = realDict;
+        NSLog(@"%@",realDict);
         self.productName = realDict[@"serviceName"];
 //        self.isRedPackageUseable = [realDict[@"support_red"] integerValue];
         self.discountPrice = realDict[@"promotionPrice"];

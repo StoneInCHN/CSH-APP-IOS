@@ -74,10 +74,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                [orderProcessView removeFromSuperview];
-                orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,[UIScreen mainScreen].bounds.size.width ,76 ) Data:dataDic];
-                [scrollView addSubview:orderCancleProcessView];
-                [scrollView bringSubviewToFront:orderCancleProcessView];
+               
                 
                 
                 orderStatusView.statusImageView.image = [UIImage imageNamed:@"dingdanxiangqing_cancel"];
@@ -209,6 +206,17 @@
     [scrollView addSubview:orderProcessView];
     
     
+    NSLog(@"%@",self.order.categoryName);
+    if ([self.order.categoryName isEqualToString:@"洗车"]) {
+        orderProcessView.hidden = YES;
+        orderCancleProcessView.hidden= NO;
+        orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,screenWidth ,76 ) Data:dataDic];
+        [scrollView addSubview:orderCancleProcessView];
+        [scrollView bringSubviewToFront:orderCancleProcessView];
+    }else{
+        orderProcessView.hidden = NO;
+        orderCancleProcessView.hidden= YES;
+    }
     
     //    status：0: 取消; 1: 未付款; 2: 预约中; 3: 完成 4:已过期 12进行中
     if (self.myOrderDetailModel != nil) {
@@ -234,7 +242,7 @@
                 
                 rightBtn=[[UIBarButtonItem alloc]initWithTitle:@"取消订单" style:UIBarButtonItemStylePlain target:self action:@selector(cancleOrderButtonPressed:)];
                 rightBtn.tintColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1];
-                self.navigationItem.rightBarButtonItem=rightBtn;
+                //self.navigationItem.rightBarButtonItem=rightBtn;
                 
             }
                 break;
@@ -275,9 +283,7 @@
         NSString *chargeStatus = self.dataDict[@"chargeStatus"];
         if([chargeStatus isEqualToString:@"RESERVATION_FAIL"]){
             [orderProcessView removeFromSuperview];
-            orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,[UIScreen mainScreen].bounds.size.width ,76 ) Data:dataDic];
-            [scrollView addSubview:orderCancleProcessView];
-            [scrollView bringSubviewToFront:orderCancleProcessView];
+            
             
             orderStatusView.centerConstraint.constant += 60;
             orderStatusView.statusImageView.image = [UIImage imageNamed:@"dingdanxiangqing_cancel"];
@@ -302,14 +308,9 @@
         }else if ([chargeStatus isEqualToString:@"OVERDUE"])
             
         {
-            [orderProcessView removeFromSuperview];
-            orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,[UIScreen mainScreen].bounds.size.width ,76 ) Data:dataDic];
-            orderCancleProcessView.secondTitleLabel.text = @"已过期";
-            [scrollView addSubview:orderCancleProcessView];
-            [scrollView bringSubviewToFront:orderCancleProcessView];
+            
             
             orderStatusView.centerConstraint.constant += 60;
-            orderStatusView.statusImageView.image = [UIImage imageNamed:@"dingdanxiangqing_cancel"];
             orderStatusView.statusLabel.text = @"订单已过期";
             orderStatusView.statusLabel.textColor = kCOLOR(247, 71, 82);
             self.navigationItem.rightBarButtonItem = nil;

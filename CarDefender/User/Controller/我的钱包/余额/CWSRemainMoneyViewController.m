@@ -11,6 +11,7 @@
 #import "CWSPurchaseViewController.h"
 #import "MJRefresh.h"
 #import "Helper.h"
+#import "CWSQRScanViewController.h"//扫一扫
 
 @interface CWSRemainMoneyViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -39,6 +40,10 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    if (self.identifier ==111) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"支付成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
     _temp = 1;
     userInfo = [UserInfo userDefault];
     
@@ -55,10 +60,13 @@
     self.moneyLabel = (UILabel *)[self.view viewWithTag:1];
 //    self.moneyLabel.text = KUserManager.account.cash;
     self.moneyLabel.text = self.moneyString;
-    self.moneyButton = (UIButton *)[self.view viewWithTag:2];
+    
     self.moneyButton.layer.borderWidth = 1.0;
     self.moneyButton.layer.borderColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1].CGColor;
-    [self.moneyButton addTarget:self action:@selector(moneyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.buyButton.layer.borderWidth = 1.0;
+    self.buyButton.layer.borderColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1].CGColor;
+
     
     self.tableView = (UITableView *)[self.view viewWithTag:3];
     self.tableView.hidden = NO;
@@ -168,14 +176,24 @@
     [_tableView.mj_header endRefreshing];
     [_tableView.mj_footer endRefreshing];
 }
-
-#pragma mark - 充值按钮
-- (void)moneyButtonPressed:(UIButton *)sender
-{
-    CWSPurchaseViewController* myPurchaseVc = [CWSPurchaseViewController new];
-    myPurchaseVc.remainMoneyVc = self;
-    [self.navigationController pushViewController:myPurchaseVc animated:YES];
+#pragma mark - 充值和购买按钮
+- (IBAction)moneyButtonAndBuyButtonPressed:(id)sender {
+    UIButton *button = (UIButton*)sender;
+    //购买
+    if(button.tag == 101){
+        CWSPurchaseViewController* myPurchaseVc = [CWSPurchaseViewController new];
+        myPurchaseVc.remainMoneyVc = self;
+        [self.navigationController pushViewController:myPurchaseVc animated:YES];
+    }else{
+    
+        CWSQRScanViewController* qrScanVc = [CWSQRScanViewController new];
+        qrScanVc.identifier = 158;
+        [self.navigationController pushViewController:qrScanVc animated:YES];
+        
+    }
 }
+
+
 
 #pragma mark - <UITableViewDataSource,UITableViewDelegate>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

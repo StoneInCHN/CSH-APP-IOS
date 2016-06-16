@@ -11,9 +11,12 @@
 @interface CWSRemainMoneyViewController : UIViewController
 
 @property (nonatomic,strong)UILabel *moneyLabel;//余额
-@property (nonatomic,strong)UIButton *moneyButton;//充值按钮
+@property (weak, nonatomic) IBOutlet UIButton *moneyButton;//充值按钮
+
+@property (weak, nonatomic) IBOutlet UIButton *buyButton;//购买按钮
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,copy)NSString *moneyString;
 @property (nonatomic,copy)NSString *walletId;
+@property (nonatomic,assign)NSInteger identifier; //支付成功返回界面提示支付成功
 
 @end
