@@ -40,15 +40,24 @@
     
     //    status：0: 取消; 1: 未付款; 2: 预约中; 3: 完成 4:已过期
     
-    if ([PublicUtils checkNSNullWithgetString:dataDic[@"createDate"]] != nil) {
+   // NSLog(@"%@",dataDic);
+    NSString *paymentDate = [NSString stringWithFormat:@"%@",dataDic[@"paymentDate"]];
+    NSString *finishDate = [NSString stringWithFormat:@"%@",dataDic[@"finishDate"]];
+    if (![paymentDate isEqualToString:@"<null>"]) {
         
-        self.secondTimeLabel.text = [PublicUtils conversionTimeStamp:[PublicUtils checkNSNullWithgetString:dataDic[@"createDate"]]];
+        self.firstTimeLabel.text = [PublicUtils conversionTimeStamp:[PublicUtils checkNSNullWithgetString:dataDic[@"paymentDate"]]];
+        self.firstTimeLabel.textColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
+        self.payImageV.image = [UIImage imageNamed:@"dingdanxiangqing_pay1"];
+        self.firstTitilLabel.textColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
     }
     
-    if ([PublicUtils checkNSNullWithgetString:dataDic[@"finishDate"]] != nil) {
+    if (!   [finishDate isEqualToString:@"<null>"]) {
         
         self.secondTimeLabel.text = [PublicUtils conversionTimeStamp:[PublicUtils checkNSNullWithgetString:dataDic[@"finishDate"]]];
-        
+        self.secondTimeLabel.textColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
+        self.doneImageV.image = [UIImage imageNamed:@"dingdanxiangqing_order_complete"];
+        self.secondTitleLabel.textColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
+        self.line.backgroundColor = [UIColor colorWithRed:33.0/255 green:167.0/255 blue:238.0/255 alpha:1];
     }
     
     

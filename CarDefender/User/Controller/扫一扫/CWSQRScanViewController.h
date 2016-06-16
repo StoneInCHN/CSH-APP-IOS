@@ -9,5 +9,5 @@
 #import "CWSBasicViewController.h"
 
 @interface CWSQRScanViewController : CWSBasicViewController
-
+@property (nonatomic,assign)NSInteger identifier;
 @end

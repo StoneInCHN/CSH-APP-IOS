@@ -52,9 +52,12 @@
 #define KHTTPHELPER_SUBSCRIBESERVICE_INSERT_URL @"/csh-interface/carService/subscribeService.jhtml"//用户预约汽车服务：
 #define KHTTPHELPER_PAYSTATUS_UPDATE_URL @"/csh-interface/carService/updatePayStatus.jhtml"//更新购买汽车服务记录状态
 #define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
-#define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//租户详情
+#define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//租户详情#
+#define KHTTPHELPER_PURDEVICEPAGE_GET_URL @"/csh-interface/balance/purDevicePage.jhtml" //购买设备充值页面(返回数据库配置的设备价格)：
 
+#define KHTTPHELPER_BALANCECHAREIN_GET_URL @"/csh-interface/balance/chargeIn.jhtml" //我的钱包余额充值获取交易凭证：
 
+#define KHTTPHELPER_PURDEVICECHARGE_GET_URL @"/csh-interface/balance/purDeviceCharge.jhtml" //购买设备充值回调：
 #define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
 #define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//支付调用
 

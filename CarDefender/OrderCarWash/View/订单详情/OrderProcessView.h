@@ -11,6 +11,7 @@
 @interface OrderProcessView : UIView
 @property (weak, nonatomic) IBOutlet UIImageView *firstImageView;
 @property (weak, nonatomic) IBOutlet UILabel *firstTitleLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *firstTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *firstLineView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondImageView;
@@ -22,6 +23,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *thirdTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *line2;
 @property (weak, nonatomic) IBOutlet UIView *line1;
+@property (weak, nonatomic) IBOutlet UIView *line3;
+@property (weak, nonatomic) IBOutlet UIImageView *fourImageView;
+@property (weak, nonatomic) IBOutlet UILabel *fourTitileLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fourTimeLabel;
+
 - (instancetype)initWithFrame:(CGRect)frame Data:(NSDictionary *)dic;
 
 @end

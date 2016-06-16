@@ -8,6 +8,7 @@
 
 #import "HttpHelper.h"
 #import "AFHTTPRequestOperationManager.h"
+
 #import "HttpURLMacro.h"
 
 @implementation HttpHelper
@@ -714,7 +715,42 @@
     [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
 }
 
+#pragma mark 购买设备充值页面(返回数据库配置的设备价格)
 
++ (void)getPurDevicePageWithUserDic:(NSDictionary *)vehicleDic
+                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_PURDEVICEPAGE_GET_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"adertisment image url购买设备充值页面:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
+
+}
+
+#pragma mark 充值获取交易凭证
+
++ (void)getbalanceChargeInWithUserDic:(NSDictionary *)vehicleDic
+                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_BALANCECHAREIN_GET_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"adertisment image url充值获取交易凭证:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
+
+
+}
+
+#pragma mark 购买设备充值回调：
+
++ (void)getPurDeviceChargeWithUserDic:(NSDictionary *)vehicleDic
+                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_PURDEVICECHARGE_GET_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"adertisment image url购买设备充值回调:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
+}
 //post方法
 +(void)requestWithHttpURL:(NSString*)urlString  andParamDict:(NSDictionary*)thyParamDict andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success andFailer:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

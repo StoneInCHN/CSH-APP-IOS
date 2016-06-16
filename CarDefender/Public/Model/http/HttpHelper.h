@@ -355,6 +355,52 @@
                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark 购买设备充值页面(返回数据库配置的设备价格)
+/**
+ * 更新购买汽车服务记录状态
+ *
+ *  @param dic @{@"userId": ,@"token": }
+ 
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
+ */
++ (void)getPurDevicePageWithUserDic:(NSDictionary *)vehicleDic
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+
+#pragma mark 充值获取交易凭证
+/**
+ * 更新购买汽车服务记录状态
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"chargeType": @"paymentType":@"deviceNo"}
+ *  @param paymentType  付款状态
+ *** 支付宝       ALIPAY,*
+ ** 微信          WECHAT,*
+ ** 余额          WALLET *
+ *   @param paymentType  付款状态  PD购买设备  CI普通充值
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
+ */
++ (void)getbalanceChargeInWithUserDic:(NSDictionary *)vehicleDic
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+#pragma mark 购买设备充值回调：
+/**
+ * 购买设备充值回调：
+ *
+ *  @param dic @{@"userId": ,@"token": , @"paymentType":,@"recordNo"}
+ *  @param paymentType  付款状态
+ *** 支付宝       ALIPAY,*
+ ** 微信          WECHAT,*
+ ** 余额          WALLET *
+ 
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
+ */
++ (void)getPurDeviceChargeWithUserDic:(NSDictionary *)vehicleDic
+                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark 租户详情
 + (void)getTenantDetailsWithUserId:(NSString *)userId

@@ -25,13 +25,15 @@
 #import "NewCarWashDiscountCell.h"     //打折cell
 #import "CWSNewCarWashNormalCell.h"
 
+#import "ChoseDatePikerView.h"
+
 #define HEADER_HEIGHT 33.0f
 #define CELL_HEIGHT 40.f
 #define REVIEWCELL_HEIGHT_NOIMG 64.0f
 #define REVIEWCELL_HEIGHT_IMG 114.0f
 #define DISCOUNTCELL_HEIGHT_NOINFO 40.0f
 #define DISCOUNTCELL_HEIGHT_INFO 52.0f
-@interface CWSCarWashDetailViewController ()<UITableViewDataSource,UITableViewDelegate,CWSTableViewButtonCellDelegate>{
+@interface CWSCarWashDetailViewController ()<UITableViewDataSource,UITableViewDelegate,CWSTableViewButtonCellDelegate,ChoseDatePikerViewDelegate>{
 
     UITableView* myTableView;
     
@@ -53,6 +55,8 @@
     NSString* _currentStoreName;
     
     UserInfo *userInfo;
+    
+    UIView *chooseBgView;
 }
 
 @end
@@ -318,6 +322,14 @@
         [cell.payButton setTitle:@"预约" forState:UIControlStateNormal];
         cell.priceLabel.hidden = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+       
+        NSArray *baoyaoArr =(NSArray *)_goodsListArray[indexPath.section-2][@"subServices"];
+        NSDictionary *dic = (NSDictionary *)baoyaoArr[indexPath.row];
+        NSLog(@"%@",dic);
+        NSLog(@"mingzi =%@",(NSArray *)_goodsListArray[indexPath.section][@"subServices"]);
+        CWSCarWashDiscountModel * discount = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
+        cell.discountModel = discount;
+        cell.delegate =self;
         return cell;
     }else if([[dataArray[index-1] sectionName] isEqualToString:@"紧急救援"]){
         CWSNewCarWashNormalCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"CWSNewCarWashNormalCell" owner:self options:nil] lastObject];
@@ -457,7 +469,7 @@
     
     CWSCarWashDiscountModel* selectedModel = thyModel;
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *dic = selectedModel.dataDic.mutableCopy;
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)selectedModel.merchantsID ] forKey:@"store_id"];
     [dic setValue:KUserManager.uid forKey:@"uid"];
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)selectedModel.productID ] forKey:@"goods_id"];
@@ -466,6 +478,9 @@
 //    [dic setValue:[NSString stringWithFormat:@"%d",selectedModel.isDiscount] forKey:@"is_discount_price"];
     [dic setValue:[NSString stringWithFormat:@"%d",YES] forKey:@"is_discount_price"];
     [dic setValue:[NSString stringWithFormat:@"%@",selectedModel.merchantsName] forKey:@"store_name"];
+    
+    
+    
     //判断是否有优惠
     if(selectedModel.isDiscount){
 
@@ -474,7 +489,7 @@
     }else {
             [dic setValue:selectedModel.originalPrice forKey:@"price"];
     }
-    
+    NSLog(@"%@",dic);
     
     //支付
     if([sender.titleLabel.text isEqualToString:@"支付"]){
@@ -522,33 +537,59 @@
     //预约
     if([sender.titleLabel.text isEqualToString:@"预约"]){
         //生成订单
-        [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
+        //时间选择器
+        myTableView.userInteractionEnabled = YES;
+        chooseBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        chooseBgView.backgroundColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:.5];
+        [self.view addSubview:chooseBgView];
+        ChoseDatePikerView *chooseDate = [[ChoseDatePikerView alloc]initWithFrame:CGRectMake(20, 70, self.view.frame.size.width-40, 280)];
+        chooseDate.delegate = self;
+        chooseDate.layer.cornerRadius = 5;
+        chooseDate.goodDic = dic;
         
-        [ModelTool getGenerateOrderWithParameter:dic andSuccess:^(id object) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
-                    MyLog(@"------------预约订单信息----------%@",object);
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    CWSCarWashDetileController* payVc = [[CWSCarWashDetileController alloc] init];
-//                    payVc.washDiscountModel = thyModel;
-                    [payVc setDataDict:object[@"data"]];
-                    [self.navigationController pushViewController:payVc animated:YES];
-                }
-                else {
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        
+        [chooseBgView addSubview:chooseDate];
+    }
+}
+#pragma ChoseDatePikerViewDelegate
+-(void)sureBtnCommitOrderButton:(UIButton*)button goodDic:(NSDictionary*)goodDic{
+    NSLog(@"%@",goodDic);
+    [chooseBgView removeFromSuperview];
+    if(button.tag == 102){
+        if (goodDic[@"id"]&&goodDic[@"price"]) {
+            NSDictionary *dic = @{@"userId":KUserInfo.desc,@"token":KUserInfo.token,@"serviceId":goodDic[@"id"],@"price":goodDic[@"price"]};
+            NSLog(@"%@\n%@",goodDic[@"id"],goodDic[@"price"]);
+            [MBProgressHUD showMessag:@"正在预约" toView:self.view];
+            [HttpHelper insertVehicleSubscribeServiceWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                NSDictionary *dataDictionary = (NSDictionary *)object;
+                NSLog(@"dataDictionary=%@",dataDictionary);
+                
+                if ([dataDictionary[@"code"] isEqualToString:SERVICE_SUCCESS]) {
+                    CWSCarWashDetileController* carWashDetailVc = [CWSCarWashDetileController new];
+                    [carWashDetailVc setDataDict:object[@"data"]];
+                    carWashDetailVc.orderID = dataDictionary[@"desc"];
+                    //订单详情
+                    
+                    [self.navigationController pushViewController:carWashDetailVc animated:YES];
+                    
+                }else{
+                    
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"desc"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                     [alert show];
                 }
                 
-            });
-            
-            
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
+            }];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
-        }];
+        }
     }
+    
 }
 
 

@@ -41,5 +41,7 @@
 /**商品类别编号*/
 @property (nonatomic,copy)  NSString* cateId;
 
+@property (nonatomic,strong)  NSDictionary *dataDic;
+
 -(instancetype)initWithDic:(NSDictionary*)lDic;
 @end
