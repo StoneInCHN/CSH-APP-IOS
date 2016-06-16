@@ -66,26 +66,14 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mir-fj-gGN">
-                        <rect key="frame" x="299" y="21" width="38" height="25"/>
-                        <attributedString key="attributedText">
-                            <fragment content="10">
-                                <attributes>
-                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <font key="NSFont" size="20" name="HelveticaNeue"/>
-                                </attributes>
-                            </fragment>
-                            <fragment content="个">
-                                <attributes>
-                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <font key="NSFont" size="15" name="PingFangSC-Regular"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mir-fj-gGN">
+                        <rect key="frame" x="299" y="21" width="24" height="27"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EJg-tK-Bba">
-                        <rect key="frame" x="278" y="54" width="67" height="23"/>
+                        <rect key="frame" x="278" y="56" width="67" height="23"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="23" id="6SN-Bd-Zom"/>
                             <constraint firstAttribute="width" constant="67" id="fkG-uv-vy9"/>
@@ -105,8 +93,15 @@
                             <action selector="onDetailInfo:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cC0-iE-jbl"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="个" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQO-OU-Pxg">
+                        <rect key="frame" x="323" y="25" width="15" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="dQO-OU-Pxg" firstAttribute="leading" secondItem="Mir-fj-gGN" secondAttribute="trailing" id="3kX-oZ-bSj"/>
                     <constraint firstItem="7HU-zy-aKI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="14" id="3nP-k8-feP"/>
                     <constraint firstItem="bbA-2y-zus" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6C0-RX-qVo"/>
                     <constraint firstItem="Mir-fj-gGN" firstAttribute="leading" secondItem="sAo-7g-Gm5" secondAttribute="trailing" id="6tm-dF-gMr"/>
@@ -138,6 +133,7 @@
                     <constraint firstItem="efa-37-sIv" firstAttribute="leading" secondItem="bbA-2y-zus" secondAttribute="trailing" id="nbC-zB-M1B"/>
                     <constraint firstItem="sAo-7g-Gm5" firstAttribute="centerY" secondItem="7HU-zy-aKI" secondAttribute="centerY" id="oX1-JW-zhH"/>
                     <constraint firstItem="bbA-2y-zus" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.7" id="wrI-wy-VRV"/>
+                    <constraint firstItem="dQO-OU-Pxg" firstAttribute="centerY" secondItem="Mir-fj-gGN" secondAttribute="centerY" id="wsW-LF-hed"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -151,12 +147,13 @@
                 <outlet property="discountCouponBtn" destination="EJg-tK-Bba" id="UEl-h4-eeu"/>
                 <outlet property="discountCouponCounter" destination="Mir-fj-gGN" id="h7M-BV-XCA"/>
                 <outlet property="displayLabel" destination="sAo-7g-Gm5" id="8Ls-f5-aOM"/>
+                <outlet property="displayLabel2" destination="dQO-OU-Pxg" id="9DI-es-smi"/>
                 <outlet property="lightImageView" destination="bbA-2y-zus" id="NCK-o1-Udc"/>
                 <outlet property="moneyLabel" destination="7HU-zy-aKI" id="OYb-GK-na9"/>
                 <outlet property="timeLabel" destination="Yw4-Qi-8Sm" id="SF5-XR-5Ix"/>
                 <outlet property="typeLabel" destination="Kuh-Rl-Nk5" id="fVj-jz-gqJ"/>
             </connections>
-            <point key="canvasLocation" x="1079" y="282"/>
+            <point key="canvasLocation" x="910" y="345"/>
         </tableViewCell>
     </objects>
     <resources>

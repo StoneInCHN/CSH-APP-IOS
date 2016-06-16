@@ -388,4 +388,11 @@
                          pageNumber:(NSString *)pageNumber
                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 申请获取优惠券
++ (void)applyCouponWithUserId:(NSString *)userId
+                       token:(NSString *)token
+                    couponId:(NSString *)couponId
+                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end
