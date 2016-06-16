@@ -26,10 +26,11 @@
 - (void)setActivityModel:(SFActivityModel *)activityModel {
     self.moneyLabel.text = [NSString stringWithFormat:@"%@元",activityModel.amount];
     self.timeLabel.text = activityModel.deadlineTime;
-    self.discountCouponCounter.text = [NSString stringWithFormat:@"%@个",activityModel.remainNum];
+    self.discountCouponCounter.text = [NSString stringWithFormat:@"%@",activityModel.remainNum];
     if ([activityModel.type isEqualToString: @"SPECIFY"]) {
         self.lightImageView.image = [UIImage imageNamed:@"redLightCoupon"];
         self.darkImageView.image = [UIImage imageNamed:@"redDarkCoupon"];
+        self.typeLabel.text = @"指定优惠券";
     }
     if (activityModel.isGet) {
         [self.discountCouponCounter removeFromSuperview];
