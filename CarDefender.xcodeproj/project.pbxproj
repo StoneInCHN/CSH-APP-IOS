@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0D0487891CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */; };
+		0D077AF71D123D5F005C1978 /* dingdanxiangqing_order_complete_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D077AF51D123D5F005C1978 /* dingdanxiangqing_order_complete_normal.png */; };
+		0D077AF81D123D5F005C1978 /* dingdanxiangqing_order_complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D077AF61D123D5F005C1978 /* dingdanxiangqing_order_complete.png */; };
+		0D077B041D12A230005C1978 /* CWSYuYueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D077B031D12A230005C1978 /* CWSYuYueViewController.m */; };
 		0D5C2BA11D06B07C00DE7B64 /* ChoseDatePikerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5C2BA01D06B07C00DE7B64 /* ChoseDatePikerView.m */; };
 		0D8504051D051824009191C2 /* CWSSelectCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D8504041D051824009191C2 /* CWSSelectCarViewController.m */; };
+		0D9690C31D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D9690C21D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m */; };
 		243AB0BF1CDA524100E9FD95 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0BE1CDA524100E9FD95 /* HttpHelper.m */; };
 		243AB0C21CDA738900E9FD95 /* HBRSAHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C11CDA738900E9FD95 /* HBRSAHandler.m */; };
 		243AB0C51CDA746A00E9FD95 /* SecurityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */; };
@@ -1242,11 +1246,17 @@
 
 /* Begin PBXFileReference section */
 		0D0487881CFBE8D1006F6CB5 /* NewCarWashTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableViewCell.xib; sourceTree = "<group>"; };
+		0D077AF51D123D5F005C1978 /* dingdanxiangqing_order_complete_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dingdanxiangqing_order_complete_normal.png; sourceTree = "<group>"; };
+		0D077AF61D123D5F005C1978 /* dingdanxiangqing_order_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dingdanxiangqing_order_complete.png; sourceTree = "<group>"; };
+		0D077B021D12A230005C1978 /* CWSYuYueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSYuYueViewController.h; sourceTree = "<group>"; };
+		0D077B031D12A230005C1978 /* CWSYuYueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSYuYueViewController.m; sourceTree = "<group>"; };
 		0D5C2B9F1D06B07C00DE7B64 /* ChoseDatePikerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseDatePikerView.h; sourceTree = "<group>"; };
 		0D5C2BA01D06B07C00DE7B64 /* ChoseDatePikerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseDatePikerView.m; sourceTree = "<group>"; };
 		0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
 		0D8504031D051824009191C2 /* CWSSelectCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSSelectCarViewController.h; sourceTree = "<group>"; };
 		0D8504041D051824009191C2 /* CWSSelectCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSelectCarViewController.m; sourceTree = "<group>"; };
+		0D9690C11D0FB49C0006D12D /* CWSPurchaseDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSPurchaseDeviceViewController.h; sourceTree = "<group>"; };
+		0D9690C21D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSPurchaseDeviceViewController.m; sourceTree = "<group>"; };
 		243AB0BD1CDA524100E9FD95 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		243AB0BE1CDA524100E9FD95 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		243AB0C01CDA738900E9FD95 /* HBRSAHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBRSAHandler.h; sourceTree = "<group>"; };
@@ -3331,6 +3341,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D077B011D12A1FF005C1978 /* 预约 */ = {
+			isa = PBXGroup;
+			children = (
+				0D077B021D12A230005C1978 /* CWSYuYueViewController.h */,
+				0D077B031D12A230005C1978 /* CWSYuYueViewController.m */,
+			);
+			name = "预约";
+			sourceTree = "<group>";
+		};
 		0D5C2B9E1D06AF9E00DE7B64 /* 预约选择时间 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5055,6 +5074,7 @@
 		335C5C861AC12A47001EA2AC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0D077B011D12A1FF005C1978 /* 预约 */,
 				4CECD2561C2287EF0069754C /* 活动专区 */,
 				4CECD25C1C2287EF0069754C /* 积分商城 */,
 				4C6078FC1C1EAC5000BDBCE3 /* 一键检测 */,
@@ -5325,6 +5345,8 @@
 		337F7DED1B8ACB5A006B2FEC /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				0D077AF51D123D5F005C1978 /* dingdanxiangqing_order_complete_normal.png */,
+				0D077AF61D123D5F005C1978 /* dingdanxiangqing_order_complete.png */,
 				4C0FEDBB1C3CA3FE00FBFC0F /* kuang_gou@2x.png */,
 				4C0FEDBC1C3CA3FE00FBFC0F /* kuang@2x.png */,
 				E91AB2471BFF04D500E1AC51 /* yuyuezhong@2x.png */,
@@ -6365,6 +6387,8 @@
 				4CAB97451C111FAE00B12A2B /* CWSRemainMoneyViewController.h */,
 				4CAB97461C111FAE00B12A2B /* CWSRemainMoneyViewController.m */,
 				4CAB97471C111FAE00B12A2B /* CWSRemainMoneyViewController.xib */,
+				0D9690C11D0FB49C0006D12D /* CWSPurchaseDeviceViewController.h */,
+				0D9690C21D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m */,
 			);
 			path = "余额";
 			sourceTree = "<group>";
@@ -8303,6 +8327,7 @@
 				335425C51B70AFFD00FD23A5 /* CWSFindCarLocDetailController.xib in Resources */,
 				33C7600B1AC64E4000F4C3A4 /* CWSCarFriendController.xib in Resources */,
 				331565221B280E8700369C78 /* call_jian6@2x.png in Resources */,
+				0D077AF71D123D5F005C1978 /* dingdanxiangqing_order_complete_normal.png in Resources */,
 				3315651F1B280E8700369C78 /* call_jian3@2x.png in Resources */,
 				4CB912871C433A80002D93BB /* AlipaySDK.bundle in Resources */,
 				927A0EA51B914B6D00FA497F /* CWSMyMonyController.xib in Resources */,
@@ -8597,6 +8622,7 @@
 				33CA3D4D1ADE2AAA00212B8C /* CarFriendContactTopView.xib in Resources */,
 				33B44FED1B68616E0060839D /* CWSEditHelpController.xib in Resources */,
 				335493F41AD3C75300825BDA /* fuwu_weizhang@2x.png in Resources */,
+				0D077AF81D123D5F005C1978 /* dingdanxiangqing_order_complete.png in Resources */,
 				33B78CF71B71FC9300E077CB /* zhaochewei_qingchu@2x.png in Resources */,
 				9284237C1ACCD2F300CD5258 /* EaseMob.bundle in Resources */,
 				333524A51B4E9873004246C5 /* infor_kefu@2x.png in Resources */,
@@ -9033,6 +9059,7 @@
 				335C5C3B1AC106BD001EA2AC /* CJSONDataSerializer.m in Sources */,
 				33507B541AD40C3C00F1F236 /* ChineseInclude.m in Sources */,
 				33C7603C1AC696B500F4C3A4 /* CWSLeftController.m in Sources */,
+				0D077B041D12A230005C1978 /* CWSYuYueViewController.m in Sources */,
 				4C9EA2CE1C141C620081DFB4 /* CWSCarMaintainDetailViewController.m in Sources */,
 				928A62B61ACCE9C50013C666 /* MKAnnotationView+EMWebCache.m in Sources */,
 				3371133A1AD7A32B00FF3D54 /* LHPShaheObject.m in Sources */,
@@ -9048,6 +9075,7 @@
 				928A62321ACCE96D0013C666 /* NSDateFormatter+Category.m in Sources */,
 				928A63D21ACCF3F00013C666 /* GroupListViewController.m in Sources */,
 				928A644A1ACD18DA0013C666 /* CWSContactsController.m in Sources */,
+				0D9690C31D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m in Sources */,
 				4CC8922F1C19899800F6AB35 /* CWSUserMessageCenterModel.m in Sources */,
 				335C5C351AC106BD001EA2AC /* CJSONSerialization.m in Sources */,
 				9279D5031B8E9F10007FF57B /* UILabel+Kun.m in Sources */,
