@@ -81,6 +81,8 @@
     [HttpHelper searchCarServicePurchaseListWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
         NSLog(@"----------我的订单信息---------%@",object);
         NSDictionary *dataDic = (NSDictionary *)object;
+      
+        
         dispatch_async(dispatch_get_main_queue(), ^{
         if ([dataDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -472,10 +474,29 @@
         
     }
     
-    cell.titleLabel.text = _order.goods_name;
-    cell.shopNameLabel.text = _order.seller_name;
-    cell.moneyLabel.text = [NSString stringWithFormat:@"￥%@",_order.price];
+  
     
+    NSString *goodName = [NSString stringWithFormat:@"%@",_order.goods_name];
+    NSString *shopName = [NSString stringWithFormat:@"%@",_order.seller_name];
+    NSString *money = [NSString stringWithFormat:@"￥%@",_order.price];
+    if (![goodName isEqualToString:@"<null>"]) {
+        cell.titleLabel.text = _order.goods_name;
+    }else{
+        cell.titleLabel.text = @"汽车服务";
+    }
+    
+    if (![shopName isEqualToString:@"<null>"]) {
+        cell.shopNameLabel.text = shopName;
+    }else{
+        cell.shopNameLabel.text = @"附近商家";
+    }
+    
+    if (![money isEqualToString:@"<null>"]) {
+        cell.moneyLabel.text = money;
+    }else{
+        cell.moneyLabel.text = @"￥0";
+    }
+
     //普洗和精洗
     if ([_order.cate_id_2 integerValue] == 30 || [_order.cate_id_2 integerValue] == 31) {
         cell.headImageViewWidth.constant = 18;

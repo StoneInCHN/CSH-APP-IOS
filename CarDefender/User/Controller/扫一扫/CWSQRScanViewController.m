@@ -373,7 +373,7 @@ static const CGFloat KMargin = 30;
 
 #pragma mark ===========扫面二维码后进行绑定商家或者设备选择车辆
 -(void)bindMerchantOrDevice:(NSDictionary *)stringValueDic{
-
+    [_captureSession startRunning];
     if (stringValueDic[@"flag"]) {
         CWSSelectCarViewController *carList = [[CWSSelectCarViewController alloc]init];
         carList.dataDic = stringValueDic;
