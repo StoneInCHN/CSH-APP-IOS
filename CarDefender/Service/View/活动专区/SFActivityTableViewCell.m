@@ -7,8 +7,10 @@
 //
 
 #import "SFActivityTableViewCell.h"
+#import "SFActivityModel.h"
 
-@implementation SFActivityTableViewCell 
+
+@implementation SFActivityTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -18,6 +20,25 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
+    self.contentView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)setActivityModel:(SFActivityModel *)activityModel {
+    self.moneyLabel.text = [NSString stringWithFormat:@"%@元",activityModel.amount];
+    self.timeLabel.text = activityModel.deadlineTime;
+    self.discountCouponCounter.text = [NSString stringWithFormat:@"%@",activityModel.remainNum];
+    if ([activityModel.type isEqualToString: @"SPECIFY"]) {
+        self.lightImageView.image = [UIImage imageNamed:@"redLightCoupon"];
+        self.darkImageView.image = [UIImage imageNamed:@"redDarkCoupon"];
+        self.typeLabel.text = @"指定优惠券";
+    }
+    if (activityModel.isGet) {
+        [self.discountCouponCounter removeFromSuperview];
+        [self.displayLabel removeFromSuperview];
+        [self.displayLabel2 removeFromSuperview];
+        self.discountCouponBtn.hidden = YES;
+        self.couponSelectedImageView.hidden = NO;
+    }
 }
 
 - (IBAction)onDetailInfo:(id)sender {

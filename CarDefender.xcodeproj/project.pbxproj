@@ -25,6 +25,7 @@
 		24A241851D11688C00BBD549 /* SFActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A241831D11688C00BBD549 /* SFActivityTableViewCell.m */; };
 		24A241861D11688C00BBD549 /* SFActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */; };
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
+		24BAFD4C1D12B3E800C354B6 /* SFActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BAFD4B1D12B3E800C354B6 /* SFActivityModel.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
 		2E29F4ED1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */; };
@@ -1281,6 +1282,8 @@
 		24A241881D117EDA00BBD549 /* HttpURLMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpURLMacro.h; sourceTree = "<group>"; };
 		24B921FF1CE3762B004E558E /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		24B922001CE3762B004E558E /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
+		24BAFD4A1D12B3E800C354B6 /* SFActivityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFActivityModel.h; sourceTree = "<group>"; };
+		24BAFD4B1D12B3E800C354B6 /* SFActivityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFActivityModel.m; sourceTree = "<group>"; };
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		24E53A8C1CE1AE9E0037197B /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindGasStationHeadView.xib; sourceTree = "<group>"; };
@@ -3379,6 +3382,15 @@
 			path = "切换车辆";
 			sourceTree = "<group>";
 		};
+		24BAFD491D12B3CC00C354B6 /* 活动专区 */ = {
+			isa = PBXGroup;
+			children = (
+				24BAFD4A1D12B3E800C354B6 /* SFActivityModel.h */,
+				24BAFD4B1D12B3E800C354B6 /* SFActivityModel.m */,
+			);
+			path = "活动专区";
+			sourceTree = "<group>";
+		};
 		24DB9F291CDB354A002B7BD0 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -5108,6 +5120,7 @@
 		335C5C871AC12A47001EA2AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				24BAFD491D12B3CC00C354B6 /* 活动专区 */,
 				4CC8920A1C19241C00F6AB35 /* 通用模型 */,
 				33858ABC1AE9D063006E331F /* CWSServiceItem.h */,
 				33858ABD1AE9D063006E331F /* CWSServiceItem.m */,
@@ -9025,6 +9038,7 @@
 				928A642A1ACCF4460013C666 /* EMChatViewBaseCell.m in Sources */,
 				4CD061551C3A06A900136B27 /* MJRefreshStateHeader.m in Sources */,
 				33B41A5E1B1852F200FB644E /* NewReportMileage.m in Sources */,
+				24BAFD4C1D12B3E800C354B6 /* SFActivityModel.m in Sources */,
 				33875EE61B33C8BE0049BCE0 /* FindMapData.m in Sources */,
 				928A62BB1ACCE9C50013C666 /* UIImage+EMWebP.m in Sources */,
 				928A64251ACCF4460013C666 /* EMChatImageBubbleView.m in Sources */,

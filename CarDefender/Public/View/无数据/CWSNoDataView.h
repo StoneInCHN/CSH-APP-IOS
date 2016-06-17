@@ -11,7 +11,6 @@
 @interface CWSNoDataView : UIView
 
 @property(nonatomic,strong) UIImageView* noDataImageView;
-
 @property(nonatomic,strong) UILabel* noDataTitleLabel;
 
 @end

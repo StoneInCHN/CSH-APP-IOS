@@ -8,18 +8,12 @@
 
 #import "CWSNoDataView.h"
 
-@implementation CWSNoDataView{
+@implementation CWSNoDataView
 
-    
-}
-
-
-#warning =================================不同的控制器、提示不同
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
         self.noDataImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 83, 90)];
         self.noDataImageView.image = [UIImage imageNamed:@"dingdanwu_icon"];
         self.noDataImageView.center = CGPointMake(frame.size.width/2, frame.size.height/2 - 117);
@@ -29,8 +23,6 @@
         self.noDataTitleLabel.center = CGPointMake(frame.size.width/2, self.noDataImageView.frame.origin.y + self.noDataImageView.frame.size.height + 27);
         self.noDataTitleLabel.textColor = [UIColor colorWithRed:0.733f green:0.733f blue:0.733f alpha:1.00f];
         [self addSubview:self.noDataTitleLabel];
-        
-        
     }
     return self;
 }

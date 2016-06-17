@@ -65,7 +65,7 @@
         [deleteMessages addObject:[NSString stringWithFormat:@"%@",dict[@"id"]]];
     }
     NSLog(@"delete messages :%@",deleteMessages);
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您确定要将所有信息清空吗???" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您确定要将所有信息清空吗?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [MBProgressHUD showMessag:@"正在删除..." toView:self.view];
         

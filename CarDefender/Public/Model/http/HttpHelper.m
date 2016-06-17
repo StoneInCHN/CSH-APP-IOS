@@ -12,6 +12,25 @@
 #import "HttpURLMacro.h"
 
 @implementation HttpHelper
+#pragma mark json post通用
++ (void)post:(NSString *)url
+  parameters:(NSMutableDictionary *)parmDict
+     success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    for (NSString *key in parmDict) {
+        [PublicUtils checkNSNullWithgetString:[parmDict valueForKey:key]];
+    }
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:url parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(operation,responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation,error);
+    }];
+}
+
 #pragma mark 登陆
 + (void)userLoginWithUserName:(NSString *)userName
                      password:(NSString *)passwd
@@ -834,15 +853,22 @@
     [parmDict setObject:[PublicUtils checkNSNullWithgetString:token] forKey:@"token"];
     [parmDict setObject:[PublicUtils checkNSNullWithgetString:pageSize] forKey:@"pageSize"];
     [parmDict setObject:[PublicUtils checkNSNullWithgetString:pageNumber] forKey:@"pageNumber"];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_AVAILABLE_COUPON_URL];
-    NSLog(@"可选优惠券列表－活动页面 url :%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+   [self post:urlString parameters:parmDict success:success failure:failure];
+}
+
+#pragma mark 申请获取优惠券
++ (void)applyCouponWithUserId:(NSString *)userId
+                        token:(NSString *)token
+                     couponId:(NSString *)couponId
+                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:userId forKey:@"userId"];
+    [parmDict setObject:token forKey:@"token"];
+    [parmDict setObject:couponId forKey:@"couponId"];
+     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_APPLY_COUPON_URL];
+    [self post:urlString parameters:parmDict success:success failure:failure];
 }
 @end
