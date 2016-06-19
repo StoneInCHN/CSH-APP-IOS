@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 @class AFHTTPRequestOperation;
 
-#define SERVERADDRESS @"http://120.27.92.247:10001"
-
+//#define SERVERADDRESS @"http://120.27.92.247:10001"
+#define SERVERADDRESS @"http://120.27.27.99:10001"
 @interface HttpHelper : NSObject
 #pragma mark 获取验证码(注册和找回密码)
 + (void)getVerifyCodeWithMobileNo:(NSString *)mobileNum
@@ -441,4 +441,10 @@
                     couponId:(NSString *)couponId
                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 获取洗车劵
++ (void)myWashingCouponWithUserId:(NSString *)userId
+                        token:(NSString *)token
+                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end

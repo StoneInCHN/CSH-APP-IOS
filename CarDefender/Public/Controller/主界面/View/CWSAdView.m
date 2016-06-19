@@ -73,8 +73,10 @@
         [_myAdDataArray addObject:thyAdvertisement];
         MyLog(@"图片地址 :%@",thyAdvertisement.advImageUrl);
     }
-    [_myAdDataArray addObject:[_myAdDataArray firstObject]];
-    [_myAdDataArray insertObject:_myAdDataArray[_myAdDataArray.count-2] atIndex:0];
+    if (_myAdDataArray.count > 0) {
+        [_myAdDataArray addObject:[_myAdDataArray firstObject]];
+        [_myAdDataArray insertObject:_myAdDataArray[_myAdDataArray.count-2] atIndex:0];
+    }
     [self initialAdScrollView];
 }
 
@@ -138,11 +140,13 @@
 -(void)imageButtonClicked:(UIButton*)sender{
 
     MyLog(@"图片点击---%ld",(long)sender.tag);
-    NSLog(@"url :%@",self.adImagesDataArray[sender.tag - 1][@"advContentLink"]);
-    NSURL *url = [NSURL URLWithString:self.adImagesDataArray[sender.tag- 1][@"advContentLink"]];
-    if (self.delegate != nil) {
-        [self.delegate clickedAdView:url];
+    if (self.adImagesDataArray.count > 0) {
+        NSURL *url = [NSURL URLWithString:self.adImagesDataArray[sender.tag- 1][@"advContentLink"]];
+        if (self.delegate != nil) {
+            [self.delegate clickedAdView:url];
+        }
     }
+    
 }
 
 

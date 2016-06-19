@@ -24,6 +24,10 @@
 		2477E8DE1CFF1B5E00CCC540 /* SFPopMenuViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2477E8DB1CFF1B5E00CCC540 /* SFPopMenuViewManager.m */; };
 		24A241851D11688C00BBD549 /* SFActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A241831D11688C00BBD549 /* SFActivityTableViewCell.m */; };
 		24A241861D11688C00BBD549 /* SFActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */; };
+		24A898E01D169A8A00C49E74 /* SFCouponViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A898DE1D169A8A00C49E74 /* SFCouponViewController.m */; };
+		24A898E11D169A8B00C49E74 /* SFCouponViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24A898DF1D169A8A00C49E74 /* SFCouponViewController.xib */; };
+		24A898E51D169F5600C49E74 /* SFWashCarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A898E41D169F5600C49E74 /* SFWashCarModel.m */; };
+		24A898E81D16A21200C49E74 /* SFCarWashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A898E71D16A21200C49E74 /* SFCarWashViewController.m */; };
 		24B922011CE3762B004E558E /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B922001CE3762B004E558E /* Helper.m */; };
 		24BAFD4C1D12B3E800C354B6 /* SFActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BAFD4B1D12B3E800C354B6 /* SFActivityModel.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
@@ -1280,6 +1284,13 @@
 		24A241841D11688C00BBD549 /* SFActivityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SFActivityTableViewCell.xib; sourceTree = "<group>"; };
 		24A241871D11725100BBD549 /* SFActivityCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFActivityCellDelegate.h; sourceTree = "<group>"; };
 		24A241881D117EDA00BBD549 /* HttpURLMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpURLMacro.h; sourceTree = "<group>"; };
+		24A898DD1D169A8A00C49E74 /* SFCouponViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFCouponViewController.h; sourceTree = "<group>"; };
+		24A898DE1D169A8A00C49E74 /* SFCouponViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFCouponViewController.m; sourceTree = "<group>"; };
+		24A898DF1D169A8A00C49E74 /* SFCouponViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SFCouponViewController.xib; sourceTree = "<group>"; };
+		24A898E31D169F5600C49E74 /* SFWashCarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFWashCarModel.h; sourceTree = "<group>"; };
+		24A898E41D169F5600C49E74 /* SFWashCarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFWashCarModel.m; sourceTree = "<group>"; };
+		24A898E61D16A21200C49E74 /* SFCarWashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFCarWashViewController.h; sourceTree = "<group>"; };
+		24A898E71D16A21200C49E74 /* SFCarWashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFCarWashViewController.m; sourceTree = "<group>"; };
 		24B921FF1CE3762B004E558E /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		24B922001CE3762B004E558E /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		24BAFD4A1D12B3E800C354B6 /* SFActivityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFActivityModel.h; sourceTree = "<group>"; };
@@ -3382,6 +3393,27 @@
 			path = "切换车辆";
 			sourceTree = "<group>";
 		};
+		24A898DC1D169A8A00C49E74 /* 优惠劵 */ = {
+			isa = PBXGroup;
+			children = (
+				24A898DD1D169A8A00C49E74 /* SFCouponViewController.h */,
+				24A898DE1D169A8A00C49E74 /* SFCouponViewController.m */,
+				24A898DF1D169A8A00C49E74 /* SFCouponViewController.xib */,
+				24A898E61D16A21200C49E74 /* SFCarWashViewController.h */,
+				24A898E71D16A21200C49E74 /* SFCarWashViewController.m */,
+			);
+			path = "优惠劵";
+			sourceTree = "<group>";
+		};
+		24A898E21D169F3F00C49E74 /* 洗车劵 */ = {
+			isa = PBXGroup;
+			children = (
+				24A898E31D169F5600C49E74 /* SFWashCarModel.h */,
+				24A898E41D169F5600C49E74 /* SFWashCarModel.m */,
+			);
+			path = "洗车劵";
+			sourceTree = "<group>";
+		};
 		24BAFD491D12B3CC00C354B6 /* 活动专区 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5204,6 +5236,7 @@
 		335C5C911AC12A47001EA2AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				24A898E21D169F3F00C49E74 /* 洗车劵 */,
 				4C21BFBE1C30D79200028D56 /* 车辆管理 */,
 				4CC8922C1C19890900F6AB35 /* 消息中心 */,
 				33E6B36C1B86C61E00909747 /* 个人中心 */,
@@ -6909,6 +6942,7 @@
 		4CC8A3D01C102DBB000B00B2 /* 我的钱包 */ = {
 			isa = PBXGroup;
 			children = (
+				24A898DC1D169A8A00C49E74 /* 优惠劵 */,
 				4CC8A3D11C102DBB000B00B2 /* CWSMyWalletViewController.h */,
 				4CC8A3D21C102DBB000B00B2 /* CWSMyWalletViewController.m */,
 				4CC8A3D31C102DBB000B00B2 /* CWSMyWalletViewController.xib */,
@@ -8056,7 +8090,7 @@
 				TargetAttributes = {
 					335C5B8D1AC1062D001EA2AC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ZJMB8US8MQ;
+						DevelopmentTeam = Y638L9NEZ8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -8647,6 +8681,7 @@
 				4CC8A39F1C100EA9000B00B2 /* chewei@3x.png in Resources */,
 				33CA3D4D1ADE2AAA00212B8C /* CarFriendContactTopView.xib in Resources */,
 				33B44FED1B68616E0060839D /* CWSEditHelpController.xib in Resources */,
+				24A898E11D169A8B00C49E74 /* SFCouponViewController.xib in Resources */,
 				335493F41AD3C75300825BDA /* fuwu_weizhang@2x.png in Resources */,
 				0D077AF81D123D5F005C1978 /* dingdanxiangqing_order_complete.png in Resources */,
 				33B78CF71B71FC9300E077CB /* zhaochewei_qingchu@2x.png in Resources */,
@@ -8881,6 +8916,7 @@
 				334708781AF86ACE006A5660 /* CWSRegistPassWordController.m in Sources */,
 				4CD061491C3A06A900136B27 /* MJRefreshBackFooter.m in Sources */,
 				4CB73B2B1C1810F1003A80A1 /* CWSCWSIllegalCheckDetailViewController.m in Sources */,
+				24A898E51D169F5600C49E74 /* SFWashCarModel.m in Sources */,
 				33507BE01AD40CA800F1F236 /* SDImageCache.m in Sources */,
 				4CECD2631C2287EF0069754C /* CWSRecordShopViewController.m in Sources */,
 				2477E8DC1CFF1B5E00CCC540 /* SFPopMenuView.m in Sources */,
@@ -8954,6 +8990,7 @@
 				928A62D01ACCE9C50013C666 /* SRSlimeView.m in Sources */,
 				4CB73B291C1810F1003A80A1 /* CWSCarMessageViewController.m in Sources */,
 				334708C11AF87590006A5660 /* CWSNavController.mm in Sources */,
+				24A898E01D169A8A00C49E74 /* SFCouponViewController.m in Sources */,
 				928A62AC1ACCE9C50013C666 /* MWTapDetectingView.m in Sources */,
 				339CFD4A1AE5F8AE00A84143 /* Footprint.m in Sources */,
 				4CD0615A1C3A06A900136B27 /* UIView+MJExtension.m in Sources */,
@@ -9140,6 +9177,7 @@
 				4CB912961C433A80002D93BB /* WQPay.m in Sources */,
 				4CC892171C194B0100F6AB35 /* TryCalculateTableViewCell.m in Sources */,
 				4CC367A71C21542E0098A6C7 /* QRCodeGenerator.m in Sources */,
+				24A898E81D16A21200C49E74 /* SFCarWashViewController.m in Sources */,
 				335425B71B70AFB100FD23A5 /* FindParkingSpaceMarkView.m in Sources */,
 				334709061AF88E0F006A5660 /* CWSUserPersonalSignatureController.m in Sources */,
 				334708C51AF87590006A5660 /* CWSFindCarLocationController.m in Sources */,
@@ -9424,6 +9462,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9490,7 +9529,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9570,7 +9609,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";

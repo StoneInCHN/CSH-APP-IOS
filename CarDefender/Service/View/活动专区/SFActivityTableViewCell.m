@@ -8,7 +8,7 @@
 
 #import "SFActivityTableViewCell.h"
 #import "SFActivityModel.h"
-
+#import "SFWashCarModel.h"
 
 @implementation SFActivityTableViewCell
 
@@ -27,6 +27,7 @@
     self.moneyLabel.text = [NSString stringWithFormat:@"%@元",activityModel.amount];
     self.timeLabel.text = activityModel.deadlineTime;
     self.discountCouponCounter.text = [NSString stringWithFormat:@"%@",activityModel.remainNum];
+    self.identify = [NSString stringWithFormat:@"%@",activityModel.identify];
     if ([activityModel.type isEqualToString: @"SPECIFY"]) {
         self.lightImageView.image = [UIImage imageNamed:@"redLightCoupon"];
         self.darkImageView.image = [UIImage imageNamed:@"redDarkCoupon"];
@@ -38,9 +39,33 @@
         [self.displayLabel2 removeFromSuperview];
         self.discountCouponBtn.hidden = YES;
         self.couponSelectedImageView.hidden = NO;
+    } else {
+        if ([activityModel.remainNum isEqualToString:@"0"]) {
+            [self.discountCouponCounter removeFromSuperview];
+            [self.displayLabel removeFromSuperview];
+            [self.displayLabel2 removeFromSuperview];
+            self.discountCouponBtn.hidden = YES;
+            self.couponSelectedImageView.hidden = NO;
+            self.couponSelectedImageView.image = [UIImage imageNamed:@"coupon_no_one"];
+        }
     }
 }
 
+- (void)setWashCarModel:(SFWashCarModel *)washCarModel {
+    self.moneyLabel.text = [NSString stringWithFormat:@"%@次",washCarModel.remainNum];
+    self.typeLabel.text = washCarModel.couponName;
+    self.timeStaticLabel.text = washCarModel.tenantName;
+    self.timeLabel.text = @"";
+    self.identify = washCarModel.identify;
+//    self.lightImageView.image = [UIImage imageNamed:@""];
+//    self.darkImageView.image = [UIImage imageNamed:@""];
+    [self.discountCouponCounter removeFromSuperview];
+    [self.displayLabel removeFromSuperview];
+    [self.displayLabel2 removeFromSuperview];
+    self.discountCouponBtn.hidden = YES;
+    self.couponSelectedImageView.hidden = NO;
+    
+}
 - (IBAction)onDetailInfo:(id)sender {
     if (self.delegate) {
         [self.delegate onDetailInfo:self];

@@ -40,12 +40,17 @@
 #pragma mark - 创建地图
 -(void)creatMapView{
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height)];
+    _mapView.backgroundColor = [UIColor blueColor];
+    _mapView.showsUserLocation = YES;//显示定位图层
     _mapView.delegate = self;
     [_mapView setZoomLevel:17];
     [self addSubview:_mapView];
+    NSLog(@"find map view subviews :%@",_mapView);
+
 }
 - (void)dealloc {
     if (_mapView) {
+        _mapView.delegate = nil;
         _mapView = nil;
     }
 }
@@ -80,7 +85,6 @@
         [self shouji];
     }
 }
-
 #pragma mark - 手机定位
 -(void)shouji{
     if (_locService == nil) {
@@ -108,8 +112,7 @@
 }
 #pragma mark - 添加标注点
 -(void)addCoord:(NSArray*)coordArray type:(int)type{
-    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
-    [_mapView removeAnnotations:array];
+    [_mapView removeAnnotations:_mapView.annotations];
     for (int i = 0; i < coordArray.count; i++) {
         Interest* coordinate = coordArray[i];
         RouteMarkAnnotation* item = [[RouteMarkAnnotation alloc]init];

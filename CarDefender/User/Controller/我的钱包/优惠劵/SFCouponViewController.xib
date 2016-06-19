@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SFCouponViewController">
+            <connections>
+                <outlet property="segmentedControl" destination="d9Q-mJ-DE9" id="KHb-qa-dpC"/>
+                <outlet property="segmentedView" destination="a4N-wy-XoI" id="Jwl-1O-wFm"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="d9Q-mJ-DE9">
+                    <rect key="frame" x="-60" y="-14" width="121" height="29"/>
+                    <segments>
+                        <segment title="优惠劵"/>
+                        <segment title="洗车劵"/>
+                    </segments>
+                    <connections>
+                        <action selector="onSegmentedEvent:" destination="-1" eventType="valueChanged" id="Lr1-XD-19F"/>
+                    </connections>
+                </segmentedControl>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a4N-wy-XoI" userLabel="SegmentView">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="d9Q-mJ-DE9" secondAttribute="trailing" constant="8" id="4V2-QM-Gjm"/>
+                <constraint firstAttribute="trailing" secondItem="a4N-wy-XoI" secondAttribute="trailing" constant="8" id="B8c-w3-1aW">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstAttribute="bottom" secondItem="a4N-wy-XoI" secondAttribute="bottom" constant="8" id="BO1-Y8-bMz"/>
+                <constraint firstItem="a4N-wy-XoI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="OjF-5w-dvR">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstItem="a4N-wy-XoI" firstAttribute="top" secondItem="d9Q-mJ-DE9" secondAttribute="bottom" constant="8" id="YvM-9H-QxH"/>
+                <constraint firstItem="d9Q-mJ-DE9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="fZH-Vu-AIg"/>
+                <constraint firstItem="d9Q-mJ-DE9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="gF6-Ka-Zud"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="d9Q-mJ-DE9"/>
+                    <exclude reference="a4N-wy-XoI"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="4V2-QM-Gjm"/>
+                    <exclude reference="fZH-Vu-AIg"/>
+                    <exclude reference="gF6-Ka-Zud"/>
+                    <exclude reference="B8c-w3-1aW"/>
+                    <exclude reference="BO1-Y8-bMz"/>
+                    <exclude reference="OjF-5w-dvR"/>
+                    <exclude reference="YvM-9H-QxH"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="d9Q-mJ-DE9"/>
+                    <include reference="a4N-wy-XoI"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="4V2-QM-Gjm"/>
+                    <include reference="fZH-Vu-AIg"/>
+                    <include reference="gF6-Ka-Zud"/>
+                    <include reference="B8c-w3-1aW"/>
+                    <include reference="BO1-Y8-bMz"/>
+                    <include reference="OjF-5w-dvR"/>
+                    <include reference="YvM-9H-QxH"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="299" y="325"/>
+        </view>
+    </objects>
+</document>
