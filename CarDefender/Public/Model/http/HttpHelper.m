@@ -699,6 +699,19 @@
     [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
 
 }
+
+#pragma mark 根据用户当前车辆查询租户可用的服务详情
+
++ (void)getTenantInfiServiceByldWithUserDic:(NSDictionary *)vehicleDic
+                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_TENANTINFOSERVICEBYLD_GET_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"adertisment image url根据用户当前车辆查询租户可用的服务详情:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
+    
+}
 #pragma mark 更新购买汽车服务记录状态
 
 + (void)updateCarServicePayStatusWithUserDic:(NSDictionary *)vehicleDic

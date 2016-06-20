@@ -280,6 +280,7 @@
 //    }
     cell.discountPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"promotion_price"]];
     cell.originalPriceLabel.text = [NSString stringWithFormat:@"%@",goodsDic[@"price"]];
+    [cell.payButton setTitle:@"支付" forState:UIControlStateNormal];
     return cell;
 }
 

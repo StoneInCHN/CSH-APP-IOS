@@ -11,6 +11,7 @@
 
 //#define SERVERADDRESS @"http://120.27.92.247:10001"
 #define SERVERADDRESS @"http://120.27.27.99:10001"
+
 @interface HttpHelper : NSObject
 #pragma mark 获取验证码(注册和找回密码)
 + (void)getVerifyCodeWithMobileNo:(NSString *)mobileNum
@@ -337,6 +338,18 @@
 + (void)insertVehicleSubscribeServiceWithUserDic:(NSDictionary *)vehicleDic
                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 根据用户当前车辆查询租户可用的服务详情
+/**
+ * 手机扫描商家二维码时用户车辆与商家绑定：
+ *
+ *  @param dic @{@"userId": ,@"token": ,@"serviceId":}
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
+ */
++ (void)getTenantInfiServiceByldWithUserDic:(NSDictionary *)vehicleDic
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark 更新购买汽车服务记录状态
 /**

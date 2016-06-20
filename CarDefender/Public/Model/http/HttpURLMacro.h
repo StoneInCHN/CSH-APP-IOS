@@ -50,6 +50,9 @@
 
 #define KHTTPHELPER_BINDTENANT_INSERT_URL @"/csh-interface/vehicle/bindTenant.jhtml"//手机扫描商家二维码时用户车辆与商家绑定：
 #define KHTTPHELPER_SUBSCRIBESERVICE_INSERT_URL @"/csh-interface/carService/subscribeService.jhtml"//用户预约汽车服务：
+
+#define KHTTPHELPER_TENANTINFOSERVICEBYLD_GET_URL @"/csh-interface/tenantInfo/getServiceById.jhtml"//根据用户当前车辆查询租户可用的服务详情
+
 #define KHTTPHELPER_PAYSTATUS_UPDATE_URL @"/csh-interface/carService/updatePayStatus.jhtml"//更新购买汽车服务记录状态
 #define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
 #define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//租户详情#

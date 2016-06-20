@@ -20,6 +20,7 @@
 #import "CWSAddCarNexCheckView.h"
 #import "ChoseDatePikerView.h"
 #import "CWSHistoryOrder.h"
+#import "CWSYuYueViewController.h"//预约
 @interface CWSCarMaintainViewController ()<UITableViewDataSource,UITableViewDelegate,CWSTableViewButtonCellDelegate,ChoseDatePikerViewDelegate>{
 
     NSInteger                 _temp;
@@ -327,17 +328,21 @@
     NSLog(@"%@",sender.titleLabel.text);
     if([sender.titleLabel.text isEqualToString:@"预约"]){
         //时间选择器
-        myTableView.userInteractionEnabled = YES;
-        chooseBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        chooseBgView.backgroundColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:.5];
-        [self.view addSubview:chooseBgView];
-        ChoseDatePikerView *chooseDate = [[ChoseDatePikerView alloc]initWithFrame:CGRectMake(20, 70, self.view.frame.size.width-40, 280)];
-        chooseDate.delegate = self;
-        chooseDate.layer.cornerRadius = 5;
-        chooseDate.goodDic = thyDict;
-        
-        
-        [chooseBgView addSubview:chooseDate];
+//        myTableView.userInteractionEnabled = YES;
+//        chooseBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//        chooseBgView.backgroundColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:.5];
+//        [self.view addSubview:chooseBgView];
+//        ChoseDatePikerView *chooseDate = [[ChoseDatePikerView alloc]initWithFrame:CGRectMake(20, 70, self.view.frame.size.width-40, 280)];
+//        chooseDate.delegate = self;
+//        chooseDate.layer.cornerRadius = 5;
+//        chooseDate.goodDic = thyDict;
+//        
+//        
+//        [chooseBgView addSubview:chooseDate];
+        //新保养预约
+        CWSYuYueViewController *yueyue = [[CWSYuYueViewController alloc]init];
+        yueyue.goodDic = thyDict;
+        [self.navigationController pushViewController:yueyue animated:YES];
         
         
         
@@ -368,7 +373,7 @@
                 
                 if ([dataDictionary[@"code"] isEqualToString:SERVICE_SUCCESS]) {
                     CWSCarWashDetileController* carWashDetailVc = [CWSCarWashDetileController new];
-                    [carWashDetailVc setDataDict:object[@"data"]];
+                    
                     carWashDetailVc.orderID = dataDictionary[@"desc"];
                     //订单详情
                     

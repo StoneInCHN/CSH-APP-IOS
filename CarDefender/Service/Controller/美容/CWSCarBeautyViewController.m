@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.title = @"汽车美容";
+    self.title = @"汽车美容";
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
