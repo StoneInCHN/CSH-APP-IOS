@@ -17,10 +17,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lightCoupon" translatesAutoresizingMaskIntoConstraints="NO" id="bbA-2y-zus">
-                        <rect key="frame" x="0.0" y="8" width="255" height="86"/>
+                        <rect key="frame" x="0.0" y="8" width="255" height="90"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="darkCoupon" translatesAutoresizingMaskIntoConstraints="NO" id="efa-37-sIv">
-                        <rect key="frame" x="255" y="8" width="105" height="86"/>
+                        <rect key="frame" x="255" y="8" width="105" height="90"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7HU-zy-aKI">
                         <rect key="frame" x="16" y="22" width="239" height="40"/>
@@ -103,13 +103,13 @@
                 <constraints>
                     <constraint firstItem="dQO-OU-Pxg" firstAttribute="leading" secondItem="Mir-fj-gGN" secondAttribute="trailing" id="3kX-oZ-bSj"/>
                     <constraint firstItem="7HU-zy-aKI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="3nP-k8-feP"/>
-                    <constraint firstItem="bbA-2y-zus" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6C0-RX-qVo"/>
+                    <constraint firstItem="bbA-2y-zus" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="2" id="6C0-RX-qVo"/>
                     <constraint firstItem="Mir-fj-gGN" firstAttribute="leading" secondItem="sAo-7g-Gm5" secondAttribute="trailing" id="6tm-dF-gMr"/>
                     <constraint firstAttribute="bottomMargin" secondItem="iKe-Fw-gNX" secondAttribute="bottom" id="8Z1-tp-how"/>
                     <constraint firstItem="efa-37-sIv" firstAttribute="leading" secondItem="Kuh-Rl-Nk5" secondAttribute="trailing" id="9Fx-PV-kWq"/>
                     <constraint firstItem="buP-Oa-x3M" firstAttribute="centerX" secondItem="efa-37-sIv" secondAttribute="centerX" id="Bph-3p-3VI"/>
                     <constraint firstItem="bbA-2y-zus" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Btv-4f-PfA"/>
-                    <constraint firstItem="buP-Oa-x3M" firstAttribute="centerY" secondItem="efa-37-sIv" secondAttribute="centerY" constant="1" id="BxX-fH-P52"/>
+                    <constraint firstItem="buP-Oa-x3M" firstAttribute="centerY" secondItem="efa-37-sIv" secondAttribute="centerY" constant="-1" id="BxX-fH-P52"/>
                     <constraint firstItem="Kuh-Rl-Nk5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="CPO-8K-Chk"/>
                     <constraint firstItem="efa-37-sIv" firstAttribute="bottom" secondItem="bbA-2y-zus" secondAttribute="bottom" id="FGz-2C-U79"/>
                     <constraint firstItem="7HU-zy-aKI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="14" id="GUM-p7-kBp"/>
@@ -154,7 +154,7 @@
                 <outlet property="timeStaticLabel" destination="7XK-Tg-6hT" id="F3b-Kn-lNv"/>
                 <outlet property="typeLabel" destination="Kuh-Rl-Nk5" id="fVj-jz-gqJ"/>
             </connections>
-            <point key="canvasLocation" x="1420" y="408.5"/>
+            <point key="canvasLocation" x="1702" y="407.5"/>
         </tableViewCell>
     </objects>
     <resources>

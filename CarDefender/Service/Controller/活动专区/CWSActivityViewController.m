@@ -58,7 +58,7 @@
 #pragma mark - 界面
 - (void)initalizeUserInterface
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.height-5) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, [UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.height-10) style:UITableViewStylePlain];
     _tableView.backgroundColor = kCOLOR(245, 245, 245);
     _tableView.delegate = self;
     _tableView.dataSource = self;

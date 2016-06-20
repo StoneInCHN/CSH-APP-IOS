@@ -18,7 +18,7 @@
 #import "WQAler.h"
 #import "payRequsestHandler.h"
 
-#define NUM_PAY 3
+#define NUM_PAY 4
 #define NUM_PURCHASE 4
 
 @interface CWSPurchaseViewController (){

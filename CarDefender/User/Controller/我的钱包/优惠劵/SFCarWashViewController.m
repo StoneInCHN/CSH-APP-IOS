@@ -27,8 +27,9 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
+    _washingCoupons = [NSMutableArray array];
     [self setupUI];
-    [self initWithData];
+    [self loadData];
 }
 - (void)setupUI
 {
@@ -37,34 +38,34 @@
     _table.dataSource = self;
     _table.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_table];
-    
 }
 #pragma mark -load data
-- (void)initWithData
+- (void)loadData
 {
-     userInfo = [UserInfo userDefault];
-    _washingCoupons = [NSMutableArray array];
+    userInfo = [UserInfo userDefault];
+    [MBProgressHUD showMessag:@"正在加载中..." toView:self.view.window];
     [HttpHelper myWashingCouponWithUserId:userInfo.desc
                                     token:userInfo.token
                                   success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                      [MBProgressHUD hideAllHUDsForView:self.view.window animated:YES];
                                       NSLog(@"洗车劵列表 :%@",responseObjcet);
                                       NSDictionary *dict = (NSDictionary *)responseObjcet;
                                       NSString *code = dict[@"code"];
                                       userInfo.token = dict[@"token"];
                                       if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                          _washingCoupons = dict[@"msg"];
+                                         _washingCoupons = dict[@"msg"];
                                           [_table reloadData];
                                       } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
                                       } else {
-                                          [MBProgressHUD showError:dict[@"desc"] toView:self.view];
+                                          [MBProgressHUD showError:dict[@"desc"] toView:self.view.window];
                                       }
                                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                      [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
+                                      [MBProgressHUD hideAllHUDsForView:self.view.window animated:YES];
+                                      [MBProgressHUD showError:@"请求失败，请重试" toView:self.view.window];
                                   }];
     
 }
-
 #pragma mark -UITableViewDelegate,UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

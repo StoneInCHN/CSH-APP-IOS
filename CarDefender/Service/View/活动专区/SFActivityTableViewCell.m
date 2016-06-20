@@ -57,8 +57,8 @@
     self.timeStaticLabel.text = washCarModel.tenantName;
     self.timeLabel.text = @"";
     self.identify = washCarModel.identify;
-//    self.lightImageView.image = [UIImage imageNamed:@""];
-//    self.darkImageView.image = [UIImage imageNamed:@""];
+    self.lightImageView.image = [UIImage imageNamed:@"greenLightCoupon"];
+    self.darkImageView.image = [UIImage imageNamed:@"greenDarkCoupon"];
     [self.discountCouponCounter removeFromSuperview];
     [self.displayLabel removeFromSuperview];
     [self.displayLabel2 removeFromSuperview];

@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UIView *segmentedView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *segmentViewTopSpace;
 
 @end
