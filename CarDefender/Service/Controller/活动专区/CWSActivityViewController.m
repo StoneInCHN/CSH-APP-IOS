@@ -27,7 +27,8 @@
 
 @implementation CWSActivityViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = @"优惠劵中心";
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -37,16 +38,18 @@
     [self setupUI];
     [self initData];
 }
-- (void)setupUI {
+- (void)setupUI
+{
     _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(kSizeOfScreen.width/2, kSizeOfScreen.height/2, 20, 20)];
     _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     [self.view addSubview:_activityIndicator];
     [_activityIndicator startAnimating];
     
-    _noDataView = [[CWSNoDataView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height)];
+    _noDataView = [[CWSNoDataView alloc] initWithFrame:CGRectMake(8, 0, kSizeOfScreen.width-16, kSizeOfScreen.height)];
     [self.view addSubview:_noDataView];
 }
-- (void)initData {
+- (void)initData
+{
     _temp = 1;
     _dataArray = [[NSMutableArray alloc] init];
     [self getDataWithPage:_temp];
@@ -62,16 +65,24 @@
     _tableView.tableFooterView = [[UIView alloc] init];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
+    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];
 }
-#pragma mark - 下拉刷新方法
--(void)headerRefreshing
+#pragma mark - 上拉获取更多
+-(void)footerRefreshing
 {
     _temp++;
     [self getDataWithPage:_temp];
     
 }
--(void)getDataWithPage:(NSInteger)page{
+#pragma mark - 下拉刷新
+- (void)headerRefreshing
+{
+    [_dataArray removeAllObjects];
+    [self getDataWithPage:1];
+}
+-(void)getDataWithPage:(NSInteger)page
+{
     [HttpHelper couponListWithUserId:userInfo.desc
                                token:userInfo.token
                             pageSize:@"10"
@@ -79,6 +90,7 @@
                              success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                  [_activityIndicator stopAnimating];
                                  [_tableView.mj_header endRefreshing];
+                                 [_tableView.mj_footer endRefreshing];
                                  NSLog(@"优惠劵列表 :%@",responseObjcet);
                                  NSDictionary *dict = (NSDictionary *)responseObjcet;
                                  NSString *code = dict[@"code"];
@@ -86,8 +98,10 @@
                                  if ([code isEqualToString:SERVICE_SUCCESS]) {
                                      NSArray *coupons = dict[@"msg"];
                                      if (coupons.count == 0) {
-                                         _temp = 1;
-                                         [MBProgressHUD showError:@"没有更多数据了哦" toView:self.view.window];
+                                         if (page > 1) {
+                                             _temp = 1;
+                                             [MBProgressHUD showError:@"没有更多数据了哦" toView:self.view.window];
+                                         }
                                      }
                                      [_dataArray addObjectsFromArray:coupons];
                                      if (_dataArray.count > 0) {
@@ -118,7 +132,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 96;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -136,14 +150,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CWSActivityDetailViewController *vc = [[CWSActivityDetailViewController alloc] init];
-    vc.htmlString = _dataArray[indexPath.row][@"remark"];
+    if ([_dataArray[indexPath.row][@"remark"] isKindOfClass:[NSNull class]]) {
+        vc.htmlString = @"";
+    } else {
+        vc.htmlString = _dataArray[indexPath.row][@"remark"];
+    }
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark SFActivityCellDelegate
 - (void)onDetailInfo:(id)sender {
     SFActivityTableViewCell *cell = (SFActivityTableViewCell *)sender;
     CWSActivityDetailViewController *vc = [[CWSActivityDetailViewController alloc] init];
-    vc.htmlString = _dataArray[cell.tag][@"remark"];
+    if ([_dataArray[cell.tag][@"remark"] isKindOfClass:[NSNull class]]) {
+        vc.htmlString = @"";
+    } else {
+        vc.htmlString = _dataArray[cell.tag][@"remark"];
+    }
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)getDiscountCoupon:(id)sender {
@@ -151,7 +173,7 @@
     SFActivityTableViewCell *cell = (SFActivityTableViewCell *)sender;
     [HttpHelper applyCouponWithUserId:userInfo.desc
                                 token:userInfo.token
-                             couponId:cell.activityModel.identify
+                             couponId:cell.identify
                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                   [MBProgressHUD hideAllHUDsForView:self.view.window animated:YES];
                                   NSLog(@"申请优惠劵 :%@",responseObjcet);

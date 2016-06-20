@@ -64,6 +64,7 @@ CGFloat SPACE = 20;
 @end
 
 @implementation CWSFindParkingSpaceController
+
 -(void)getHttpData:(CLLocationCoordinate2D)coordinate nearbyCar:(BOOL)nearbyCar City:(NSString*)city{
 //    NSDictionary* dic;
 //    NSRange lRang=[city rangeOfString:@"重庆"];

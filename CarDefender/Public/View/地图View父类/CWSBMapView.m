@@ -21,6 +21,12 @@
     }
     return self;
 }
+- (void)dealloc {
+    if (_mapView != nil) {
+        _mapView = nil;
+        _mapView.delegate = nil;
+    }
+}
 #pragma mark - 创建地图
 -(void)creatMapView{
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];

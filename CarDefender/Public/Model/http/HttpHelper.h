@@ -442,4 +442,10 @@
                     couponId:(NSString *)couponId
                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 获取洗车劵
++ (void)myWashingCouponWithUserId:(NSString *)userId
+                        token:(NSString *)token
+                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end

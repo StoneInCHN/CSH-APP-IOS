@@ -9,15 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "SFActivityCellDelegate.h"
 
-@class SFActivityModel;
+@class SFActivityModel,SFWashCarModel;
+
 @interface SFActivityTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) id<SFActivityCellDelegate>delegate; ;
 @property (strong, nonatomic) SFActivityModel *activityModel;
+@property (strong, nonatomic) SFWashCarModel *washCarModel;
+
+@property (strong, nonatomic) NSString *identify;
 @property (weak, nonatomic) IBOutlet UIImageView *lightImageView;
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeStaticLabel;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *darkImageView;
 @property (weak, nonatomic) IBOutlet UILabel *displayLabel;

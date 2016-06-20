@@ -28,6 +28,7 @@
 @implementation CWSFindCarLocationController
 #pragma mark - 更新数据
 -(void)getHttpData:(CLLocationCoordinate2D)coordinate nearbyCar:(BOOL)nearbyCar type:(int)type{
+    /*
     _oldPt = coordinate;
 //    [self showHudInView:self.view hint:@"数据加载中..."];
     NSDictionary* dic = @{@"latitude":[NSString stringWithFormat:@"%f",coordinate.longitude],
@@ -73,6 +74,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }];
+     */
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -89,11 +91,13 @@
     //创建地图View
     [self creatMapView];
     //定位
-    [self getPoint];
+//    [self getPoint];
+    [self shouji];
     //创建TableView
     [self creatTableView];
     //创建通知
     [self creatNotification];
+    NSLog(@"subviews  :%@",self.view.subviews);
 }
 -(void)getPoint{
     
@@ -166,6 +170,7 @@
 }
 #pragma mark - 创建mapView
 -(void)creatMapView{
+    _findMapView.backgroundColor = [UIColor redColor];
     _findMapView = [[CWSFindMapView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height - kDockHeight)];
     _findMapView.type = self.findMapViewType;
     _findMapView.delegate = self;

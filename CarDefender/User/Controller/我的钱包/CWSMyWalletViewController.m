@@ -14,7 +14,7 @@
 #import "CWSPhoneMoneyViewController.h"
 #import "CWSInternetPhoneViewController.h"
 #import "HttpHelper.h"
-#import "CWSActivityViewController.h"
+#import "SFCouponViewController.h"
 
 @interface CWSMyWalletViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -237,7 +237,7 @@
 //            }
 //            
 //            [self.navigationController pushViewController:vc animated:YES];
-            CWSActivityViewController *couponVC = [[CWSActivityViewController alloc] init];
+            SFCouponViewController *couponVC = [[SFCouponViewController alloc] init];
             [self.navigationController pushViewController:couponVC animated:YES];
         }
             break;

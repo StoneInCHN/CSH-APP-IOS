@@ -65,5 +65,7 @@
 #define KHTTPHELPER_DISCOUNT_COUPON_URL @"/csh-interface/coupon/getCouponForPay.jhtml" //支付时可用优惠券列表
 #define KHTTPHELPER_AVAILABLE_COUPON_URL @"/csh-interface/coupon/availableCoupon.jhtml" //活动页面优惠券列表
 #define KHTTPHELPER_APPLY_COUPON_URL @"/csh-interface/coupon/getCoupon.jhtml" //手机用户领取优惠券
+#define KHTTPHELPER_MYWASH_COUPON_URL @"/csh-interface/coupon/myWashingCoupon.jhtml" //我的洗车劵列表
+
 
 #endif /* HttpURLMacro_h */
