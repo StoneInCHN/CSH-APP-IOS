@@ -10,4 +10,6 @@
 
 @interface CWSYuYueViewController : UIViewController
 
+@property (nonatomic ,strong)NSDictionary *goodDic;
+
 @end
