@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 @class AFHTTPRequestOperation;
 
-#define SERVERADDRESS @"http://120.27.92.247:10001"
+//#define SERVERADDRESS @"http://120.27.92.247:10001"
+#define SERVERADDRESS @"http://120.27.27.99:10001"
 
 @interface HttpHelper : NSObject
 #pragma mark 获取验证码(注册和找回密码)

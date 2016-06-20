@@ -16,6 +16,10 @@
     CWSNoDataView* _noCarView;
     UITableView*     _tableView;
     UIBarButtonItem* backItem2;
+    
+    UIView *hongbaoView;
+    UIImageView * imagevew;
+    UIButton *concel;
 }
 
 @end
@@ -52,6 +56,8 @@
     //获取数据
     [self initialData];
     
+    [self hongbaoView];
+    
 }
 #pragma mark - 创建tableView
 -(void)creatTableView{
@@ -65,6 +71,51 @@
     [_tableView registerNib:[UINib nibWithNibName:@"CWSCarManagerCell" bundle:nil] forCellReuseIdentifier:@"CWSCarManagerCell"];
     
     _tableView.backgroundColor = [UIColor whiteColor];
+}
+
+-(void)hongbaoView{
+    hongbaoView =[[UIView alloc] initWithFrame:CGRectMake(0, -64, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    hongbaoView.backgroundColor = [UIColor colorWithRed:88.0/255 green:88.0/255 blue:88.0/255 alpha:.5];
+    
+    //[self.view addSubview:hongbaoView];
+    //beging
+    imagevew = [UIImageView new];
+    [imagevew setContentMode:UIViewContentModeScaleToFill];
+    [imagevew setImage:[UIImage imageNamed:@"b_coupon_reg_bind"]];
+    [hongbaoView addSubview:imagevew];
+    imagevew.frame = CGRectMake(0,0,hongbaoView.frame.size.width*0.8, hongbaoView.frame.size.width*0.8*580/630);
+    imagevew.center = CGPointMake(hongbaoView.frame.size.width/2, hongbaoView.frame.size.height/2);
+    imagevew.alpha=0;
+    UILabel * commitlabel = [[UILabel alloc]initWithFrame:CGRectMake(20, imagevew.frame.size.height/3-20, imagevew.frame.size.width-40, 40)];
+    commitlabel .text = @"提交成功!!!";
+    commitlabel.textColor = [UIColor colorWithRed:242.0/255 green:204.0/255 blue:50.0/255 alpha:1];
+    commitlabel.textAlignment = NSTextAlignmentCenter;
+    commitlabel.font = [UIFont boldSystemFontOfSize:20];
+    [imagevew addSubview:commitlabel];
+    
+    UILabel * getYouHuilabel = [[UILabel alloc]initWithFrame:CGRectMake(20, imagevew.frame.size.height*2/3-30, imagevew.frame.size.width-40, 40)];
+    getYouHuilabel .text = @"恭喜您获得一个优惠卷";
+    getYouHuilabel.textColor = [UIColor colorWithRed:242.0/255 green:204.0/255 blue:50.0/255 alpha:1];
+    getYouHuilabel.textAlignment = NSTextAlignmentCenter;
+    getYouHuilabel.font = [UIFont boldSystemFontOfSize:20];
+    [imagevew addSubview:getYouHuilabel];
+    //end
+    
+    concel = [[UIButton alloc]initWithFrame:CGRectMake(hongbaoView.frame.size.width-40, imagevew.frame.origin.y, 30, 30)];
+    [concel setImage:[UIImage imageNamed:@"weizhang_shan"] forState:UIControlStateNormal];
+    [concel addTarget:self action:@selector(removeHongBarView:) forControlEvents:UIControlEventTouchUpInside];
+    [hongbaoView addSubview:concel];
+
+}
+-(void)removeHongBarView:(UIButton*)sender{
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        hongbaoView.alpha=0;
+    } completion:^(BOOL finish){
+    
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
 }
 -(void)setExtraCellLineHidden: (UITableView *)tableView
 {
@@ -115,9 +166,6 @@
                         }
                     }
                     
-                    
-                    NSMutableDictionary *userDefaultVehicle = [NSMutableDictionary dictionaryWithDictionary:_dataArray[0]];
-                  
                    
                     KUserManager.userCID = userCid;
                     MyLog(@"我的CID：%@",KUserManager.userCID);
@@ -195,28 +243,43 @@
 }
 #pragma mark - 绑定租户
 -(void)vehicleBindTenant:(NSString *)carId{
-    [MBProgressHUD showMessag:@"正在绑定..." toView:self.view];
+    
     if(self.dataDic[@"tenantInfo"]){
+        
+        [MBProgressHUD showMessag:@"正在绑定..." toView:self.view];
         NSDictionary * dic = @{@"userId":KUserInfo.desc,@"token":KUserInfo.token,@"vehicleId":carId,@"tenantId":self.dataDic[@"tenantInfo"]};
         [HttpHelper insertVehicleBindTenantWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             MyLog(@"boject=%@",object);
             NSDictionary * bindDic = (NSDictionary *)object;
             if ([bindDic[@"code"] isEqualToString:SERVICE_SUCCESS]) {
-                UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:@"绑定成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                alertView.tag = 101;
-                [alertView show];
+                
+                //ture 有优惠卷
+                
+                
+                
+                if(bindDic[@"msg"][@"isGetCoupon"]){
+                    [self commitSucessHongBao];
+                }else{
+                    
+                    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:@"绑定成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    alertView.tag = 101;
+                    //[alertView show];
+                }
+                
             }else{
                 UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:bindDic[@"desc"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertView show];
             }
+            [_tableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation,NSError *error){
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
+            [_tableView reloadData];
         }];
     }else{
-    
+        [_tableView reloadData];
     }
    
 }
@@ -250,6 +313,21 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
+    }];
+    [_tableView reloadData];
+    
+}
+
+-(void)commitSucessHongBao{
+    
+    
+    [UIView animateWithDuration:.5 animations:^{
+        
+        imagevew.alpha = 1;
+        
+        [self.view addSubview:hongbaoView];
+        
+        
     }];
     
 }
