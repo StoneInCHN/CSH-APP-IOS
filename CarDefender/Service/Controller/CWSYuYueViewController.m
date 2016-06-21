@@ -79,7 +79,7 @@
     //
     UILabel *carNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(carImageView.frame.origin.x+carImageView.frame.size.width+20, 20, kSizeOfScreen.width-carImageView.frame.origin.x-carImageView.frame.size.width-40, 20)];
     carNameLabel.tag = 1002;
-    carNameLabel.text = KUserInfo.defaultVehicle;
+    carNameLabel.text = [NSString stringWithFormat:@"%@",KUserInfo.defaultVehicle];
     carNameLabel.textAlignment = NSTextAlignmentLeft;
     carNameLabel.font = [UIFont boldSystemFontOfSize:18];
     [carView addSubview:carNameLabel];
@@ -90,7 +90,7 @@
     carDetailLabel.textColor = kTextlightGrayColor;
     
     carDetailLabel.font = [UIFont systemFontOfSize:15];
-    carDetailLabel.text = dataDic[@"desc"];
+    carDetailLabel.text = [NSString stringWithFormat:@"%@",dataDic[@"desc"]];
     [carView addSubview:carDetailLabel];
     
     //穿件button
@@ -123,7 +123,7 @@
     NSString *priceStr = [NSString stringWithFormat:@"%.2f",price];
     NSArray *idArray = [self saveBYId];
     NSDictionary *dic = @{@"userId":KUserInfo.desc,@"token":KUserInfo.token,@"serviceId":self.goodDic[@"service_id"],@"price":priceStr,@"itemIds":idArray};
-    NSLog(@"idc ====%@",dic);
+  
     [MBProgressHUD showMessag:@"正在预约" toView:self.view];
     
     [HttpHelper insertVehicleSubscribeServiceWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
@@ -269,6 +269,7 @@
 #pragma mark 获取产品列表
 -(void)getTenantInfo{
     NSDictionary *dic = @{@"userId":KUserInfo.desc,@"token":KUserInfo.token,@"serviceId":self.goodDic[@"service_id"]};
+    NSLog(@"%@",dic);
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     [HttpHelper getTenantInfiServiceByldWithUserDic:dic success:^(AFHTTPRequestOperation*operation,id object){
         [MBProgressHUD hideHUDForView:self.view animated:YES];

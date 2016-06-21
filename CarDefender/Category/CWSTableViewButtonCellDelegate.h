@@ -21,8 +21,13 @@
 @optional
 -(void)selectTableViewButtonClicked:(UIButton*)sender Red:(NSInteger)red ID:(NSInteger)idNumber andDataDict:(NSDictionary*)thyDict;
 
+
+
 @optional
 -(void)selectTableViewButtonClicked:(UIButton *)sender andDiscountModel:(CWSCarWashDiscountModel*)thyModel;
+
+@optional
+-(void)selectTableViewButtonClicked:(UIButton *)sender andDiscountModel:(CWSCarWashDiscountModel*)thyModel cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @optional
 -(void)selectTableViewButtonClicked:(UIButton *)sender andNormalModel:(CWSCarWashNormalModel*)thyModel;

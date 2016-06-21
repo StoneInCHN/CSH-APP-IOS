@@ -77,13 +77,13 @@
     
 }
 
-//获取租户列表
+//获取租户列表 //104.077647,30.553998
 - (void)getData:(Boolean) isRefresh {
     [HttpHelper searchRenterListWithServiceCategoryId:@"1"
                                                userId:userInfo.desc
                                                 token:userInfo.token
-                                             latitude:userInfo.latitude
-                                            longitude:userInfo.longitude
+                                             latitude:@"30.553998"
+                                            longitude:@"104.077647"
                                              pageSize:5
                                            pageNumber:[[NSString stringWithFormat:@"%ld", (long)_temp] intValue]
                                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
@@ -310,8 +310,7 @@
 
 -(void)selectTableViewButtonClicked:(UIButton*)sender Red:(NSInteger)red ID:(NSInteger)idNumber andDataDict:(NSDictionary*)thyDict{
     
-    NSLog(@"datearray%@",dataArray);
-    NSLog(@"gooddic%@",thyDict);
+    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"merchantsID"] ] forKey:@"store_id"];
     [dic setValue:KUserManager.uid forKey:@"uid"];
@@ -327,19 +326,8 @@
     
     NSLog(@"%@",sender.titleLabel.text);
     if([sender.titleLabel.text isEqualToString:@"预约"]){
-        //时间选择器
-//        myTableView.userInteractionEnabled = YES;
-//        chooseBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-//        chooseBgView.backgroundColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:.5];
-//        [self.view addSubview:chooseBgView];
-//        ChoseDatePikerView *chooseDate = [[ChoseDatePikerView alloc]initWithFrame:CGRectMake(20, 70, self.view.frame.size.width-40, 280)];
-//        chooseDate.delegate = self;
-//        chooseDate.layer.cornerRadius = 5;
-//        chooseDate.goodDic = thyDict;
-//        
-//        
-//        [chooseBgView addSubview:chooseDate];
         //新保养预约
+        
         CWSYuYueViewController *yueyue = [[CWSYuYueViewController alloc]init];
         yueyue.goodDic = thyDict;
         [self.navigationController pushViewController:yueyue animated:YES];
