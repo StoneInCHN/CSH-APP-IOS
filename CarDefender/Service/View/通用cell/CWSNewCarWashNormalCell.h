@@ -29,4 +29,6 @@
 
 @property (nonatomic,assign) id <CWSTableViewButtonCellDelegate> delegate;
 
+@property (nonatomic,assign)NSIndexPath *indexPath;
+
 @end

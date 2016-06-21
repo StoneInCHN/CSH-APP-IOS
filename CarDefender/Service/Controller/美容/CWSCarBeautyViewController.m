@@ -64,13 +64,13 @@
 
 }
 
-//获取租户列表
+//获取租户列表@"30.553998"@"104.077647"
 - (void)getData:(Boolean) isRefresh {
     [HttpHelper searchRenterListWithServiceCategoryId:@"5"
                                                userId:userInfo.desc
                                                 token:userInfo.token
-                                             latitude:userInfo.latitude
-                                            longitude:userInfo.longitude
+                                             latitude:@"30.553998"
+                                            longitude:@"104.077647"
                                              pageSize:_pageSize
                                            pageNumber:_page
                                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {

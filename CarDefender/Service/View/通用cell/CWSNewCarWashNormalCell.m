@@ -37,7 +37,7 @@
 
 - (IBAction)payButtonClicked:(UIButton *)sender {
     
-        [self.delegate selectTableViewButtonClicked:sender andDiscountModel:self.discountModel];
+        [self.delegate selectTableViewButtonClicked:sender andDiscountModel:self.discountModel cellForRowAtIndexPath:self.indexPath];
     
     
 }

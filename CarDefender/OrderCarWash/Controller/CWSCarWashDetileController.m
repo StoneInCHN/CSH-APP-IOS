@@ -148,10 +148,23 @@
     
     
     
+    NSString * orserID = [NSString string];
+    
+    if (self.order) {
+        //历史订单条状获取orderID
+        orserID = self.order.orderId;
+    }else if (self.tag==101){
+        //支付成功页面，成功后 tag设置101
+        orserID = self.dataDict[@"orderId"];
+    }else{
+        //预约跳转此页后  直接获取orderID
+        orserID = self.orderID;
+    }
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
     NSDictionary* dic= @{@"userId":KUserInfo.desc,
                          @"token":KUserInfo.token,
-                         @"recordId":self.order.orderId};
+                         @"recordId":orserID};
+    NSLog(@"dic====%@",dic);
     [HttpHelper searchCarServiceRecordDetailWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"object=%@",object);
@@ -284,7 +297,7 @@
             
             rightBtn=[[UIBarButtonItem alloc]initWithTitle:@"取消订单" style:UIBarButtonItemStylePlain target:self action:@selector(cancleOrderButtonPressed:)];
             rightBtn.tintColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1];
-            self.navigationItem.rightBarButtonItem=rightBtn;
+            //self.navigationItem.rightBarButtonItem=rightBtn;
         }
         
         else if([chargeStatus isEqualToString:@"FINISH"]){

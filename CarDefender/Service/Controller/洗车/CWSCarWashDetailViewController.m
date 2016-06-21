@@ -25,6 +25,8 @@
 #import "NewCarWashDiscountCell.h"     //打折cell
 #import "CWSNewCarWashNormalCell.h"
 
+#import "CWSYuYueViewController.h" //预约保养
+
 #import "ChoseDatePikerView.h"
 
 #define HEADER_HEIGHT 33.0f
@@ -131,6 +133,7 @@
                                                    _commentsArray = dic[@"subServices"];
                                                }else if ([dic[@"categoryName"] isEqualToString:@"保养"]){
                                                    _normolWashArray = dic[@"subServices"];
+                                                   NSLog(@"%@",_normolWashArray);
                                                }else if ([dic[@"categoryName"] isEqualToString:@"紧急救援"]){
                                                    _fineWashArray = dic[@"subServices"];
                                                }else if ([dic[@"categoryName"] isEqualToString:@"洗车"]){
@@ -320,6 +323,9 @@
         CWSNewCarWashNormalCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"CWSNewCarWashNormalCell" owner:self options:nil] lastObject];
         cell.productNameLabel.text = @"";
         [cell.payButton setTitle:@"预约" forState:UIControlStateNormal];
+        cell.indexPath = indexPath;
+        //保养预约与美容预约不同 需要设置tag区分
+        cell.payButton.tag = 201;
         cell.priceLabel.hidden = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
        
@@ -465,7 +471,7 @@
 }
 
 
--(void)selectTableViewButtonClicked:(UIButton *)sender andDiscountModel:(CWSCarWashDiscountModel *)thyModel{
+-(void)selectTableViewButtonClicked:(UIButton *)sender andDiscountModel:(CWSCarWashDiscountModel *)thyModel cellForRowAtIndexPath:(NSIndexPath*)indexPath{
     
     CWSCarWashDiscountModel* selectedModel = thyModel;
     
@@ -538,17 +544,29 @@
     if([sender.titleLabel.text isEqualToString:@"预约"]){
         //生成订单
         //时间选择器
-        myTableView.userInteractionEnabled = YES;
-        chooseBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        chooseBgView.backgroundColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:.5];
-        [self.view addSubview:chooseBgView];
-        ChoseDatePikerView *chooseDate = [[ChoseDatePikerView alloc]initWithFrame:CGRectMake(20, 70, self.view.frame.size.width-40, 280)];
-        chooseDate.delegate = self;
-        chooseDate.layer.cornerRadius = 5;
-        chooseDate.goodDic = dic;
-        
-        
-        [chooseBgView addSubview:chooseDate];
+        if (sender.tag==201) {
+            //保养预约
+            //获取商品id
+            NSDictionary *dic = _normolWashArray[indexPath.row];
+            NSDictionary *goodDic = @{@"service_id":dic[@"id"]};
+            CWSYuYueViewController *yueyue = [[CWSYuYueViewController alloc]init];
+            
+            yueyue.goodDic = goodDic;
+            [self.navigationController pushViewController:yueyue animated:YES];
+        }else{
+            //美容预约
+            myTableView.userInteractionEnabled = YES;
+            chooseBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            chooseBgView.backgroundColor = [UIColor colorWithRed:200.0/255 green:200.0/255 blue:200.0/255 alpha:.5];
+            [self.view addSubview:chooseBgView];
+            ChoseDatePikerView *chooseDate = [[ChoseDatePikerView alloc]initWithFrame:CGRectMake(20, 70, self.view.frame.size.width-40, 280)];
+            chooseDate.delegate = self;
+            chooseDate.layer.cornerRadius = 5;
+            chooseDate.goodDic = dic;
+            
+            
+            [chooseBgView addSubview:chooseDate];
+        }
     }
 }
 #pragma ChoseDatePikerViewDelegate
