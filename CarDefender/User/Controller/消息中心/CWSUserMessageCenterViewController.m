@@ -257,7 +257,7 @@
     return cell;
 }
 
-- (void)readMessage:(NSDictionary *)detailDic withIndexPath:(NSIndexPath *)indexPath{
+- (void)readMessage:(NSDictionary *)detailDic withCell:(CWSUserMessageInfoCell *)cell{
     BOOL isRead = [[NSString stringWithFormat:@"%@",detailDic[@"isRead"]] isEqualToString:@"0"] ? NO : YES;
     if (!isRead) {
         NSString *itemId = [NSString stringWithFormat:@"%@",detailDic[@"id"]];
@@ -270,7 +270,7 @@
                                              userInfo.token = dict[@"token"];
                                              NSString *code = dict[@"code"];
                                              if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                                 
+                                                 [cell.readFlagView removeFromSuperview];
                                              } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
                                              } else {
@@ -282,7 +282,7 @@
 #pragma mark -================================TableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self readMessage:dataArray[indexPath.row] withIndexPath:indexPath];
+    [self readMessage:dataArray[indexPath.row] withCell:[tableView cellForRowAtIndexPath:indexPath]];
     
     CWSMessageDetailViewController *messageDetailVC = [[CWSMessageDetailViewController alloc] init];
     messageDetailVC.detailDic = dataArray[indexPath.row];
@@ -318,7 +318,7 @@
                                         if ([code isEqualToString:SERVICE_SUCCESS]) {
                                             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                             [MBProgressHUD showSuccess:@"删除成功" toView:self.view];
-                                            [self.messageList removeObjectAtIndex:indexPath.row];
+                                            [dataArray removeObjectAtIndex:indexPath.row];
                                             [myTableView reloadData];
                                         } else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];

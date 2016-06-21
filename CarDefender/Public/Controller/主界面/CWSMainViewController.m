@@ -239,6 +239,7 @@
                                          NSString *badgeValue = dict[@"desc"];
                                          if ([badgeValue isEqualToString:@"0"]) {
                                              [self.badgeValueLabel removeFromSuperview];
+                                             self.badgeImage.hidden = YES;
                                          } else {
                                              self.badgeImage.hidden = NO;
                                              if ([badgeValue integerValue] >= 100) {
