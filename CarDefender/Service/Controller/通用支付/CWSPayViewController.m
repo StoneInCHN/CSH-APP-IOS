@@ -322,7 +322,7 @@
     [self createRedPackageView];
     
     //余额抵用选择
-//    [self createBalanceView];
+    //[self createBalanceView];
     
     
     //合计确认
@@ -469,7 +469,7 @@
     balanceButton = [UIButton buttonWithType:UIButtonTypeCustom];
     balanceButton.tag = 202;
     balanceButton.frame = CGRectMake(0, 1, kSizeOfScreen.width, 58);
-    [balanceButton setTitle:@"qianbao" forState:UIControlStateNormal];
+    [balanceButton setTitle:@"yue" forState:UIControlStateNormal];
     [balanceButton setImage:[UIImage imageNamed:@"mycar_noclick"] forState:UIControlStateNormal];
     [balanceButton setImage:[UIImage imageNamed:@"mycar_click"] forState:UIControlStateSelected];
     [balanceButton setImageEdgeInsets:UIEdgeInsetsMake(0, kSizeOfScreen.width-35, 0, 0)];
@@ -744,6 +744,7 @@
     payMethodNum = sender.tag-200;
     payMethodString = sender.titleLabel.text;
     
+    
     UISwitch* balanceSwitch = (UISwitch *)[self.view viewWithTag:301];
     balanceSwitch.on = NO;
     
@@ -949,6 +950,8 @@
         }else if([payMethodString isEqualToString:@"yue"]){
             paymentType = @"WALLET";
         }
+        
+        
         NSLog(@"goods_id is %@", self.dataDict[@"goods_id"]);
         [HttpHelper payServiceWithUserId:userInfo.desc
                                    token:userInfo.token
@@ -1109,7 +1112,7 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if([dataD[@"code"] isEqualToString:SERVICE_SUCCESS]){
             CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
-           
+            
             NSDictionary *successData = [NSDictionary dictionaryWithObjectsAndKeys:
                                          [NSString stringWithFormat:@"%@", self.dataDict[@"store_name"]],
                                          @"store_name",
@@ -1121,9 +1124,11 @@
                                          @"order_sn",
                                          rootDict[@"desc"],
                                          @"orderId",
+                                         self.dataDict[@"categoryName"],
+                                         @"categoryName",
                                          nil];
             
-            
+       
             [paySuccessVc setDataDict:successData];
             [self.navigationController pushViewController:paySuccessVc animated:YES];
         }else{

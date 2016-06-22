@@ -82,8 +82,8 @@
     [HttpHelper searchRenterListWithServiceCategoryId:@"1"
                                                userId:userInfo.desc
                                                 token:userInfo.token
-                                             latitude:@"30.553998"
-                                            longitude:@"104.077647"
+                                             latitude:userInfo.latitude
+                                            longitude:userInfo.longitude
                                              pageSize:5
                                            pageNumber:[[NSString stringWithFormat:@"%ld", (long)_temp] intValue]
                                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {

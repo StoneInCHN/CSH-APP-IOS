@@ -164,14 +164,16 @@
     NSDictionary* dic= @{@"userId":KUserInfo.desc,
                          @"token":KUserInfo.token,
                          @"recordId":orserID};
+    NSLog(@"%@",self.dataDict);
     NSLog(@"dic====%@",dic);
     [HttpHelper searchCarServiceRecordDetailWithUserDic:dic success:^(AFHTTPRequestOperation *operation,id object){
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"object=%@",object);
             if ([object[@"code"] isEqualToString:SERVICE_SUCCESS]) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                self.dataDict = [NSDictionary dictionaryWithDictionary:object[@"msg"]];
+                
                 dataDic = [NSDictionary dictionaryWithDictionary:object[@"msg"]];
+                
                 [self createUI];
             }else {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -204,8 +206,9 @@
     [scrollView addSubview:orderProcessView];
     
     
-    NSLog(@"%@",self.order.categoryName);
-    if ([self.order.categoryName isEqualToString:@"洗车"]) {
+    
+    NSString *categoryName = [NSString stringWithFormat:@"%@",self.dataDict[@"categoryName"]];
+    if ([self.order.categoryName isEqualToString:@"洗车"]||[categoryName isEqualToString:@"洗车"]) {
         orderProcessView.hidden = YES;
         orderCancleProcessView.hidden= NO;
         orderCancleProcessView = [[OrderCancleProcessView alloc] initWithFrame:CGRectMake(0, orderStatusView.endY+20,screenWidth ,76 ) Data:dataDic];
