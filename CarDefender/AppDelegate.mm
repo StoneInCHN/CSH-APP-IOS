@@ -386,6 +386,7 @@ BMKMapManager* _mapManager;
     } else {
         UserInfo *userInfo = [UserInfo userDefault];
         userInfo.token = [userDefaults objectForKey:@"token"];
+        NSLog(@"userInfo.token :%@",userInfo.token);
         userInfo.desc = [userDefaults objectForKey:@"desc"];
         userInfo.nickName = [userDefaults objectForKey:@"nickName"];
         userInfo.signature = [userDefaults objectForKey:@"signature"];
@@ -620,6 +621,9 @@ BMKMapManager* _mapManager;
         }
     }
     MyLog(@"Receive Message2:%@",[self logDic:userInfo]);
+    NSString *alert = userInfo[@"aps"][@"alert"];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"推送消息" message:alert delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{

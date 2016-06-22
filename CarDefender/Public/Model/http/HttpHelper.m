@@ -811,7 +811,9 @@
     [parmDict setObject:userId forKey:@"userId"];
     [parmDict setObject:token forKey:@"token"];
     [parmDict setObject:serviceId forKey:@"serviceId"];
-    [parmDict setObject:paymentType forKey:@"paymentType"];
+    if (![paymentType isEqualToString:@"0"]) {
+         [parmDict setObject:paymentType forKey:@"paymentType"];
+    }
     [parmDict setObject:recordId forKey:@"recordId"];
     [parmDict setObject:couponId forKey:@"couponId"];
     

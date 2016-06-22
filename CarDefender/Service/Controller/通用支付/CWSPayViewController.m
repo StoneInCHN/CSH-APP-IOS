@@ -971,7 +971,7 @@
         }
         
         if (payMoney == 0) {
-            paymentType = @"";
+            paymentType = @"0";
         }
         
         NSLog(@"paymentType :%@",paymentType);
@@ -1003,10 +1003,12 @@
                     }else  if([payMethodString isEqualToString:@"yue"]){
                         //余额支付成功后回调
                         [self updateCarServicePayStatus:rootDict];
-                    }else  if([payMethodString isEqualToString:@"yue"]){
+                    }else  if([payMethodString isEqualToString:@"carWashCoupon"]){
                         [MBProgressHUD showSuccess:@"支付成功" toView:self.view];
                     }
                     
+                }else if ([rootDict[@"code"] isEqualToString:SERVICE_TIME_OUT]) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
                 }else{
                     [self alert:@"温馨提示" msg:[PublicUtils showServiceReturnMessage:rootDict[@"desc"]]];
                 }
