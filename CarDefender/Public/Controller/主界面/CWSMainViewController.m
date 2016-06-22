@@ -442,6 +442,7 @@
 
 #pragma mark --================================================================ 用户信息
 -(void)refreshUserIcon{
+    self.UserIconButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.UserIconButton setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS,userInfo.defaultVehicleIcon]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed | SDWebImageProgressiveDownload];
 }
 

@@ -956,7 +956,6 @@
 //    
 //    MyLog(@"-------------生成支付订单的参数-------------%@",paramDict);
 //    MyLog(@"支付方式:%@-支付金额:%.2f",payMethodString,payMoney);
-    if(payMoney){
         //在线支付
         [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
         NSString *paymentType;
@@ -975,7 +974,8 @@
             paymentType = @"";
         }
         
-        
+        NSLog(@"paymentType :%@",paymentType);
+        NSLog(@"coupon id :%@",currentCouponId);
         NSLog(@"goods_id is %@", self.dataDict[@"goods_id"]);
         [HttpHelper payServiceWithUserId:userInfo.desc
                                    token:userInfo.token
@@ -1004,7 +1004,6 @@
                         //余额支付成功后回调
                         [self updateCarServicePayStatus:rootDict];
                     }else  if([payMethodString isEqualToString:@"yue"]){
-#warning 洗车劵支付成功后如何回调
                         [MBProgressHUD showSuccess:@"支付成功" toView:self.view];
                     }
                     
@@ -1016,30 +1015,6 @@
              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
              [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
          }];
-    }else{
-        //使用红包或者余额支付
-        [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-//        [ModelTool getPayByRedAndBalaceWithParameter:paramDict andSuccess:^(id object) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//                NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
-//                MyLog(@"----------红包或余额充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
-//                MyLog(@"----------红包或余额充值返回信息-----------%@",rootDict);
-//                if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-//                    isPaySuccess = YES;
-//                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
-//                    [paySuccessVc setDataDict:rootDict[@"data"][@"return"]];
-//                    [self.navigationController pushViewController:paySuccessVc animated:YES];
-//                }else{
-//
-//                    [WCAlertView showAlertWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:rootDict[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                }
-//            });
-//        } andFail:^(NSError *err) {
-//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//            [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
-//        }];
-    }
 
 /*
     以下是PINGPP的支付方式

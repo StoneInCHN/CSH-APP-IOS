@@ -16,6 +16,7 @@
 @property (weak, nonatomic) id<SFActivityCellDelegate>delegate; ;
 @property (strong, nonatomic) SFActivityModel *activityModel;
 @property (strong, nonatomic) SFWashCarModel *washCarModel;
+@property (strong, nonatomic) SFActivityModel *onlyShowActivityModel;
 
 @property (strong, nonatomic) NSString *identify;
 @property (weak, nonatomic) IBOutlet UIImageView *lightImageView;

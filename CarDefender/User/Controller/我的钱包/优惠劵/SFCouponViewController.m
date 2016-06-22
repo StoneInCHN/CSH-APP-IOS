@@ -33,6 +33,7 @@
     if (segment.selectedSegmentIndex == 0) {
         if (!_activityVC) {
            _activityVC = [[CWSActivityViewController alloc] initWithNibName:@"CWSActivityViewController" bundle:nil];
+            _activityVC.isOnlyShow = YES;
             [self addChildViewController:_activityVC];
         }
         [self.segmentedView addSubview:_activityVC.view];

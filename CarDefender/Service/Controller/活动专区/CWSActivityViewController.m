@@ -143,7 +143,11 @@
     SFActivityTableViewCell *cell = [[SFActivityTableViewCell alloc] init];
     cell  = [tableView dequeueReusableCellWithIdentifier:@"activityTableViewCell" forIndexPath:indexPath];
     cell.delegate = self;
-    cell.activityModel = model;
+    if (self.isOnlyShow) {
+        cell.onlyShowActivityModel = model;
+    } else {
+       cell.activityModel = model;
+    }
     cell.tag = indexPath.row;
     return cell;
 }

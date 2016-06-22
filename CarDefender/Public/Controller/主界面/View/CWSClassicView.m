@@ -81,6 +81,7 @@
 #pragma mark -============================回调方法
 -(void)leftButtonClicked:(UIButton*)sender{
     CWSActivityViewController *vc = [[CWSActivityViewController alloc] init];
+    vc.isOnlyShow = NO;
     [self.thyRootVc.navigationController pushViewController:vc animated:YES];
 }
 

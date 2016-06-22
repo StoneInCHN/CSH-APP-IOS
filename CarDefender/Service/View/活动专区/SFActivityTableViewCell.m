@@ -50,7 +50,22 @@
         }
     }
 }
-
+- (void)setOnlyShowActivityModel:(SFActivityModel *)onlyShowActivityModel {
+    self.moneyLabel.text = [NSString stringWithFormat:@"%@元",onlyShowActivityModel.amount];
+    self.timeLabel.text = onlyShowActivityModel.deadlineTime;
+    self.discountCouponCounter.text = [NSString stringWithFormat:@"%@",onlyShowActivityModel.remainNum];
+    self.identify = [NSString stringWithFormat:@"%@",onlyShowActivityModel.identify];
+    if ([onlyShowActivityModel.type isEqualToString: @"SPECIFY"]) {
+        self.lightImageView.image = [UIImage imageNamed:@"redLightCoupon"];
+        self.darkImageView.image = [UIImage imageNamed:@"redDarkCoupon"];
+        self.typeLabel.text = @"指定优惠券";
+    }
+    [self.discountCouponCounter removeFromSuperview];
+    [self.displayLabel removeFromSuperview];
+    [self.displayLabel2 removeFromSuperview];
+    self.discountCouponBtn.hidden = YES;
+    self.couponSelectedImageView.hidden = NO;
+}
 - (void)setWashCarModel:(SFWashCarModel *)washCarModel {
     self.moneyLabel.text = [NSString stringWithFormat:@"%@次",washCarModel.remainNum];
     self.typeLabel.text = washCarModel.couponName;
