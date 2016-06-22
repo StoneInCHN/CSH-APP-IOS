@@ -27,9 +27,9 @@
 
 @property (nonatomic,strong)CWSCarWashDiscountModel *washDiscountModel;
 @property (nonatomic,strong)MyOrderDetailModel *myOrderDetailModel;
-@property (nonatomic,assign)NSInteger tag;//支付成功查看详情点过来的
-@property (nonatomic,strong) NSDictionary* dataDict; // 数据字典
-@property (nonatomic,strong)CWSHistoryOrder *order; //订单
+@property (nonatomic,assign)NSInteger tag;  //支付成功查看详情点过来的
+@property (nonatomic,strong) NSDictionary* dataDict;   // 数据字典
+@property (nonatomic,strong)CWSHistoryOrder *order;   //订单
 
 @property (nonatomic,strong)NSString *orderID; //订单id
 

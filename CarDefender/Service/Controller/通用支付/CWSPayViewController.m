@@ -325,7 +325,7 @@
     [self createRedPackageView];
     
     //余额抵用选择
-//    [self createBalanceView];
+    //[self createBalanceView];
     
     
     //合计确认
@@ -747,6 +747,7 @@
     payMethodNum = sender.tag-200;
     payMethodString = sender.titleLabel.text;
     
+    
     UISwitch* balanceSwitch = (UISwitch *)[self.view viewWithTag:301];
     balanceSwitch.on = NO;
     
@@ -973,6 +974,8 @@
         if (payMoney == 0) {
             paymentType = @"";
         }
+        
+        
         NSLog(@"goods_id is %@", self.dataDict[@"goods_id"]);
         [HttpHelper payServiceWithUserId:userInfo.desc
                                    token:userInfo.token
@@ -1133,7 +1136,7 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if([dataD[@"code"] isEqualToString:SERVICE_SUCCESS]){
             CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
-           
+            
             NSDictionary *successData = [NSDictionary dictionaryWithObjectsAndKeys:
                                          [NSString stringWithFormat:@"%@", self.dataDict[@"store_name"]],
                                          @"store_name",
@@ -1145,9 +1148,11 @@
                                          @"order_sn",
                                          rootDict[@"desc"],
                                          @"orderId",
+                                         self.dataDict[@"categoryName"],
+                                         @"categoryName",
                                          nil];
             
-            
+       
             [paySuccessVc setDataDict:successData];
             [self.navigationController pushViewController:paySuccessVc animated:YES];
         }else{

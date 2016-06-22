@@ -69,8 +69,8 @@
     [HttpHelper searchRenterListWithServiceCategoryId:@"5"
                                                userId:userInfo.desc
                                                 token:userInfo.token
-                                             latitude:@"30.553998"
-                                            longitude:@"104.077647"
+                                             latitude:userInfo.latitude
+                                            longitude:userInfo.longitude
                                              pageSize:_pageSize
                                            pageNumber:_page
                                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {

@@ -228,6 +228,7 @@
     }
     sender.selected = YES;
     selectedPay = sender.titleLabel.text;
+    NSLog(@"%@",sender.titleLabel.text);
 }
 
 /**付款金额按钮回调*/

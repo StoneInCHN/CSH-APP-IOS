@@ -173,6 +173,7 @@
     sender.selected = YES;
     payMethodString = sender.titleLabel.text;
     balanceSwitch.on=NO;
+    
 }
 
 //开关事件

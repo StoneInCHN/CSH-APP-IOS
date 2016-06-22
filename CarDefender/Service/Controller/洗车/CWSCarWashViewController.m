@@ -318,6 +318,7 @@
         [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"promotion_price"]] forKey:@"discount_price"];
         [dic setValue:[NSString stringWithFormat:@"%d",YES] forKey:@"is_discount_price"];
         [dic setValue:[NSString stringWithFormat:@"%@",thyDict[@"tenantName"]] forKey:@"store_name"];
+        [dic setValue:@"洗车" forKey:@"categoryName"];
         //tag为0表示红包标志为0，表示不能红包支付
         if(red){
             CWSPayViewController* payVc = [CWSPayViewController new];
