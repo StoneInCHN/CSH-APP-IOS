@@ -35,7 +35,6 @@
     [self addSubview:_mapView];
 }
 
-
 #pragma mark - 改变地图显示大小
 -(void)changeMapZoomLevel:(int)Level{
     int lChange = _mapView.zoomLevel + Level;
@@ -56,7 +55,9 @@
     _mapView.showsUserLocation = NO;//先关闭显示的定位图层
     _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
     _mapView.showsUserLocation = YES;//显示定位图层
-    _mapView.centerCoordinate = KManager.mobileCurrentPt;
+//    _mapView.centerCoordinate = KManager.mobileCurrentPt;
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake([[UserInfo userDefault].latitude doubleValue], [[UserInfo userDefault].longitude doubleValue]);
+    _mapView.centerCoordinate = centerCoordinate;
 }
 #pragma mark - 定位
 -(void)locationWithPoint:(CLLocationCoordinate2D)point Annotation:(CWSPointAnnotation*)annotation{

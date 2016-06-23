@@ -990,7 +990,10 @@
 //                MyLog(@"----------充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"msg"]]);
                 MyLog(@"----------充值返回信息-----------%@",rootDict);
                 if([rootDict[@"code"] isEqualToString:SERVICE_SUCCESS]){
-                    
+                    if (payMoney == 0) {
+                        [self updateCarServicePayStatus:rootDict];
+                        return ;
+                    }
                     if([payMethodString isEqualToString:@"wx"]){
                         //使用微信支付
                         WXPay* thyWeiXinPay = [WXPay shareInstance];
@@ -1004,7 +1007,7 @@
                         //余额支付成功后回调
                         [self updateCarServicePayStatus:rootDict];
                     }else  if([payMethodString isEqualToString:@"carWashCoupon"]){
-                        [MBProgressHUD showSuccess:@"支付成功" toView:self.view];
+                        [self updateCarServicePayStatus:rootDict];
                     }
                     
                 }else if ([rootDict[@"code"] isEqualToString:SERVICE_TIME_OUT]) {

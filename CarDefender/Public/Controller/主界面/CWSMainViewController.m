@@ -35,7 +35,7 @@
 #import "MyJPushService.h"
 #import "UIImageView+WebCache.h"
 
-@interface CWSMainViewController ()<BMKLocationServiceDelegate,UINavigationControllerDelegate,IChatManagerDelegate,ICallManagerDelegate,BMKGeoCodeSearchDelegate,UIAlertViewDelegate,UIAlertViewDelegate,CWSAdViewDelegate>{
+@interface CWSMainViewController ()<BMKLocationServiceDelegate,UINavigationControllerDelegate,IChatManagerDelegate,ICallManagerDelegate,BMKGeoCodeSearchDelegate,UIAlertViewDelegate,UIAlertViewDelegate,CWSAdViewDelegate,BadgeValueChangeDelegate>{
     
     NSMutableArray *_messageList;
     NSArray*   _cityArray;
@@ -397,10 +397,18 @@
 
 - (IBAction)onMessageCenterBtn:(id)sender {
     CWSUserMessageCenterViewController *userMessageCenterVC = [CWSUserMessageCenterViewController new];
-    userMessageCenterVC.messageList = _messageList;
+    userMessageCenterVC.delegate = self;
     [self.navigationController pushViewController:userMessageCenterVC animated:YES];
 }
-
+- (void)badgeValueChanged {
+    NSInteger badgeValue = [self.badgeValueLabel.text integerValue];
+    badgeValue = badgeValue -1;
+    self.badgeValueLabel.text = [NSString stringWithFormat:@"%ld",(long)badgeValue];
+}
+- (void)badgeDidEmpty {
+    [self.badgeValueLabel removeFromSuperview];
+    [self.badgeImage removeFromSuperview];
+}
 -(void)titleButtonClicked:(UIButton*)sender{
 
     MyLog(@"buttonTest");

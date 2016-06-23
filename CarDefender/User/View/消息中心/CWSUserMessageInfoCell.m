@@ -48,7 +48,6 @@
     self.messageDateLabel.text = userMessageModel.messageDate;
     self.messageTitleLabel.text = userMessageModel.messageTitle;
     self.messageContentLabel.text = userMessageModel.messageContent;
-    NSLog(@"is selected :%d",self.isSelected);
     if (userMessageModel.isSelected) {
         self.readFlagView.backgroundColor = [UIColor whiteColor];
     } else {

@@ -28,7 +28,7 @@
 @implementation CWSFindCarLocationController
 #pragma mark - 更新数据
 -(void)getHttpData:(CLLocationCoordinate2D)coordinate nearbyCar:(BOOL)nearbyCar type:(int)type{
-    /*
+
     _oldPt = coordinate;
 //    [self showHudInView:self.view hint:@"数据加载中..."];
     NSDictionary* dic = @{@"latitude":[NSString stringWithFormat:@"%f",coordinate.longitude],
@@ -74,7 +74,6 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }];
-     */
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -91,52 +90,25 @@
     //创建地图View
     [self creatMapView];
     //定位
-//    [self getPoint];
-    [self shouji];
+    [self getPoint];
     //创建TableView
     [self creatTableView];
     //创建通知
     [self creatNotification];
-    NSLog(@"subviews  :%@",self.view.subviews);
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (_findMapView) {
+        _findMapView.delegate = nil;
+        _findMapView = nil;
+    }
 }
 -(void)getPoint{
-    
-#if USENEWVERSION
-    if (userInfo.desc == nil) {
-        [self turnToLoginVC];
-        return;
-    }
-    
-//    if (KUserManager.userCID ==nil  || KUserManager.userDefaultVehicle[@"device"] == nil || [KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
-//        UIButton* lBtn2 = (UIButton*)[self.view viewWithTag:11];
-//        [lBtn2 setBackgroundImage:[UIImage imageNamed:@"chedongtai_myphone1"] forState:UIControlStateNormal];
-//        UIButton* btn = (UIButton*)[self.view viewWithTag:lBtn2.tag-1];
-//        [btn setBackgroundImage:[UIImage imageNamed:@"chedongtai_mycar1"] forState:UIControlStateNormal];
-        //手机定位
+    if (userInfo.defaultVehicle == nil) {
         [self shouji];
-//    }else{
-//        NSLog(@"%@%@",KUserManager.userCID,KUserManager.uid);
-//        //车辆定位
-//        [self dingwei];
-//    }
-#else
-    
-    if ([KUserManager.car.device isEqualToString:@""] || KUserManager.uid == nil) {
-        UIButton* lBtn2 = (UIButton*)[self.view viewWithTag:11];
-        [lBtn2 setBackgroundImage:[UIImage imageNamed:@"chedongtai_myphone1"] forState:UIControlStateNormal];
-        UIButton* btn = (UIButton*)[self.view viewWithTag:lBtn2.tag-1];
-        [btn setBackgroundImage:[UIImage imageNamed:@"chedongtai_mycar1"] forState:UIControlStateNormal];
-        //手机定位
-        [self shouji];
-    }else{
-        //车辆定位
+    } else {
         [self dingwei];
     }
-#endif
-    
-    
-    
-    
 }
 #pragma mark - 通知返回方法
 -(void)creatNotification{
@@ -285,45 +257,8 @@
 
 #pragma mark - 车辆定位
 -(void)dingwei{
-#if USENEWVERSION
-//    if (KManager.currentPt.latitude >0 && KManager.currentPt.longitude>0) {
-//         [self carLocationPoint:KManager.currentPt];
-//    }
-//    else {
-//         [self carLocationPoint:KManager.mobileCurrentPt];
-//    }
-    if (KUserManager.userDefaultVehicle[@"device"] == nil || [KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"绑定设备后才能看到您爱车附近的加油站噢！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }
-    else {
-        
-        [self carLocationPoint:KManager.currentPt];
-    }
-    
-#else
-    NSDictionary* lDic = @{@"carId":KUserManager.car.carId,@"uid":KUserManager.uid,@"key":KUserManager.key,@"isMode":@"0"};
-    MyLog(@"%@",lDic);
-    [self showHudInView:self.view hint:@"数据加载中..."];
-    [ModelTool httpGetGPSCarInfoWithParameter:lDic success:^(id object) {
-        NSDictionary* dic = object;
-        MyLog(@"%@",dic);
-        if ([dic[@"operationState"] isEqualToString:@"SUCCESS"]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                CLLocationCoordinate2D point = (CLLocationCoordinate2D){[dic[@"data"][@"data"][@"body"][@"lat"] floatValue], [dic[@"data"][@"data"][@"body"][@"lon"] floatValue]};
-                _nearbyCar = YES;
-                [self carLocationPoint:point];
-            });
-        }else{
-            [self hideHud];
-            
-        }
-    } faile:^(NSError *err) {
-        [self hideHud];
-    }];
-    
-#endif
-    
+    CLLocationCoordinate2D currentPt =  CLLocationCoordinate2DMake([userInfo.latitude doubleValue], [userInfo.longitude doubleValue]);
+    [self carLocationPoint:currentPt];
 }
 #pragma mark - 车辆定位方法
 -(void)carLocationPoint:(CLLocationCoordinate2D)point{
@@ -331,11 +266,10 @@
 }
 #pragma mark - 手机定位
 -(void)shouji{
-    
     _subCity = KManager.currentSubCity;
-    
+    CLLocationCoordinate2D currentPt =  CLLocationCoordinate2DMake([userInfo.latitude doubleValue], [userInfo.longitude doubleValue]);
     _nearbyCar = NO;
-    [self getHttpData:KManager.mobileCurrentPt nearbyCar:NO type:self.findMapViewType];
+    [self getHttpData:currentPt nearbyCar:NO type:self.findMapViewType];
 }
 
 #pragma mark - 左边按钮点击
@@ -343,14 +277,14 @@
     switch (sender.tag) {
         case 10://定位车辆
         {
-            if (KUserManager.uid == nil) {//登录
-                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"登录后才能看到您爱车附近的加油站噢！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                return;
-            }
-            if ([KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
-                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"绑定设备后才能看到您爱车附近的加油站噢！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                return;
-            }
+//            if (KUserManager.uid == nil) {//登录
+//                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"登录后才能看到您爱车附近的加油站噢！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+//                return;
+//            }
+//            if ([KUserManager.userDefaultVehicle[@"device"] isEqualToString:@""]) {
+//                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"绑定设备后才能看到您爱车附近的加油站噢！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+//                return;
+//            }
             [sender setBackgroundImage:[UIImage imageNamed:@"dongtai_mycar_click"] forState:UIControlStateNormal];
             UIButton* btn = (UIButton*)[self.view viewWithTag:sender.tag+1];
             [btn setBackgroundImage:[UIImage imageNamed:@"dongtai_myphone"] forState:UIControlStateNormal];

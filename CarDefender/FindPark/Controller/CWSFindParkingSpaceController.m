@@ -245,13 +245,12 @@ CGFloat SPACE = 20;
 }
 #pragma mark - 手机定位
 -(void)shouji{
-    CLLocationCoordinate2D point = (CLLocationCoordinate2D){KManager.mobileCurrentPt.latitude, KManager.mobileCurrentPt.longitude};
-    
+    CLLocationCoordinate2D point = CLLocationCoordinate2DMake([userInfo.latitude doubleValue], [userInfo.longitude doubleValue]);
     _nearbyCar = NO;
     [MBProgressHUD showMessag:@"数据加载中..." toView:self.view];
     _oldPt = point;
     _findMapView.normalPoint = _oldPt;
-    [self getHttpData:KManager.mobileCurrentPt nearbyCar:NO City:KManager.currentCity];
+    [self getHttpData:point nearbyCar:NO City:KManager.currentCity];
 }
 #pragma CWSParkMapView代理协议
 -(void)pointClick:(NSString *)name{
