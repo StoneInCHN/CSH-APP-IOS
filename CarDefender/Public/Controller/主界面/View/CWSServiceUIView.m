@@ -182,7 +182,9 @@
     else if ([whichService isEqualToString:@"一键检测"]) {
         if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""]) {
             [self alertShowWithMessage:@"请先绑定设备" ForConfirmEvent:^{
-                [MBProgressHUD showSuccess:@"binding" toView:self];
+                CWSAddCarController* lController = [[CWSAddCarController alloc] init];
+                lController.title = @"添加车辆";
+                [self.thyRootVc.navigationController pushViewController:lController animated:YES];
             }];
         } else {
             CWSDetectionOneForAllViewController* carDetectionVc = [CWSDetectionOneForAllViewController new];

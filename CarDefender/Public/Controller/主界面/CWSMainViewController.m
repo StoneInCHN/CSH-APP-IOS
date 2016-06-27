@@ -205,6 +205,9 @@
 - (void)initJpush{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *regId = [userDefaults objectForKey:@"regId"];
+    if (regId == nil) {
+        regId = @"000";
+    }
     [HttpHelper initJpushWithUserId:userInfo.desc
                               token:userInfo.token
                         versionCode:@"11"
@@ -403,6 +406,10 @@
 - (void)badgeValueChanged {
     NSInteger badgeValue = [self.badgeValueLabel.text integerValue];
     badgeValue = badgeValue -1;
+    if(badgeValue == 0) {
+        [self badgeDidEmpty];
+        return;
+    }
     self.badgeValueLabel.text = [NSString stringWithFormat:@"%ld",(long)badgeValue];
 }
 - (void)badgeDidEmpty {

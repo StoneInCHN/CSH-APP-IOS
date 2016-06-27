@@ -23,6 +23,7 @@
     CLLocationCoordinate2D    nowLocation;
     BMKGeoCodeSearch*        _geocodesearch;
     UserInfo *userInfo;
+    CLLocationCoordinate2D currentPt;
 }
 
 @end
@@ -92,9 +93,9 @@
 - (void)initalizeUserInterface
 {
     self.addressLabel = (UILabel *)[self.view viewWithTag:1];
-    if (KManager.currentCity.length>0 || KManager.currentSubCity>0 || KManager.currentStreetName>0 || KManager.currentStreetNumber>0) {
-        self.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",KManager.currentCity,KManager.currentSubCity,KManager.currentStreetName,KManager.currentStreetNumber];
-    }
+//    if (KManager.currentCity.length>0 || KManager.currentSubCity>0 || KManager.currentStreetName>0 || KManager.currentStreetNumber>0) {
+//        self.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",KManager.currentCity,KManager.currentSubCity,KManager.currentStreetName,KManager.currentStreetNumber];
+//    }
     
     
     self.addressButton = (UIButton *)[self.view viewWithTag:2];
@@ -119,8 +120,8 @@
     [self.mapCustomView addSubview:_mapView];
     //定位跟地图为跟随状态，即随时定位
     _mapView.userTrackingMode = BMKUserTrackingModeFollow;
-    
-    [_mapView setCenterCoordinate:KUserManager.currentPt];
+    currentPt = CLLocationCoordinate2DMake([userInfo.latitude doubleValue], [userInfo.longitude doubleValue]);
+    [_mapView setCenterCoordinate:currentPt];
     //定位
     locationService = [[BMKLocationService alloc] init];
     locationService.delegate = self;
@@ -128,29 +129,25 @@
     [locationService startUserLocationService];
     //显示定位图层
     _mapView.showsUserLocation = NO;
-    [_mapView setCenterCoordinate:KManager.currentPt animated:YES];
+    [_mapView setCenterCoordinate:currentPt animated:YES];
     [self addPointAnnotation];
     
-//    if (_geocodesearch == nil) {
-//        _geocodesearch = [[BMKGeoCodeSearch alloc]init];
-//        _geocodesearch.delegate = self;
-//    }
-//
-//    
-//    
-//    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-//    reverseGeocodeSearchOption.reverseGeoPoint = KUserManager.currentPt;
-//    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
-//    if(flag)
-//    {
-//        MyLog(@"反geo检索发送成功");
-//    }
-//    else
-//    {
-//        MyLog(@"反geo检索发送失败");
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"地图检索出错，请稍后再试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//    }
+    if (_geocodesearch == nil) {
+        _geocodesearch = [[BMKGeoCodeSearch alloc]init];
+        _geocodesearch.delegate = self;
+    }
+    
+    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    reverseGeocodeSearchOption.reverseGeoPoint = currentPt;
+    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    if(flag)
+    {
+        MyLog(@"反geo检索发送成功");
+    }
+    else
+    {
+        MyLog(@"反geo检索发送失败");
+    }
 }
 
 #pragma mark - 添加标注
@@ -164,7 +161,7 @@
 //    //标注1
     pointAnnotation = [[BMKPointAnnotation alloc]init];
     
-    pointAnnotation.coordinate = KManager.currentPt;
+    pointAnnotation.coordinate = currentPt;
 //    pointAnnotation.title = KUserManager.car.plate;
 //    pointAnnotation.title = KUserManager.userDefaultVehicle[@"plate"];
     pointAnnotation.title = userInfo.defaultVehiclePlate;
@@ -194,7 +191,7 @@
 {
     
     if (error == 0) {
-    
+        self.addressLabel.text = result.address;
         //移除地图上所有标注点
         NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
         [_mapView removeAnnotations:array];
@@ -202,12 +199,12 @@
         //    //标注1
         pointAnnotation = [[BMKPointAnnotation alloc]init];
         
-        pointAnnotation.coordinate = KManager.currentPt;
+        pointAnnotation.coordinate = currentPt;
         //    pointAnnotation.title = KUserManager.car.plate;
 //        pointAnnotation.title = KUserManager.userDefaultVehicle[@"plate"];
         pointAnnotation.title = userInfo.defaultVehiclePlate;
         [_mapView addAnnotation:pointAnnotation];
-        _mapView.centerCoordinate = KUserManager.currentPt;
+        _mapView.centerCoordinate = currentPt;
         
     }
 }
@@ -302,12 +299,7 @@
  */
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-    //    NSLog(@"方向更新");
-    
     [_mapView updateLocationData:userLocation];
-    
-    
-    
 }
 
 /**
@@ -316,8 +308,7 @@
  */
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    //    NSLog(@"位置更新");
-    
+    currentPt = userLocation.location.coordinate;
     [_mapView updateLocationData:userLocation];
     
 }
