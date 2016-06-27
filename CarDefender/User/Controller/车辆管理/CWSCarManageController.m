@@ -517,11 +517,20 @@
                         currentCell.defaultLabel.text = @"[默认]";
                         currentCell.defaultLabel.hidden = NO;
                         
-                        
+                        //更改默认车辆信息
+                        NSDictionary *defautCarInfo = _dataArray[indexPath.row];
                         //更换UserDefaults中保存的默认车辆cid
-                        NSString* userCid = _dataArray[indexPath.row][@"id"];
+                        KUserInfo.defaultDeviceNo = defautCarInfo[@"deviceNo"];
+                        KUserInfo.defaultVehicleIcon = [NSString stringWithFormat:@"%@",defautCarInfo[@"brandIcon"]];
+                        
+                        NSString* userCid = defautCarInfo[@"id"];
                         NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
                         [thyUserDefaults setValue:userCid forKey:@"cid"];
+                        
+                        [thyUserDefaults setObject:[PublicUtils checkNSNullWithgetString:defautCarInfo[@"plate"]] forKey:@"defaultVehiclePlate"];
+                        [thyUserDefaults setObject:[PublicUtils checkNSNullWithgetString:defautCarInfo[@"deviceNo"]] forKey:@"defaultDeviceNo"];
+                        [thyUserDefaults setObject:[PublicUtils checkNSNullWithgetString:defautCarInfo[@"brandIcon"]]  forKey:@"defaultVehicleIcon"];
+                        [thyUserDefaults setObject:[PublicUtils checkNSNullWithgetString:defautCarInfo[@"id"]] forKey:@"defaultVehicleId"];
                         NSMutableDictionary *userDefaultVehicle = [NSMutableDictionary dictionaryWithDictionary:_dataArray[indexPath.row]];
                         //去除为空得值
                         for (NSString* key in [userDefaultVehicle allKeys]) {

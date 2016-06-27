@@ -31,6 +31,8 @@
 
 #import "CWSPayViewController.h"
 
+#import "CWSAddCarController.h"//添加车辆
+
 #define BUTTON_NUM 4
 #define TOTAL_BUTTON_NUM 12
 @implementation CWSServiceUIView{
@@ -168,7 +170,7 @@
     }
     else if ([whichService isEqualToString:@"车辆动态"]) {
         if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""] ) {
-            [self alertShowWithMessage:@"先绑定车牌吧" ForConfirmEvent:^{
+            [self alertShowWithMessage:@"先绑定车牌吧" title:@"前往绑定" ForConfirmEvent:^{
                 CWSAddCarController* lController = [[CWSAddCarController alloc] init];
                 lController.title = @"添加车辆";
                 [self.thyRootVc.navigationController pushViewController:lController animated:YES];
@@ -180,14 +182,31 @@
         }
     }
     else if ([whichService isEqualToString:@"一键检测"]) {
-        if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""]) {
-            [self alertShowWithMessage:@"请先绑定设备" ForConfirmEvent:^{
-                [MBProgressHUD showSuccess:@"binding" toView:self];
+        NSLog(@"defaultVehicleId===%@",userInfo.defaultVehicleId);
+        if([userInfo.defaultVehicleId isKindOfClass:[NSNull class]]||[[NSString stringWithFormat:@"%@",userInfo.defaultVehicleId] isEqualToString:@""]||1){
+            //没绑定汽车
+            [self alertShowWithMessage:@"请先添加车辆" title:@"前往添加" ForConfirmEvent:^{
+                CWSAddCarController *addCarView = [[CWSAddCarController alloc]init];
+                addCarView.title = @"添加车辆";
+                [self.thyRootVc.navigationController pushViewController:addCarView animated:YES];
+                
             }];
-        } else {
-            CWSDetectionOneForAllViewController* carDetectionVc = [CWSDetectionOneForAllViewController new];
-            carDetectionVc.title = @"一键检测";
-            [self.thyRootVc.navigationController pushViewController:carDetectionVc animated:YES];
+
+            
+        }else{
+          //  绑定汽车
+        NSLog(@"%@",userInfo.defaultDeviceNo);
+            if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""]) {
+                //
+                [self alertShowWithMessage:@"请先绑定设备" title:@"前往绑定" ForConfirmEvent:^{
+                    [MBProgressHUD showSuccess:@"binding" toView:self];
+                }];
+            } else {
+                //
+                CWSDetectionOneForAllViewController* carDetectionVc = [CWSDetectionOneForAllViewController new];
+                carDetectionVc.title = @"一键检测";
+                [self.thyRootVc.navigationController pushViewController:carDetectionVc animated:YES];
+            }
         }
     }
     else if ([whichService isEqualToString:@"找加油站"]) {
@@ -204,9 +223,10 @@
 
 }
 - (void)alertShowWithMessage:(NSString *)message
+                       title:(NSString*)title
              ForConfirmEvent:(void (^)())onEvent {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *bindBtn = [UIAlertAction actionWithTitle:@"前往绑定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *bindBtn = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         onEvent();
     }];
     UIAlertAction *cancleBtn = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];

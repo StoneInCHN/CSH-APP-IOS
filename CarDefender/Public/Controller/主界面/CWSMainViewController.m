@@ -65,6 +65,7 @@
     _navIsHidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
     [self getLocationCity];
+    [self refreshUserIcon];
     //存储当前界面标记
     NSUserDefaults* markController = [[NSUserDefaults alloc]init];
     [markController setObject:@"CWSMainViewController" forKey:@"currentController"];
