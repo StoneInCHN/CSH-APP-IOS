@@ -35,7 +35,7 @@
 #import "MyJPushService.h"
 #import "UIImageView+WebCache.h"
 
-@interface CWSMainViewController ()<BMKLocationServiceDelegate,UINavigationControllerDelegate,IChatManagerDelegate,ICallManagerDelegate,BMKGeoCodeSearchDelegate,UIAlertViewDelegate,UIAlertViewDelegate,CWSAdViewDelegate>{
+@interface CWSMainViewController ()<BMKLocationServiceDelegate,UINavigationControllerDelegate,IChatManagerDelegate,ICallManagerDelegate,BMKGeoCodeSearchDelegate,UIAlertViewDelegate,UIAlertViewDelegate,CWSAdViewDelegate,BadgeValueChangeDelegate>{
     
     NSMutableArray *_messageList;
     NSArray*   _cityArray;
@@ -240,6 +240,7 @@
                                          NSString *badgeValue = dict[@"desc"];
                                          if ([badgeValue isEqualToString:@"0"]) {
                                              [self.badgeValueLabel removeFromSuperview];
+                                             self.badgeImage.hidden = YES;
                                          } else {
                                              self.badgeImage.hidden = NO;
                                              if ([badgeValue integerValue] >= 100) {
@@ -397,10 +398,18 @@
 
 - (IBAction)onMessageCenterBtn:(id)sender {
     CWSUserMessageCenterViewController *userMessageCenterVC = [CWSUserMessageCenterViewController new];
-    userMessageCenterVC.messageList = _messageList;
+    userMessageCenterVC.delegate = self;
     [self.navigationController pushViewController:userMessageCenterVC animated:YES];
 }
-
+- (void)badgeValueChanged {
+    NSInteger badgeValue = [self.badgeValueLabel.text integerValue];
+    badgeValue = badgeValue -1;
+    self.badgeValueLabel.text = [NSString stringWithFormat:@"%ld",(long)badgeValue];
+}
+- (void)badgeDidEmpty {
+    [self.badgeValueLabel removeFromSuperview];
+    [self.badgeImage removeFromSuperview];
+}
 -(void)titleButtonClicked:(UIButton*)sender{
 
     MyLog(@"buttonTest");
@@ -442,6 +451,7 @@
 
 #pragma mark --================================================================ 用户信息
 -(void)refreshUserIcon{
+    self.UserIconButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.UserIconButton setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS,userInfo.defaultVehicleIcon]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed | SDWebImageProgressiveDownload];
 }
 

@@ -10,4 +10,6 @@
 
 @interface CWSActivityViewController : UIViewController
 
+@property(assign, nonatomic) BOOL isOnlyShow;
+
 @end

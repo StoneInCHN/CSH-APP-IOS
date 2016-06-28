@@ -26,13 +26,13 @@
 
 #import "CWSCarBoundOKController.h"//设备ID第二次绑定跳转位置
 
-
+#import "CWSSelectDeviceNOViewController.h" //选择设备列表
 #import "CWSSelectCarAreaController.h"
 
 #import "IQKeyboardManager.h"
 #import "CWSBoundIDViewController.h"
 
-#define kAlphaNum @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
+#define kAlphaNum @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz"
 @interface CWSAddCarController ()<UIActionSheetDelegate,UITextFieldDelegate,BMKGeoCodeSearchDelegate,ChooseCarColorViewDelegate,UIAlertViewDelegate,UIScrollViewDelegate,CWSAddCarNexCheckViewDelegate>
 {
     UIScrollView*_scrollView;
@@ -61,7 +61,7 @@
     UIView  *helpBackView;
     UIView *helpPhotoView;
     NSDictionary*carBackDic;//车辆信息返回数据
-    
+    NSString *carId;
     int identifier;  //标示年检和保险
 }
 @end
@@ -211,9 +211,15 @@
 -(void)goBackEvent:(UIButton*)sender
 {
     if (_isEditing) {
-        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"是否放弃添加车辆信息？" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"继续添加", nil];
-        alert.tag=1111;
-        [alert show];
+        if ([self.title isEqualToString:@"编辑车辆"]) {
+            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"是否放弃添加车辆信息？" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"继续编辑", nil];
+            alert.tag=1111;
+            [alert show];
+        }else{
+            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"是否放弃添加车辆信息？" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"继续添加", nil];
+            alert.tag=1111;
+            [alert show];
+        }
     }else{
         if ([self.noDeviceComeBackEdit isEqualToString:@"回来了"]) {
             self.noDeviceComeBackEdit = @"";
@@ -242,6 +248,15 @@
     }else if (alertView.tag==1110){
         if (buttonIndex==1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",@"4007930888"]]];
+        }
+    }else if(alertView.tag==1001){
+        if (buttonIndex==1) {
+            CWSSelectDeviceNOViewController *selectDevice = [[CWSSelectDeviceNOViewController alloc]init];
+            selectDevice.identifier = @"添加或编辑车辆时";
+            selectDevice.carId = carId;
+            [self.navigationController pushViewController:selectDevice animated:YES];
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -421,7 +436,9 @@
 - (void)textFieldDidChange:(UITextField *)textField
 {
     if (textField == self.carNumberTextField) {
+        self.carNumberTextField.text=[textField.text uppercaseString];
         if (textField.text.length > 5) {
+            
             textField.text = [textField.text substringToIndex:5];
         }
     }
@@ -720,9 +737,14 @@
                 }
                 self.editDic = realDict.copy;
                 if([self.editDic[@"deviceNo"] isEqualToString:@""]){
-                    CWSBoundIDViewController* boundIdVc = [[CWSBoundIDViewController alloc]init];
-                    boundIdVc.idString = self.editDic[@"id"];
-                    [self.navigationController pushViewController:boundIdVc animated:YES];
+//                    CWSBoundIDViewController* boundIdVc = [[CWSBoundIDViewController alloc]init];
+//                    boundIdVc.idString = self.editDic[@"id"];
+//                    [self.navigationController pushViewController:boundIdVc animated:YES];
+                    //新 选择设备列表绑定设备
+                    carId = [NSString stringWithFormat:@"%@",self.editDic[@"id"]];
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请先绑定设备" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"前去绑定", nil];
+                    [alert show];
+                    alert.tag = 1001;
                 }else{
                     [WCAlertView showAlertWithTitle:@"提示" message:@"保存成功!" customizationBlock:nil completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
                         if(!buttonIndex){
@@ -744,6 +766,7 @@
     }];
 
 }
+
 //添加车辆的接口
 -(void)addCarDetail:(NSDictionary *)dic{
     [MBProgressHUD showMessag:@"添加中..." toView:self.view];
@@ -768,13 +791,17 @@
                     KUserInfo.defaultVehicleId = userCid;
                 }
                 
-                CWSBoundIDViewController *vc = [[CWSBoundIDViewController alloc] init];
-                //vc.idString = _bodyDic[@"cid"];
-                vc.idString = object[@"desc"];
-                NSLog(@"%@",vc.idString);
-                [self.navigationController pushViewController:vc animated:YES];
+//                CWSBoundIDViewController *vc = [[CWSBoundIDViewController alloc] init];
+//                //vc.idString = _bodyDic[@"cid"];
+//                vc.idString = object[@"desc"];
+//                NSLog(@"%@",vc.idString);
+//                [self.navigationController pushViewController:vc animated:YES];
                 
-                
+                //新获取设备列表进行绑定设备
+                carId = [NSString stringWithFormat:@"%@",object[@"desc"]];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请先绑定设备" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"前去绑定", nil];
+                [alert show];
+                alert.tag = 1001;
                 
                 
             });
@@ -879,25 +906,8 @@
 }
 #pragma mark - 选择项的点击事件
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    switch (buttonIndex) {
-        case 0:
-        {
-            //self.hibitOilText.text = @"97#汽油";
-        }
-            break;
-        case 1:
-        {
-            //self.hibitOilText.text = @"93#汽油";
-        }
-            break;
-        case 2:
-        {
-           // self.hibitOilText.text = @"0#柴油";
-        }
-            break;
-        default:
-            break;
-    }
+    
+    
 }
 
 - (IBAction)selectAreaButtonClicked:(UIButton *)sender {

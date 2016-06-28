@@ -520,8 +520,10 @@
                         //更改默认车辆信息
                         NSDictionary *defautCarInfo = _dataArray[indexPath.row];
                         //更换UserDefaults中保存的默认车辆cid
-                        KUserInfo.defaultDeviceNo = defautCarInfo[@"deviceNo"];
-                        KUserInfo.defaultVehicleIcon = [NSString stringWithFormat:@"%@",defautCarInfo[@"brandIcon"]];
+                        KUserInfo.defaultDeviceNo = [PublicUtils checkNSNullWithgetString:defautCarInfo[@"deviceNo"]];
+                        KUserInfo.defaultVehicleIcon = [PublicUtils checkNSNullWithgetString:defautCarInfo[@"brandIcon"]];
+                        KUserInfo.defaultVehicleId = [PublicUtils checkNSNullWithgetString:defautCarInfo[@"id"]];
+                        
                         
                         NSString* userCid = defautCarInfo[@"id"];
                         NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];

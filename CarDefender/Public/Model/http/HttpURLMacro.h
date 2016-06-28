@@ -61,6 +61,9 @@
 #define KHTTPHELPER_BALANCECHAREIN_GET_URL @"/csh-interface/balance/chargeIn.jhtml" //我的钱包余额充值获取交易凭证：
 
 #define KHTTPHELPER_PURDEVICECHARGE_GET_URL @"/csh-interface/balance/purDeviceCharge.jhtml" //购买设备充值回调：
+
+#define KHTTPHELPER_AVAILABLEDEVICE_GET_URL @"/csh-interface/vehicle/getAvailableDevice.jhtml" //获取用户已经购买的可以绑定的设备列表
+
 #define KHTTPHELPER_TENANT_DETAILS_URL @"/csh-interface/tenantInfo/getTenantById.jhtml"//租户详情
 #define KHTTPHELPER_PAY_SERVICE_URL @"/csh-interface/carService/payService.jhtml"//支付调用
 

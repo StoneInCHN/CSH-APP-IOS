@@ -26,26 +26,7 @@
     [Utils changeBackBarButtonStyle:self];
     [MBProgressHUD showMessag:@"数据加载中..." toView:self.view];
     userInfo = [UserInfo userDefault];
-    _oldPt = coordinate;
-//    _subCity = KManager.currentSubCity;
-//    NSDictionary* dic;
-//    if (KUserManager.uid != nil){
-//        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
-//                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
-//                @"uid":KUserManager.uid,
-//                @"cityName":[_subCity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-//                @"keyWord":[self.type stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-//                @"page":@"0",
-//                @"size":@"20"};
-//    }else{
-//        dic = @{@"lat":[NSString stringWithFormat:@"%f",coordinate.latitude],
-//                @"lon":[NSString stringWithFormat:@"%f",coordinate.longitude],
-//                @"cityName":[_subCity stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-//                @"keyWord":[self.type stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-//                @"page":@"0",
-//                @"size":@"20"};
-//    }
-    
+    _oldPt = CLLocationCoordinate2DMake([userInfo.latitude doubleValue], [userInfo.longitude doubleValue]);
     [HttpHelper searchGasolineStationWithUserId:userInfo.desc
                                           token:userInfo.token
                                         keyWord:@"加油站"
@@ -67,15 +48,11 @@
                                                 findMapData.point = coordinate;
                                                 findMapData.nearbyCar = nearbyCar;
                                                 findMapData.coordArray = _dataArray;
-                                                
-                                                dispatch_async(dispatch_get_main_queue(), ^{
-                                                    [_findMapView reloadData:findMapData type:type];
-                                                    if (_dataArray.count > 0) {
-                                                        [self reloadFootView:_dataArray[0]];
-                                                    }
-                                                    [_tableView reloadData];
-                                                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                                                });
+                                                [_findMapView reloadData:findMapData type:type];
+                                                if (_dataArray.count > 0) {
+                                                    [self reloadFootView:_dataArray[0]];
+                                                }
+                                                [_tableView reloadData];
                                                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                                             }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
@@ -127,7 +104,20 @@
     
 }
 
-
+- (void)viewDidLoad {
+    [super viewDidLoad];
+//    [self creatMapView];
+}
+#pragma mark - 创建mapView
+-(void)creatMapView{
+    _findMapView.backgroundColor = [UIColor redColor];
+    _findMapView = [[CWSFindMapView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height - kDockHeight)];
+    _findMapView.type = self.findMapViewType;
+    _findMapView.delegate = self;
+    [self.view insertSubview:_findMapView atIndex:0];
+    [self.footView setFrame:CGRectMake(0, kSizeOfScreen.height - self.footView.frame.size.height - kDockHeight - kSTATUS_BAR, self.footView.frame.size.width, self.footView.frame.size.height)];
+    [self.view addSubview:self.footView];
+}
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellID=@"oilCell";
     CWSOilCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID];

@@ -415,6 +415,18 @@
                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark 获取用户已经购买的可以绑定的设备列表
+/**
+ * 获取用户已经购买的可以绑定的设备列表
+ *
+ *  @param dic @{@"userId": ,@"token": }
+ 
+ *  @param success 成功回调数据
+ *  @param faile   失败回调数据
+ */
++ (void)getAvailableDeviceWithUserDic:(NSDictionary *)vehicleDic
+                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 #pragma mark 租户详情
 + (void)getTenantDetailsWithUserId:(NSString *)userId
                             token:(NSString *)token
