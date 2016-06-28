@@ -37,13 +37,6 @@
     [self updateLoginCacheInfo];
 }
 #pragma mark -========================InitialData
-- (NSString *)currentDateStr {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd"];
-    NSDate *currentDate = [[NSDate alloc] init];
-    NSString *currentDateStr = [NSString stringWithFormat:@"%@",[formatter stringFromDate:currentDate]];
-    return currentDateStr;
-}
 
 - (void)saveUserInfo:(NSDictionary *)info {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -92,7 +85,7 @@
 }
 - (void)oneKeyDetection {
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-    NSString *searchDate = [self currentDateStr];
+    NSString *searchDate = [Helper currentDateStr];
     [HttpHelper oneKeyDetectionWithUserId:userInfo.desc
                                     token:userInfo.token
                                  deviceNo:userInfo.defaultDeviceNo

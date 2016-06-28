@@ -9,7 +9,7 @@
 #import "CWSDetectionScanViewController.h"
 #import "CWSCarReportViewController.h"
 #import "DriveBehaviorDetailsController.h"
-#import "CWSDetectionDetailViewController.h"
+#import "SFDetectionDetailViewController.h"
 
 #define CARWIDTH 145.0f
 #define CARHEIGHT 265.0f
@@ -344,13 +344,13 @@
         case 0:{
             //车辆报告
             CWSCarReportViewController* reportVc = [CWSCarReportViewController new];
+            reportVc.searchDate = [Helper currentDateStr];
             [self.navigationController pushViewController:reportVc animated:YES];
             
         };break;
         case 1:{
             //查看详情
-            CWSDetectionDetailViewController* detailVc = [[CWSDetectionDetailViewController alloc] init];
-            detailVc.obdDataArray = self.obdDataArray;
+            SFDetectionDetailViewController* detailVc = [[SFDetectionDetailViewController alloc] init];
             [self.navigationController pushViewController:detailVc animated:YES];
         
         };break;

@@ -170,50 +170,6 @@
 {
     _detailOrMain=NO;
     _bodyDic=[NSMutableDictionary dictionary];
-    /*
-#if USENEWVERSION
-    [_bodyDic setObject:KUserManager.uid forKey:@"uid"];
-    [_bodyDic setObject:KUserManager.mobile forKey:@"mobile"];
-    [_bodyDic setObject:@"day" forKey:@"type"];
-    [_bodyDic setObject:KUserManager.userCID forKey:@"cid"];
-    
-    NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
-    long long int date = (long long int)time;
-    date = date - 60*60*24;
-    NSDate *dateNew = [NSDate dateWithTimeIntervalSince1970:date];
-    NSDateFormatter *form = [[NSDateFormatter alloc] init];
-    [form setDateFormat:@"yyyy-MM-dd"];
-    NSString *stringDate = [form stringFromDate:dateNew];
-    [_bodyDic setObject:stringDate forKey:@"time"];
-    _nowDate = dateNew;
-    
-#else
-    [_bodyDic setObject:KUserManager.uid forKey:@"uid"];
-    [_bodyDic setObject:KUserManager.key forKey:@"key"];
-    [_bodyDic setObject:@"day" forKey:@"type"];
-    [_bodyDic setObject:KUserManager.car.cid forKey:@"cid"];
-    
-    NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
-    long long int date = (long long int)time;
-    date = date - 60*60*24;
-    NSDate *dateNew = [NSDate dateWithTimeIntervalSince1970:date];
-    NSDateFormatter *form = [[NSDateFormatter alloc] init];
-    [form setDateFormat:@"yyyy-MM-dd"];
-    NSString *stringDate = [form stringFromDate:dateNew];
-    [_bodyDic setObject:stringDate forKey:@"time"];
-    _nowDate = dateNew;
-    
-    _reportDic=[NSMutableDictionary dictionary];
-    [_reportDic setObject:KUserManager.uid forKey:@"uid"];
-    [_reportDic setObject:KUserManager.key forKey:@"key"];
-    [_reportDic setObject:KUserManager.car.cid forKey:@"cid"];
-    
-#endif
-    
-    */
-    
-    
-    
 }
 #pragma mark -左右滑动动画介绍代理协议
 -(void)animateFinish:(BOOL)isLeft{
@@ -753,122 +709,6 @@
                                       [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
                                       [_stopView removeFromSuperview];
                                   }];
-    /*
-    
-#if USENEWVERSION
-    
-    [ModelTool getReportWithParameter:_bodyDic andSuccess:^(id object) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                NSLog(@"%@",object);
-                NSDictionary* dataDic = object[@"data"];
-                _costCurrentDic=object[@"data"];
-                NSDictionary* lDic1 = @{@"image":@"baogao_youhao",
-                                        @"name":@"当日油耗",
-                                        @"data":[NSString stringWithFormat:@"%@L",dataDic[@"oil"]]};
-                NSDictionary* lDic2 = @{@"image":@"baogao_baigongli",
-                                        @"name":@"平均油耗",
-                                        @"data":[NSString stringWithFormat:@"%@L/100km",dataDic[@"avgOil"]]};
-                NSDictionary* lDic3 = @{@"image":@"baogao_time",
-                                        @"name":@"驾驶时间",
-                                        @"data":[NSString stringWithFormat:@"%@Min",dataDic[@"feeTime"]]};
-                NSDictionary* lDic4 = @{@"image":@"baogao_licheng",
-                                        @"name":@"当日里程",
-                                        @"data":[NSString stringWithFormat:@"%@km",dataDic[@"mile"]]};
-                NSDictionary* lDic5 = @{@"image":@"baogao_sudu",
-                                        @"name":@"平均速度",
-                                        @"data":[NSString stringWithFormat:@"%@km/h",dataDic[@"avgSpeed"]]};
-                
-                
-                NSArray* array = @[lDic1,lDic2,lDic3,lDic4,lDic5];
-                NSString* cost = [NSString stringWithFormat:@"￥%@",dataDic[@"fee"]];
-                
-                [_groundView reloadData:array cost:cost];
-                if ([dataDic[@"mile"] floatValue] < 3) {
-                    _normalLabel1.hidden = NO;
-                    _normalLable.hidden = NO;
-                }else{
-                    _normalLabel1.hidden = YES;
-                    _normalLable.hidden = YES;
-                }
-                //驾驶得分
-//                _scoreLabel1.text = [NSString stringWithFormat:@"%@分",dataDic[@"drivingScore"]];
-//                _scoreLabel2.text = [NSString stringWithFormat:@"%@分",_costCurrentDic[@"drivingScore"]];
-                [_stopView removeFromSuperview];
-            }
-            else {
-                [[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                
-            }
-            [_stopView removeFromSuperview];
-        });
-        
-    } andFail:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        loadORNoSide=NO;
-        [_stopView removeFromSuperview];
-    }];
-#else
-    [ModelTool httpAppGainReportWithParameter:_bodyDic success:^(id object) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            loadORNoSide=NO;
-            MyLog(@"%@",object);
-            
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([object[@"operationState"] isEqualToString:@"SUCCESS"]) {
-                    NSDictionary* dataDic = object[@"data"];
-                    _costCurrentDic=object[@"data"];
-                    NSDictionary* lDic1 = @{@"image":@"baogao_youhao",
-                                            @"name":@"当日油耗",
-                                            @"data":[NSString stringWithFormat:@"%@L",dataDic[@"oil"]]};
-                    NSDictionary* lDic2 = @{@"image":@"baogao_baigongli",
-                                            @"name":@"平均油耗",
-                                            @"data":[NSString stringWithFormat:@"%@L/100km",dataDic[@"avgOil"]]};
-                    NSDictionary* lDic3 = @{@"image":@"baogao_time",
-                                            @"name":@"驾驶时间",
-                                            @"data":[NSString stringWithFormat:@"%@Min",dataDic[@"feeTime"]]};
-                    NSDictionary* lDic4 = @{@"image":@"baogao_licheng",
-                                            @"name":@"当日里程",
-                                            @"data":[NSString stringWithFormat:@"%@km",dataDic[@"mile"]]};
-                    NSDictionary* lDic5 = @{@"image":@"baogao_sudu",
-                                            @"name":@"平均速度",
-                                            @"data":[NSString stringWithFormat:@"%@km/h",dataDic[@"avgSpeed"]]};
-                    
-                    
-                    NSArray* array = @[lDic1,lDic2,lDic3,lDic4,lDic5];
-                    NSString* cost = [NSString stringWithFormat:@"￥%@",dataDic[@"fee"]];
-                    
-                    [_groundView reloadData:array cost:cost];
-                    if ([dataDic[@"mile"] floatValue] < 3) {
-                        _normalLabel1.hidden = NO;
-                        _normalLable.hidden = NO;
-                    }else{
-                        _normalLabel1.hidden = YES;
-                        _normalLable.hidden = YES;
-                    }
-                    _scoreLabel1.text = [NSString stringWithFormat:@"%@分",dataDic[@"drivingScore"]];
-                    _scoreLabel2.text = [NSString stringWithFormat:@"%@分",_costCurrentDic[@"drivingScore"]];
-                    [_stopView removeFromSuperview];
-                    
-                }else{
-                    [[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"data"][@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                    
-                }
-                [_stopView removeFromSuperview];
-            });
-        });
-    } faile:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        loadORNoSide=NO;
-        [_stopView removeFromSuperview];
-    }];
-    
-#endif
-    */
-    
 }
 //创建主界面视图
 -(void)creatUI{
@@ -924,9 +764,7 @@
     self.calendarView = [[CLWeeklyCalendarView alloc] initWithFrame:CGRectMake(0, kTO_TOP_DISTANCE, self.view.bounds.size.width, 58)];
     self.calendarView.delegate = self;
     self.calendarView.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
-
     [self.view addSubview:self.calendarView];
-    
 }
 
 #pragma mark - CLWeeklyCalendarViewDelegate 设定周几排在前面

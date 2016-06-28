@@ -8,8 +8,6 @@
 
 #import "CWSBasicViewController.h"
 
-@interface CWSDetectionDetailViewController : CWSBasicViewController
-
-@property (nonatomic,strong) NSArray* obdDataArray;
+@interface CWSDetectionInfoViewController : CWSBasicViewController
 
 @end

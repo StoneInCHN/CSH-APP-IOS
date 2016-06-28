@@ -437,13 +437,21 @@
     [parmDict setObject:searchDate forKey:@"searchDate"];
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_ONEKEEDETECTION_URL];
     NSLog(@"one key detection url :%@",urlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlString parameters:parmDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(operation,error);
-    }];
+    [self post:urlString parameters:parmDict success:success failure:failure];
+}
+#pragma mark 一键检测之查看详情
++ (void)scanDetailWithUserId:(NSString *)userId
+                       token:(NSString *)token
+                    deviceNo:(NSString *)deviceNo
+                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:userId] forKey:@"userId"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:token] forKey:@"token"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:deviceNo] forKey:@"deviceNo"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_VEHICLE_SCAN_URL];
+    NSLog(@"scan detail url :%@",urlString);
+    [self post:urlString parameters:parmDict success:success failure:failure];
 }
 #pragma mark 我的车辆
 + (void)myCarListWithUserId:(NSString *)userId
