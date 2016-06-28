@@ -14,6 +14,8 @@
 		0D5C2BA11D06B07C00DE7B64 /* ChoseDatePikerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5C2BA01D06B07C00DE7B64 /* ChoseDatePikerView.m */; };
 		0D8504051D051824009191C2 /* CWSSelectCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D8504041D051824009191C2 /* CWSSelectCarViewController.m */; };
 		0D9690C31D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D9690C21D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m */; };
+		0DF7C0461D22148A007E5377 /* CWSSelectDeviceNOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7C0451D22148A007E5377 /* CWSSelectDeviceNOViewController.m */; };
+		0DF7C0491D224749007E5377 /* CWSSelectDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7C0481D224749007E5377 /* CWSSelectDeviceTableViewCell.m */; };
 		0DF8452C1D17D453009398D3 /* CWSSlelectBaoYangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF8452B1D17D453009398D3 /* CWSSlelectBaoYangViewController.m */; };
 		0DF8452F1D17D4A4009398D3 /* CWSServiceBYTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF8452E1D17D4A4009398D3 /* CWSServiceBYTableViewCell.m */; };
 		243AB0BF1CDA524100E9FD95 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0BE1CDA524100E9FD95 /* HttpHelper.m */; };
@@ -1266,6 +1268,10 @@
 		0D8504041D051824009191C2 /* CWSSelectCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSelectCarViewController.m; sourceTree = "<group>"; };
 		0D9690C11D0FB49C0006D12D /* CWSPurchaseDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSPurchaseDeviceViewController.h; sourceTree = "<group>"; };
 		0D9690C21D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSPurchaseDeviceViewController.m; sourceTree = "<group>"; };
+		0DF7C0441D22148A007E5377 /* CWSSelectDeviceNOViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSSelectDeviceNOViewController.h; sourceTree = "<group>"; };
+		0DF7C0451D22148A007E5377 /* CWSSelectDeviceNOViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSelectDeviceNOViewController.m; sourceTree = "<group>"; };
+		0DF7C0471D224749007E5377 /* CWSSelectDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSSelectDeviceTableViewCell.h; sourceTree = "<group>"; };
+		0DF7C0481D224749007E5377 /* CWSSelectDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSelectDeviceTableViewCell.m; sourceTree = "<group>"; };
 		0DF8452A1D17D453009398D3 /* CWSSlelectBaoYangViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSSlelectBaoYangViewController.h; sourceTree = "<group>"; };
 		0DF8452B1D17D453009398D3 /* CWSSlelectBaoYangViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSlelectBaoYangViewController.m; sourceTree = "<group>"; };
 		0DF8452D1D17D4A4009398D3 /* CWSServiceBYTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSServiceBYTableViewCell.h; sourceTree = "<group>"; };
@@ -3390,6 +3396,17 @@
 			name = "预约选择时间";
 			sourceTree = "<group>";
 		};
+		0DF7C0431D22142D007E5377 /* 选择设备 */ = {
+			isa = PBXGroup;
+			children = (
+				0DF7C0441D22148A007E5377 /* CWSSelectDeviceNOViewController.h */,
+				0DF7C0451D22148A007E5377 /* CWSSelectDeviceNOViewController.m */,
+				0DF7C0471D224749007E5377 /* CWSSelectDeviceTableViewCell.h */,
+				0DF7C0481D224749007E5377 /* CWSSelectDeviceTableViewCell.m */,
+			);
+			name = "选择设备";
+			sourceTree = "<group>";
+		};
 		2477E8D51CFF1B5700CCC540 /* 切换车辆 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4353,6 +4370,7 @@
 		334708F71AF88E0F006A5660 /* 添加车辆 */ = {
 			isa = PBXGroup;
 			children = (
+				0DF7C0431D22142D007E5377 /* 选择设备 */,
 				4CB70E781C3E5A7300046102 /* CWSBoundIDViewController.h */,
 				4CB70E791C3E5A7300046102 /* CWSBoundIDViewController.m */,
 				336B03021B3CFE3E00C6C038 /* CWSCarBoundOKController.h */,
@@ -8875,6 +8893,7 @@
 				337BC43F1B4396A600277F5C /* CWSQueryResultCellCell.m in Sources */,
 				336B03051B3CFE3E00C6C038 /* CWSCarBoundOKController.m in Sources */,
 				33507B5B1AD40C3C00F1F236 /* PinYinForObjc.m in Sources */,
+				0DF7C0491D224749007E5377 /* CWSSelectDeviceTableViewCell.m in Sources */,
 				928A62CF1ACCE9C50013C666 /* SRRefreshView.m in Sources */,
 				33B7907C1B8411B00085F2A4 /* ParkAnnotation.m in Sources */,
 				4CC184791C25327E001D2C44 /* CWSShopLuckyDrawViewController.m in Sources */,
@@ -9307,6 +9326,7 @@
 				33507BE31AD40CA800F1F236 /* SDWebImageDownloader.m in Sources */,
 				4CD8F19D1C200EF50023891B /* CWSAdInfoModel.m in Sources */,
 				337F745A1B2050A50038CE1B /* CWSMoodController.m in Sources */,
+				0DF7C0461D22148A007E5377 /* CWSSelectDeviceNOViewController.m in Sources */,
 				334709041AF88E0F006A5660 /* CWSUserMsgSettingController.m in Sources */,
 				33507BEA1AD40CA800F1F236 /* UIImage+WebP.m in Sources */,
 				33FFA9A11BCCAD3200788D9F /* CWSHistoryOrderCell.m in Sources */,
