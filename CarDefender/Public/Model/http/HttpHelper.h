@@ -148,6 +148,13 @@
                        searchDate:(NSString *)searchDate
                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+#pragma mark 一键检测之查看详情
++ (void)scanDetailWithUserId:(NSString *)userId
+                            token:(NSString *)token
+                         deviceNo:(NSString *)deviceNo
+                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark 我的车辆
 + (void)myCarListWithUserId:(NSString *)userId
                       token:(NSString *)token
@@ -472,4 +479,6 @@
                         token:(NSString *)token
                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+
 @end

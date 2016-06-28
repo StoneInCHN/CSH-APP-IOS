@@ -459,7 +459,7 @@
     [balanceView addSubview:barrierLine3];
     
     UIImageView* yinlianImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 38, 38)];
-    yinlianImage.image = [UIImage imageNamed:@"yinlian"];
+    yinlianImage.image = [UIImage imageNamed:@"wallet_pay_money"];
     [balanceView addSubview:yinlianImage];
 
     UILabel* view3ImgLabel1 = [PublicUtils labelWithFrame:CGRectMake(CGRectGetMaxX(yinlianImage.frame)+10, 12, kSizeOfScreen.width, 15) withTitle:@"钱包支付" titleFontSize:[UIFont systemFontOfSize:13.0f] textColor:KBlackMainColor backgroundColor:nil alignment:0 hidden:NO];
@@ -490,7 +490,7 @@
     [couponView addSubview:barrierLine4];
     
     UIImageView* balanceImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 38, 38)];
-    balanceImage.image = [UIImage imageNamed:@"yinlian"];
+    balanceImage.image = [UIImage imageNamed:@"carWashCoupon"];
     [couponView addSubview:balanceImage];
     UILabel* view4ImgLabel1 = [PublicUtils labelWithFrame:CGRectMake(CGRectGetMaxX(yinlianImage.frame)+10, 12, kSizeOfScreen.width, 15) withTitle:@"洗车劵支付" titleFontSize:[UIFont systemFontOfSize:13.0f] textColor:KBlackMainColor backgroundColor:nil alignment:0 hidden:NO];
     [couponView addSubview:view4ImgLabel1];

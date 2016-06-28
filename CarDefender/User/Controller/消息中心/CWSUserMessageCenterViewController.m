@@ -110,7 +110,14 @@
                                      userInfo.token = dict[@"token"];
                                      if ([code isEqualToString:SERVICE_SUCCESS]) {
                                          NSArray *messages = dict[@"msg"];
+
                                          [dataArray addObjectsFromArray:messages];
+
+                                         NSInteger total = [dict[@"page"][@"total"] integerValue];
+                                         if (dataArray.count < total) {
+                                             [dataArray addObjectsFromArray:messages];
+                                         }
+
                                          dataArray = [dataArray mutableCopy];
                                          if (messages.count == 0) {
                                              [MBProgressHUD showError:@"没有更多数据了哦" toView:self.view.window];
@@ -160,6 +167,9 @@
     myTableView.delegate = self;
     myTableView.bounces = YES;
     myTableView.showsHorizontalScrollIndicator = NO;
+
+    myTableView.tableFooterView = [[UIView alloc] init];
+
     [myTableView registerNib:[UINib nibWithNibName:@"CWSUserMessageInfoCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MessageInfoCell"];
     myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
     myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];

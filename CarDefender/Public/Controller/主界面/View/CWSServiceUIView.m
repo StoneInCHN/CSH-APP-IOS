@@ -218,6 +218,7 @@
         }
     }
     else if ([whichService isEqualToString:@"一键检测"]) {
+
         
         if([userInfo.defaultVehicleId isKindOfClass:[NSNull class]]||[[NSString stringWithFormat:@"%@",userInfo.defaultVehicleId] isEqualToString:@""]){
             //没绑定汽车
@@ -225,7 +226,6 @@
                 CWSAddCarController *addCarView = [[CWSAddCarController alloc]init];
                 addCarView.title = @"添加车辆";
                 [self.thyRootVc.navigationController pushViewController:addCarView animated:YES];
-                
             }];
 
             

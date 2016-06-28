@@ -90,6 +90,7 @@ BMKMapManager* _mapManager;
 
     
     [MyJPushService setupWithOption:launchOptions];
+    [APService setDebugMode];
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
@@ -158,6 +159,7 @@ BMKMapManager* _mapManager;
     //判断
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
+    [self loadAdvertisment];
 //app第一次登陆
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
@@ -222,6 +224,12 @@ BMKMapManager* _mapManager;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shutdownAlertButtonClicke:) name:@"shutdownAlertButton" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shutdownInformationButtonClicke:) name:@"shutdownInformationButton" object:nil];
     return YES;
+}
+- (void)loadAdvertisment {
+
+
+//[self.window makeKeyAndVisible]; lunchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0]; lunchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height); [self.window addSubview:lunchView]; UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, 320, 300)]; NSString *str = @"http://www.jerehedu.com/images/temp/logo.gif"; [imageV sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"default1.jpg"]]; [lunchView addSubview:imageV]; [self.window bringSubviewToFront:lunchView]; [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(removeLun) userInfo:nil repeats:NO]; return YES; } -(void)removeLun { [lunchView removeFromSuperview]; }
+    
 }
 -(void)otherDeviceLogin{
     [self loginOterDeviceNoteWithString:@"您的账号在其他设备上登录过，请重新登录"];
@@ -965,4 +973,5 @@ BMKMapManager* _mapManager;
         [self forceLogout];
     }];
 }
+
 @end

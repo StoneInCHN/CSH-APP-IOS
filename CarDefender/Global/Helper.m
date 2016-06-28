@@ -36,4 +36,12 @@
     }
     return [NSString stringWithFormat:@"%@",data];
 }
+
++ (NSString *)currentDateStr {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    NSDate *currentDate = [[NSDate alloc] init];
+    NSString *currentDateStr = [NSString stringWithFormat:@"%@",[formatter stringFromDate:currentDate]];
+    return currentDateStr;
+}
 @end
