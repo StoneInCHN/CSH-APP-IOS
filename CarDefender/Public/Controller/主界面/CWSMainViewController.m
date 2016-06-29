@@ -209,22 +209,29 @@
     if (regId == nil) {
         regId = @"000";
     }
+    
     [HttpHelper initJpushWithUserId:userInfo.desc
                               token:userInfo.token
                         versionCode:@"11"
                               regId:regId
                         appPlatform:@"IOS"
+                            piWidth:[NSString stringWithFormat:@"%d", (int)kSizeOfScreen.width * 2]
+                           piHeight:[NSString stringWithFormat:@"%d", (int)kSizeOfScreen.height * 2]
                             success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                 NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                NSLog(@"车生活后台初始化jPush返回值：%@", dict);
+                                //保存广告图片地址
+                                [userDefaults setObject:dict[@"msg"][@"homeAdvUrl"] forKey:@"homeAdvUrl"];
+                                [userDefaults synchronize];
                                 NSString *code = dict[@"code"];
                                 userInfo.token = dict[@"token"];
                                 if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                    NSLog(@"init jpush success");
+                                    NSLog(@"车生活后台初始化jPush成功");
                                 }else{
-                                    NSLog(@"init jpush failure");
+                                    NSLog(@"车生活后台初始化jPush失败");
                                 }
                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                NSLog(@"init jpush failure");
+                                NSLog(@"车生活后台初始化jPush失败（服务器异常）");
                             }];
 }
 //获取右上角消息列表

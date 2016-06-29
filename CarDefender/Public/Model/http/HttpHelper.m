@@ -527,6 +527,8 @@
                 versionCode:(NSString *)versionCode
                       regId:(NSString *)regId
                 appPlatform:(NSString *)appPlatform
+                    piWidth:(NSString *)piWidth
+                   piHeight:(NSString *)piHeight
                     success:(void (^)(AFHTTPRequestOperation *, id))success
                     failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
     NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
@@ -535,6 +537,8 @@
     [parmDict setObject:versionCode forKey:@"versionCode"];
     [parmDict setObject:regId forKey:@"regId"];
     [parmDict setObject:appPlatform forKey:@"appPlatform"];
+    [parmDict setObject:piWidth forKey:@"piWidth"];
+    [parmDict setObject:piHeight forKey:@"piHeight"];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_INIT_JPUSH_URL];
     NSLog(@"init jpush url :%@",urlString);

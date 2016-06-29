@@ -222,16 +222,22 @@ BMKMapManager* _mapManager;
     return YES;
 }
 - (void)loadAdvertisment {
-    launchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0];
-    launchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height);
-    [self.window addSubview:launchView];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.window.frame];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    NSString *str = @"http://d.lanrentuku.com/down/png/1512/star-wars-7-png/master-joda.png";
-    [imageView setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"welcome"]];
-    [launchView addSubview:imageView];
-    [self.window bringSubviewToFront:launchView];
-    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(removeLun) userInfo:nil repeats:NO];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *str = [userDefaults objectForKey:@"homeAdvUrl"];
+    if (str != nil) {
+        launchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0];
+        launchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height);
+        [self.window addSubview:launchView];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.window.frame];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        NSString *urlString = [NSString stringWithFormat:@"%@%@%@", SERVERADDRESS, PROJECT_NAME, str];
+        [imageView setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"welcome"]];
+        [launchView addSubview:imageView];
+        [self.window bringSubviewToFront:launchView];
+        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(removeLun) userInfo:nil repeats:NO];
+      
+    }
+    
 }
 -(void)removeLun {
     [launchView removeFromSuperview];
