@@ -279,6 +279,7 @@ BMKMapManager* _mapManager;
     //    [_mapView updateLocationData:userLocation];
 //        NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     KManager.mobileCurrentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
+    
     NSString *latitudeString = [NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.latitude];
     NSString *longitudeeString = [NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.longitude];
     if ([latitudeString integerValue] == 0 && [longitudeeString integerValue] == 0) {
@@ -410,6 +411,7 @@ BMKMapManager* _mapManager;
         userInfo.defaultVehiclePlate = [userDefaults objectForKey:@"defaultVehiclePlate"];
         userInfo.defaultDeviceNo = [userDefaults objectForKey:@"defaultDeviceNo"];
         userInfo.defaultVehicleIcon = [userDefaults objectForKey:@"defaultVehicleIcon"];
+        userInfo.defaultVehicleId = [userDefaults objectForKey:@"defaultVehicleId"];
         
         CWSMainViewController *mainVC=[[CWSMainViewController alloc]init];
         UINavigationController*navMain=[[UINavigationController alloc]initWithRootViewController:mainVC];

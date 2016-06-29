@@ -31,6 +31,9 @@
 
 #import "CWSPayViewController.h"
 
+#import "CWSAddCarController.h"//添加车辆
+#import "CWSSelectDeviceNOViewController.h" //选择设备号
+
 #define BUTTON_NUM 4
 #define TOTAL_BUTTON_NUM 12
 @implementation CWSServiceUIView{
@@ -148,18 +151,42 @@
             [self.thyRootVc.navigationController pushViewController:lController animated:YES];
     }
     else if([whichService isEqualToString:@"紧急救援"]) {
+        if([userInfo.defaultVehicleId isKindOfClass:[NSNull class]]||[[NSString stringWithFormat:@"%@",userInfo.defaultVehicleId] isEqualToString:@""]){
+            //没绑定汽车
+            [self alertShowWithMessage:@"请先添加车辆" title:@"前往添加" ForConfirmEvent:^{
+                CWSAddCarController *addCarView = [[CWSAddCarController alloc]init];
+                addCarView.title = @"添加车辆";
+                [self.thyRootVc.navigationController pushViewController:addCarView animated:YES];
+                
+            }];
+            
+            
+        }else{
             CWSTyreHomeController* cyreVC = [[CWSTyreHomeController alloc] initWithNibName:@"CWSTyreHomeController" bundle:nil];
             cyreVC.title = @"紧急救援";
             [self.thyRootVc.navigationController pushViewController:cyreVC animated:YES];
+        }
     }
     else if([whichService isEqualToString:@"保养"]) {
             CWSCarMaintainViewController* carMaintainVc = [CWSCarMaintainViewController new];
             [self.thyRootVc.navigationController pushViewController:carMaintainVc animated:YES];
     }
     else if ([whichService isEqualToString:@"违章查询"]) {
+        if([userInfo.defaultVehicleId isKindOfClass:[NSNull class]]||[[NSString stringWithFormat:@"%@",userInfo.defaultVehicleId] isEqualToString:@""]){
+            //没绑定汽车
+            [self alertShowWithMessage:@"请先添加车辆" title:@"前往添加" ForConfirmEvent:^{
+                CWSAddCarController *addCarView = [[CWSAddCarController alloc]init];
+                addCarView.title = @"添加车辆";
+                [self.thyRootVc.navigationController pushViewController:addCarView animated:YES];
+                
+            }];
+            
+            
+        }else{
             CWSIllegalCheckViewController *vc = [[CWSIllegalCheckViewController alloc] init];
             vc.title = @"违章查询";
             [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+        }
     }
     else if ([whichService isEqualToString:@"美容"]) {
             CWSCarBeautyViewController* beautyVc = [CWSCarBeautyViewController new];
@@ -167,29 +194,56 @@
             [self.thyRootVc.navigationController pushViewController:beautyVc animated:YES];
     }
     else if ([whichService isEqualToString:@"车辆动态"]) {
-        if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""] ) {
-            [self alertShowWithMessage:@"先绑定车牌吧" ForConfirmEvent:^{
-                CWSAddCarController* lController = [[CWSAddCarController alloc] init];
-                lController.title = @"添加车辆";
-                [self.thyRootVc.navigationController pushViewController:lController animated:YES];
+        if([userInfo.defaultVehicleId isKindOfClass:[NSNull class]]||[[NSString stringWithFormat:@"%@",userInfo.defaultVehicleId] isEqualToString:@""]){
+            //没绑定汽车
+            [self alertShowWithMessage:@"请先添加车辆" title:@"前往添加" ForConfirmEvent:^{
+                CWSAddCarController *addCarView = [[CWSAddCarController alloc]init];
+                addCarView.title = @"添加车辆";
+                [self.thyRootVc.navigationController pushViewController:addCarView animated:YES];
+                
             }];
-        } else {
-            CWSCarTrendsController*carTrend=[[CWSCarTrendsController alloc]initWithNibName:@"CWSCarTrendsController" bundle:nil];
-            carTrend.title=@"车辆动态";
-            [self.thyRootVc.navigationController pushViewController:carTrend animated:YES];
+            
+            
+        }else{
+            if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""] ) {
+                [self alertShowWithMessage:@"请先绑定设备" title:@"前往绑定" ForConfirmEvent:^{
+                    CWSSelectDeviceNOViewController*selectDevice = [[CWSSelectDeviceNOViewController alloc]init];
+                    [self.thyRootVc.navigationController pushViewController:selectDevice animated:YES];
+                }];
+            } else {
+                CWSCarTrendsController*carTrend=[[CWSCarTrendsController alloc]initWithNibName:@"CWSCarTrendsController" bundle:nil];
+                carTrend.title=@"车辆动态";
+                [self.thyRootVc.navigationController pushViewController:carTrend animated:YES];
+            }
         }
     }
     else if ([whichService isEqualToString:@"一键检测"]) {
-        if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""]) {
-            [self alertShowWithMessage:@"请先绑定设备" ForConfirmEvent:^{
-                CWSAddCarController* lController = [[CWSAddCarController alloc] init];
-                lController.title = @"添加车辆";
-                [self.thyRootVc.navigationController pushViewController:lController animated:YES];
+
+        
+        if([userInfo.defaultVehicleId isKindOfClass:[NSNull class]]||[[NSString stringWithFormat:@"%@",userInfo.defaultVehicleId] isEqualToString:@""]){
+            //没绑定汽车
+            [self alertShowWithMessage:@"请先添加车辆" title:@"前往添加" ForConfirmEvent:^{
+                CWSAddCarController *addCarView = [[CWSAddCarController alloc]init];
+                addCarView.title = @"添加车辆";
+                [self.thyRootVc.navigationController pushViewController:addCarView animated:YES];
             }];
-        } else {
-            CWSDetectionOneForAllViewController* carDetectionVc = [CWSDetectionOneForAllViewController new];
-            carDetectionVc.title = @"一键检测";
-            [self.thyRootVc.navigationController pushViewController:carDetectionVc animated:YES];
+
+            
+        }else{
+          //  绑定汽车
+        NSLog(@"%@",userInfo.defaultDeviceNo);
+            if ([userInfo.defaultDeviceNo isKindOfClass:[NSNull class]] ||[userInfo.defaultDeviceNo isEqualToString:@""]) {
+                //
+                [self alertShowWithMessage:@"请先绑定设备" title:@"前往绑定" ForConfirmEvent:^{
+                    CWSSelectDeviceNOViewController*selectDevice = [[CWSSelectDeviceNOViewController alloc]init];
+                    [self.thyRootVc.navigationController pushViewController:selectDevice animated:YES];
+                }];
+            } else {
+                //
+                CWSDetectionOneForAllViewController* carDetectionVc = [CWSDetectionOneForAllViewController new];
+                carDetectionVc.title = @"一键检测";
+                [self.thyRootVc.navigationController pushViewController:carDetectionVc animated:YES];
+            }
         }
     }
     else if ([whichService isEqualToString:@"找加油站"]) {
@@ -206,9 +260,10 @@
 
 }
 - (void)alertShowWithMessage:(NSString *)message
+                       title:(NSString*)title
              ForConfirmEvent:(void (^)())onEvent {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *bindBtn = [UIAlertAction actionWithTitle:@"前往绑定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *bindBtn = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         onEvent();
     }];
     UIAlertAction *cancleBtn = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];

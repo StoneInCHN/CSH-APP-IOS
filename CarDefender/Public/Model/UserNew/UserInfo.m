@@ -27,10 +27,12 @@
 }
 
 - (void)loadDataWithDict:(NSDictionary *)dict {
+   
     self.defaultDeviceNo = dict[@"defaultDeviceNo"];
     self.defaultVehicle = dict[@"defaultVehicle"];
     self.defaultVehicleIcon = dict[@"defaultVehicleIcon"];
     self.defaultVehiclePlate = dict[@"defaultVehiclePlate"];
+    self.defaultVehicleId = dict[@"defaultVehicleId"];
     self.nickName = dict[@"nickName"];
     self.photo = dict[@"photo"];
     self.signature = dict[@"signature"];

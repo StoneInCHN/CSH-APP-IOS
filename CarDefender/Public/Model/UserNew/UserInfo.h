@@ -17,6 +17,7 @@
 @property(strong, nonatomic) NSString *defaultVehicle;
 @property(strong, nonatomic) NSString *defaultVehicleIcon;
 @property(strong, nonatomic) NSString *defaultVehiclePlate;
+@property(strong, nonatomic) NSString *defaultVehicleId;
 @property(strong, nonatomic) NSString *nickName;
 @property(strong, nonatomic) NSString *photo;
 @property(strong, nonatomic) NSString *signature;

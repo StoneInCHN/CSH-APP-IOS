@@ -36,15 +36,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *shangyexian;//商业险
 
 @property (weak, nonatomic) IBOutlet UITextField *lastKilomText;//上次保养
-//@property (weak, nonatomic) IBOutlet UIButton *carNubBtn;
+
 @property (weak, nonatomic) IBOutlet UIImageView *carImage;
-//@property (weak, nonatomic) IBOutlet UITextField *carNubLabel;
-//@property (weak, nonatomic) IBOutlet UIButton *carColorBtn;
+
 @property (weak, nonatomic) IBOutlet UIView *addCarHeadView;
-//@property (weak, nonatomic) IBOutlet UITextField *shopID;
-//- (IBAction)addtionalClick:(UIButton *)sender;
+
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
-//- (IBAction)shopIDTextChange:(UITextField *)sender;
+
 - (IBAction)btnClick:(UIButton *)sender;
 
 
@@ -57,5 +55,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *carFrameField;//车架号
 
 @property (weak, nonatomic) IBOutlet UIView *bindIDView;
+
+@property (assign,nonatomic) NSInteger identifierID;//主界面提示符号  设置111  ；
 
 @end

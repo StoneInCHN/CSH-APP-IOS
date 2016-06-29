@@ -768,6 +768,17 @@
     NSLog(@"adertisment image url购买设备充值回调:%@",urlString);
     [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
 }
+
+#pragma mark 获取用户已经购买的可以绑定的设备列表
+
++ (void)getAvailableDeviceWithUserDic:(NSDictionary *)vehicleDic
+                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_AVAILABLEDEVICE_GET_URL];
+    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"获取用户已经购买的可以绑定的设备列表:%@",urlString);
+    [self requestWithHttpURL:urlString andParamDict:vehicleDic andSuccess:success andFailer:failure];
+}
 //post方法
 +(void)requestWithHttpURL:(NSString*)urlString  andParamDict:(NSDictionary*)thyParamDict andSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success andFailer:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

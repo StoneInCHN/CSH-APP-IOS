@@ -26,12 +26,13 @@
 
 #import "CWSCarBoundOKController.h"//设备ID第二次绑定跳转位置
 
-
+#import "CWSSelectDeviceNOViewController.h" //选择设备列表
 #import "CWSSelectCarAreaController.h"
 
 #import "IQKeyboardManager.h"
 #import "CWSBoundIDViewController.h"
 
+#define kAlphaNum @"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz"
 @interface CWSAddCarController ()<UIActionSheetDelegate,UITextFieldDelegate,BMKGeoCodeSearchDelegate,ChooseCarColorViewDelegate,UIAlertViewDelegate,UIScrollViewDelegate,CWSAddCarNexCheckViewDelegate>
 {
     UIScrollView*_scrollView;
@@ -60,7 +61,7 @@
     UIView  *helpBackView;
     UIView *helpPhotoView;
     NSDictionary*carBackDic;//车辆信息返回数据
-    
+    NSString *carId;
     int identifier;  //标示年检和保险
 }
 @end
@@ -85,7 +86,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.carNumberTextField.keyboardType=UIKeyboardTypeDefault;
+    self.carNumberTextField.keyboardType=UIKeyboardTypeASCIICapable;
    
     
     [Utils changeBackBarButtonStyle:self];
@@ -210,9 +211,15 @@
 -(void)goBackEvent:(UIButton*)sender
 {
     if (_isEditing) {
-        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"是否放弃添加车辆信息？" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"继续添加", nil];
-        alert.tag=1111;
-        [alert show];
+        if ([self.title isEqualToString:@"编辑车辆"]) {
+            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"是否放弃添加车辆信息？" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"继续编辑", nil];
+            alert.tag=1111;
+            [alert show];
+        }else{
+            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"是否放弃添加车辆信息？" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"继续添加", nil];
+            alert.tag=1111;
+            [alert show];
+        }
     }else{
         if ([self.noDeviceComeBackEdit isEqualToString:@"回来了"]) {
             self.noDeviceComeBackEdit = @"";
@@ -241,6 +248,15 @@
     }else if (alertView.tag==1110){
         if (buttonIndex==1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",@"4007930888"]]];
+        }
+    }else if(alertView.tag==1001){
+        if (buttonIndex==1) {
+            CWSSelectDeviceNOViewController *selectDevice = [[CWSSelectDeviceNOViewController alloc]init];
+            selectDevice.identifier = @"添加或编辑车辆时";
+            selectDevice.carId = carId;
+            [self.navigationController pushViewController:selectDevice animated:YES];
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -420,12 +436,36 @@
 - (void)textFieldDidChange:(UITextField *)textField
 {
     if (textField == self.carNumberTextField) {
+        self.carNumberTextField.text=[textField.text uppercaseString];
         if (textField.text.length > 5) {
+            
             textField.text = [textField.text substringToIndex:5];
         }
     }
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.carNumberTextField) {
+        NSCharacterSet *cs;
+        
+        cs = [[NSCharacterSet characterSetWithCharactersInString:kAlphaNum] invertedSet];
+        
+      
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""]; //按cs分离出数组,数组按@""分离出字符串
+        
+        
+        
+        BOOL canChange = [string isEqualToString:filtered];
+        
+        NSUInteger newLength = textField.text.length+string .length-range.length;
+        return newLength>=6?NO : canChange;
+        
+        
+    }
+    return YES;
+    
+}
 
 - (IBAction)shopIDTextChange:(UITextField *)sender {
     sender.text=sender.text.uppercaseString;
@@ -621,169 +661,26 @@
     
     if ([self.title isEqualToString:@"编辑车辆"]) {//编辑
         
-//        [self showHudInView:self.view hint:@"编辑保存中"];
-//        [ModelTool httpAppUpCarWithParameter:_bodyDic success:^(id object) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                MyLog(@"%@",object);
-//                if ([object[@"operationState"] isEqualToString:@"SUCCESS"]) {
-////                    NSString*feedMsg = object[@"data"][@"feed"];//判断是否跳转
-////                    NSString*cidCarString=[NSString stringWithFormat:@"%@",object[@"data"][@"msg"]];//车辆id
-//                    if ([[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2] isKindOfClass:[CWSCarManageController class]]) {//是重车辆管理跳过来的
-//                        CWSCarManageController* carManagerVC = (CWSCarManageController* )[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
-//                        carManagerVC.backMsg = @"回来了";
-//                    }
-//                    if (self.carIDText.userInteractionEnabled) {//新添加的设备id
-//                        if (self.carIDText.text.length) {//有设备id
-//                            //获取app登陆信息
-//                            [ModelTool httpAppGainNewLoginWithParameter:@{@"uid":KUserManager.uid,@"key":KUserManager.key} success:^(id object) {
-//                                dispatch_async(dispatch_get_main_queue(), ^{
-//                                    [self hideHud];
-//                                    if ([object[@"operationState"] isEqualToString:@"SUCCESS"]) {
-//                                        [self setUserMsg:object[@"data"]];
-//                                        if (KUserManager.type) {//隐藏
-//                                            [self goBackToCarManger];
-//                                        }else{//显示
-////                                            if ([feedMsg isEqualToString:@"0"]) {//已选择过费用
-//                                                CWSCarBoundOKController*boundOKVC = [[CWSCarBoundOKController alloc]initWithNibName:@"CWSCarBoundOKController" bundle:nil];
-//                                                [self.navigationController pushViewController:boundOKVC animated:YES];
-////                                            }else{//没有选择过费用
-////                                                CWSCarManagerDeviceOkController*carDeviceOk=[[CWSCarManagerDeviceOkController alloc]initWithNibName:@"CWSCarManagerDeviceOkController" bundle:nil];
-////                                                _gotoChooseCost=YES;
-////                                                carDeviceOk.carCid=cidCarString;
-////                                                [self.navigationController pushViewController:carDeviceOk animated:YES];
-////                                            }
-//                                        }
-//                                    }
-//                                });
-//                            } faile:^(NSError *err) {
-//                                [self hideHud];
-//                            }];
-//                        }else{//没有设备id
-//                            [self hideHud];
-//                            if (KUserManager.type) {//隐藏
-//                                [self goBackToCarManger];
-//                            }else{//显示
-//                                CWSCarMangerAddNoDeviceController*nodevice=[[CWSCarMangerAddNoDeviceController alloc]initWithNibName:@"CWSCarMangerAddNoDeviceController" bundle:nil];
-//                                _gotoChooseCost=YES;
-//                                [self.navigationController pushViewController:nodevice animated:YES];
-//                            }
-//                        }
-//                    }else{
-//                        [self hideHud];
-//                        [self goBackToCarManger];
-//                    }
-//                }else{
-//                    [self hideHud];
-//                    UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:object[@"data"][@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                    [alert show];
-//                }
-//            });
-//        } faile:^(NSError *err) {
-//            [self hideHud];
-//        }];
-        //车id
         [_bodyDic setValue:self.editDic[@"id"] forKey:@"vehicleId"];
-//        [_bodyDic setValue:self.editDic[@"brand"][@"brand"] forKey:@"brand"];
-//        [_bodyDic setValue:self.editDic[@"brand"][@"series"] forKey:@"series"];
-//        [_bodyDic setValue:self.editDic[@"brand"][@"module"] forKey:@"module"];
+
 
         
         
         
         if ([self respondsToSelector:@selector(chooseCarMsgBack:)]) {
             if (carBackDic != nil) {
-//                [_bodyDic setObject:carBackDic[@"brandCar"][@"id"] forKey:@"brand"];//车辆品牌
-//                [_bodyDic setObject:carBackDic[@"modelCar"][@"id"] forKey:@"series"];//车系
-//                [_bodyDic setObject:carBackDic[@"styleCar"][@"id"] forKey:@"module"];//车型
                 [_bodyDic setObject:carBackDic[@"styleCar"][@"id"] forKey:@"brandDetailId"];//车型id
-                //[_bodyDic setObject:carBackDic[@"modelCar"][@"id"] forKey:@"vehicleId"];//车系
-            }
+                            }
             
         }
         NSLog(@"%@",_bodyDic);
         [self editCarDetail:_bodyDic];
-       // [_bodyDic setValue:@"black" forKey:@"color"];
-        
-       /*[MBProgressHUD showMessag:@"编辑保存中..." toView:self.view];
-        
-        [ModelTool editVehicleInfoWithParameter:_bodyDic andSuccess:^(id object) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    MyLog(@"------insert-------%@",object);
-                    if(object[@"data"][@"id"]){
-                        NSString* userCid = object[@"data"][@"id"];
-                        NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
-                        [thyUserDefaults setValue:userCid forKey:@"cid"];
-                        [NSUserDefaults resetStandardUserDefaults];
-                        KUserManager.userCID = userCid;
-                        MyLog(@"我的CID：%@",KUserManager.userCID);
-                        //编辑的时候若没有显示设备ID可跳转页面
-                        if(!self.bindIDView.alpha){
-                            CWSBoundIDViewController* boundIdVc = [[CWSBoundIDViewController alloc]init];
-                            boundIdVc.idString = _bodyDic[@"cid"];
-                            [self.navigationController pushViewController:boundIdVc animated:YES];
-                        }else{
-                            [WCAlertView showAlertWithTitle:@"提示" message:@"保存成功!" customizationBlock:nil completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
-                                if(!buttonIndex){
-                                    [self.navigationController popViewControllerAnimated:YES];
-                                }
-                            } cancelButtonTitle:@"返回" otherButtonTitles:nil, nil];
-                        }
-                    }
-                    
-                }else {
-                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                    UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alert show];
-                }
-            });
-            
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-        }];*/
         
     }else{//添加
         
         
 
 #if USENEWVERSION
-//    MyLog(@"-------------添加的车辆信息-------------:%@",_bodyDic);
-//    [ModelTool insertVehicleInfoWithParameter:_bodyDic andSuccess:^(id object) {
-//        MyLog(@"------insert-------%@",object[@"message"]);
-//        MyLog(@"------insert-------%@",object);
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-//                if(object[@"data"][@"id"]){
-//                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//                    if (!KUserManager.userCID) {
-//                        NSString* userCid = object[@"data"][@"id"];
-//                        NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
-//                        [thyUserDefaults setValue:userCid forKey:@"cid"];
-//                        [NSUserDefaults resetStandardUserDefaults];
-//                        KUserManager.userCID = userCid;
-//                        MyLog(@"我的CID：%@",KUserManager.userCID);
-//                    }
-//                    
-//                    CWSBoundIDViewController *vc = [[CWSBoundIDViewController alloc] init];
-//                    vc.idString = _bodyDic[@"cid"];
-//                    [self.navigationController pushViewController:vc animated:YES];
-//                    
-//             
-//               }
-//            }else {
-//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//                UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                [alert show];
-//            }
-//        });
-//    } andFail:^(NSError *err) {
-//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//        UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"网络出错,请重新加载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//        [alert show];
-//    }];
         NSLog(@"bodydic=%@",_bodyDic);
         [self addCarDetail:_bodyDic];
         
@@ -840,9 +737,14 @@
                 }
                 self.editDic = realDict.copy;
                 if([self.editDic[@"deviceNo"] isEqualToString:@""]){
-                    CWSBoundIDViewController* boundIdVc = [[CWSBoundIDViewController alloc]init];
-                    boundIdVc.idString = self.editDic[@"id"];
-                    [self.navigationController pushViewController:boundIdVc animated:YES];
+//                    CWSBoundIDViewController* boundIdVc = [[CWSBoundIDViewController alloc]init];
+//                    boundIdVc.idString = self.editDic[@"id"];
+//                    [self.navigationController pushViewController:boundIdVc animated:YES];
+                    //新 选择设备列表绑定设备
+                    carId = [NSString stringWithFormat:@"%@",self.editDic[@"id"]];
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请先绑定设备" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"前去绑定", nil];
+                    [alert show];
+                    alert.tag = 1001;
                 }else{
                     [WCAlertView showAlertWithTitle:@"提示" message:@"保存成功!" customizationBlock:nil completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
                         if(!buttonIndex){
@@ -864,6 +766,7 @@
     }];
 
 }
+
 //添加车辆的接口
 -(void)addCarDetail:(NSDictionary *)dic{
     [MBProgressHUD showMessag:@"添加中..." toView:self.view];
@@ -872,23 +775,33 @@
         NSLog(@"object==%@",object);
         if ([object[@"code"] isEqualToString:SERVICE_SUCCESS]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                
+                NSString* userCid =  [PublicUtils checkNSNullWithgetString:object[@"desc"]];
+                NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
+                [NSUserDefaults resetStandardUserDefaults];
                 if (!KUserManager.userCID) {
-                    NSString* userCid = object[@"desc"];
-                    NSUserDefaults* thyUserDefaults = [NSUserDefaults standardUserDefaults];
+                    
                     [thyUserDefaults setValue:userCid forKey:@"cid"];
-                    [NSUserDefaults resetStandardUserDefaults];
+                    
                     KUserManager.userCID = userCid;
                     MyLog(@"我的CID：%@",KUserManager.userCID);
                 }
+            
+                if ([KUserInfo.defaultVehicleId isKindOfClass:[NSNull class]]||[@"" isEqualToString:KUserInfo.defaultVehicleId]) {
+                    [thyUserDefaults setValue:userCid forKey:@"defaultVehicleId"];
+                    KUserInfo.defaultVehicleId = userCid;
+                }
                 
-                CWSBoundIDViewController *vc = [[CWSBoundIDViewController alloc] init];
-                //vc.idString = _bodyDic[@"cid"];
-                vc.idString = object[@"desc"];
-                NSLog(@"%@",vc.idString);
-                [self.navigationController pushViewController:vc animated:YES];
+//                CWSBoundIDViewController *vc = [[CWSBoundIDViewController alloc] init];
+//                //vc.idString = _bodyDic[@"cid"];
+//                vc.idString = object[@"desc"];
+//                NSLog(@"%@",vc.idString);
+//                [self.navigationController pushViewController:vc animated:YES];
                 
-                
+                //新获取设备列表进行绑定设备
+                carId = [NSString stringWithFormat:@"%@",object[@"desc"]];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请先绑定设备" delegate:self cancelButtonTitle:@"放弃" otherButtonTitles:@"前去绑定", nil];
+                [alert show];
+                alert.tag = 1001;
                 
                 
             });
@@ -993,25 +906,8 @@
 }
 #pragma mark - 选择项的点击事件
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    switch (buttonIndex) {
-        case 0:
-        {
-            //self.hibitOilText.text = @"97#汽油";
-        }
-            break;
-        case 1:
-        {
-            //self.hibitOilText.text = @"93#汽油";
-        }
-            break;
-        case 2:
-        {
-           // self.hibitOilText.text = @"0#柴油";
-        }
-            break;
-        default:
-            break;
-    }
+    
+    
 }
 
 - (IBAction)selectAreaButtonClicked:(UIButton *)sender {
