@@ -55,7 +55,7 @@
 //极光推送
 #import "MyJPushService.h"
 #import "JPushNote.h"
-
+#import "UIImageView+WebCache.h"
 #import "CWSCheckMessageCenterDetailViewController.h"
 
 #define UMSYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -75,7 +75,7 @@ BMKMapManager* _mapManager;
 
     BOOL isShutdownAlert;  //关闭警报推送
     BOOL isShutdownInformation; //关闭消息推送
-    
+    UIView *launchView;
     NSString* forceLogoutString;  //挤登录用语
 }
 
@@ -84,7 +84,6 @@ BMKMapManager* _mapManager;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     NSString* uuid = [SvUDIDTools UDID];
     NSLog(@"唯一标识：%@",uuid);
 
@@ -99,29 +98,27 @@ BMKMapManager* _mapManager;
 //    NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
 //    MyLog(@"程序未运行");
 
-    
-    //标记当前页面
-    NSUserDefaults*user=[[NSUserDefaults alloc]init];
-    [user setObject:@"" forKey:@"currentController"];
-    [NSUserDefaults resetStandardUserDefaults];
-    
-    
-    
-    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        //标记当前页面
+        NSUserDefaults*user=[[NSUserDefaults alloc]init];
+        [user setObject:@"" forKey:@"currentController"];
+        [NSUserDefaults resetStandardUserDefaults];
+        
+        [Utils chargeNetWork];
+        [self shareMsg];
+        
+        
+    });
     //键盘处理
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = YES;
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = NO;
-    [Utils chargeNetWork];
-    [self shareMsg];
     
   //  [WXApi registerApp:APP_ID withDescription:@"2.0"];
     
     [MyJPushService resetBadge];
-    
-    
     
 #pragma mark -  友盟的东东
 //    //友盟统计
@@ -159,7 +156,7 @@ BMKMapManager* _mapManager;
     //判断
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    [self loadAdvertisment];
+    
 //app第一次登陆
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
@@ -206,8 +203,6 @@ BMKMapManager* _mapManager;
 #else
     [self checkLoginOrNo];
 #endif
-
-    
 //    [self easeMobWith:application with:launchOptions];
     [self.window makeKeyAndVisible];
     
@@ -223,14 +218,25 @@ BMKMapManager* _mapManager;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shutdownAlertButtonClicke:) name:@"shutdownAlertButton" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shutdownInformationButtonClicke:) name:@"shutdownInformationButton" object:nil];
+    [self loadAdvertisment];
     return YES;
 }
 - (void)loadAdvertisment {
-
-
-//[self.window makeKeyAndVisible]; lunchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0]; lunchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height); [self.window addSubview:lunchView]; UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, 320, 300)]; NSString *str = @"http://www.jerehedu.com/images/temp/logo.gif"; [imageV sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"default1.jpg"]]; [lunchView addSubview:imageV]; [self.window bringSubviewToFront:lunchView]; [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(removeLun) userInfo:nil repeats:NO]; return YES; } -(void)removeLun { [lunchView removeFromSuperview]; }
-    
+    launchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0];
+    launchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height);
+    [self.window addSubview:launchView];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.window.frame];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    NSString *str = @"http://d.lanrentuku.com/down/png/1512/star-wars-7-png/master-joda.png";
+    [imageView setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"welcome"]];
+    [launchView addSubview:imageView];
+    [self.window bringSubviewToFront:launchView];
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(removeLun) userInfo:nil repeats:NO];
 }
+-(void)removeLun {
+    [launchView removeFromSuperview];
+}
+
 -(void)otherDeviceLogin{
     [self loginOterDeviceNoteWithString:@"您的账号在其他设备上登录过，请重新登录"];
 }
@@ -840,11 +846,11 @@ BMKMapManager* _mapManager;
 - (void)applicationWillEnterForeground:(UIApplication *)application{
     [application setApplicationIconBadgeNumber:0];
     [application cancelAllLocalNotifications];
-    
     UserInfo *userInfo = [UserInfo userDefault];
     userInfo.token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     NSLog(@"---applicationWillEnterForeground----get last token :%@",userInfo.token);
     [[NSNotificationCenter defaultCenter]postNotificationName:@"EnterForeground" object:nil];
+    [self loadAdvertisment];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application{
     backOrActive=NO;

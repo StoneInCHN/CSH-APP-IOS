@@ -53,6 +53,7 @@
     NSMutableArray *_fineWashArray;
     NSMutableArray *_BeautyArray;
     NSMutableArray *_maintenanceArray;
+    NSMutableArray *_images;
     
     NSString* _currentStoreName;
     
@@ -67,29 +68,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.title = @"商家详情";
-    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     self.indexNumber = 0;
     [Utils changeBackBarButtonStyle:self];
     userInfo = [UserInfo userDefault];
-    
     [self initialData];
-    
 }
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [ModelTool stopAllOperation];
 }
-
 #pragma mark -================================InitialData
 -(void)initialData{
     if(!dataArray){
-    
         dataArray = @[].mutableCopy;
         reviewDataArray = @[].mutableCopy;
         rowsHeightArray = @[].mutableCopy;
@@ -97,7 +91,7 @@
         _dataDic = [NSMutableDictionary dictionary];
         _goodsListArray = [NSMutableArray array];
         _sectionNameArray = [NSMutableArray array];
-        
+
         _commentsArray = [NSMutableArray array];
         _normolWashArray= [NSMutableArray array];
         _fineWashArray= [NSMutableArray array];
@@ -120,11 +114,14 @@
                                        NSString *code = dict[@"code"];
                                        userInfo.token = dict[@"token"];
                                        if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                           
                                            _dataDic = [dict[@"msg"] mutableCopy];
                                            _currentStoreName = _dataDic[@"tenantName"];
                                            _goodsListArray = [_dataDic[@"carServices"] mutableCopy];
-                                           
+                                           NSArray *tenantImages = _dataDic[@"tenantImages"];
+                                           _images = [NSMutableArray array];
+                                           for (NSDictionary *imageDict in tenantImages) {
+                                               [_images addObject:imageDict[@"image"]];
+                                           }
                                            //分别添加数据源
                                            NSMutableArray *sectionNameArray = [NSMutableArray array];
                                            for (NSDictionary *dic in _goodsListArray) {
@@ -415,8 +412,7 @@
     
     if(!section){
         
-        eachHeaderView = [[NewCarWashDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 98) Data:_dataDic controller:self];
-        
+        eachHeaderView = [[NewCarWashDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 98) Data:_dataDic images:_images controller:self];
     }else if (section == 1){
         return nil;
     }

@@ -67,14 +67,14 @@
 }
 - (void)parser:(NSDictionary *)msg {
     _detailsInfo[0] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"totalMileAge"]];
-    _detailsInfo[1] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"totalMileAge"]];
-    _detailsInfo[2] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"totalMileAge"]];
-    _detailsInfo[3] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"totalMileAge"]];
+    _detailsInfo[1] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdAFR"]];
+    _detailsInfo[2] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdCTA"]];
+    _detailsInfo[3] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdEngLoad"]];
     
     _detailsInfo[4] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdEngRuntime"]];
-    _detailsInfo[5] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"totalMileAge"]];
-    _detailsInfo[6] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"totalMileAge"]];
-    _detailsInfo[7] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"totalMileAge"]];
+    _detailsInfo[5] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdIFC"]];
+    _detailsInfo[6] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdRemainingGas"]];
+    _detailsInfo[7] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdRPM"]];
     
     _detailsInfo[8] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdspeed"]];
     _detailsInfo[9] = [PublicUtils checkNSNullWithgetString:[msg objectForKey:@"obdTemp"]];

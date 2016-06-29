@@ -10,7 +10,11 @@
 #import "UIImageView+WebCache.h"
 #import "BMNavController.h"
 
-@interface NewCarWashDetailHeaderView()<UIAlertViewDelegate>
+@interface NewCarWashDetailHeaderView()<UIAlertViewDelegate,UIScrollViewDelegate> {
+    UIView *backgroundView;
+    UILabel *progress;
+    int width;
+}
 @property (nonatomic,strong)NSString *telString;
 @property (nonatomic,assign)CLLocationCoordinate2D pt;
 @property (nonatomic,strong)BMNavController *controller;
@@ -18,7 +22,7 @@
 
 @implementation NewCarWashDetailHeaderView
 
-- (instancetype)initWithFrame:(CGRect)frame Data:(NSDictionary *)dic controller:(BMNavController *)controller
+- (instancetype)initWithFrame:(CGRect)frame Data:(NSDictionary *)dic images:(NSArray *)images controller:(BMNavController *)controller
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -33,12 +37,60 @@
         self.storeNameLabel.text = dic[@"tenantName"];
         self.storeBusinessHoursLabel.text = [NSString stringWithFormat:@"营业时间:%@",dic[@"businessTime"]];
         self.storeAddressLabel.text = dic[@"address"];
-        
+        self.images = images;
         self.telString = dic[@"contactPhone"];
         self.pt = CLLocationCoordinate2DMake([dic[@"latitude"] floatValue], [dic[@"longitude"] floatValue]);
         self.controller = controller;
     }
     return self;
+}
+- (IBAction)showImageDetails:(id)sender {
+    if (_images.count == 0) {
+        return;
+    }
+    UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
+    backgroundView = [[UIView alloc] initWithFrame:window.frame];
+    backgroundView.backgroundColor = [UIColor blackColor];
+    [window addSubview:backgroundView];
+    
+    UIView *imageBackgroundView = [[UIView alloc] init];
+    imageBackgroundView.center = backgroundView.center;
+    imageBackgroundView.bounds = CGRectMake(0, 0, window.frame.size.width, window.frame.size.height * 0.8);
+    imageBackgroundView.backgroundColor = [UIColor clearColor];
+    [backgroundView addSubview:imageBackgroundView];
+    
+    width = imageBackgroundView.frame.size.width;
+    int hight = imageBackgroundView.frame.size.height;
+    progress = [[UILabel alloc] initWithFrame:CGRectMake(imageBackgroundView.frame.origin.x, CGRectGetMaxY(imageBackgroundView.frame), width, 20)];
+    progress.text = [NSString stringWithFormat:@"1/%lu",(unsigned long)_images.count];
+    progress.backgroundColor = [UIColor clearColor];
+    progress.textColor = [UIColor whiteColor];
+    progress.textAlignment = NSTextAlignmentCenter;
+    [backgroundView addSubview:progress];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeImageDetailsByTap)];
+    [backgroundView addGestureRecognizer:tapGesture];
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, hight)];
+    scrollView.contentSize = CGSizeMake(width*_images.count, hight);
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.delegate = self;
+    for (int i = 0; i < _images.count; i++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0+width*i, 0, width, hight)];
+        NSString *urlStr = [NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS,_images[i]];
+        [imageView setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"zhaochewei_img"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [scrollView addSubview:imageView];
+    }
+    [imageBackgroundView addSubview:scrollView];
+}
+- (void)removeImageDetailsByTap {
+    [backgroundView removeSubviews];
+    [backgroundView removeFromSuperview];
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    int index = (int)scrollView.contentOffset.x / width + 1;
+    progress.text = [NSString stringWithFormat:@"%d/%lu",index,(unsigned long)_images.count];
 }
 
 - (IBAction)buttonClicked:(UIButton *)sender {
@@ -81,6 +133,7 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",self.telString]]];
     }
 }
+
 
 
 @end
