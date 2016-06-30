@@ -77,6 +77,9 @@ BMKMapManager* _mapManager;
     BOOL isShutdownInformation; //关闭消息推送
     UIView *launchView;
     NSString* forceLogoutString;  //挤登录用语
+    int _timeCounter;
+    NSTimer *_timer;
+    UIButton *_skipBtn;
 }
 
 @end
@@ -152,12 +155,27 @@ BMKMapManager* _mapManager;
     _locService.delegate = self;
 
     [_locService startUserLocationService];
-    
     //判断
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-//app第一次登陆
+//    [self easeMobWith:application with:launchOptions];
+    [self.window makeKeyAndVisible];
+    
+    //初始化导航SDK
+    [BNCoreServices_Instance initServices:MAP_KEY];
+    [BNCoreServices_Instance startServicesAsyn:nil fail:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(welcomeComeHere:) name:@"welcomeToRoot" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(rightAddCar:) name:@"rightAddCar" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(rightAddCarBack:) name:@"addCarBack" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginToMainController:) name:@"loginToMainController" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(otherDeviceLogin) name:@"accountLoginInOterDevice" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shutdownAlertButtonClicke:) name:@"shutdownAlertButton" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shutdownInformationButtonClicke:) name:@"shutdownInformationButton" object:nil];
+    
+    //app第一次登陆
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
         NSLog(@"第一次启动");
@@ -165,9 +183,55 @@ BMKMapManager* _mapManager;
         self.window.rootViewController = guideVC;
     }else{
         NSLog(@"不是第一次启动");
+        self.window.rootViewController = [[UIViewController alloc] init];
+        [self loadAdvertisment]; 
+    }
+    return YES;
+}
+- (void)loadAdvertisment {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *str = [userDefaults objectForKey:@"homeAdvUrl"];
+    if (str != nil) {
+        launchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0];
+        launchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height);
+        [self.window addSubview:launchView];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.window.frame];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        NSString *urlString = [NSString stringWithFormat:@"%@%@%@", SERVERADDRESS, PROJECT_NAME, str];
+//        NSString *urlString = @"http://d.lanrentuku.com/down/png/1511/wsj2015/wsj2015-3.png";
+            [imageView setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"welcome"]];
+        _skipBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.window.frame.size.width-80, 10, 70, 50)];
+        [_skipBtn setTitle:@"跳过5秒" forState:UIControlStateNormal];
+        [_skipBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        _skipBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+        [_skipBtn addTarget:self action:@selector(skipAdertisment) forControlEvents:UIControlEventTouchUpInside];
+        imageView.userInteractionEnabled = YES;
+        [imageView addSubview:_skipBtn];
+        [launchView addSubview:imageView];
+        [self.window bringSubviewToFront:launchView];
+        _timeCounter = 5;
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(removeLun) userInfo:nil repeats:YES];
+    } else {
         CWSWellcomeController* lController = [[CWSWellcomeController alloc] init];
         self.window.rootViewController = lController;
     }
+    
+}
+- (void)skipAdertisment {
+    _timeCounter = 0;
+    [self removeLun];
+}
+-(void)removeLun {
+    _timeCounter--;
+    if (_timeCounter > 0) {
+        [_skipBtn setTitle:[NSString stringWithFormat:@"跳过%d秒",_timeCounter] forState:UIControlStateNormal];
+        return;
+    }
+    [_timer invalidate];
+    [launchView removeFromSuperview];
+    
+    CWSWellcomeController* lController = [[CWSWellcomeController alloc] init];
+    self.window.rootViewController = lController;
     backOrActive=NO;
     
     //判断是否在其他设备上登录
@@ -203,44 +267,6 @@ BMKMapManager* _mapManager;
 #else
     [self checkLoginOrNo];
 #endif
-//    [self easeMobWith:application with:launchOptions];
-    [self.window makeKeyAndVisible];
-    
-    //初始化导航SDK
-    [BNCoreServices_Instance initServices:MAP_KEY];
-    [BNCoreServices_Instance startServicesAsyn:nil fail:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(welcomeComeHere:) name:@"welcomeToRoot" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(rightAddCar:) name:@"rightAddCar" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(rightAddCarBack:) name:@"addCarBack" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginToMainController:) name:@"loginToMainController" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(otherDeviceLogin) name:@"accountLoginInOterDevice" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shutdownAlertButtonClicke:) name:@"shutdownAlertButton" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shutdownInformationButtonClicke:) name:@"shutdownInformationButton" object:nil];
-    [self loadAdvertisment];
-    return YES;
-}
-- (void)loadAdvertisment {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *str = [userDefaults objectForKey:@"homeAdvUrl"];
-    if (str != nil) {
-        launchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0];
-        launchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height);
-        [self.window addSubview:launchView];
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.window.frame];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        NSString *urlString = [NSString stringWithFormat:@"%@%@%@", SERVERADDRESS, PROJECT_NAME, str];
-        [imageView setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"welcome"]];
-        [launchView addSubview:imageView];
-        [self.window bringSubviewToFront:launchView];
-        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(removeLun) userInfo:nil repeats:NO];
-      
-    }
-    
-}
--(void)removeLun {
-    [launchView removeFromSuperview];
 }
 
 -(void)otherDeviceLogin{
@@ -858,7 +884,6 @@ BMKMapManager* _mapManager;
     userInfo.token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     NSLog(@"---applicationWillEnterForeground----get last token :%@",userInfo.token);
     [[NSNotificationCenter defaultCenter]postNotificationName:@"EnterForeground" object:nil];
-    [self loadAdvertisment];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application{
     backOrActive=NO;

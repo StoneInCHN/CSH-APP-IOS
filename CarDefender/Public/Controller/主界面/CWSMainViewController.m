@@ -220,13 +220,13 @@
                             success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                 NSDictionary *dict = (NSDictionary *)responseObjcet;
                                 NSLog(@"车生活后台初始化jPush返回值：%@", dict);
-                                //保存广告图片地址
-                                [userDefaults setObject:dict[@"msg"][@"homeAdvUrl"] forKey:@"homeAdvUrl"];
-                                [userDefaults synchronize];
                                 NSString *code = dict[@"code"];
                                 userInfo.token = dict[@"token"];
                                 if ([code isEqualToString:SERVICE_SUCCESS]) {
                                     NSLog(@"车生活后台初始化jPush成功");
+                                    //保存广告图片地址
+                                    [userDefaults setObject:dict[@"msg"][@"homeAdvUrl"] forKey:@"homeAdvUrl"];
+                                    [userDefaults synchronize];
                                 }else{
                                     NSLog(@"车生活后台初始化jPush失败");
                                 }
