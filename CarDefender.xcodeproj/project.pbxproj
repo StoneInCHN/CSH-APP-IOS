@@ -1082,7 +1082,6 @@
 		4CDF3AF61C3B9F6E0049A7FA /* CWSInternetPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF3AF41C3B9F6E0049A7FA /* CWSInternetPhoneViewController.m */; };
 		4CDF3AF71C3B9F6E0049A7FA /* CWSInternetPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDF3AF51C3B9F6E0049A7FA /* CWSInternetPhoneViewController.xib */; };
 		4CE740BE1C4107D40043C638 /* ad_default_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE740BD1C4107D40043C638 /* ad_default_back.png */; };
-		4CECD2551C2283D40069754C /* CWSDetectionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CECD2541C2283D40069754C /* CWSDetectionDetailViewController.m */; };
 		4CECD2601C2287EF0069754C /* CWSActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CECD2581C2287EF0069754C /* CWSActivityDetailViewController.m */; };
 		4CECD2611C2287EF0069754C /* CWSActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CECD25A1C2287EF0069754C /* CWSActivityViewController.m */; };
 		4CECD2621C2287EF0069754C /* CWSActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CECD25B1C2287EF0069754C /* CWSActivityViewController.xib */; };
@@ -2900,8 +2899,6 @@
 		4CDF3AF41C3B9F6E0049A7FA /* CWSInternetPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSInternetPhoneViewController.m; sourceTree = "<group>"; };
 		4CDF3AF51C3B9F6E0049A7FA /* CWSInternetPhoneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSInternetPhoneViewController.xib; sourceTree = "<group>"; };
 		4CE740BD1C4107D40043C638 /* ad_default_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ad_default_back.png; sourceTree = "<group>"; };
-		4CECD2531C2283D40069754C /* CWSDetectionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSDetectionDetailViewController.h; sourceTree = "<group>"; };
-		4CECD2541C2283D40069754C /* CWSDetectionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSDetectionDetailViewController.m; sourceTree = "<group>"; };
 		4CECD2571C2287EF0069754C /* CWSActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSActivityDetailViewController.h; sourceTree = "<group>"; };
 		4CECD2581C2287EF0069754C /* CWSActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSActivityDetailViewController.m; sourceTree = "<group>"; };
 		4CECD2591C2287EF0069754C /* CWSActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSActivityViewController.h; sourceTree = "<group>"; };
@@ -6328,8 +6325,6 @@
 				4C6078FE1C1EAF8600BDBCE3 /* CWSDetectionOneForAllViewController.m */,
 				4CD8F1951C1FAB560023891B /* CWSDetectionScanViewController.h */,
 				4CD8F1961C1FAB560023891B /* CWSDetectionScanViewController.m */,
-				4CECD2531C2283D40069754C /* CWSDetectionDetailViewController.h */,
-				4CECD2541C2283D40069754C /* CWSDetectionDetailViewController.m */,
 			);
 			path = "一键检测";
 			sourceTree = "<group>";
@@ -9258,7 +9253,6 @@
 				928A642D1ACCF4460013C666 /* MessageModelManager.m in Sources */,
 				928A62AE1ACCE9C50013C666 /* DACircularProgressView.m in Sources */,
 				4CDDD1A51C15376D00128318 /* CWSCarMaintainDetailContentView.m in Sources */,
-				4CECD2551C2283D40069754C /* CWSDetectionDetailViewController.m in Sources */,
 				337728801B004FA20064FDEC /* CWSPhoneWaitController.m in Sources */,
 				3316F70D1AD278EC0008D5CD /* QianDao.m in Sources */,
 				33507B8E1AD40C7900F1F236 /* TableViewCell.m in Sources */,
