@@ -100,12 +100,24 @@
     
     [self.chooseCarBtn setExclusiveTouch:YES];
     
-   // [self.carNubBtn setExclusiveTouch:YES];
-    //[self.carColorBtn setExclusiveTouch:YES];
+    //注册键盘通知
+    
     
     
 }
 
+#pragma mark _点击屏幕 让江畔消失
+-(void)dismissKeyboardView{
+    UIView *view1 = [self.view viewWithTag:201];
+    UIView *view2 = [self.view viewWithTag:202];
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
+    
+    [view1 addGestureRecognizer:gesture];
+    [view2 addGestureRecognizer:gesture];
+}
+-(void)dismissKeyboard{
+    [self Actiondo:nil];
+}
 #pragma mark - 键盘通知
 -(void)buildKeyboardNoti{
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -159,6 +171,7 @@
     self.view.frame=viewFrame;
 }
 
+#pragma mark - 键盘弹出
 #pragma mark - 试图将要显示
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -270,6 +283,7 @@
   //  self.carIDText.delegate=self;
     self.carBoundIdTextFiled.delegate = self;
     self.carNumberTextField.delegate = self;
+    self.carFrameField.delegate = self;
     [self.scrollerView addSubview:self.groundView];
     [self.groundView setFrame:CGRectMake(0, 0, kSizeOfScreen.width, self.groundView.frame.size.height)];
     self.scrollerView.contentSize = CGSizeMake(0, self.groundView.frame.size.height);
@@ -370,20 +384,20 @@
 }
 #pragma mark - 收键盘
 -(void)Actiondo:(UIGestureRecognizer*)sender{
-//    if ([self.carIDText isFirstResponder]) {
-//        [self.carIDText resignFirstResponder];
-//        return;
-//    }else if ([self.carJiaNubText isFirstResponder]) {
-//        [self.carJiaNubText resignFirstResponder];
-//        return;
-//    }else if ([self.currentKiloText isFirstResponder]) {
-//        [self.currentKiloText resignFirstResponder];
-//        return;
-//    }else if ([self.lastKilomText isFirstResponder]) {
-//        [self.lastKilomText resignFirstResponder];
-//        return;
-//    }
-//    [self.view endEditing:YES];
+    if ([self.carNumberTextField isFirstResponder]) {
+        [self.carNumberTextField resignFirstResponder];
+        return;
+    }else if ([self.currentKiloText isFirstResponder]) {
+        [self.currentKiloText resignFirstResponder];
+        return;
+    }else if ([self.lastKilomText isFirstResponder]) {
+        [self.lastKilomText resignFirstResponder];
+        return;
+    }else if ([self.carFrameField isFirstResponder]) {
+        [self.carFrameField resignFirstResponder];
+        return;
+    }
+    [self.view endEditing:YES];
 }
 -(void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
 {
@@ -417,6 +431,10 @@
     NSURL*logoImgUrl=[NSURL URLWithString:url];
     [self.carImage setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"normal_car_brand"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
 }
+
+#pragma textField delegate
+
+
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -582,7 +600,7 @@
 //    [self checkMsgIsOK];
     
     if (!self.carCheXinLabel.text.length) {
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择车型" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择品牌车系" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
         return;
     }
     if (!self.carNumberTextField.text.length) {
@@ -834,12 +852,7 @@
                             CWSCarBoundOKController*boundOKVC = [[CWSCarBoundOKController alloc]initWithNibName:@"CWSCarBoundOKController" bundle:nil];
                             _gotoChooseCost=YES;
                             [self.navigationController pushViewController:boundOKVC animated:YES];
-//                        }else{//设备没有选择过费用
-//                            CWSCarManagerDeviceOkController*carDeviceOk=[[CWSCarManagerDeviceOkController alloc]initWithNibName:@"CWSCarManagerDeviceOkController" bundle:nil];
-//                            _gotoChooseCost=YES;
-//                            carDeviceOk.carCid=cidCarString;
-//                            [self.navigationController pushViewController:carDeviceOk animated:YES];
-//                        }
+
                     }else{//没有设备
                         CWSCarMangerAddNoDeviceController*nodevice=[[CWSCarMangerAddNoDeviceController alloc]initWithNibName:@"CWSCarMangerAddNoDeviceController" bundle:nil];
                         _gotoChooseCost=YES;
