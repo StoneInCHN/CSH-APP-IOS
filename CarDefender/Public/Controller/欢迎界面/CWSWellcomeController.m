@@ -40,11 +40,12 @@
     [super viewDidLoad];
     
     //设置3秒后自动跳转
-    _timer=[NSTimer scheduledTimerWithTimeInterval:1.0
-                                            target:self selector:@selector(timerFireMethod:)
-                                          userInfo:nil repeats:YES];
-    [_timer fire];
-    _minite=2;
+//    _timer=[NSTimer scheduledTimerWithTimeInterval:1.0
+//                                            target:self selector:@selector(timerFireMethod:)
+//                                          userInfo:nil repeats:YES];
+//    [_timer fire];
+//    _minite=2;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"welcomeToRoot" object:nil];
 }
 #pragma mark - timer事件
 -(void)timerFireMethod:(NSTimer*)sender
