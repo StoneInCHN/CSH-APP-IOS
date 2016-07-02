@@ -155,7 +155,7 @@
 
         
     if (!self.carBrandField.text.length) {
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择车型" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择品牌车系" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
         return;
     }
     if (!self.carNumberField.text.length) {
