@@ -209,7 +209,7 @@
                                                [dataArray addObject:model];
                                               
                                            }
-                                           if (dataArray.count > 1) {
+                                           if (dataArray.count >=  1) {
                                                [self createTableView];
                                            }
                                            
@@ -249,19 +249,18 @@
 #pragma mark -================================TableViewDataSource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-//    NSLog(@"numberOfSectionsInTableView is %ld", (dataArray.count + 1));
     return dataArray.count + 1;
 //    return _sectionNameArray.count + 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    NSLog(@"section is %ld", (long)section);
-    
+
     if(!section){
         return 0;
-    }else if (section == 1){
-        return 0;
     }
+//    else if (section == 1){
+//        return 0;
+//    }
     else{
     
         CWSCarMaintainInfoModel* model = dataArray[section-1];
@@ -361,6 +360,10 @@
     }
 }
 
+- (void)selectTableViewButtonClicked:(UIButton *)sender andDiscountModel:(CWSCarWashDiscountModel *)thyModel
+{
+    NSLog(@"table view cell clicked!");
+}
 
 #pragma mark -================================TableViewDelegate
 
@@ -370,9 +373,11 @@
     
     if(!indexPath.section){
         thyRowHeight = 0.0f;
-    }else  if(indexPath.section == 1){
-        return 0;
-    }else{
+    }
+//    else  if(indexPath.section == 1){
+//        return 0;
+//    }
+    else{
         CWSCellHeightModel* heightModel = [dataArray[indexPath.section-1] cellHeightArray][indexPath.row];
         thyRowHeight = [heightModel.currentCellHeight floatValue];
 //        NSDictionary* currentDict = dataArray[indexPath.section-1];
