@@ -23,6 +23,10 @@
 @property(strong, nonatomic) NSString *signature;
 @property(strong, nonatomic) NSString *userName;
 
+@property(strong, nonatomic) NSString *currentCity;
+@property(strong, nonatomic) NSString *currentSubCity;
+@property (assign, nonatomic)CLLocationCoordinate2D currentPt;
+
 @property(strong, nonatomic) NSString *latitude;
 @property(strong, nonatomic) NSString *longitude;
 

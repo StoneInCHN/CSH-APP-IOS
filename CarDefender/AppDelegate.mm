@@ -67,7 +67,7 @@
 #define kUmengAppKey @"5577d5dc67e58eb24c0029db"
 
 //NSString* MAP_KEY = @"x04Mu9iPtpvHXkuiD14zOt1G";//企业版百度地图KEY
-NSString* MAP_KEY = @"tVn5kiTok0runTCOrkOQEgU5ef7C6x1V";//AppStore版百度地图Key
+NSString* MAP_KEY = @"tVn5kiTok0runTCOrkOQEgU5ef7C6x1V";//AppStore版百度地图
 
 BMKMapManager* _mapManager;
 

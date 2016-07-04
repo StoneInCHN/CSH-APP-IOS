@@ -19,4 +19,6 @@ typedef void(^selectInfoBlock)(NSString*);
 
 @property (nonatomic,strong) selectInfoBlock selectedAreaOrLetter;
 
++(NSString*)getUserLocationCityProvince;  //根据user位置获取简称
+
 @end
