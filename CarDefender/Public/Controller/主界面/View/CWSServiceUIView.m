@@ -33,6 +33,7 @@
 
 #import "CWSAddCarController.h"//添加车辆
 #import "CWSSelectDeviceNOViewController.h" //选择设备号
+#import "SFBuyCarInsuranceViewController.h"
 
 #define BUTTON_NUM 4
 #define TOTAL_BUTTON_NUM 12
@@ -142,9 +143,10 @@
     NSString* whichService = sender.titleLabel.text;
     NSLog(@"%@",whichService);
     if([whichService isEqualToString:@"买车险"]) {
-//            CWSBuyCarInsuranceViewController *vc = [[CWSBuyCarInsuranceViewController alloc] init];
-//            [self.thyRootVc.navigationController pushViewController:vc animated:YES];
-        [MBProgressHUD showError:@"此功能暂未开放" toView:self];
+//        CWSBuyCarInsuranceViewController *vc = [[CWSBuyCarInsuranceViewController alloc] init];
+//        [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+        SFBuyCarInsuranceViewController *buyCarInsVC = [[SFBuyCarInsuranceViewController alloc] init];
+        [self.thyRootVc.navigationController pushViewController:buyCarInsVC animated:YES];
     }
     else if([whichService isEqualToString:@"洗车"]) {
             CWSCarWashViewController* lController = [[CWSCarWashViewController alloc] init];

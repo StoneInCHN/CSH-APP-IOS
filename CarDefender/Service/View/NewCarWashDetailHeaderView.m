@@ -14,6 +14,14 @@
     UIView *backgroundView;
     UILabel *progress;
     int width;
+    int startContentOffsetX;
+    int willEndContentOffsetX;
+    int endContentOffsetX;
+    BOOL _isNext;
+    BOOL _isEndScroll;
+    int index;
+    int kScreenWidth;
+    int kScreenHeight;
 }
 @property (nonatomic,strong)NSString *telString;
 @property (nonatomic,assign)CLLocationCoordinate2D pt;
@@ -53,6 +61,9 @@
     backgroundView.backgroundColor = [UIColor blackColor];
     [window addSubview:backgroundView];
     
+    kScreenWidth = window.frame.size.width;
+    kScreenHeight = window.frame.size.height;
+    
     UIView *imageBackgroundView = [[UIView alloc] init];
     imageBackgroundView.center = backgroundView.center;
     imageBackgroundView.bounds = CGRectMake(0, 0, window.frame.size.width, window.frame.size.height * 0.8);
@@ -88,10 +99,63 @@
     [backgroundView removeSubviews];
     [backgroundView removeFromSuperview];
 }
+#pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    int index = (int)scrollView.contentOffset.x / width + 1;
+    index = (int)scrollView.contentOffset.x / width + 1;
     progress.text = [NSString stringWithFormat:@"%d/%lu",index,(unsigned long)_images.count];
+    if (!_isEndScroll) {
+        return;
+    }
+    if (_isNext) {
+        CGRect rect = CGRectMake(kScreenWidth*(index-0.5), 0, kScreenWidth, kScreenHeight);
+        if (CGRectContainsPoint(rect,scrollView.contentOffset)) {
+            [scrollView setContentOffset:CGPointMake(kScreenWidth*(index), 0)];
+        } else {
+            [scrollView setContentOffset:CGPointMake(kScreenWidth*(index-1), 0)];
+        }
+    } else {
+        CGRect rect = CGRectMake(kScreenWidth*(index-1), 0, kScreenWidth/2, kScreenHeight);
+        if (CGRectContainsPoint(rect,scrollView.contentOffset)) {
+            [scrollView setContentOffset:CGPointMake(kScreenWidth*(index-1), 0)];
+        } else {
+            [scrollView setContentOffset:CGPointMake(kScreenWidth*(index), 0)];
+        }
+    }
 }
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    _isEndScroll = NO;
+    startContentOffsetX = scrollView.contentOffset.x;
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    willEndContentOffsetX = scrollView.contentOffset.x;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    _isEndScroll = YES;
+    endContentOffsetX = scrollView.contentOffset.x;
+    if (endContentOffsetX <= willEndContentOffsetX && willEndContentOffsetX < startContentOffsetX) { //画面从右往左移动，前一页
+        _isNext = NO;
+        CGRect rect = CGRectMake(kScreenWidth*(index-1), 0, kScreenWidth/2, kScreenHeight);
+        if (CGRectContainsPoint(rect,scrollView.contentOffset)) {
+            [scrollView setContentOffset:CGPointMake(kScreenWidth*(index-1), 0)];
+        } else {
+            [scrollView setContentOffset:CGPointMake(kScreenWidth*(index), 0)];
+        }
+    } else if (endContentOffsetX >= willEndContentOffsetX && willEndContentOffsetX > startContentOffsetX) {//画面从左往右移动，后一页
+        _isNext = YES;
+        CGRect rect = CGRectMake(kScreenWidth*(index-0.5), 0, kScreenWidth, kScreenHeight);
+        if (CGRectContainsPoint(rect,scrollView.contentOffset)) {
+            [scrollView setContentOffset:CGPointMake(kScreenWidth*(index), 0)];
+        } else {
+            [scrollView setContentOffset:CGPointMake(kScreenWidth*(index-1), 0)];
+        }
+    }
+}
+
 
 - (IBAction)buttonClicked:(UIButton *)sender {
     sender.selected = !sender.selected;

@@ -19,6 +19,7 @@
 		240A75D31D221EB9003F8731 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 240A75D21D221EB9003F8731 /* LaunchScreen.xib */; };
 		240A75D51D224F58003F8731 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240A75D41D224F58003F8731 /* Images-2.xcassets */; };
 		240A75DD1D22912B003F8731 /* NSObject+Null_Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 240A75DC1D22912B003F8731 /* NSObject+Null_Category.m */; };
+		241F75B81D268E63009E88D4 /* SFBuyCarInsuranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241F75B71D268E63009E88D4 /* SFBuyCarInsuranceViewController.m */; };
 		243AB0BF1CDA524100E9FD95 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0BE1CDA524100E9FD95 /* HttpHelper.m */; };
 		243AB0C21CDA738900E9FD95 /* HBRSAHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C11CDA738900E9FD95 /* HBRSAHandler.m */; };
 		243AB0C51CDA746A00E9FD95 /* SecurityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */; };
@@ -1280,6 +1281,8 @@
 		240A75D41D224F58003F8731 /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
 		240A75DB1D22912B003F8731 /* NSObject+Null_Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Null_Category.h"; sourceTree = "<group>"; };
 		240A75DC1D22912B003F8731 /* NSObject+Null_Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Null_Category.m"; sourceTree = "<group>"; };
+		241F75B61D268E63009E88D4 /* SFBuyCarInsuranceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBuyCarInsuranceViewController.h; sourceTree = "<group>"; };
+		241F75B71D268E63009E88D4 /* SFBuyCarInsuranceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBuyCarInsuranceViewController.m; sourceTree = "<group>"; };
 		243AB0BD1CDA524100E9FD95 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		243AB0BE1CDA524100E9FD95 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		243AB0C01CDA738900E9FD95 /* HBRSAHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBRSAHandler.h; sourceTree = "<group>"; };
@@ -7105,6 +7108,8 @@
 		4CDDD1AB1C15741000128318 /* 买车险 */ = {
 			isa = PBXGroup;
 			children = (
+				241F75B61D268E63009E88D4 /* SFBuyCarInsuranceViewController.h */,
+				241F75B71D268E63009E88D4 /* SFBuyCarInsuranceViewController.m */,
 				4CDDD1AC1C15741000128318 /* CWSBuyCarInsuranceViewController.h */,
 				4CDDD1AD1C15741000128318 /* CWSBuyCarInsuranceViewController.m */,
 				4CDDD1AE1C15741000128318 /* CWSBuyCarInsuranceViewController.xib */,
@@ -8822,6 +8827,7 @@
 				4CC3678C1C214C950098A6C7 /* NSArray+MASAdditions.m in Sources */,
 				4C55D3781C0C270A00F22902 /* OrderConfirmView.m in Sources */,
 				3391BEB91B15C94B0051E264 /* SpeedTopCell.m in Sources */,
+				241F75B81D268E63009E88D4 /* SFBuyCarInsuranceViewController.m in Sources */,
 				4CB73B3F1C18317E003A80A1 /* CWSCarBeautyDetailViewController.m in Sources */,
 				4C21BFC41C31621D00028D56 /* UserAdvertisementInfo.m in Sources */,
 				928A62FE1ACCF3BA0013C666 /* XHMessageTextView.m in Sources */,
