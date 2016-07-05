@@ -541,10 +541,7 @@
     _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KUserInfo.currentPt.latitude, KUserInfo.currentPt.longitude};
     NSLog(@"%f   ,%f",KUserInfo.currentPt.latitude,KUserInfo.currentPt.longitude);
     
-//    else {
-//        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){[userInfo.latitude doubleValue],
-//            [userInfo.longitude doubleValue]};
-//    }
+
     BOOL flag = [_geocodesearch reverseGeoCode:_reverseGeocodeSearchOption];
     
     if(flag){
@@ -579,7 +576,7 @@
     userInfo.latitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.latitude];
     userInfo.longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
     KUserInfo.currentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
-    
+  
     [_locService stopUserLocationService];
     if ([userInfo.latitude integerValue] == 0 && [userInfo.longitude integerValue] == 0) {
         [_locService startUserLocationService];

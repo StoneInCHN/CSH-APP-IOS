@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "APService.h"
+#import "JPUSHService.h"
 @interface MyJPushService : NSObject
 
 

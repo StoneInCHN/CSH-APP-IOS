@@ -7,63 +7,35 @@
 //
 
 #import "MyJPushService.h"
+#import <AdSupport/AdSupport.h>
 
-
-
+static NSString *appKey = @"37ada1a7a6d7a3b77cde69b8";
+static NSString *channel = @"Publish channel";
+static BOOL isProduction = FALSE;
 @implementation MyJPushService
 
 /**应用启动调用(同时实现registerForRemoteNotificationTypes方法)*/
 +(void)setupWithOption:(NSDictionary *)launchingOption{
-
-    if([[UIDevice currentDevice].systemVersion floatValue] >= 8.0){
-    
-        // 可以添加自定义categories
-        
-//        UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
-//        
-//        category.identifier = @"identifier";
-//        
-//        UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
-//        
-//        action.identifier = @"test2";
-//        
-//        action.title = @"test";
-//        
-//        action.activationMode = UIUserNotificationActivationModeBackground;
-//        
-//        action.authenticationRequired = YES;
-//        
-//        //YES显示为红色，NO显示为蓝色
-//        action.destructive = NO;
-//        
-//        NSArray *actions = @[ action ];
-//        
-//        [category setActions:actions forContext:UIUserNotificationActionContextMinimal];
-        
-        //        //设置消息类型
-        //        UIMutableUserNotificationAction* action1 = [[UIMutableUserNotificationAction alloc]init];
-        //        action1.identifier = @"action1_identifier";
-        //        action1.title = @"Accept";
-        //        action1.activationMode = UIUserNotificationActivationModeForeground; //当点击的时候启动程序
-        //
-        //        UIMutableUserNotificationAction* action2 = [[UIMutableUserNotificationAction alloc]init];
-        //        action2.identifier = @"action2_identifier";
-        //        action2.title = @"Reject";
-        //        action2.activationMode = UIUserNotificationActivationModeBackground; //点击时候不启动程序，在后台运行
-        //        action2.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
-        //        action2.destructive = NO;
-        //
-        //        UIMutableUserNotificationCategory* categorys = [[UIMutableUserNotificationCategory alloc]init];
-        //        categorys.identifier = @"category1";
-        //        [categorys setActions:@[action1,action2] forContext:UIUserNotificationActionContextDefault];
-        
-        [APService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil];
-    }else{
-        //categories必须为空
-        [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert) categories:nil];
+    NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    } else {
+        //categories 必须为nil
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                          UIRemoteNotificationTypeSound |
+                                                          UIRemoteNotificationTypeAlert)
+                                              categories:nil];
     }
-    
-    [APService setupWithOption:launchingOption];
+    //Required
+    // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
+    [JPUSHService setupWithOption:launchingOption appKey:appKey
+                          channel:channel
+                 apsForProduction:isProduction
+            advertisingIdentifier:advertisingId];
     
     return;
 }
@@ -71,14 +43,14 @@
 /**appdelegate注册设备调用*/
 +(void)registerDeviceToken:(NSData *)deviceToken{
     
-    [APService registerDeviceToken:deviceToken];
+    [JPUSHService registerDeviceToken:deviceToken];
     return;
 }
 
 /**ios7以后才有completion，否则传nil*/
 +(void)handleRemoteNotification:(NSDictionary *)userInfo completion:(void (^)(UIBackgroundFetchResult))completion{
 
-    [APService handleRemoteNotification:userInfo];
+    [JPUSHService handleRemoteNotification:userInfo];
     if(completion){
         completion(UIBackgroundFetchResultNewData);
     }
@@ -88,7 +60,7 @@
 /**显示本地通知在最前面*/
 +(void)showLocalNotificationAtFront:(UILocalNotification *)notification{
 
-    [APService showLocalNotificationAtFront:notification identifierKey:nil];
+    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
     
     return;
 }
@@ -96,7 +68,7 @@
 /**设置别名*/
 +(void)setupWithAlias:(NSString*)alias andCallBackSelector:(SEL)callBack andTarget:(id)thyTarget{
     
-    [APService setAlias:alias callbackSelector:callBack object:thyTarget];
+    [JPUSHService setAlias:alias callbackSelector:callBack object:thyTarget];
     
     return;
 }
@@ -104,19 +76,19 @@
 /**设置标签*/
 +(void)setupWithTag:(NSSet*)tags andCallBackSelector:(SEL)callBack andTarget:(id)thyTarget{
     
-    [APService setTags:tags callbackSelector:callBack object:thyTarget];
+    [JPUSHService setTags:tags callbackSelector:callBack object:thyTarget];
     
     return;
 }
 
 /**设置消息红点个数*/
 +(BOOL)setBadge:(int)value{
-    return [APService setBadge:value];
+    return [JPUSHService setBadge:value];
 }
 
 /**清空消息个数*/
 +(void)resetBadge{
-    [APService resetBadge];
+    [JPUSHService resetBadge];
 }
 
 @end

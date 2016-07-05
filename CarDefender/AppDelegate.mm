@@ -54,7 +54,7 @@
 
 //极光推送
 #import "MyJPushService.h"
-#import "JPushNote.h"
+
 #import "UIImageView+WebCache.h"
 #import "CWSCheckMessageCenterDetailViewController.h"
 
@@ -92,7 +92,7 @@ BMKMapManager* _mapManager;
 
     
     [MyJPushService setupWithOption:launchOptions];
-    [APService setDebugMode];
+    [JPUSHService setDebugMode];
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
@@ -624,7 +624,7 @@ BMKMapManager* _mapManager;
     /**极光推送DeviceToken*/
     [MyJPushService registerDeviceToken:deviceToken];
     MyLog(@"%@",[NSString stringWithFormat:@"Device Token:%@",deviceToken]);
-    NSString *registrationID = [APService registrationID];
+    NSString *registrationID = [JPUSHService registrationID];
     NSLog(@"registration id is %@", registrationID);
     [userDefaults setObject:registrationID forKey:@"regId"];
     [userDefaults synchronize];
