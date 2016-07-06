@@ -73,6 +73,7 @@
 #define KHTTPHELPER_APPLY_COUPON_URL @"/csh-interface/coupon/getCoupon.jhtml" //手机用户领取优惠券
 #define KHTTPHELPER_MYWASH_COUPON_URL @"/csh-interface/coupon/myWashingCoupon.jhtml" //我的洗车劵列表
 #define KHTTPHELPER_VEHICLE_SCAN_URL @"/csh-interface/obd/vehicleScan.jhtml" //--车辆详情接口, 用于车辆检测的安全扫描接口
+#define KHTTPHELPER_WALLET_CHARGE_URL @"/csh-interface/balance/chargeIn.jhtml" //账户余额充值
 
 
 #endif /* HttpURLMacro_h */

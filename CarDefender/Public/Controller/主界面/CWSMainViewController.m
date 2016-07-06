@@ -467,10 +467,8 @@
 
 #pragma mark --================================================================ 用户信息
 -(void)refreshUserIcon{
-    self.UserIconButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.UserIconButton setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS,userInfo.defaultVehicleIcon]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed | SDWebImageProgressiveDownload];
+    [self.UserIcon setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/csh-interface%@",SERVERADDRESS,userInfo.defaultVehicleIcon]] placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed | SDWebImageProgressiveDownload];
 }
-
 -(void)isHaveUnreadMessage{
     if(KUserManager.uid != nil){
         NSString* namePath=[NSString stringWithFormat:@"kMessageCenter%@",KUserManager.uid];
@@ -763,13 +761,7 @@
         self.myIndexScrollView.contentSize = CGSizeMake(kSizeOfScreen.width, totalHeight);
     }
     
-    
-    if (KUserManager.userDefaultVehicle != nil) {
-        //更改用户头像
-        [self.UserIconButton setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"baseUrl"],KUserManager.userDefaultVehicle[@"brand"][@"brandIcon"]]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed | SDWebImageProgressiveDownload];
-    }else {
-        [self.UserIconButton setBackgroundImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
-    }
+    [self refreshUserIcon];
 }
 #pragma mark CWSAdViewDelegate
 - (void)clickedAdView:(NSURL *)url {

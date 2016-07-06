@@ -484,5 +484,12 @@
                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-
+#pragma mark 账户余额充值
++ (void)walletChargeWithUserId:(NSString *)userId
+                            token:(NSString *)token
+                        amount:(NSString *)amount
+                   paymentType:(NSString *)paymentType
+                    chargeType:(NSString *)chargeType
+                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 @end

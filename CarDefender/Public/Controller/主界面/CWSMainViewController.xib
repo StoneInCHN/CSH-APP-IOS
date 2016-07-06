@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CWSMainViewController">
             <connections>
-                <outlet property="UserIconButton" destination="2xc-XP-elB" id="4S2-zi-WEo"/>
+                <outlet property="UserIcon" destination="2Dw-5J-sc6" id="lFX-xy-hOk"/>
                 <outlet property="badgeImage" destination="AjT-1u-pla" id="1Xd-pI-lL8"/>
                 <outlet property="badgeValueLabel" destination="jSE-jq-2Zm" id="311-aC-ZUJ"/>
                 <outlet property="myIndexScrollView" destination="9Wp-rt-TVW" id="aWf-wt-9Me"/>
@@ -28,17 +28,6 @@
                             <color key="textColor" red="0.28235294117647058" green="0.28235294117647058" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2xc-XP-elB">
-                            <rect key="frame" x="8" y="30" width="48" height="23"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="48" id="2Et-mr-qha"/>
-                                <constraint firstAttribute="height" constant="23" id="STY-pc-Nk6"/>
-                            </constraints>
-                            <state key="normal" backgroundImage="logo.png"/>
-                            <connections>
-                                <action selector="UserIconButtonClicked:" destination="-1" eventType="touchUpInside" id="714-z7-pdK"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdF-ko-YsG">
                             <rect key="frame" x="564" y="23" width="28" height="32"/>
                             <constraints>
@@ -70,30 +59,49 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="2Dw-5J-sc6">
+                            <rect key="frame" x="8" y="27" width="50" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="LJe-O6-gSa"/>
+                                <constraint firstAttribute="height" constant="25" id="xcj-dk-0hf"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2xc-XP-elB">
+                            <rect key="frame" x="8" y="27" width="50" height="25"/>
+                            <connections>
+                                <action selector="UserIconButtonClicked:" destination="-1" eventType="touchUpInside" id="714-z7-pdK"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="AjT-1u-pla" firstAttribute="centerX" secondItem="jSE-jq-2Zm" secondAttribute="centerX" id="36Z-dj-cMz"/>
+                        <constraint firstItem="2xc-XP-elB" firstAttribute="leading" secondItem="2Dw-5J-sc6" secondAttribute="leading" id="4GO-xA-bBM"/>
                         <constraint firstItem="KIm-R1-thQ" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="25" id="BjG-y5-AJ9"/>
-                        <constraint firstItem="2xc-XP-elB" firstAttribute="leading" secondItem="Jyt-h1-2K6" secondAttribute="leading" constant="8" id="Eg8-Oc-TBu"/>
                         <constraint firstItem="jSE-jq-2Zm" firstAttribute="centerY" secondItem="Jyt-h1-2K6" secondAttribute="centerY" id="Eh9-R5-WLD"/>
+                        <constraint firstItem="2xc-XP-elB" firstAttribute="height" secondItem="2Dw-5J-sc6" secondAttribute="height" id="Fmu-ji-c3d"/>
+                        <constraint firstItem="2Dw-5J-sc6" firstAttribute="leading" secondItem="Jyt-h1-2K6" secondAttribute="leading" constant="8" id="HCE-cw-xuu"/>
                         <constraint firstItem="KIm-R1-thQ" firstAttribute="centerX" secondItem="Jyt-h1-2K6" secondAttribute="centerX" id="HMl-0k-uti"/>
                         <constraint firstItem="AjT-1u-pla" firstAttribute="bottom" secondItem="jSE-jq-2Zm" secondAttribute="bottom" id="JAJ-X7-cK7"/>
                         <constraint firstAttribute="trailing" secondItem="PdF-ko-YsG" secondAttribute="trailing" constant="8" id="KJw-dg-QWW"/>
                         <constraint firstItem="jSE-jq-2Zm" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="20" id="LUC-Gz-YYM"/>
                         <constraint firstAttribute="bottom" secondItem="KIm-R1-thQ" secondAttribute="bottom" constant="10" id="M35-Mi-uAZ"/>
                         <constraint firstItem="AjT-1u-pla" firstAttribute="top" secondItem="jSE-jq-2Zm" secondAttribute="top" id="Nfi-7e-RWn"/>
-                        <constraint firstItem="2xc-XP-elB" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="30" id="Pf5-lw-vM3"/>
+                        <constraint firstItem="2xc-XP-elB" firstAttribute="centerY" secondItem="KIm-R1-thQ" secondAttribute="centerY" id="PyF-kM-Ybd"/>
+                        <constraint firstItem="2xc-XP-elB" firstAttribute="width" secondItem="2Dw-5J-sc6" secondAttribute="width" id="SuK-za-CeU"/>
                         <constraint firstItem="jSE-jq-2Zm" firstAttribute="centerX" secondItem="AjT-1u-pla" secondAttribute="centerX" id="Uq3-fX-wxg"/>
+                        <constraint firstItem="2Dw-5J-sc6" firstAttribute="centerY" secondItem="KIm-R1-thQ" secondAttribute="centerY" id="ZbQ-Rf-ovv"/>
                         <constraint firstAttribute="height" constant="64" id="diu-ie-t1z"/>
                         <constraint firstAttribute="trailing" secondItem="AjT-1u-pla" secondAttribute="trailing" constant="7" id="i83-UR-Vm2"/>
                         <constraint firstItem="PdF-ko-YsG" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="23" id="iUL-3V-ITd"/>
                         <constraint firstItem="AjT-1u-pla" firstAttribute="top" secondItem="Jyt-h1-2K6" secondAttribute="top" constant="15" id="nZP-nX-dIZ"/>
                         <constraint firstItem="jSE-jq-2Zm" firstAttribute="centerY" secondItem="AjT-1u-pla" secondAttribute="centerY" id="vuA-YD-lN4"/>
+                        <constraint firstItem="2xc-XP-elB" firstAttribute="trailing" secondItem="2Dw-5J-sc6" secondAttribute="trailing" id="xTq-Rc-rNT"/>
                         <constraint firstItem="AjT-1u-pla" firstAttribute="centerX" secondItem="jSE-jq-2Zm" secondAttribute="centerX" id="ztY-Cj-cKU"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="xTq-Rc-rNT"/>
                             <exclude reference="36Z-dj-cMz"/>
                             <exclude reference="JAJ-X7-cK7"/>
                             <exclude reference="Nfi-7e-RWn"/>
@@ -127,7 +135,7 @@
                 <constraint firstItem="Jyt-h1-2K6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o5p-l5-vXG"/>
                 <constraint firstItem="9Wp-rt-TVW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="omr-aB-Tpp"/>
             </constraints>
-            <point key="canvasLocation" x="461" y="63"/>
+            <point key="canvasLocation" x="545" y="-438"/>
         </view>
     </objects>
     <resources>

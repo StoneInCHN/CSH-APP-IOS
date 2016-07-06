@@ -13,8 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *badgeValueLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *badgeImage;
 
-@property (weak, nonatomic) IBOutlet UIButton *UserIconButton;
-
+@property (weak, nonatomic) IBOutlet UIImageView *UserIcon;
 @property (weak, nonatomic) IBOutlet UIScrollView *myIndexScrollView;
 
 @end

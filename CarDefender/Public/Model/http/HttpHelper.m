@@ -918,4 +918,24 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_MYWASH_COUPON_URL];
     [self post:urlString parameters:parmDict success:success failure:failure];
 }
+
+#pragma mark 账户余额充值
++ (void)walletChargeWithUserId:(NSString *)userId
+                         token:(NSString *)token
+                        amount:(NSString *)amount
+                   paymentType:(NSString *)paymentType
+                    chargeType:(NSString *)chargeType
+                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:userId] forKey:@"userId"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:token] forKey:@"token"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:amount] forKey:@"amount"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:paymentType] forKey:@"paymentType"];
+    [parmDict setObject:chargeType forKey:@"chargeType"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_WALLET_CHARGE_URL];
+    NSLog(@"余额充值 :%@",urlString);   
+    [self post:urlString parameters:parmDict success:success failure:failure];
+}
+
 @end

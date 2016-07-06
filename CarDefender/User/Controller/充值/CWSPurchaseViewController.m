@@ -246,129 +246,46 @@
 /**确认回调*/
 -(void)comfirmButtonClicked:(UIButton*)sender{
     MyLog(@"支付方式:%@-PINGPP:%@-支付金额:%@",selectedPay,selectedPay,price);
-//    if([selectedPay isEqualToString:@"微信"]){
-//        WXPay* thyWeiXinPay = [WXPay shareInstance];
-//        thyWeiXinPay.isSuccess = NO;
-//        [self getWeiXinOrderWithPrice:price];
-//    }
-//    if([selectedPay isEqualToString:@"支付宝"]){
-//        [self getOrderIdWithPrice:price];
-//    }
-    
+    [MBProgressHUD showMessag:@"充值中..." toView:self.view];
+    NSString *paymentType;
+    if([selectedPay isEqualToString:@"wx"]){
+        paymentType = @"WECHAT";
+    }else if([selectedPay isEqualToString:@"alipay"]){
+        paymentType = @"ALIPAY";
+    }
 
-/*
-    以下是新版支付方式
- */
-    NSDictionary* paramDict = @{
-                                @"uid":KUserManager.uid,
-                                @"mobile":KUserManager.mobile,
-                                @"appid":@"app_j5qbP4Dib5uHTe5C",
-                                @"amount":[NSString stringWithFormat:@"%d",(int)([[[price componentsSeparatedByString:@"元"] firstObject] floatValue]*100)],  //1分钱充值
-                                @"channel":selectedPay,
-                                @"currency":@"cny",
-                                @"subject":[NSString stringWithFormat:@"车生活%@充值",price],
-                                @"body":[NSString stringWithFormat:@"车生活%@元充值",price],
-                                @"red":@"0",
-                                @"money":@"0",
-                                @"order_sn":[NSString stringWithFormat:@""],
-                                @"store_id":@"2",
-                                @"goods_id":@"1",
-                                @"price":[NSString stringWithFormat:@"%d",(int)([[[price componentsSeparatedByString:@"元"] firstObject] floatValue]*100)]
-                                };
-    
-    MyLog(@"-------------生成充值订单的参数-------------%@",paramDict);
-    [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-    [ModelTool getPayOrderCreateWithParameter:paramDict andSuccess:^(id object) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
-            MyLog(@"----------充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
-            MyLog(@"----------充值返回信息-----------%@",rootDict);
-            if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                
-                if([selectedPay isEqualToString:@"wx"]){
-                    //使用微信支付
-                    WXPay* thyWeiXinPay = [WXPay shareInstance];
-                    thyWeiXinPay.isSuccess = NO;
-//                    [self WXPayWithPrepayId:rootDict[@"data"][@"order_sn"]];
-                    [self WXPayWithParamDict:rootDict[@"data"]];
-                }else{
-                    //使用支付宝支付
-                    [self AlipayWithPrice:price andOrderNum:rootDict[@"data"][@"out_trade_no"]];
-                }
-            }else{
-                [self alert:@"温馨提示" msg:[PublicUtils showServiceReturnMessage:rootDict[@"message"]]];
-            }
-        });
-    } andFail:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
-    }];
-    
-/*
-    以下是PINGPP支付方式
- */
-//    NSDictionary* paramDict = @{
-//                                @"uid":KUserManager.uid,
-//                                @"mobile":KUserManager.mobile,
-//                                @"appid":@"app_j5qbP4Dib5uHTe5C",
-//                                @"amount":[NSString stringWithFormat:@"%d",(int)(0.01*100)],  //1分钱充值
-//                                @"channel":selectedPay,
-//                                @"currency":@"cny",
-//                                @"subject":[NSString stringWithFormat:@"车生活%.2f元充值",0.01],
-//                                @"body":[NSString stringWithFormat:@"车生活%.2f元充值",0.01],
-//                                @"red":@"0",
-//                                @"money":@"0",
-//                                @"order_sn":[NSString stringWithFormat:@""],
-//                                @"store_id":@"2",
-//                                @"goods_id":@"1",
-//                                @"price":[NSString stringWithFormat:@"%d",(int)(0.01*100)]
-//                                };
-//    MyLog(@"-------------生成充值订单的参数-------------%@",paramDict);
-//    [MBProgressHUD showMessag:@"订单提交中..." toView:self.view];
-//    [ModelTool getPayOrderCreateWithParameter:paramDict andSuccess:^(id object) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//            NSDictionary* rootDict = [NSDictionary dictionaryWithDictionary:object];
-//            MyLog(@"----------充值返回信息-----------%@",[PublicUtils showServiceReturnMessage:rootDict[@"message"]]);
-//            MyLog(@"----------充值返回信息-----------%@",object);
-//            if([rootDict[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-//                //调用支付控件
-//                if([selectedPay isEqualToString:@"wx"]){
-//                    if([WXApi isWXAppInstalled]){
-//                        
-//                        [Pingpp createPayment:rootDict[@"data"][@"charge"] appURLScheme:@"wx75b0585936937e4a" withCompletion:^(NSString *result, PingppError *error) {
-//                            if([result isEqualToString:@"success"]){
-//                                //支付成功
-//                                [MBProgressHUD showSuccess:@"交易成功!" toView:self.view];
-//                                [self.navigationController popViewControllerAnimated:YES];
-//                            }else{
-//                                [MBProgressHUD showError:[error getMsg] toView:self.view];
-//                            }
-//                        }];
-//                    
-//                    }else{
-//                        [WCAlertView showAlertWithTitle:@"温馨提示" message:@"您还没有安装微信客户端哦" customizationBlock:nil completionBlock:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-//                    }
-//                }else{
-//                    
-//                    [Pingpp createPayment:rootDict[@"data"][@"charge"] appURLScheme:@"MyPayUrlScheme" withCompletion:^(NSString *result, PingppError *error) {
-//                        if([result isEqualToString:@"success"]){
-//                            //支付成功
-//                            [MBProgressHUD showSuccess:@"交易成功!" toView:self.view];
-//                            [self.navigationController popViewControllerAnimated:YES];
-//                        }else{
-//                            [MBProgressHUD showError:[error getMsg] toView:self.view];
-//                        }
-//                    }];
-//                    
-//                }
-//            }
-//        });
-//    } andFail:^(NSError *err) {
-//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//        [WCAlertView showAlertWithTitle:@"提示" message:@"网络出错,请重新加载" customizationBlock:nil completionBlock:nil cancelButtonTitle:@"" otherButtonTitles:nil, nil];
-//    }];
+    NSString *amount = [price substringWithRange:NSMakeRange(0, price.length-1)];
+     UserInfo *userInfo = [UserInfo userDefault];
+    [HttpHelper walletChargeWithUserId:userInfo.desc
+                                 token:userInfo.token
+                                amount:amount
+                                paymentType:paymentType
+                            chargeType:@"CI"
+                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                   NSDictionary* rootDict = (NSDictionary *)responseObjcet;
+                                   MyLog(@"----------账户充值返回信息-----------%@",rootDict);
+                                   if([rootDict[@"code"] isEqualToString:SERVICE_SUCCESS]){
+                                       if([selectedPay isEqualToString:@"wx"]){
+                                           //使用微信支付
+                                           WXPay* thyWeiXinPay = [WXPay shareInstance];
+                                           thyWeiXinPay.isSuccess = NO;
+                                           [self WXPayWithParamDict:rootDict[@"msg"]];
+                                       }
+                                       if([selectedPay isEqualToString:@"alipay"]){
+                                           [self AlipayWithPrice:amount andOrderNum:rootDict[@"msg"][@"out_trade_no"]];
+                                       }
+                                   }else if ([rootDict[@"code"] isEqualToString:SERVICE_TIME_OUT]) {
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
+                                   }else{
+                                       [self alert:@"温馨提示" msg:[PublicUtils showServiceReturnMessage:rootDict[@"desc"]]];
+                                   }
+                                   
+                               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                   NSLog(@"wallet charge error:%@",error);
+                                   [self alert:@"温馨提示" msg:@"网络出错,请重新加载"];
+                               }];
 }
 
 
@@ -419,7 +336,6 @@
     [[WQPay shareInstance] setPaySucc:^{
         [self alert:@"提示" msg:@"支付完成!"];
         [self.navigationController popViewControllerAnimated:YES];
-        //  [self checkLoginOrNo];
     }];
 }
 
