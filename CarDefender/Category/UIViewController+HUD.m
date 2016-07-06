@@ -16,7 +16,7 @@
 #import "CWSCarTrendsController.h"
 #import "CWSDetectionController.h"
 #import "CWSCarManageController.h"
-#import "MobClick.h"
+#import "UMMobClick/MobClick.h"
 #import <ShareSDK/ShareSDK.h>
 #import "CWSLoginController.h"
 static const void *HttpRequestHUDKey = &HttpRequestHUDKey;
@@ -32,11 +32,13 @@ static const void *HttpRequestHUDKey = &HttpRequestHUDKey;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"PageOne"];
+    NSString *pageName = NSStringFromClass([self class]);
+    [MobClick beginLogPageView:pageName];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"PageOne"];
+     NSString *pageName = NSStringFromClass([self class]);
+    [MobClick endLogPageView:pageName];
 }
 #pragma mark 设置超时信息重新登陆通知
 -(void)turnToLoginVC

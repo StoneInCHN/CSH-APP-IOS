@@ -50,29 +50,29 @@
 
 #pragma mark -==================CreateUI====================
 -(void)createUI{
-    NSString* titleLabelString = @"账户一次性充值600元 , 就可以享受一年内免费洗车48次 ; 还可以在商城进行愉快购物哦～";
-    CGFloat titleLabelHeight = [titleLabelString boundingRectWithSize:CGSizeMake(kSizeOfScreen.width-40-18, 0) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0]} context:nil].size.height;
+//    NSString* titleLabelString = @"账户一次性充值600元 , 就可以享受一年内免费洗车48次 ; 还可以在商城进行愉快购物哦～";
+//    CGFloat titleLabelHeight = [titleLabelString boundingRectWithSize:CGSizeMake(kSizeOfScreen.width-40-18, 0) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0]} context:nil].size.height;
+//    
+//    UIView* titleView = [[UIView alloc]initWithFrame:CGRectMake(20, 22, kSizeOfScreen.width-40, titleLabelHeight+5)];
+//    titleView.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:titleView];
     
-    UIView* titleView = [[UIView alloc]initWithFrame:CGRectMake(20, 22, kSizeOfScreen.width-40, titleLabelHeight+5)];
-    titleView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleView];
     
+//    UILabel* titleImageView = [PublicUtils labelWithFrame:CGRectMake(0, 0, 20, 20) withTitle:@"\U0000E619" titleFontSize:[UIFont fontWithName:@"icomoon" size:15.0] textColor:[UIColor colorWithRed:244/255.0 green:167/255.0 blue:64/255.0 alpha:1] backgroundColor:[UIColor whiteColor] alignment:0 hidden:NO];
+//    [titleView addSubview:titleImageView];
+//    UILabel* titleLabel = [PublicUtils labelWithFrame:CGRectMake(CGRectGetMaxX(titleImageView.frame)+3, 2, titleView.frame.size.width-18, titleLabelHeight) withTitle:titleLabelString titleFontSize:[UIFont systemFontOfSize:12.0] textColor:[UIColor grayColor] backgroundColor:nil alignment:0 hidden:NO];
+//    titleLabel.numberOfLines = 0;
+//    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//    //调整行间距
+//    NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc]initWithString:titleLabelString];
+//    NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+//    [paragraphStyle setLineSpacing:5.0];
+//    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [titleLabelString length])];
+//    titleLabel.attributedText = attributedString;
+//    [titleView addSubview:titleLabel];
+//    [titleLabel sizeToFit];
     
-    UILabel* titleImageView = [PublicUtils labelWithFrame:CGRectMake(0, 0, 20, 20) withTitle:@"\U0000E619" titleFontSize:[UIFont fontWithName:@"icomoon" size:15.0] textColor:[UIColor colorWithRed:244/255.0 green:167/255.0 blue:64/255.0 alpha:1] backgroundColor:[UIColor whiteColor] alignment:0 hidden:NO];
-    [titleView addSubview:titleImageView];
-    UILabel* titleLabel = [PublicUtils labelWithFrame:CGRectMake(CGRectGetMaxX(titleImageView.frame)+3, 2, titleView.frame.size.width-18, titleLabelHeight) withTitle:titleLabelString titleFontSize:[UIFont systemFontOfSize:12.0] textColor:[UIColor grayColor] backgroundColor:nil alignment:0 hidden:NO];
-    titleLabel.numberOfLines = 0;
-    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    //调整行间距
-    NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc]initWithString:titleLabelString];
-    NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc]init];
-    [paragraphStyle setLineSpacing:5.0];
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [titleLabelString length])];
-    titleLabel.attributedText = attributedString;
-    [titleView addSubview:titleLabel];
-    [titleLabel sizeToFit];
-    
-    UILabel* label1 = [PublicUtils labelWithFrame:CGRectMake(20, CGRectGetMaxY(titleView.frame)+20, kSizeOfScreen.width, 30) withTitle:@"请选择支付方式" titleFontSize:[UIFont systemFontOfSize:15.0] textColor:KBlackMainColor backgroundColor:nil alignment:0 hidden:NO];
+    UILabel* label1 = [PublicUtils labelWithFrame:CGRectMake(20, 20, kSizeOfScreen.width, 30) withTitle:@"请选择支付方式" titleFontSize:[UIFont systemFontOfSize:15.0] textColor:KBlackMainColor backgroundColor:nil alignment:0 hidden:NO];
     [self.view addSubview:label1];
     [label1 sizeToFit];
     

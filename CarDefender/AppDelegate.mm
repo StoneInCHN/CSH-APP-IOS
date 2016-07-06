@@ -19,14 +19,11 @@
 #import "CWSLeftController.h"
 #import "CWSRightController.h"
 
-#import "UMessage.h"//友盟推送
 #import "UMFeedback.h"
 #import "UMOpus.h"
 #import "CWSFeedbackController.h"
 
 #import "CWSCarManageController.h"
-#import "MobClick.h"
-
 #import "CWSGuideViewController.h"
 
 #import "CWSAddCarController.h"
@@ -48,7 +45,8 @@
 
 #import "WXPay.h"
 #import "WQAler.h"
-
+//UMeng错误分析
+#import "UMMobClick/MobClick.h"
 //键盘
 #import "IQKeyBoardManager.h"
 
@@ -68,6 +66,7 @@
 
 //NSString* MAP_KEY = @"x04Mu9iPtpvHXkuiD14zOt1G";//企业版百度地图KEY
 NSString* MAP_KEY = @"tVn5kiTok0runTCOrkOQEgU5ef7C6x1V";//AppStore版百度地图Key
+static NSString *const kUmengKey = @"577a677b67e58e2c5c003487";
 
 BMKMapManager* _mapManager;
 
@@ -123,11 +122,13 @@ BMKMapManager* _mapManager;
     
     [MyJPushService resetBadge];
     
-#pragma mark -  友盟的东东
-//    //友盟统计
-//    [MobClick startWithAppkey:kUmengAppKey reportPolicy:BATCH channelId:nil];
-//    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];//version标识
-//    [MobClick setAppVersion:version];
+#pragma mark -  友盟
+    
+    [MobClick setAppVersion:XcodeAppVersion];
+    [MobClick setLogEnabled:YES];;
+    UMConfigInstance.appKey = kUmengKey;
+    [MobClick startWithConfigure:UMConfigInstance];
+
 //    //友盟信息反馈
 //    [UMOpus setAudioEnable:YES];
 //    [UMFeedback setAppkey:kUmengAppKey];
