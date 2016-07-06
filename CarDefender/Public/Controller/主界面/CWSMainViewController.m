@@ -536,13 +536,12 @@
         
         _reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     }
-    if (KManager.currentPt.latitude>0 && KManager.currentPt.longitude>0) {
-        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KManager.currentPt.latitude, KManager.currentPt.longitude};
-    }
-//    else {
-//        _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){[userInfo.latitude doubleValue],
-//            [userInfo.longitude doubleValue]};
-//    }
+    
+    
+    _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KUserInfo.currentPt.latitude, KUserInfo.currentPt.longitude};
+    NSLog(@"%f   ,%f",KUserInfo.currentPt.latitude,KUserInfo.currentPt.longitude);
+    
+
     BOOL flag = [_geocodesearch reverseGeoCode:_reverseGeocodeSearchOption];
     
     if(flag){
@@ -576,10 +575,13 @@
     
     userInfo.latitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.latitude];
     userInfo.longitude = [NSString stringWithFormat:@"%f", userLocation.location.coordinate.longitude];
+    KUserInfo.currentPt = (CLLocationCoordinate2D){userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude};
+  
     [_locService stopUserLocationService];
     if ([userInfo.latitude integerValue] == 0 && [userInfo.longitude integerValue] == 0) {
         [_locService startUserLocationService];
     }
+    [self getLocationCity];
 }
 - (void)didFailToLocateUserWithError:(NSError *)error {
     NSLog(@"did fail to locate :%@",error);
@@ -627,6 +629,8 @@
 }
 
 -(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error{
+    
+    NSLog(@"city=%@",result.addressDetail.province);
     if (result.addressDetail.city == nil || [result.addressDetail.city isEqualToString:@""]) {
         return;
     }
@@ -639,10 +643,14 @@
         province = result.addressDetail.province;
         city = result.addressDetail.city;
     }
+    
     KManager.currentCity = province;
     KManager.currentSubCity = city;
     KManager.currentStreetName = result.addressDetail.streetName;
     KManager.currentStreetNumber = result.addressDetail.streetNumber;
+    KUserInfo.currentCity = province;
+    KUserInfo.currentSubCity = city;
+    
     if (KManager.currentCity!=nil || KManager.currentCity.length) {
         NSUserDefaults*user = [[NSUserDefaults alloc]init];
         NSString*string = [user objectForKey:@"SERVICE_CITYNAME"];

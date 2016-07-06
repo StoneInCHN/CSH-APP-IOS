@@ -73,7 +73,8 @@
     _geocodesearch.delegate = self;
     isGeoSearch = false;
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-    reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KManager.currentPt.latitude, KManager.currentPt.longitude};
+    reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KUserInfo.currentPt.latitude, KUserInfo.currentPt.longitude};
+    
     BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
     if(flag)
     {
@@ -297,13 +298,10 @@
     simpleDic=@{@"浙江省":@"浙",@"福建省":@"闽",@"广东省":@"粤",@"北京市":@"京",@"天津市":@"津",@"河北省":@"冀",@"山西省":@"晋",@"内蒙古自治区":@"蒙",@"辽宁省":@"辽",@"吉林省":@"吉",@"黑龙江省":@"黑",@"上海市":@"泸",@"江苏省":@"苏",@"安徽省":@"皖",@"江西省":@"赣",@"山东省":@"鲁",@"河南省":@"豫",@"湖北省":@"鄂",@"湖南省":@"湘",@"广西壮族自治区":@"桂",@"海南省":@"琼",@"重庆市":@"渝",@"四川省":@"川",@"贵州省":@"贵",@"云南省":@"云",@"西藏自治区":@"藏",@"陕西省":@"陕",@"甘肃省":@"甘",@"青海省":@"青",@"宁夏回族自治区":@"宁",@"新疆维吾尔族自治区":@"新"};
     colorDic=@{@"黑色":KBlackMainColor,@"白色":[UIColor whiteColor],@"红色":[UIColor redColor],@"蓝色":[UIColor blueColor],@"绿色":[UIColor greenColor],@"银灰色":[UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1],@"黄色":[UIColor yellowColor]};
     [self.chooseCarBtn setBackgroundImage:[UIImage imageNamed:@"btnHight_whiteBack"] forState:UIControlStateHighlighted];
-    //[self.carNubBtn setBackgroundImage:[UIImage imageNamed:@"btnHight_whiteBack"] forState:UIControlStateHighlighted];
-   // [self.carColorBtn setBackgroundImage:[UIImage imageNamed:@"btnHight_whiteBack"] forState:UIControlStateHighlighted];
+
+    //获取车牌首字
     
-//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-//    fmt.dateFormat = @"YYYY-MM-dd";
-//    NSString *time = [fmt stringFromDate:[NSDate date]];
-//    self.nextCheckText.text=time;
+    self.carAreaLabel.text = [CWSSelectCarAreaController getUserLocationCityProvince];
     
     
 }
@@ -402,6 +400,7 @@
 -(void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
 {
     _cityStr = result.addressDetail.city;
+    
     NSArray*array=[simpleDic allKeys];
     if ([array containsObject:_cityStr]) {
         shortString=simpleDic[_cityStr];

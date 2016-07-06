@@ -132,7 +132,108 @@
 }
 
 
-
++(NSString*)getUserLocationCityProvince{
+    
+    NSString *province= [NSString string];
+    NSString *city = [NSString stringWithFormat:@"%@",KUserInfo.currentCity];
+    if ([city isEqualToString:@"北京市"]) {
+        province = @"京";
+        return province;
+    }else if ([city isEqualToString:@"天津市"]){
+        province = @"津";
+        return province;
+    }else if ([city isEqualToString:@"河北省"]){
+        province = @"冀";
+        return province;
+    }else if ([city isEqualToString:@"山西省"]){
+        province = @"晋";
+        return province;
+    }else if ([city isEqualToString:@"内蒙古自治区"]){
+        province = @"蒙";
+        return province;
+    }else if ([city isEqualToString:@"辽宁省"]){
+        province = @"辽";
+        return province;
+    }else if ([city isEqualToString:@"吉林省"]){
+        province = @"吉";
+        return province;
+    }else if ([city isEqualToString:@"黑龙江省"]){
+        province = @"黑";
+        return province;
+    }else if ([city isEqualToString:@"上海市"]){
+        province = @"沪";
+        return province;
+    }else if ([city isEqualToString:@"江苏省"]){
+        province = @"苏";
+        return province;
+    }else if ([city isEqualToString:@"浙江省"]){
+        province = @"浙";
+        return province;
+    }else if ([city isEqualToString:@"安徽省"]){
+        province = @"皖";
+        return province;
+    }else if ([city isEqualToString:@"福建省"]){
+        province = @"闽";
+        return province;
+    }else if ([city isEqualToString:@"江西省"]){
+        province = @"赣";
+        return province;
+    }else if ([city isEqualToString:@"山东省"]){
+        province = @"鲁";
+        return province;
+    }else if ([city isEqualToString:@"河南省"]){
+        province = @"豫";
+        return province;
+    }else if ([city isEqualToString:@"湖北省"]){
+        province = @"鄂";
+        return province;
+    }else if ([city isEqualToString:@"湖南省"]){
+        province = @"湘";
+        return province;
+    }else if ([city isEqualToString:@"广东省"]){
+        province = @"粤";
+        return province;
+    }else if ([city isEqualToString:@"广西壮族自治区"]){
+        province = @"桂";
+        return province;
+    }else if ([city isEqualToString:@"海南省"]){
+        province = @"琼";
+        return province;
+    }else if ([city isEqualToString:@"重庆市"]){
+        province = @"渝";
+        return province;
+    }else if ([city isEqualToString:@"四川省"]){
+        province = @"川";
+        return province;
+    }else if ([city isEqualToString:@"贵州省"]){
+        province = @"贵";
+        return province;
+    }else if ([city isEqualToString:@"云南省"]){
+        province = @"云";
+        return province;
+    }else if ([city isEqualToString:@"西藏自治区"]){
+        province = @"藏";
+        return province;
+    }else if ([city isEqualToString:@"陕西省"]){
+        province = @"陕";
+        return province;
+    }else if ([city isEqualToString:@"甘肃省"]){
+        province = @"甘";
+        return province;
+    }else if ([city isEqualToString:@"青海省"]){
+        province = @"青";
+        return province;
+    }else if ([city isEqualToString:@"宁夏回族自治区"]){
+        province = @"宁";
+        return province;
+    }else if ([city isEqualToString:@"新疆维吾尔自治区"]){
+        province = @"新";
+        return province;
+    }else{
+        return @"渝";
+    }
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

@@ -12,7 +12,7 @@
 @interface CWSSelectDeviceNOViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>{
     UITableView   * _tableView;
     NSMutableArray* _dataArr;
-    NSDictionary  *objectDic;
+    
 }
 
 @end
@@ -30,7 +30,7 @@
    
     [self getAvailabelDevice];
     _dataArr = [NSMutableArray array];
-    objectDic = @{@"code":@"0000",@"msg":@[@{@"tenantName":@"沈阳汽修",@"deviceNo":@"0856000542"},@{@"tenantName":@"沈阳汽修",@"deviceNo":@"1856000542"},@{@"tenantName":@"沈阳汽修",@"deviceNo":@"2856000542"},@{@"tenantName":@"沈阳汽修",@"deviceNo":@"3856000542"},@{@"tenantName":@"沈阳汽修",@"deviceNo":@"4856000542"}]};
+  
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     
@@ -180,7 +180,7 @@
         NSLog(@"可用设备列表＝＝%@",object);
         NSDictionary *dic = (NSDictionary*)object;
         if ([SERVICE_SUCCESS isEqualToString:dic[@"code"]]) {
-            _dataArr = objectDic[@"msg"];
+            _dataArr = dic[@"msg"];
             if (_dataArr.count>0) {
                 if (_tableView==nil) {
                     [self creatTabelView];
