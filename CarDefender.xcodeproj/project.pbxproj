@@ -43,6 +43,7 @@
 		2E11D6F51D1845E10007DF8B /* CWSSlelectBaoYangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E11D6F31D1845E10007DF8B /* CWSSlelectBaoYangViewController.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
 		2E29F4ED1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */; };
+		2E7A52F91D2D4B3D009DFA35 /* jpush-ios-2.1.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7A52F81D2D4B3D009DFA35 /* jpush-ios-2.1.6.a */; };
 		3300F4A81ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */; };
 		3300F4A91ADFFD7B00B3D5B7 /* DailyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49C1ADFFD7B00B3D5B7 /* DailyCalendarView.m */; };
 		3300F4AA1ADFFD7B00B3D5B7 /* DayTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49E1ADFFD7B00B3D5B7 /* DayTitleLabel.m */; };
@@ -818,8 +819,6 @@
 		4C1587ED1C0D6F2C00DE5262 /* info_bianji_gouxuan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587E91C0D6F2C00DE5262 /* info_bianji_gouxuan@2x.png */; };
 		4C1587EE1C0D6F2C00DE5262 /* weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587EA1C0D6F2C00DE5262 /* weixin@2x.png */; };
 		4C1587EF1C0D6F2C00DE5262 /* zhufu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587EB1C0D6F2C00DE5262 /* zhufu@2x.png */; };
-		4C1587F51C0D762700DE5262 /* JPushNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1587F31C0D762700DE5262 /* JPushNote.m */; };
-		4C1587F61C0D762700DE5262 /* libPushSDK-1.8.8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1587F41C0D762700DE5262 /* libPushSDK-1.8.8.a */; };
 		4C1587F81C0D833B00DE5262 /* CWSDetectionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587F71C0D833B00DE5262 /* CWSDetectionController.xib */; };
 		4C1587FA1C0D83CB00DE5262 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587F91C0D83CB00DE5262 /* PushConfig.plist */; };
 		4C1C21F21C3FB6260066F796 /* BoundIDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1C21F11C3FB6260066F796 /* BoundIDView.xib */; };
@@ -1324,6 +1323,8 @@
 		2E11D6F31D1845E10007DF8B /* CWSSlelectBaoYangViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSlelectBaoYangViewController.m; sourceTree = "<group>"; };
 		2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindGasStationHeadView.xib; sourceTree = "<group>"; };
 		2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
+		2E7A52F51D2D49D0009DFA35 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		2E7A52F81D2D4B3D009DFA35 /* jpush-ios-2.1.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.6.a"; sourceTree = "<group>"; };
 		3300F4991ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLWeeklyCalendarView.h; sourceTree = "<group>"; };
 		3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWeeklyCalendarView.m; sourceTree = "<group>"; };
 		3300F49B1ADFFD7B00B3D5B7 /* DailyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyCalendarView.h; sourceTree = "<group>"; };
@@ -2402,10 +2403,6 @@
 		4C1587E91C0D6F2C00DE5262 /* info_bianji_gouxuan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_bianji_gouxuan@2x.png"; sourceTree = "<group>"; };
 		4C1587EA1C0D6F2C00DE5262 /* weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin@2x.png"; sourceTree = "<group>"; };
 		4C1587EB1C0D6F2C00DE5262 /* zhufu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhufu@2x.png"; sourceTree = "<group>"; };
-		4C1587F11C0D762700DE5262 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
-		4C1587F21C0D762700DE5262 /* JPushNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPushNote.h; sourceTree = "<group>"; };
-		4C1587F31C0D762700DE5262 /* JPushNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPushNote.m; sourceTree = "<group>"; };
-		4C1587F41C0D762700DE5262 /* libPushSDK-1.8.8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.8.a"; sourceTree = "<group>"; };
 		4C1587F71C0D833B00DE5262 /* CWSDetectionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSDetectionController.xib; sourceTree = "<group>"; };
 		4C1587F91C0D83CB00DE5262 /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		4C1C21F11C3FB6260066F796 /* BoundIDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoundIDView.xib; sourceTree = "<group>"; };
@@ -3342,6 +3339,7 @@
 				9284237F1ACCD35C00CD5258 /* MobileCoreServices.framework in Frameworks */,
 				335C5C741AC1160D001EA2AC /* Security.framework in Frameworks */,
 				335C5C731AC11601001EA2AC /* MessageUI.framework in Frameworks */,
+				2E7A52F91D2D4B3D009DFA35 /* jpush-ios-2.1.6.a in Frameworks */,
 				4C55D3371C0C24CE00F22902 /* libWeChatSDK.a in Frameworks */,
 				335C5C721AC115F7001EA2AC /* OpenGLES.framework in Frameworks */,
 				330379C91BF5E226003ED95F /* QQConnection.framework in Frameworks */,
@@ -3367,7 +3365,6 @@
 				335C5C551AC1081A001EA2AC /* MediaPlayer.framework in Frameworks */,
 				335C5C531AC1080F001EA2AC /* AVFoundation.framework in Frameworks */,
 				4C55D3431C0C255500F22902 /* BaiduMobStat.a in Frameworks */,
-				4C1587F61C0D762700DE5262 /* libPushSDK-1.8.8.a in Frameworks */,
 				335C5C511AC10809001EA2AC /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6242,12 +6239,10 @@
 		4C1587F01C0D762700DE5262 /* JPush */ = {
 			isa = PBXGroup;
 			children = (
+				2E7A52F81D2D4B3D009DFA35 /* jpush-ios-2.1.6.a */,
+				2E7A52F51D2D49D0009DFA35 /* JPUSHService.h */,
 				4CC72A051C44AFAA00EEAC4D /* MyJPushService.h */,
 				4CC72A061C44AFAA00EEAC4D /* MyJPushService.m */,
-				4C1587F11C0D762700DE5262 /* APService.h */,
-				4C1587F21C0D762700DE5262 /* JPushNote.h */,
-				4C1587F31C0D762700DE5262 /* JPushNote.m */,
-				4C1587F41C0D762700DE5262 /* libPushSDK-1.8.8.a */,
 			);
 			path = JPush;
 			sourceTree = "<group>";
@@ -8139,7 +8134,7 @@
 				TargetAttributes = {
 					335C5B8D1AC1062D001EA2AC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ZJMB8US8MQ;
+						DevelopmentTeam = Y638L9NEZ8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9238,7 +9233,6 @@
 				334708C51AF87590006A5660 /* CWSFindCarLocationController.m in Sources */,
 				928A62C51ACCE9C50013C666 /* PSTCollectionViewItemKey.m in Sources */,
 				33EC246B1AE7BE7500C27E3D /* CWSForgetSetPswController.m in Sources */,
-				4C1587F51C0D762700DE5262 /* JPushNote.m in Sources */,
 				2E11D6F41D1845E10007DF8B /* CWSServiceBYTableViewCell.m in Sources */,
 				335425BC1B70AFB100FD23A5 /* FindParkSearchCell.m in Sources */,
 				33CA8F321B1EFB0400B4BEEE /* CWSMessageDetailViewController.m in Sources */,
@@ -9475,7 +9469,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "e054533c-7e91-4ba2-84d2-43bc022ce774";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -9511,7 +9505,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "e054533c-7e91-4ba2-84d2-43bc022ce774";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -9522,9 +9516,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9593,7 +9587,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";
@@ -9605,8 +9599,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9675,7 +9669,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";
