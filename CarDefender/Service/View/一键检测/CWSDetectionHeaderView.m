@@ -61,6 +61,7 @@
     CWSDetectionScanViewController* scanVc = [CWSDetectionScanViewController new];
     scanVc.dataDic = [self.checkData mutableCopy];
     scanVc.obdDataArray = self.senderDataArray;
+    NSLog(@"%@",self.senderDataArray);
     [self.thyRootVc.navigationController pushViewController:scanVc animated:YES];
 }
 

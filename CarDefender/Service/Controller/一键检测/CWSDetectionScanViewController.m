@@ -56,7 +56,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    NSLog(@"%@",self.obdDataArray);
     for (NSDictionary* thyDict in self.obdDataArray) {
         if([PublicUtils isMatchOneOfStringWithObject:thyDict andKey:@"name" andRangeOfString:@"发动机,气节门,空燃比"]){ //动力系统有问题
             if([[thyDict valueForKey:@"fault"] boolValue]){

@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 @class AFHTTPRequestOperation;
 
-//#define SERVERADDRESS @"http://120.27.92.247:10001"
-#define SERVERADDRESS @"http://120.27.27.99:10001"
+#define SERVERADDRESS @"http://120.27.92.247:10001"
+//#define SERVERADDRESS @"http://120.27.27.99:10001"
 
 #define PROJECT_NAME @"/csh-interface"
 

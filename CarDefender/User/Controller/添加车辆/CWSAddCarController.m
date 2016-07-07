@@ -63,6 +63,15 @@
     NSDictionary*carBackDic;//车辆信息返回数据
     NSString *carId;
     int identifier;  //标示年检和保险
+    
+    //判断是否编辑完
+    BOOL pingpai;
+    BOOL chepai;
+    BOOL licheng;
+    BOOL shangcibaoyang;
+    BOOL nianjian;
+    BOOL baoxian;
+    BOOL chejiahao;
 }
 @end
 
@@ -101,7 +110,7 @@
     
     [self.chooseCarBtn setExclusiveTouch:YES];
     
-    //注册键盘通知
+    [self changeBtnStatus];
     
     
     
@@ -177,6 +186,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.carNumberTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [self.carFrameField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.navigationController setNavigationBarHidden:NO];
     _scrollerView.contentOffset=CGPointMake(0, 0);
     
@@ -278,6 +288,7 @@
 -(void)buildUI{
     self.scrollerView.scrollEnabled = YES;
     [self.sureBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [self.sureBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [Utils setViewRiders:_carColorView riders:8];
     [Utils setBianKuang:[UIColor colorWithRed:(255)/255.0 green:(247)/255.0 blue:(25)/255.0 alpha:0.5] Wide:0.5 view:_carColorView];
   //  self.carJiaNubText.delegate=self;
@@ -285,6 +296,8 @@
     self.carBoundIdTextFiled.delegate = self;
     self.carNumberTextField.delegate = self;
     self.carFrameField.delegate = self;
+    self.currentKiloText.delegate = self;
+    self.lastKilomText.delegate =self;
     [self.scrollerView addSubview:self.groundView];
     [self.groundView setFrame:CGRectMake(0, 0, kSizeOfScreen.width, self.groundView.frame.size.height)];
     self.scrollerView.contentSize = CGSizeMake(0, self.groundView.frame.size.height);
@@ -373,10 +386,12 @@
         if ([PublicUtils checkNSNullWithgetString:self.editDic[@"vehicleNo"]]) {
             self.carFrameField.text = [NSString stringWithFormat:@"%@",[PublicUtils checkNSNullWithgetString:self.editDic[@"vehicleNo"]]];
         }
+        [self.sureBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [self.sureBtn setTitleColor:[UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1] forState:UIControlStateNormal];
         
     }else{
         [self.sureBtn setTitle:@"保存" forState:UIControlStateNormal];
-        [self.sureBtn setTitleColor:[UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1] forState:UIControlStateNormal];
+        //[self.sureBtn setTitleColor:[UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1] forState:UIControlStateNormal];
 
     }
 }
@@ -429,6 +444,8 @@
     NSString*url=[NSString stringWithFormat:@"http://120.27.92.247:10001/csh-interface%@",carBackDic[@"brandCar"][@"icon"]];
     NSURL*logoImgUrl=[NSURL URLWithString:url];
     [self.carImage setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"normal_car_brand"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
+    pingpai = YES;
+    [self changeBtnStatus];
 }
 
 #pragma textField delegate
@@ -459,11 +476,21 @@
             textField.text = [textField.text substringToIndex:5];
         }
     }
+    if (textField == self.carFrameField) {
+        self.carFrameField.text=[textField.text uppercaseString];
+        
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (textField == self.carNumberTextField) {
+        if (textField.text.length==0) {
+            chepai = NO;
+        }else{
+            chepai = YES;
+        }
+        
         NSCharacterSet *cs;
         
         cs = [[NSCharacterSet characterSetWithCharactersInString:kAlphaNum] invertedSet];
@@ -476,10 +503,47 @@
         BOOL canChange = [string isEqualToString:filtered];
         
         NSUInteger newLength = textField.text.length+string .length-range.length;
+        [self changeBtnStatus];
         return newLength>=6?NO : canChange;
         
         
     }
+    if (textField == self.currentKiloText) {
+        if (textField.text.length==0) {
+            licheng = NO;
+        }else{
+            licheng = YES;
+        }
+    }
+    if (textField == self.lastKilomText) {
+        if (textField.text.length==0) {
+            shangcibaoyang = NO;
+        }else{
+            shangcibaoyang = YES;
+        }
+    }
+    if (textField == self.carFrameField) {
+        if (textField.text.length==0) {
+            chejiahao = NO;
+        }else{
+            chejiahao = YES;
+        }
+        
+        NSCharacterSet *cs;
+        
+        cs = [[NSCharacterSet characterSetWithCharactersInString:kAlphaNum] invertedSet];
+        
+        
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""]; //按cs分离出数组,数组按@""分离出字符串
+        
+        
+        
+        BOOL canChange = [string isEqualToString:filtered];
+        
+       
+        return  canChange;
+    }
+    [self changeBtnStatus];
     return YES;
     
 }
@@ -886,12 +950,16 @@
     fmt.dateFormat = @"YYYY-MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
     NSString *time = [fmt stringFromDate:chooseDate];
     if(identifier == 7){
+        //下次年检
         self.nextCheckText.text=time;
+        nianjian = YES;
     }else if (identifier == 9){
         self.jiaoqiangxian.text = time;
+        baoxian = YES;
     }else if (identifier == 10){
         self.shangyexian.text = time;
     }
+    [self changeBtnStatus];
 }
 -(void)setUserMsg:(NSDictionary*)dic
 {
@@ -966,4 +1034,42 @@
     [helpPhotoView removeFromSuperview];
 }
 
+#pragma 改变保存按钮的状态
+-(void)changeBtnStatus{
+    if([self.title isEqualToString:@"添加车辆"]){
+        if (self.carNumberTextField.text.length==0) {
+            chepai = NO;
+        }else{
+            chepai = YES;
+        }
+        
+        
+        if (self.currentKiloText.text.length==0) {
+            licheng = NO;
+        }else{
+            licheng = YES;
+        }
+        
+        
+        if (self.lastKilomText.text.length==0) {
+            shangcibaoyang = NO;
+        }else{
+            shangcibaoyang = YES;
+        }
+        
+        if (self.carFrameField.text.length==0) {
+            chejiahao = NO;
+        }else{
+            chejiahao = YES;
+        }
+        
+        if (pingpai&&chepai&&licheng&&shangcibaoyang&&nianjian&&baoxian&&chejiahao) {
+            self.sureBtn.enabled = YES;
+            [self.sureBtn setTitleColor:kMainColor forState:UIControlStateNormal];
+        }else{
+            self.sureBtn.enabled = NO;
+            [self.sureBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        }
+    }
+}
 @end

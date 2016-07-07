@@ -22,6 +22,7 @@
     _datePicker.datePickerMode=UIDatePickerModeDate;
     [_datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
     UIButton*sureBtn=[[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width-20-80, 5, 80, 30)];
+
     [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
     [sureBtn setTitleColor:kMainColor forState:UIControlStateNormal];
     [sureBtn addTarget:self action:@selector(makeSureNextCheckTime:) forControlEvents:UIControlEventTouchUpInside];
@@ -30,6 +31,7 @@
     [Utils setBianKuang:kMainColor Wide:1 view:sureBtn];
     
     UIButton*cancelBtn=[[UIButton alloc]initWithFrame:CGRectMake(20, 5, 80, 30)];
+ 
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:kMainColor forState:UIControlStateNormal];
     [cancelBtn addTarget:self action:@selector(cancelChooseTime) forControlEvents:UIControlEventTouchUpInside];
@@ -45,6 +47,7 @@
 }
 -(void)makeSureNextCheckTime:(UIButton*)sender
 {
+    
     if (chooseDate!=nil) {
         NSTimeInterval chooseTime=[chooseDate timeIntervalSince1970];
         NSTimeInterval nowTime=[[NSDate date] timeIntervalSince1970];
@@ -67,6 +70,7 @@
         [viewSub removeFromSuperview];
     }
     [self removeFromSuperview];
+   
 }
 -(void)cancelChooseTime
 {

@@ -23,6 +23,7 @@
                 <outlet property="nextNianJian" destination="xa1-Uf-WcJ" id="qQM-gV-eeU"/>
                 <outlet property="scrollerView" destination="ixP-sV-1vY" id="77g-jG-zTr"/>
                 <outlet property="shangyexian" destination="3NN-3v-o16" id="MIn-a3-skt"/>
+                <outlet property="sureBtn" destination="u1I-Uk-Ae2" id="Bnx-lw-mF7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -214,12 +215,12 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="u1I-Uk-Ae2" userLabel="确定Button">
+                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="u1I-Uk-Ae2" userLabel="确定Button">
                     <rect key="frame" x="0.0" y="428" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="保存">
-                        <color key="titleColor" red="0.18039215689999999" green="0.70196078429999997" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="btnClick:" destination="-1" eventType="touchUpInside" id="bPX-d9-DvU"/>

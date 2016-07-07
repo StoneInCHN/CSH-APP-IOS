@@ -28,7 +28,7 @@
 //@property (weak, nonatomic) IBOutlet UITextField *carJiaNubText;
 @property (weak, nonatomic) IBOutlet UITextField *carCheXinLabel;
 @property (weak, nonatomic) IBOutlet UIButton *chooseCarBtn;
-@property (weak, nonatomic) IBOutlet UITextField *currentKiloText;//行驶里程
+@property (strong, nonatomic) IBOutlet UITextField *currentKiloText;//行驶里程
 //@property (weak, nonatomic) IBOutlet UITextField *hibitOilText;
 @property (weak, nonatomic) IBOutlet UITextField *nextCheckText;//下次年检
 @property (weak, nonatomic) IBOutlet UITextField *nextNianJian;//下次年检

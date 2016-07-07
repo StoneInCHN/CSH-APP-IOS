@@ -533,13 +533,12 @@
         _geocodesearch = [[BMKGeoCodeSearch alloc]init];
         _geocodesearch.delegate = self;
         _isGeoSearch = false;
-        
         _reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     }
     
     
     _reverseGeocodeSearchOption.reverseGeoPoint = (CLLocationCoordinate2D){KUserInfo.currentPt.latitude, KUserInfo.currentPt.longitude};
-    NSLog(@"%f   ,%f",KUserInfo.currentPt.latitude,KUserInfo.currentPt.longitude);
+    //NSLog(@"%f   ,%f",KUserInfo.currentPt.latitude,KUserInfo.currentPt.longitude);
     
 
     BOOL flag = [_geocodesearch reverseGeoCode:_reverseGeocodeSearchOption];
@@ -547,7 +546,7 @@
     if(flag){
         MyLog(@"反geo检索发送成功");
     }else{
-        MyLog(@"反geo检索发送失败");
+       // MyLog(@"反geo检索发送失败");
     }
 }
 
