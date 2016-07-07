@@ -999,7 +999,7 @@
                         WXPay* thyWeiXinPay = [WXPay shareInstance];
                         thyWeiXinPay.isSuccess = NO;
                         [self WXPayWithParamDict:rootDict[@"msg"]];
-                        
+                    
                     }else if([payMethodString isEqualToString:@"alipay"]){
                         //使用支付宝支付
                         [self AlipayWithPrice:[NSString stringWithFormat:@"%.2f元",payMoney] andOrderNum:rootDict[@"msg"][@"out_trade_no"]];

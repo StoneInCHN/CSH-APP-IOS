@@ -28,6 +28,7 @@
 - (void)setupUI {
      _webViw = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height)];
     [_webViw loadHTMLString:self.htmlString baseURL:nil];
+    _webViw.scalesPageToFit = YES;
     [self.view addSubview:_webViw];
 }
 

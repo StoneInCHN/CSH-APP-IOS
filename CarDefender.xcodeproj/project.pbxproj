@@ -21,6 +21,7 @@
 		240A75D51D224F58003F8731 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 240A75D41D224F58003F8731 /* Images-2.xcassets */; };
 		240A75DD1D22912B003F8731 /* NSObject+Null_Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 240A75DC1D22912B003F8731 /* NSObject+Null_Category.m */; };
 		241F75B81D268E63009E88D4 /* SFBuyCarInsuranceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241F75B71D268E63009E88D4 /* SFBuyCarInsuranceViewController.m */; };
+		243109371D2B897D0051768E /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 243109361D2B897D0051768E /* UMMobClick.framework */; };
 		243AB0BF1CDA524100E9FD95 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0BE1CDA524100E9FD95 /* HttpHelper.m */; };
 		243AB0C21CDA738900E9FD95 /* HBRSAHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C11CDA738900E9FD95 /* HBRSAHandler.m */; };
 		243AB0C51CDA746A00E9FD95 /* SecurityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 243AB0C41CDA746A00E9FD95 /* SecurityHelper.m */; };
@@ -43,6 +44,7 @@
 		2E11D6F51D1845E10007DF8B /* CWSSlelectBaoYangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E11D6F31D1845E10007DF8B /* CWSSlelectBaoYangViewController.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
 		2E29F4ED1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */; };
+		2E7A52F91D2D4B3D009DFA35 /* jpush-ios-2.1.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7A52F81D2D4B3D009DFA35 /* jpush-ios-2.1.6.a */; };
 		3300F4A81ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */; };
 		3300F4A91ADFFD7B00B3D5B7 /* DailyCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49C1ADFFD7B00B3D5B7 /* DailyCalendarView.m */; };
 		3300F4AA1ADFFD7B00B3D5B7 /* DayTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3300F49E1ADFFD7B00B3D5B7 /* DayTitleLabel.m */; };
@@ -828,9 +830,7 @@
 		4C55D3351C0C24B700F22902 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C55D3341C0C24B700F22902 /* libWeiboSDK.a */; };
 		4C55D3371C0C24CE00F22902 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C55D3361C0C24CE00F22902 /* libWeChatSDK.a */; };
 		4C55D33D1C0C251F00F22902 /* libUMFeedback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C55D33C1C0C251F00F22902 /* libUMFeedback.a */; };
-		4C55D33F1C0C253000F22902 /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C55D33E1C0C253000F22902 /* libUMessage_Sdk_1.1.0.a */; };
 		4C55D3431C0C255500F22902 /* BaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C55D3421C0C255500F22902 /* BaiduMobStat.a */; };
-		4C55D3451C0C257300F22902 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C55D3441C0C257300F22902 /* libMobClickLibrary.a */; };
 		4C55D3471C0C259300F22902 /* libEaseMobClientSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C55D3461C0C259300F22902 /* libEaseMobClientSDK.a */; };
 		4C55D3691C0C263D00F22902 /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C55D34B1C0C263D00F22902 /* IQNSArray+Sort.m */; };
 		4C55D36A1C0C263D00F22902 /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C55D34D1C0C263D00F22902 /* IQUIView+Hierarchy.m */; };
@@ -1284,6 +1284,7 @@
 		240A75DC1D22912B003F8731 /* NSObject+Null_Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Null_Category.m"; sourceTree = "<group>"; };
 		241F75B61D268E63009E88D4 /* SFBuyCarInsuranceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBuyCarInsuranceViewController.h; sourceTree = "<group>"; };
 		241F75B71D268E63009E88D4 /* SFBuyCarInsuranceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBuyCarInsuranceViewController.m; sourceTree = "<group>"; };
+		243109361D2B897D0051768E /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		243AB0BD1CDA524100E9FD95 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		243AB0BE1CDA524100E9FD95 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		243AB0C01CDA738900E9FD95 /* HBRSAHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBRSAHandler.h; sourceTree = "<group>"; };
@@ -1325,6 +1326,8 @@
 		2E11D6F31D1845E10007DF8B /* CWSSlelectBaoYangViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSSlelectBaoYangViewController.m; sourceTree = "<group>"; };
 		2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindGasStationHeadView.xib; sourceTree = "<group>"; };
 		2E29F4EC1CFC812200EC8EAF /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
+		2E7A52F51D2D49D0009DFA35 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		2E7A52F81D2D4B3D009DFA35 /* jpush-ios-2.1.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.6.a"; sourceTree = "<group>"; };
 		3300F4991ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLWeeklyCalendarView.h; sourceTree = "<group>"; };
 		3300F49A1ADFFD7B00B3D5B7 /* CLWeeklyCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLWeeklyCalendarView.m; sourceTree = "<group>"; };
 		3300F49B1ADFFD7B00B3D5B7 /* DailyCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyCalendarView.h; sourceTree = "<group>"; };
@@ -1845,7 +1848,6 @@
 		335978211AD696FC0058B6BF /* TSLocateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSLocateView.xib; sourceTree = "<group>"; };
 		335978221AD696FC0058B6BF /* TSLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLocation.h; sourceTree = "<group>"; };
 		335978231AD696FC0058B6BF /* TSLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLocation.m; sourceTree = "<group>"; };
-		3359784D1AD6A7E80058B6BF /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		335C5B8E1AC1062D001EA2AC /* CarDefender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarDefender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		335C5B931AC1062D001EA2AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		335C5B951AC1062D001EA2AC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -2416,9 +2418,7 @@
 		4C55D3341C0C24B700F22902 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		4C55D3361C0C24CE00F22902 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		4C55D33C1C0C251F00F22902 /* libUMFeedback.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMFeedback.a; sourceTree = "<group>"; };
-		4C55D33E1C0C253000F22902 /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
 		4C55D3421C0C255500F22902 /* BaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = BaiduMobStat.a; sourceTree = "<group>"; };
-		4C55D3441C0C257300F22902 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		4C55D3461C0C259300F22902 /* libEaseMobClientSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEaseMobClientSDK.a; sourceTree = "<group>"; };
 		4C55D34A1C0C263D00F22902 /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		4C55D34B1C0C263D00F22902 /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
@@ -3188,7 +3188,6 @@
 		928A629D1ACCE9C50013C666 /* SRSlimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRSlimeView.m; sourceTree = "<group>"; };
 		928A629F1ACCE9C50013C666 /* THProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THProgressView.h; sourceTree = "<group>"; };
 		928A62A01ACCE9C50013C666 /* THProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THProgressView.m; sourceTree = "<group>"; };
-		928A62A31ACCE9C50013C666 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		928A62DB1ACCE9E70013C666 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		928A62DC1ACCE9E70013C666 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
 		928A62DD1ACCE9E70013C666 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -3315,22 +3314,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33B4D9A21BD4876700F285EE /* libsqlite3.tbd in Frameworks */,
+				33B4D99C1BD4874300F285EE /* libz.tbd in Frameworks */,
+				335C5C571AC10822001EA2AC /* CoreTelephony.framework in Frameworks */,
 				4C3B27271CD72C4000362B9D /* BaiduMapAPI.framework in Frameworks */,
 				4C0FEF391C3D02B700FBFC0F /* libbaiduNaviSDK.a in Frameworks */,
 				33B4D9A61BD4879E00F285EE /* libstdc++.6.0.9.tbd in Frameworks */,
-				335C5C571AC10822001EA2AC /* CoreTelephony.framework in Frameworks */,
 				4C3A16BA1CD5E30F00E3795F /* libsqlite3.0.tbd in Frameworks */,
 				4C0FEE6A1C3CE56400FBFC0F /* libc++.tbd in Frameworks */,
 				4C55D3911C0C28E300F22902 /* libUMOpus.a in Frameworks */,
 				330379DE1BF5E323003ED95F /* JavaScriptCore.framework in Frameworks */,
 				330379DC1BF5E31A003ED95F /* AdSupport.framework in Frameworks */,
 				33B4D9A41BD4876E00F285EE /* libz.1.2.5.tbd in Frameworks */,
-				4C55D3451C0C257300F22902 /* libMobClickLibrary.a in Frameworks */,
-				33B4D9A21BD4876700F285EE /* libsqlite3.tbd in Frameworks */,
 				4CB9128A1C433A80002D93BB /* libcrypto.a in Frameworks */,
 				33B4D9A01BD4875D00F285EE /* libxml2.tbd in Frameworks */,
 				33B4D99E1BD4874F00F285EE /* libiconv.tbd in Frameworks */,
-				33B4D99C1BD4874300F285EE /* libz.tbd in Frameworks */,
 				33B4D99A1BD4873900F285EE /* libresolv.tbd in Frameworks */,
 				33B4D9981BD4872500F285EE /* libicucore.tbd in Frameworks */,
 				33B4D9961BD4871800F285EE /* libstdc++.tbd in Frameworks */,
@@ -3344,6 +3342,7 @@
 				9284237F1ACCD35C00CD5258 /* MobileCoreServices.framework in Frameworks */,
 				335C5C741AC1160D001EA2AC /* Security.framework in Frameworks */,
 				335C5C731AC11601001EA2AC /* MessageUI.framework in Frameworks */,
+				2E7A52F91D2D4B3D009DFA35 /* jpush-ios-2.1.6.a in Frameworks */,
 				4C55D3371C0C24CE00F22902 /* libWeChatSDK.a in Frameworks */,
 				335C5C721AC115F7001EA2AC /* OpenGLES.framework in Frameworks */,
 				330379C91BF5E226003ED95F /* QQConnection.framework in Frameworks */,
@@ -3351,10 +3350,13 @@
 				4C55D33D1C0C251F00F22902 /* libUMFeedback.a in Frameworks */,
 				335C5C701AC114C8001EA2AC /* UIKit.framework in Frameworks */,
 				330379D11BF5E226003ED95F /* ShareSDKCoreService.framework in Frameworks */,
+
 				0D27A8F61D2B98D200ECCAA7 /* jpush-ios-2.1.6.a in Frameworks */,
 				4C55D33F1C0C253000F22902 /* libUMessage_Sdk_1.1.0.a in Frameworks */,
+
 				4CB9128B1C433A80002D93BB /* libssl.a in Frameworks */,
 				4CB912881C433A80002D93BB /* AlipaySDK.framework in Frameworks */,
+				243109371D2B897D0051768E /* UMMobClick.framework in Frameworks */,
 				335C5C6F1AC10E6D001EA2AC /* Foundation.framework in Frameworks */,
 				335C5C6E1AC10E60001EA2AC /* CoreGraphics.framework in Frameworks */,
 				330379D91BF5E226003ED95F /* ShareSDKFlatShareViewUI.framework in Frameworks */,
@@ -3411,6 +3413,15 @@
 				0DF7C0481D224749007E5377 /* CWSSelectDeviceTableViewCell.m */,
 			);
 			name = "选择设备";
+			sourceTree = "<group>";
+		};
+		243109311D2B857B0051768E /* 友盟分析 */ = {
+			isa = PBXGroup;
+			children = (
+				243109361D2B897D0051768E /* UMMobClick.framework */,
+				4C3A16B91CD5E30F00E3795F /* libsqlite3.0.tbd */,
+			);
+			path = "友盟分析";
 			sourceTree = "<group>";
 		};
 		2477E8D51CFF1B5700CCC540 /* 切换车辆 */ = {
@@ -4726,19 +4737,9 @@
 			name = "紧急救援";
 			sourceTree = "<group>";
 		};
-		3359784C1AD6A7E80058B6BF /* 友盟推送 */ = {
-			isa = PBXGroup;
-			children = (
-				3359784D1AD6A7E80058B6BF /* UMessage.h */,
-				4C55D33E1C0C253000F22902 /* libUMessage_Sdk_1.1.0.a */,
-			);
-			path = "友盟推送";
-			sourceTree = "<group>";
-		};
 		335C5B851AC1062D001EA2AC = {
 			isa = PBXGroup;
 			children = (
-				4C3A16B91CD5E30F00E3795F /* libsqlite3.0.tbd */,
 				330379DD1BF5E323003ED95F /* JavaScriptCore.framework */,
 				330379DB1BF5E31A003ED95F /* AdSupport.framework */,
 				335C5B901AC1062D001EA2AC /* CarDefender */,
@@ -4819,6 +4820,7 @@
 		335C5BB81AC106BD001EA2AC /* ThirdLib */ = {
 			isa = PBXGroup;
 			children = (
+				243109311D2B857B0051768E /* 友盟分析 */,
 				4CB9120F1C433A80002D93BB /* 支付宝 */,
 				4CB9127A1C433A80002D93BB /* WeiXinThirdParty copy */,
 				4CD0611B1C3A06A900136B27 /* MJRefresh */,
@@ -4829,7 +4831,6 @@
 				4C55D3481C0C263D00F22902 /* IQKeyBoardManager */,
 				3303799E1BF5E225003ED95F /* ShareSDK */,
 				332127901ADF8FD500649491 /* 友盟反馈 */,
-				3359784C1AD6A7E80058B6BF /* 友盟推送 */,
 				33507BC01AD40CA800F1F236 /* SDWebImage */,
 				3316F6ED1AD277670008D5CD /* AFNetworking */,
 				33D0D3011AC15291009E08A4 /* YRSideViewController */,
@@ -6245,10 +6246,14 @@
 		4C1587F01C0D762700DE5262 /* JPush */ = {
 			isa = PBXGroup;
 			children = (
+				2E7A52F81D2D4B3D009DFA35 /* jpush-ios-2.1.6.a */,
+				2E7A52F51D2D49D0009DFA35 /* JPUSHService.h */,
 				4CC72A051C44AFAA00EEAC4D /* MyJPushService.h */,
 				4CC72A061C44AFAA00EEAC4D /* MyJPushService.m */,
+
 				0D27A8F41D2B98D200ECCAA7 /* jpush-ios-2.1.6.a */,
 				0D27A8F51D2B98D200ECCAA7 /* JPUSHService.h */,
+
 			);
 			path = JPush;
 			sourceTree = "<group>";
@@ -7902,8 +7907,6 @@
 		928A62A11ACCE9C50013C666 /* UMeng */ = {
 			isa = PBXGroup;
 			children = (
-				4C55D3441C0C257300F22902 /* libMobClickLibrary.a */,
-				928A62A31ACCE9C50013C666 /* MobClick.h */,
 			);
 			path = UMeng;
 			sourceTree = "<group>";
@@ -8142,7 +8145,7 @@
 				TargetAttributes = {
 					335C5B8D1AC1062D001EA2AC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ZJMB8US8MQ;
+						DevelopmentTeam = Y638L9NEZ8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9477,7 +9480,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "e054533c-7e91-4ba2-84d2-43bc022ce774";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -9513,7 +9516,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "e054533c-7e91-4ba2-84d2-43bc022ce774";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -9524,9 +9527,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9540,6 +9543,8 @@
 					"$(PROJECT_DIR)/CarDefender/ThirdLib/支付宝",
 					"$(PROJECT_DIR)/CarDefender/ThirdLib/PingPP/lib/Channels",
 					"$(PROJECT_DIR)/CarDefender/ThirdLib/PingPP/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/CarDefender/ThirdLib/友盟推送",
+					"$(PROJECT_DIR)/CarDefender/ThirdLib/友盟分析",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9593,7 +9598,9 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
+
 				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLi;
+
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";
@@ -9605,8 +9612,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9620,6 +9627,8 @@
 					"$(PROJECT_DIR)/CarDefender/ThirdLib/支付宝",
 					"$(PROJECT_DIR)/CarDefender/ThirdLib/PingPP/lib/Channels",
 					"$(PROJECT_DIR)/CarDefender/ThirdLib/PingPP/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/CarDefender/ThirdLib/友盟推送",
+					"$(PROJECT_DIR)/CarDefender/ThirdLib/友盟分析",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9673,7 +9682,9 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLi;
+
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
+
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";

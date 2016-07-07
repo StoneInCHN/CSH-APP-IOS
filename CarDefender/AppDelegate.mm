@@ -19,14 +19,11 @@
 #import "CWSLeftController.h"
 #import "CWSRightController.h"
 
-#import "UMessage.h"//友盟推送
 #import "UMFeedback.h"
 #import "UMOpus.h"
 #import "CWSFeedbackController.h"
 
 #import "CWSCarManageController.h"
-#import "MobClick.h"
-
 #import "CWSGuideViewController.h"
 
 #import "CWSAddCarController.h"
@@ -48,7 +45,8 @@
 
 #import "WXPay.h"
 #import "WQAler.h"
-
+//UMeng错误分析
+#import "UMMobClick/MobClick.h"
 //键盘
 #import "IQKeyBoardManager.h"
 
@@ -67,7 +65,8 @@
 #define kUmengAppKey @"5577d5dc67e58eb24c0029db"
 
 //NSString* MAP_KEY = @"x04Mu9iPtpvHXkuiD14zOt1G";//企业版百度地图KEY
-NSString* MAP_KEY = @"tVn5kiTok0runTCOrkOQEgU5ef7C6x1V";//AppStore版百度地图
+NSString* MAP_KEY = @"tVn5kiTok0runTCOrkOQEgU5ef7C6x1V";//AppStore版百度地图Key
+static NSString *const kUmengKey = @"577a677b67e58e2c5c003487";
 
 BMKMapManager* _mapManager;
 
@@ -123,11 +122,13 @@ BMKMapManager* _mapManager;
     
     [MyJPushService resetBadge];
     
-#pragma mark -  友盟的东东
-//    //友盟统计
-//    [MobClick startWithAppkey:kUmengAppKey reportPolicy:BATCH channelId:nil];
-//    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];//version标识
-//    [MobClick setAppVersion:version];
+#pragma mark -  友盟
+    
+    [MobClick setAppVersion:XcodeAppVersion];
+    [MobClick setLogEnabled:YES];;
+    UMConfigInstance.appKey = kUmengKey;
+    [MobClick startWithConfigure:UMConfigInstance];
+
 //    //友盟信息反馈
 //    [UMOpus setAudioEnable:YES];
 //    [UMFeedback setAppkey:kUmengAppKey];
@@ -198,8 +199,7 @@ BMKMapManager* _mapManager;
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.window.frame];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         NSString *urlString = [NSString stringWithFormat:@"%@%@%@", SERVERADDRESS, PROJECT_NAME, str];
-//        NSString *urlString = @"http://d.lanrentuku.com/down/png/1511/wsj2015/wsj2015-3.png";
-            [imageView setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"welcome"]];
+        [imageView setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"welcome"]];
         _skipBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.window.frame.size.width-80, 10, 70, 50)];
         [_skipBtn setTitle:@"跳过5秒" forState:UIControlStateNormal];
         [_skipBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];

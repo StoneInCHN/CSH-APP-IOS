@@ -22,7 +22,8 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.textField = (UITextField *)[self.view viewWithTag:1];
-    self.textField.placeholder = @"请输入您的昵称";
+    UserInfo *user = [UserInfo userDefault];
+    self.textField.placeholder = user.nickName;
     UIBarButtonItem*rightBtn=[[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(inputComplate:)];
     rightBtn.tintColor = [UIColor colorWithRed:46/255.0 green:179/255.0 blue:232/255.0 alpha:1];
     self.navigationItem.rightBarButtonItem=rightBtn;

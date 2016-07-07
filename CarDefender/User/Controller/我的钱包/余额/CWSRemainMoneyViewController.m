@@ -226,13 +226,13 @@
     
     NSDictionary* dic = _dataArray[indexPath.row];
 //    cell.titleLabel.text = [NSString stringWithFormat:@"%@",dic[@"describe"]];
+    cell.titleLabel.text = dic[@"remark"];
+
     NSString *type = dic[@"balanceType"];
     if ([type isEqualToString:@"OUTCOME"]) {
-        cell.titleLabel.text = [NSString stringWithFormat:@"消费"];
         cell.moneyLabel.text = [NSString stringWithFormat:@"-%@",dic[@"money"]];
         cell.moneyLabel.textColor = kCOLOR(57, 197, 30);
     }else if ([type isEqualToString:@"INCOME"]){
-        cell.titleLabel.text = [NSString stringWithFormat:@"充值"];
         cell.moneyLabel.text = [NSString stringWithFormat:@"+%@",dic[@"money"]];
         cell.moneyLabel.textColor = kCOLOR(254, 98, 112);
     }
