@@ -11,6 +11,7 @@
 		0D077AF71D123D5F005C1978 /* dingdanxiangqing_order_complete_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D077AF51D123D5F005C1978 /* dingdanxiangqing_order_complete_normal.png */; };
 		0D077AF81D123D5F005C1978 /* dingdanxiangqing_order_complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D077AF61D123D5F005C1978 /* dingdanxiangqing_order_complete.png */; };
 		0D077B041D12A230005C1978 /* CWSYuYueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D077B031D12A230005C1978 /* CWSYuYueViewController.m */; };
+		0D27A8F61D2B98D200ECCAA7 /* jpush-ios-2.1.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D27A8F41D2B98D200ECCAA7 /* jpush-ios-2.1.6.a */; };
 		0D5C2BA11D06B07C00DE7B64 /* ChoseDatePikerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5C2BA01D06B07C00DE7B64 /* ChoseDatePikerView.m */; };
 		0D8504051D051824009191C2 /* CWSSelectCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D8504041D051824009191C2 /* CWSSelectCarViewController.m */; };
 		0D9690C31D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D9690C21D0FB49C0006D12D /* CWSPurchaseDeviceViewController.m */; };
@@ -817,8 +818,6 @@
 		4C1587ED1C0D6F2C00DE5262 /* info_bianji_gouxuan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587E91C0D6F2C00DE5262 /* info_bianji_gouxuan@2x.png */; };
 		4C1587EE1C0D6F2C00DE5262 /* weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587EA1C0D6F2C00DE5262 /* weixin@2x.png */; };
 		4C1587EF1C0D6F2C00DE5262 /* zhufu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587EB1C0D6F2C00DE5262 /* zhufu@2x.png */; };
-		4C1587F51C0D762700DE5262 /* JPushNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1587F31C0D762700DE5262 /* JPushNote.m */; };
-		4C1587F61C0D762700DE5262 /* libPushSDK-1.8.8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1587F41C0D762700DE5262 /* libPushSDK-1.8.8.a */; };
 		4C1587F81C0D833B00DE5262 /* CWSDetectionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587F71C0D833B00DE5262 /* CWSDetectionController.xib */; };
 		4C1587FA1C0D83CB00DE5262 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C1587F91C0D83CB00DE5262 /* PushConfig.plist */; };
 		4C1C21F21C3FB6260066F796 /* BoundIDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1C21F11C3FB6260066F796 /* BoundIDView.xib */; };
@@ -1266,6 +1265,8 @@
 		0D077AF61D123D5F005C1978 /* dingdanxiangqing_order_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dingdanxiangqing_order_complete.png; sourceTree = "<group>"; };
 		0D077B021D12A230005C1978 /* CWSYuYueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSYuYueViewController.h; sourceTree = "<group>"; };
 		0D077B031D12A230005C1978 /* CWSYuYueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSYuYueViewController.m; sourceTree = "<group>"; };
+		0D27A8F41D2B98D200ECCAA7 /* jpush-ios-2.1.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.6.a"; sourceTree = "<group>"; };
+		0D27A8F51D2B98D200ECCAA7 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		0D5C2B9F1D06B07C00DE7B64 /* ChoseDatePikerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseDatePikerView.h; sourceTree = "<group>"; };
 		0D5C2BA01D06B07C00DE7B64 /* ChoseDatePikerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseDatePikerView.m; sourceTree = "<group>"; };
 		0D64DDCA1D00220900DF51AA /* NewCarWashTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCarWashTableHeaderView.xib; sourceTree = "<group>"; };
@@ -2403,10 +2404,6 @@
 		4C1587E91C0D6F2C00DE5262 /* info_bianji_gouxuan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_bianji_gouxuan@2x.png"; sourceTree = "<group>"; };
 		4C1587EA1C0D6F2C00DE5262 /* weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin@2x.png"; sourceTree = "<group>"; };
 		4C1587EB1C0D6F2C00DE5262 /* zhufu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhufu@2x.png"; sourceTree = "<group>"; };
-		4C1587F11C0D762700DE5262 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
-		4C1587F21C0D762700DE5262 /* JPushNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPushNote.h; sourceTree = "<group>"; };
-		4C1587F31C0D762700DE5262 /* JPushNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPushNote.m; sourceTree = "<group>"; };
-		4C1587F41C0D762700DE5262 /* libPushSDK-1.8.8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.8.a"; sourceTree = "<group>"; };
 		4C1587F71C0D833B00DE5262 /* CWSDetectionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CWSDetectionController.xib; sourceTree = "<group>"; };
 		4C1587F91C0D83CB00DE5262 /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		4C1C21F11C3FB6260066F796 /* BoundIDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoundIDView.xib; sourceTree = "<group>"; };
@@ -3354,6 +3351,7 @@
 				4C55D33D1C0C251F00F22902 /* libUMFeedback.a in Frameworks */,
 				335C5C701AC114C8001EA2AC /* UIKit.framework in Frameworks */,
 				330379D11BF5E226003ED95F /* ShareSDKCoreService.framework in Frameworks */,
+				0D27A8F61D2B98D200ECCAA7 /* jpush-ios-2.1.6.a in Frameworks */,
 				4C55D33F1C0C253000F22902 /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				4CB9128B1C433A80002D93BB /* libssl.a in Frameworks */,
 				4CB912881C433A80002D93BB /* AlipaySDK.framework in Frameworks */,
@@ -3372,7 +3370,6 @@
 				335C5C551AC1081A001EA2AC /* MediaPlayer.framework in Frameworks */,
 				335C5C531AC1080F001EA2AC /* AVFoundation.framework in Frameworks */,
 				4C55D3431C0C255500F22902 /* BaiduMobStat.a in Frameworks */,
-				4C1587F61C0D762700DE5262 /* libPushSDK-1.8.8.a in Frameworks */,
 				335C5C511AC10809001EA2AC /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6250,10 +6247,8 @@
 			children = (
 				4CC72A051C44AFAA00EEAC4D /* MyJPushService.h */,
 				4CC72A061C44AFAA00EEAC4D /* MyJPushService.m */,
-				4C1587F11C0D762700DE5262 /* APService.h */,
-				4C1587F21C0D762700DE5262 /* JPushNote.h */,
-				4C1587F31C0D762700DE5262 /* JPushNote.m */,
-				4C1587F41C0D762700DE5262 /* libPushSDK-1.8.8.a */,
+				0D27A8F41D2B98D200ECCAA7 /* jpush-ios-2.1.6.a */,
+				0D27A8F51D2B98D200ECCAA7 /* JPUSHService.h */,
 			);
 			path = JPush;
 			sourceTree = "<group>";
@@ -9246,7 +9241,6 @@
 				334708C51AF87590006A5660 /* CWSFindCarLocationController.m in Sources */,
 				928A62C51ACCE9C50013C666 /* PSTCollectionViewItemKey.m in Sources */,
 				33EC246B1AE7BE7500C27E3D /* CWSForgetSetPswController.m in Sources */,
-				4C1587F51C0D762700DE5262 /* JPushNote.m in Sources */,
 				2E11D6F41D1845E10007DF8B /* CWSServiceBYTableViewCell.m in Sources */,
 				335425BC1B70AFB100FD23A5 /* FindParkSearchCell.m in Sources */,
 				33CA8F321B1EFB0400B4BEEE /* CWSMessageDetailViewController.m in Sources */,
@@ -9599,7 +9593,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";
@@ -9679,7 +9673,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLif;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";

@@ -122,22 +122,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CarDefender/Service/Controller/&#x6d17;&#x8f66;/CWSCarWashDetailViewController.m"
-            timestampString = "488190836.408144"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "-getData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CarDefender/Service/Controller/&#x6d17;&#x8f66;/CWSCarWashDetailViewController.m"
             timestampString = "488192699.069395"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -186,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
-            timestampString = "489296871.365116"
+            timestampString = "489583524.004847"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "920"
-            endingLineNumber = "920"
+            startingLineNumber = "988"
+            endingLineNumber = "988"
             landmarkName = "-actionSheet:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -202,28 +186,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
-            timestampString = "489296871.365116"
+            timestampString = "489583524.004847"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "818"
-            endingLineNumber = "818"
+            startingLineNumber = "882"
+            endingLineNumber = "882"
             landmarkName = "-addCarDetail:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
-            timestampString = "489296568.192811"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
-            landmarkName = "-alertView:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -240,6 +208,182 @@
             startingLineNumber = "175"
             endingLineNumber = "175"
             landmarkName = "-serviceButtonClicked:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CWSServiceUIView serviceButtonClicked:]"
+                  moduleName = "CarDefender"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/driphion/Desktop/cardefender/CarDefender/Public/Controller/%E4%B8%BB%E7%95%8C%E9%9D%A2/View/CWSServiceUIView.m"
+                  timestampString = "489583524.178545"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "1752">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CWSServiceUIView serviceButtonClicked:]"
+                  moduleName = "CarDefender"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/driphion/Desktop/cardefender/CarDefender/Public/Controller/%E4%B8%BB%E7%95%8C%E9%9D%A2/View/CWSServiceUIView.m"
+                  timestampString = "489583524.178722"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "1764">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/Service/Controller/&#x4e00;&#x952e;&#x68c0;&#x6d4b;/CWSDetectionScanViewController.m"
+            timestampString = "489555402.441395"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
+            timestampString = "489583524.004847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
+            landmarkName = "-chooseCarMsgBack:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
+            timestampString = "489583524.004847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "665"
+            endingLineNumber = "665"
+            landmarkName = "-sureEvent"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
+            timestampString = "489583524.004847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1068"
+            endingLineNumber = "1068"
+            landmarkName = "-changeBtnStatus"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
+            timestampString = "489583524.004847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "529"
+            endingLineNumber = "529"
+            landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
+            timestampString = "489583524.004847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "955"
+            endingLineNumber = "955"
+            landmarkName = "-addCarNexCheckViewChooseDate:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
+            timestampString = "489583524.004847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "958"
+            endingLineNumber = "958"
+            landmarkName = "-addCarNexCheckViewChooseDate:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
+            timestampString = "489583524.004847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
+            landmarkName = "-textFieldDidChange:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CarDefender/User/Controller/&#x6dfb;&#x52a0;&#x8f66;&#x8f86;/CWSAddCarController.m"
+            timestampString = "489583524.004847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "472"
+            endingLineNumber = "472"
+            landmarkName = "-textFieldDidChange:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
