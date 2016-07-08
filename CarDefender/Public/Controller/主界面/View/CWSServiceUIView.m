@@ -143,8 +143,6 @@
     NSString* whichService = sender.titleLabel.text;
     NSLog(@"%@",whichService);
     if([whichService isEqualToString:@"买车险"]) {
-//        CWSBuyCarInsuranceViewController *vc = [[CWSBuyCarInsuranceViewController alloc] init];
-//        [self.thyRootVc.navigationController pushViewController:vc animated:YES];
         SFBuyCarInsuranceViewController *buyCarInsVC = [[SFBuyCarInsuranceViewController alloc] init];
         [self.thyRootVc.navigationController pushViewController:buyCarInsVC animated:YES];
     }

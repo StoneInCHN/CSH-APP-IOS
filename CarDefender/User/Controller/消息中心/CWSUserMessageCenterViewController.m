@@ -110,14 +110,10 @@
                                      userInfo.token = dict[@"token"];
                                      if ([code isEqualToString:SERVICE_SUCCESS]) {
                                          NSArray *messages = dict[@"msg"];
-
-                                         [dataArray addObjectsFromArray:messages];
-
                                          NSInteger total = [dict[@"page"][@"total"] integerValue];
                                          if (dataArray.count < total) {
                                              [dataArray addObjectsFromArray:messages];
                                          }
-
                                          dataArray = [dataArray mutableCopy];
                                          if (messages.count == 0) {
                                              [MBProgressHUD showError:@"没有更多数据了哦" toView:self.view.window];

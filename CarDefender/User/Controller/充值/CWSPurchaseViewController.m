@@ -326,7 +326,6 @@
     [[WXPay shareInstance]setPaySucc:^{
         [self alert:@"温馨提示" msg:@"支付完成!"];
         [self.navigationController popViewControllerAnimated:YES];
-        //  [self checkLoginOrNo];
     }];
 }
 

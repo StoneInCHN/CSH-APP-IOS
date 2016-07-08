@@ -1176,28 +1176,28 @@
     request.timeStamp = [signParams[@"timestamp"] intValue];
     [WXApi sendReq:request];
     [[WXPay shareInstance]setPaySucc:^{
-//        [self alert:@"温馨提示" msg:@"支付完成!"];
-//        [self.navigationController popViewControllerAnimated:YES];
+        [self alert:@"温馨提示" msg:@"支付完成!"];
+        [self.navigationController popViewControllerAnimated:YES];
         //  [self checkLoginOrNo];
-        [MBProgressHUD showMessag:@"支付完成,跳转中..." toView:self.view];
-        [ModelTool getPayFinishInfoWithParameter:@{@"uid":KUserManager.uid,@"order_sn":thyDict[@"out_trade_no"]} andSuccess:^(id object) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                MyLog(@"----------支付完成返回信息----------%@",object);
-                if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                    isPaySuccess = YES;
-                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
-                    paySuccessVc.dataDict = object[@"data"][@"return"];
-                    [self.navigationController pushViewController:paySuccessVc animated:YES];
-                    
-                }else{
-                    [WCAlertView showAlertWithTitle:@"温馨提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                }
-            });
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [WCAlertView showAlertWithTitle:@"温馨提示" message:@"网络出错,请重新加载" customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        }];
+//        [MBProgressHUD showMessag:@"支付完成,跳转中..." toView:self.view];
+//        [ModelTool getPayFinishInfoWithParameter:@{@"uid":KUserManager.uid,@"order_sn":thyDict[@"out_trade_no"]} andSuccess:^(id object) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                MyLog(@"----------支付完成返回信息----------%@",object);
+//                if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+//                    isPaySuccess = YES;
+//                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
+//                    paySuccessVc.dataDict = object[@"data"][@"return"];
+//                    [self.navigationController pushViewController:paySuccessVc animated:YES];
+//                    
+//                }else{
+//                    [WCAlertView showAlertWithTitle:@"温馨提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                }
+//            });
+//        } andFail:^(NSError *err) {
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            [WCAlertView showAlertWithTitle:@"温馨提示" message:@"网络出错,请重新加载" customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        }];
     }];
 }
 
@@ -1205,30 +1205,30 @@
 -(void)AlipayWithPrice:(NSString*)thyPrice andOrderNum:(NSString*)thyOrderNum{
     [[WQPay shareInstance]payProductArray:thyPrice AndOrderID:thyOrderNum];
     [[WQPay shareInstance] setPaySucc:^{
-//        [self alert:@"提示" msg:@"支付完成!"];
-//        [self.navigationController popViewControllerAnimated:YES];
+        [self alert:@"提示" msg:@"支付完成!"];
+        [self.navigationController popViewControllerAnimated:YES];
         //  [self checkLoginOrNo];
-        [MBProgressHUD showMessag:@"支付完成,跳转中..." toView:self.view];
-        [ModelTool getPayFinishInfoWithParameter:@{@"uid":KUserManager.uid,@"order_sn":thyOrderNum} andSuccess:^(id object) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                MyLog(@"----------支付完成返回信息----------%@",object);
-                if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-                    
-                    isPaySuccess = YES;
-                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
-                    paySuccessVc.dataDict = object[@"data"][@"return"];
-                    [self.navigationController pushViewController:paySuccessVc animated:YES];
-                    
-                    
-                }else{
-                    [WCAlertView showAlertWithTitle:@"温馨提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"" otherButtonTitles:nil, nil];
-                }
-            });
-        } andFail:^(NSError *err) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [WCAlertView showAlertWithTitle:@"温馨提示" message:@"网络出错,请重新加载" customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        }];
+//        [MBProgressHUD showMessag:@"支付完成,跳转中..." toView:self.view];
+//        [ModelTool getPayFinishInfoWithParameter:@{@"uid":KUserManager.uid,@"order_sn":thyOrderNum} andSuccess:^(id object) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//                MyLog(@"----------支付完成返回信息----------%@",object);
+//                if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
+//                    
+//                    isPaySuccess = YES;
+//                    CWSPaySuccessViewController* paySuccessVc = [CWSPaySuccessViewController new];
+//                    paySuccessVc.dataDict = object[@"data"][@"return"];
+//                    [self.navigationController pushViewController:paySuccessVc animated:YES];
+//                    
+//                    
+//                }else{
+//                    [WCAlertView showAlertWithTitle:@"温馨提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] customizationBlock:nil completionBlock:nil cancelButtonTitle:@"" otherButtonTitles:nil, nil];
+//                }
+//            });
+//        } andFail:^(NSError *err) {
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            [WCAlertView showAlertWithTitle:@"温馨提示" message:@"网络出错,请重新加载" customizationBlock:nil completionBlock:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        }];
     }];
 }
 

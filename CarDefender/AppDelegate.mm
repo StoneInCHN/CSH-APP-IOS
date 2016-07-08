@@ -117,7 +117,6 @@ BMKMapManager* _mapManager;
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = NO;
-    
   //  [WXApi registerApp:APP_ID withDescription:@"2.0"];
     
     [MyJPushService resetBadge];
@@ -128,7 +127,7 @@ BMKMapManager* _mapManager;
     [MobClick setLogEnabled:YES];;
     UMConfigInstance.appKey = kUmengKey;
     [MobClick startWithConfigure:UMConfigInstance];
-
+    [MobClick setCrashReportEnabled:YES];
 //    //友盟信息反馈
 //    [UMOpus setAudioEnable:YES];
 //    [UMFeedback setAppkey:kUmengAppKey];

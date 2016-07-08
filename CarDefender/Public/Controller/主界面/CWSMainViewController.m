@@ -250,7 +250,7 @@
                                          NSString *badgeValue = dict[@"desc"];
                                          if ([badgeValue isEqualToString:@"0"]) {
                                              [self.badgeValueLabel removeFromSuperview];
-                                             self.badgeImage.hidden = YES;
+                                             [self.badgeImage removeFromSuperview];
                                          } else {
                                              self.badgeImage.hidden = NO;
                                              if ([badgeValue integerValue] >= 100) {

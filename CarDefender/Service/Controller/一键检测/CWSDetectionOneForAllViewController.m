@@ -98,6 +98,9 @@
                                       userInfo.token = dict[@"token"];
                                       NSString *code = dict[@"code"];
                                       if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                          if ([dict[@"msg"] isKindOfClass:[NSNull class]]) {
+                                              return ;
+                                          }
                                           dispatch_async(dispatch_get_main_queue(), ^{
                                               NSDictionary *data = dict[@"msg"];
                                               detectionHeaderView = [[CWSDetectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 206) Data:nil];
