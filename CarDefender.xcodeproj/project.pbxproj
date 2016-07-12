@@ -3350,10 +3350,7 @@
 				4C55D33D1C0C251F00F22902 /* libUMFeedback.a in Frameworks */,
 				335C5C701AC114C8001EA2AC /* UIKit.framework in Frameworks */,
 				330379D11BF5E226003ED95F /* ShareSDKCoreService.framework in Frameworks */,
-
 				0D27A8F61D2B98D200ECCAA7 /* jpush-ios-2.1.6.a in Frameworks */,
-				4C55D33F1C0C253000F22902 /* libUMessage_Sdk_1.1.0.a in Frameworks */,
-
 				4CB9128B1C433A80002D93BB /* libssl.a in Frameworks */,
 				4CB912881C433A80002D93BB /* AlipaySDK.framework in Frameworks */,
 				243109371D2B897D0051768E /* UMMobClick.framework in Frameworks */,
@@ -6250,10 +6247,8 @@
 				2E7A52F51D2D49D0009DFA35 /* JPUSHService.h */,
 				4CC72A051C44AFAA00EEAC4D /* MyJPushService.h */,
 				4CC72A061C44AFAA00EEAC4D /* MyJPushService.m */,
-
 				0D27A8F41D2B98D200ECCAA7 /* jpush-ios-2.1.6.a */,
 				0D27A8F51D2B98D200ECCAA7 /* JPUSHService.h */,
-
 			);
 			path = JPush;
 			sourceTree = "<group>";
@@ -8145,7 +8140,7 @@
 				TargetAttributes = {
 					335C5B8D1AC1062D001EA2AC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = Y638L9NEZ8;
+						DevelopmentTeam = ZJMB8US8MQ;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -9527,9 +9522,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9598,9 +9593,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-
 				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLi;
-
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";
@@ -9612,8 +9605,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9682,9 +9675,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
-
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";
