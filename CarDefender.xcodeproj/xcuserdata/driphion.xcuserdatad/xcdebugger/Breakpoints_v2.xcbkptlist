@@ -209,38 +209,6 @@
             endingLineNumber = "175"
             landmarkName = "-serviceButtonClicked:"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CWSServiceUIView serviceButtonClicked:]"
-                  moduleName = "CarDefender"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/driphion/Desktop/cardefender/CarDefender/Public/Controller/%E4%B8%BB%E7%95%8C%E9%9D%A2/View/CWSServiceUIView.m"
-                  timestampString = "489583524.178545"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "175"
-                  endingLineNumber = "175"
-                  offsetFromSymbolStart = "1752">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CWSServiceUIView serviceButtonClicked:]"
-                  moduleName = "CarDefender"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/driphion/Desktop/cardefender/CarDefender/Public/Controller/%E4%B8%BB%E7%95%8C%E9%9D%A2/View/CWSServiceUIView.m"
-                  timestampString = "489583524.178722"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "175"
-                  endingLineNumber = "175"
-                  offsetFromSymbolStart = "1764">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
