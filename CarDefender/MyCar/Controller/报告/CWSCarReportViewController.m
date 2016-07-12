@@ -665,9 +665,11 @@
                                           NSDictionary* lDic1 = @{@"image":@"baogao_youhao",
                                                                   @"name":@"当日油耗",
                                                                   @"data":[NSString stringWithFormat:@"%@L",[self changeStrWithData:msg[@"fuelConsumption"]]]};
+                                          NSString *youhaoStr =[self changeStrWithData:msg[@"averageFuelConsumption"]];
+                                          CGFloat youhaoF = [youhaoStr floatValue];
                                           NSDictionary* lDic2 = @{@"image":@"baogao_baigongli",
                                                                   @"name":@"平均油耗",
-                                                                  @"data":[NSString stringWithFormat:@"%@L/100km",[self changeStrWithData:msg[@"averageFuelConsumption"]]]};
+                                                                  @"data":[NSString stringWithFormat:@"%.2fL/100km",youhaoF]};
                                           NSDictionary* lDic3 = @{@"image":@"baogao_time",
                                                                   @"name":@"驾驶时间",
                                                                   @"data":[NSString stringWithFormat:@"%@Min",[self changeStrWithData:msg[@"runningTime"]]]};
@@ -678,7 +680,9 @@
                                                                   @"name":@"平均速度",
                                                                   @"data":[NSString stringWithFormat:@"%@km/h",[self changeStrWithData:msg[@"averageSpeed"]]]};
                                           NSArray* array = @[lDic1,lDic2,lDic3,lDic4,lDic5];
-                                          NSString* cost = [NSString stringWithFormat:@"￥%@",[self changeStrWithData:msg[@"cost"]]];
+                                          NSString *costStr =[self changeStrWithData:msg[@"averageFuelConsumption"]];
+                                          CGFloat costF = [costStr floatValue];
+                                          NSString* cost = [NSString stringWithFormat:@"￥%.2f",costF];
                                           [_groundView reloadData:array cost:cost];
                                           if ([msg[@"totalMileAge"] floatValue] < 3) {
                                               _normalLabel1.hidden = NO;
