@@ -328,7 +328,7 @@
         NSArray *baoyaoArr =(NSArray *)_goodsListArray[indexPath.section-2][@"subServices"];
         NSDictionary *dic = (NSDictionary *)baoyaoArr[indexPath.row];
         NSLog(@"%@",dic);
-        NSLog(@"mingzi =%@",(NSArray *)_goodsListArray[indexPath.section][@"subServices"]);
+//        NSLog(@"mingzi =%@",(NSArray *)_goodsListArray[indexPath.section][@"subServices"]);
         CWSCarWashDiscountModel * discount = [[CWSCarWashDiscountModel alloc]initWithDic:dic];
         cell.discountModel = discount;
         cell.delegate =self;
@@ -366,7 +366,19 @@
 }
 - (void)selectTableViewButtonClicked:(UIButton *)sender andDiscountModel:(CWSCarWashDiscountModel *)thyModel
 {
-    NSLog(@"table view cell clicked!");
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:thyModel.discountPrice forKey:@"discount_price"];
+    [dict setObject:[NSNumber numberWithInteger:thyModel.productID] forKey:@"goods_id"];
+    [dict setObject:thyModel.productName forKey:@"goods_name"];
+    [dict setObject:[NSNumber numberWithBool:YES] forKey:@"is_discount_price"];
+    [dict setObject:[NSNumber numberWithInteger:thyModel.merchantsID] forKey:@"store_id"];
+    [dict setObject:thyModel.merchantsName forKey:@"store_name"];
+    [dict setObject:thyModel.originalPrice forKey:@"price"];
+    [dict setObject:thyModel.discountPrice forKey:@"discount_price"];
+    
+    CWSPayViewController* payVc = [CWSPayViewController new];
+    payVc.dataDict = dict;
+    [self.navigationController pushViewController:payVc animated:YES];
 }
 
 #pragma mark -================================TableViewDelegate
