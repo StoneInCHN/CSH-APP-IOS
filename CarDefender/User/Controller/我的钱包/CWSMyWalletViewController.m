@@ -39,54 +39,20 @@
     self.title = @"我的钱包";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [Utils changeBackBarButtonStyle:self];
-    
     [self initDataSource];
     
 }
-
-
 #pragma mark - 数据源
 - (void)initDataSource
 {
-//    _titleArray = @[@"余额",@"红包",@"积分",@"网络电话"];
-//    _messageArray = @[@"元",@"元",@"分",@""];
-//    _headImageArray = @[@"qianbao_yue",@"qianbao_hogbao",@"qianbao_jifen",@"qianbao_dianhua"];
-    
-    _titleArray = @[@"余额",@"优惠劵",@"积分",@"网络电话"];
-    _messageArray = @[@"元",@"",@"分",@""];
-    _headImageArray = @[@"qianbao_yue",@"qianbao_hogbao",@"qianbao_jifen",@"qianbao_dianhua"];
+    _titleArray = @[@"余额",@"优惠劵",@"积分"];
+    _messageArray = @[@"元",@"",@"分"];
+    _headImageArray = @[@"qianbao_yue",@"qianbao_hogbao",@"qianbao_jifen"];
     
 }
 
 - (void)getData
 {
-    
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    [dic setValue:KUserManager.uid forKey:@"uid"];
-//    [dic setValue:KUserManager.mobile forKey:@"mobile"];
-//    [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-//    [ModelTool getWalletInfoWithParameter:dic andSuccess:^(id object) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//            if ([object[@"state"] integerValue] == 200000) {
-//                _dataDic = [NSMutableDictionary dictionaryWithDictionary:object[@"data"]];
-////                self.tableView = (UITableView *)[self.view viewWithTag:1];
-//                self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-20) style:UITableViewStylePlain];
-//                self.tableView.delegate = self;
-//                self.tableView.dataSource = self;
-//                self.tableView.tableFooterView = [[UIView alloc] init];
-//                [self.view addSubview:self.tableView];
-//            }else{
-//                UIAlertView*alert=[[UIAlertView alloc]initWithTitle:@"提示" message:[PublicUtils showServiceReturnMessage:object[@"message"]] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                [alert show];
-//            }
-//        });
-//    } andFail:^(NSError *err) {
-//        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//    }];
-    
     [HttpHelper viewMyWalletWithUserId:userInfo.desc
                                  token:userInfo.token
                                success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
@@ -229,14 +195,6 @@
             break;
             //红包
         case 1:{
-//            CWSRedEnvelopeViewController *vc = [[CWSRedEnvelopeViewController alloc] init];
-//            if([PublicUtils checkNSNullWithgetString:_dataDic[@"giftAmount"]] != nil){
-//                vc.moneyString = [NSString stringWithFormat:@"%.1f",[[PublicUtils checkNSNullWithgetString:_dataDic[@"giftAmount"]] floatValue]];
-//            }else{
-//                vc.moneyString  = @"0";
-//            }
-//            
-//            [self.navigationController pushViewController:vc animated:YES];
             SFCouponViewController *couponVC = [[SFCouponViewController alloc] init];
             [self.navigationController pushViewController:couponVC animated:YES];
         }

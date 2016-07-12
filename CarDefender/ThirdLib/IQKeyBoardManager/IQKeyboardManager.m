@@ -947,7 +947,6 @@ void _IQShowLog(NSString *logString);
 //    CGRect screenRect = [self keyWindow].bounds;
     CGRect kbFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     _kbSize = kbFrame.size;
- 
     _IQShowLog([NSString stringWithFormat:@"UIKeyboard Size : %@",NSStringFromCGSize(_kbSize)]);
 
     //If last restored keyboard size is different(any orientation accure), then refresh. otherwise not.

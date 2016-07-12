@@ -38,54 +38,53 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.title = @"到店洗车";
-    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     [Utils changeBackBarButtonStyle:self];
     userInfo = [UserInfo userDefault];
-    NSLog(@"userInfo.longitude: %@", userInfo.longitude);
-    NSLog(@"userInfo.latitude: %@", userInfo.latitude);
-    
     [self initialData];
-    
 }
 
-#pragma mark -===========================================================InitialData
+#pragma mark -InitialData
 -(void)initialData{
     _page = 1;
     _pageSize = 5;
     _dataArray = [NSMutableArray array];
     _cellDataArray = [NSMutableArray array];
-    [self getData:NO];
+    [self loadData:1];
 }
-
-//获取租户列表
-- (void)getData:(Boolean) isRefresh {
+- (void)loadData:(int)page {
+    if (page > 10) {
+        _page = 1;
+        page = 1;
+    }
     [HttpHelper searchRenterListWithServiceCategoryId:@"2"
                                                userId:userInfo.desc
                                                 token:userInfo.token
                                              latitude:userInfo.latitude
                                             longitude:userInfo.longitude
                                              pageSize:_pageSize
-                                           pageNumber:_page
+                                           pageNumber:page
                                               success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
                                                   NSLog(@"到店洗车 :%@",responseObjcet);
                                                   NSDictionary *dict = (NSDictionary *)responseObjcet;
                                                   NSString *code = dict[@"code"];
                                                   userInfo.token = dict[@"token"];
                                                   if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                                      if (isRefresh) {
-                                                          [_dataArray addObject:dict[@"msg"]];
-                                                          [myTableView.mj_header endRefreshing];
-                                                          [myTableView.mj_footer endRefreshing];
-                                                      }else{
-                                                          NSMutableArray* rootArray = [dict[@"msg"] mutableCopy];
-                                                          _dataArray = rootArray;
+                                                      NSArray *cars = dict[@"msg"];
+                                                      NSInteger total = [dict[@"page"][@"total"] integerValue];
+                                                      if (_dataArray.count < total) {
+                                                          [_dataArray addObjectsFromArray:cars];
+                                                      }
+                                                      if (_dataArray.count > 0) {
                                                           [self createTableView];
                                                       }
-                                                      
+                                                      [myTableView reloadData];
+
+                                                      if (cars.count == 0) {
+                                                          [MBProgressHUD showError:@"没有更多数据了哦" toView:self.view.window];
+                                                      }
                                                   }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
                                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
                                                   } else {
@@ -96,46 +95,7 @@
                                               }];
 }
 
--(void)loadData{
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:KUserManager.uid forKey:@"uid"];
-    [dic setValue:KUserManager.mobile forKey:@"mobile"];
-
-//    if (KManager.currentPt.latitude >0 && KManager.currentPt.longitude>0) {
-//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.latitude] forKey:@"lat"];
-//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.longitude] forKey:@"lon"];
-//    }
-   // else {
-        [dic setValue:[NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.latitude] forKey:@"lat"];
-        [dic setValue:[NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.longitude] forKey:@"lon"];
-   // }
-    [dic setValue:[NSString stringWithFormat:@"%d",_page] forKey:@"pageNumber"];
-    [dic setValue:[NSString stringWithFormat:@"%d",_pageSize] forKey:@"pageSize"];
-    [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-    [ModelTool getWashCarWithParameter:dic andSuccess:^(id object) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MyLog(@"-------------洗车信息------------%@",object);
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if ([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]) {
-                NSMutableArray* rootArray = [object[@"data"] mutableCopy];
-                _dataArray = rootArray;
-                [self createTableView];
-            }
-            else {
-                UIAlertView *alert =  [[UIAlertView alloc] initWithTitle:@"提示" message:object[@"message"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                [alert show];
-            }
-        });
-    } andFail:^(NSError *err) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }];
-
-}
-
-
-#pragma mark -===========================================================CreateUI
+#pragma mark -CreateUI
 -(void)createTableView{
     myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, kSizeOfScreen.height-kDockHeight) style:UITableViewStyleGrouped];
     myTableView.backgroundColor = KGrayColor3;
@@ -146,84 +106,20 @@
     myTableView.rowHeight = 38;
     myTableView.bounces = YES;
     myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _page = 1;
-        [_dataArray removeAllObjects];
-        [self getData:NO];
-    }];
-    myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        _page++;
-        [self getData:YES];
-    }];
-    
+    myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
+    myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];
     [self setExtraCellLineHidden:myTableView];
     [self.view addSubview:myTableView];
-    
 }
-
-#pragma mark - 刷新加载
--(void)refreshData{
-    
-    [HttpHelper searchRenterListWithServiceCategoryId:@"2"
-                                               userId:userInfo.desc
-                                                token:userInfo.token
-                                             latitude:userInfo.latitude
-                                            longitude:userInfo.longitude
-                                             pageSize:_pageSize
-                                           pageNumber:_page
-                                              success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
-                                                  NSLog(@"到店洗车 :%@",responseObjcet);
-                                                  NSDictionary *dict = (NSDictionary *)responseObjcet;
-                                                  NSString *code = dict[@"code"];
-                                                  userInfo.token = dict[@"token"];
-                                                  if ([code isEqualToString:SERVICE_SUCCESS]) {
-                                                      
-                                                      [_dataArray addObject:dict[@"msg"]];
-                                                      
-                                                      [myTableView.mj_header endRefreshing];
-                                                      [myTableView.mj_footer endRefreshing];
-                                                      
-                                                  }else if ([code isEqualToString:SERVICE_TIME_OUT]) {
-                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"TIME_OUT_NEED_LOGIN_AGAIN" object:nil];
-                                                  } else {
-                                                      [MBProgressHUD showError:dict[@"desc"] toView:self.view];
-                                                  }
-                                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                  [MBProgressHUD showError:@"请求失败，请重试" toView:self.view];
-                                              }];
-    
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    [dic setValue:KUserManager.uid forKey:@"uid"];
-//    [dic setValue:KUserManager.mobile forKey:@"mobile"];
-//    
-//    if (KManager.currentPt.latitude >0 && KManager.currentPt.longitude>0) {
-//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.latitude] forKey:@"lat"];
-//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.currentPt.longitude] forKey:@"lon"];
-//    }
-//    else {
-//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.latitude] forKey:@"lat"];
-//        [dic setValue:[NSString stringWithFormat:@"%f",KManager.mobileCurrentPt.longitude] forKey:@"lon"];
-//    }
-//    [dic setValue:[NSString stringWithFormat:@"%d",_page] forKey:@"pageNumber"];
-//    [dic setValue:[NSString stringWithFormat:@"%d",_pageSize] forKey:@"pageSize"];
-//    
-//    
-//    [ModelTool getWashCarWithParameter:dic andSuccess:^(id object) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if([object[@"state"] isEqualToString:SERVICE_STATE_SUCCESS]){
-//                for (NSDictionary* dict in object[@"data"]) {
-//                    [_dataArray addObject:dict];
-//                }
-//                [myTableView.mj_header endRefreshing];
-//                [myTableView.mj_footer endRefreshing];
-//            }
-//        });
-//    } andFail:^(NSError *err) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络出错，请重新加载" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//    }];
+- (void)headerRefreshing {
+    [self loadData:1];
+    [myTableView.mj_header endRefreshing];
 }
-
+- (void)footerRefreshing {
+    _page++;
+    [self loadData:_page];
+    [myTableView.mj_footer endRefreshing];
+}
 #pragma mark - 更新数据源方法
 -(void)loadShareDataInPage{
     [myTableView.mj_footer endRefreshing];
@@ -257,6 +153,9 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
 
+    if (_dataArray.count == 0) {
+        return nil;
+    }
     NewCarWashTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"NewCarWashCell"];
 
     NSMutableDictionary *goodsDic = [NSMutableDictionary dictionaryWithDictionary:_dataArray[indexPath.section][@"carService"][indexPath.row]];

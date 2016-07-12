@@ -26,7 +26,7 @@
 #import "CWSNewCarWashNormalCell.h"
 
 #import "CWSYuYueViewController.h" //预约保养
-
+#import "CWSTyreHomeController.h"
 #import "ChoseDatePikerView.h"
 
 #define HEADER_HEIGHT 33.0f
@@ -337,6 +337,7 @@
         CWSNewCarWashNormalCell* cell = [[[NSBundle mainBundle]loadNibNamed:@"CWSNewCarWashNormalCell" owner:self options:nil] lastObject];
         cell.productNameLabel.text = @"";
         [cell.payButton setTitle:@"救援" forState:UIControlStateNormal];
+        [cell.payButton addTarget:self action:@selector(emergencyRescueEvent) forControlEvents:UIControlEventTouchUpInside];
         cell.priceLabel.hidden = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -359,7 +360,10 @@
         return nil;
     }
 }
-
+- (void)emergencyRescueEvent {
+    CWSTyreHomeController *emergencyRescue = [[CWSTyreHomeController alloc] init];
+    [self.navigationController pushViewController:emergencyRescue animated:YES];
+}
 - (void)selectTableViewButtonClicked:(UIButton *)sender andDiscountModel:(CWSCarWashDiscountModel *)thyModel
 {
     NSLog(@"table view cell clicked!");
@@ -389,14 +393,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
     if(!section){
-    
         return 98.0f;
-    }else  if(section == 1){
-        return 0;
     }
-    
     return HEADER_HEIGHT;
 }
 
@@ -418,9 +417,10 @@
     if(!section){
         
         eachHeaderView = [[NewCarWashDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width, 98) Data:_dataDic images:_images controller:self];
-    }else if (section == 1){
-        return nil;
     }
+//    else if (section == 1){
+//        return nil;
+//    }
     else{
         
         eachHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kSizeOfScreen.width,HEADER_HEIGHT)];

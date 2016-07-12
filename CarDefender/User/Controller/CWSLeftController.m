@@ -90,34 +90,9 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(leftMark:) name:@"leftMark" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationStateActive:) name:kAppToActionNotification object:nil];
     _unreadMsgOnce = YES;
-    
-#if USENEWVERSION
-    
-#warning 修改查询用户数据的链接
-    
-//    [HttpTool postcheckAllUserMessageWithParameter:@{@"uid":KUserManager.uid} success:^(NSDictionary *data) {
-//
-//        NSLog(@"%@",data);
-//        UserNew* lUser = [[UserNew alloc] initWithDic:data];
-//        KUserManager = lUser;
-//        
-//        [self initalizeUserInterface];
-//        [self initDataSource];
-//        
-//    } faile:^(NSError *err) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:err.localizedDescription delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//        [alert show];
-//    }];
-    
-#else
     [self initalizeUserInterface];
     [self initDataSource];
-    
-#endif
 }
-
-
-
 
 -(void)leftMark:(NSNotification*)sender
 {
@@ -189,7 +164,7 @@
         }
         //昵称
         if ([Helper isStringEmpty:userInfo.nickName]) {
-            cell.nameLabel.text = userInfo.userName;
+            cell.nameLabel.text = @" ";
         }else{
             cell.nameLabel.text = userInfo.nickName;
         }

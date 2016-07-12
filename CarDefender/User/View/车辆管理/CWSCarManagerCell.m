@@ -14,6 +14,7 @@
 
     NSString*url=[NSString stringWithFormat:@"%@%@",kBaseUrl,dicMsg[@"brandIcon"]];
     NSURL*logoImgUrl=[NSURL URLWithString:url];
+    self.carBrandImage.contentMode = UIViewContentModeScaleAspectFit;
     [self.carBrandImage setImageWithURL:logoImgUrl placeholderImage:[UIImage imageNamed:@"logo"] options:SDWebImageLowPriority | SDWebImageRetryFailed|SDWebImageProgressiveDownload];
 //    self.clickImagView.hidden = YES;
 //    if ([dicMsg[@"carId"] isEqualToString:KUserManager.car.carId]) {
