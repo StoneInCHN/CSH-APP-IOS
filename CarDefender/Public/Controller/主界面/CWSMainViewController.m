@@ -117,6 +117,7 @@
     [self updateIndexPageData];
     [self buildNoti];
     [self initJpush];
+    [self getDuiBaUrl];
     
 }
 #pragma mark 初始化UI和数据
@@ -200,6 +201,28 @@
     self.myIndexScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(updateIndexPageData)];
     self.badgeValueLabel.text = @"";//没有网络时显示
     self.badgeImage.hidden = YES;
+}
+
+- (void)getDuiBaUrl{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [HttpHelper getDuiBaUrlWithUserId:userInfo.desc
+                                token:userInfo.token
+                              success:^(AFHTTPRequestOperation *operation, id responseObjcet) {
+                                  NSDictionary *dict = (NSDictionary *)responseObjcet;
+                                  NSLog(@"兑吧商城URL接口返回值：%@", dict);
+                                  NSString *code = dict[@"code"];
+                                  userInfo.token = dict[@"token"];
+                                  if ([code isEqualToString:SERVICE_SUCCESS]) {
+                                      NSLog(@"获取兑吧商城URL成功");
+                                      //保存地址
+                                      [userDefaults setObject:dict[@"desc"] forKey:@"duiBaUrl"];
+                                      [userDefaults synchronize];
+                                  }else{
+                                      NSLog(@"获取兑吧商城URL失败");
+                                  }
+                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  NSLog(@"获取兑吧商城URL失败（服务器异常）");
+                              }];
 }
 
 //初始化极光推送

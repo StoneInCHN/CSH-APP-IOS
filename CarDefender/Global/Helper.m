@@ -37,11 +37,13 @@
     return [NSString stringWithFormat:@"%@",data];
 }
 
-+ (NSString *)currentDateStr {
++ (NSString *)yesterdayDateStr {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"YYYY-MM-dd"];
     NSDate *currentDate = [[NSDate alloc] init];
-    NSString *currentDateStr = [NSString stringWithFormat:@"%@",[formatter stringFromDate:currentDate]];
-    return currentDateStr;
+    NSTimeInterval a_day = -24*60*60;
+    NSDate *yesterday = [currentDate dateByAddingTimeInterval:a_day];
+    NSString *result = [NSString stringWithFormat:@"%@",[formatter stringFromDate:yesterday]];
+    return result;
 }
 @end

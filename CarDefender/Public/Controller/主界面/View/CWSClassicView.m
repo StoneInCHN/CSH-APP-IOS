@@ -9,6 +9,7 @@
 #import "CWSClassicView.h"
 #import "CWSActivityViewController.h"
 #import "CWSRecordShopViewController.h"
+#import "CreditWebViewController.h"
 
 @implementation CWSClassicView
 
@@ -87,8 +88,12 @@
 
 -(void)rightButtonClicked:(UIButton*)sender{
     //积分商城
-    CWSRecordShopViewController *vc = [[CWSRecordShopViewController alloc] init];
-    [self.thyRootVc.navigationController pushViewController:vc animated:YES];
+//    CWSRecordShopViewController *vc = [[CWSRecordShopViewController alloc] init];
+    //兑吧商城
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *duiBaUrl = [userDefaults objectForKey:@"duiBaUrl"];
+    CreditWebViewController *web=[[CreditWebViewController alloc]initWithUrl:duiBaUrl];
+    [self.thyRootVc.navigationController pushViewController:web animated:YES];
 }
 
 

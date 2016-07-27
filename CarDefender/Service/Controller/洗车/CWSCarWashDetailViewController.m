@@ -325,7 +325,7 @@
         cell.priceLabel.hidden = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
        
-        NSArray *baoyaoArr =(NSArray *)_goodsListArray[indexPath.section-2][@"subServices"];
+        NSArray *baoyaoArr =(NSArray *)_goodsListArray[indexPath.section-1][@"subServices"];
         NSDictionary *dic = (NSDictionary *)baoyaoArr[indexPath.row];
         NSLog(@"%@",dic);
 //        NSLog(@"mingzi =%@",(NSArray *)_goodsListArray[indexPath.section][@"subServices"]);

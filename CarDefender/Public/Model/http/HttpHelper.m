@@ -938,4 +938,16 @@
     [self post:urlString parameters:parmDict success:success failure:failure];
 }
 
++ (void)getDuiBaUrlWithUserId:(NSString *)userId
+                        token:(NSString *)token
+                      success:(void (^)(AFHTTPRequestOperation *, id))success
+                      failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
+    NSMutableDictionary *parmDict = [NSMutableDictionary dictionary];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:userId] forKey:@"userId"];
+    [parmDict setObject:[PublicUtils checkNSNullWithgetString:token] forKey:@"token"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVERADDRESS, KHTTPHELPER_DUI_BA_URL];
+    NSLog(@"兑吧商城地址 :%@",urlString);
+    [self post:urlString parameters:parmDict success:success failure:failure];
+}
+
 @end

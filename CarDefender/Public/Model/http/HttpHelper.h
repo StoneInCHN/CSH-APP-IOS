@@ -492,4 +492,11 @@
                     chargeType:(NSString *)chargeType
                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark 获取积分商城URL
++ (void)getDuiBaUrlWithUserId:(NSString *)userId
+                        token:(NSString *)token
+                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObjcet))success
+                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

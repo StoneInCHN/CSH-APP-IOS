@@ -85,7 +85,7 @@
 }
 - (void)oneKeyDetection {
     [MBProgressHUD showMessag:@"正在加载..." toView:self.view];
-    NSString *searchDate = [Helper currentDateStr];
+    NSString *searchDate = [Helper yesterdayDateStr];
     [HttpHelper oneKeyDetectionWithUserId:userInfo.desc
                                     token:userInfo.token
                                  deviceNo:userInfo.defaultDeviceNo

@@ -40,6 +40,9 @@
 		24BAFD4C1D12B3E800C354B6 /* SFActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24BAFD4B1D12B3E800C354B6 /* SFActivityModel.m */; };
 		24E085CE1D2118CC000E01FF /* SFDetectionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E085CD1D2118CC000E01FF /* SFDetectionDetailViewController.m */; };
 		24E53A8D1CE1AE9E0037197B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E53A8C1CE1AE9E0037197B /* UserInfo.m */; };
+		2E0C04B21D4900AF0067493F /* CreditNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C04AD1D4900AF0067493F /* CreditNavigationController.m */; };
+		2E0C04B31D4900AF0067493F /* CreditWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C04AF1D4900AF0067493F /* CreditWebView.m */; };
+		2E0C04B41D4900AF0067493F /* CreditWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C04B11D4900AF0067493F /* CreditWebViewController.m */; };
 		2E11D6F41D1845E10007DF8B /* CWSServiceBYTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E11D6F11D1845E10007DF8B /* CWSServiceBYTableViewCell.m */; };
 		2E11D6F51D1845E10007DF8B /* CWSSlelectBaoYangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E11D6F31D1845E10007DF8B /* CWSSlelectBaoYangViewController.m */; };
 		2E29F4E91CF5D8F900EC8EAF /* FindGasStationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E29F4E81CF5D8F900EC8EAF /* FindGasStationHeadView.xib */; };
@@ -1320,6 +1323,13 @@
 		24E085CD1D2118CC000E01FF /* SFDetectionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDetectionDetailViewController.m; sourceTree = "<group>"; };
 		24E53A8B1CE1AE9E0037197B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		24E53A8C1CE1AE9E0037197B /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		2E0C04AB1D4900AF0067493F /* CreditConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreditConstant.h; path = DuiBaSource/CreditConstant.h; sourceTree = "<group>"; };
+		2E0C04AC1D4900AF0067493F /* CreditNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreditNavigationController.h; path = DuiBaSource/CreditNavigationController.h; sourceTree = "<group>"; };
+		2E0C04AD1D4900AF0067493F /* CreditNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreditNavigationController.m; path = DuiBaSource/CreditNavigationController.m; sourceTree = "<group>"; };
+		2E0C04AE1D4900AF0067493F /* CreditWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreditWebView.h; path = DuiBaSource/CreditWebView.h; sourceTree = "<group>"; };
+		2E0C04AF1D4900AF0067493F /* CreditWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreditWebView.m; path = DuiBaSource/CreditWebView.m; sourceTree = "<group>"; };
+		2E0C04B01D4900AF0067493F /* CreditWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreditWebViewController.h; path = DuiBaSource/CreditWebViewController.h; sourceTree = "<group>"; };
+		2E0C04B11D4900AF0067493F /* CreditWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreditWebViewController.m; path = DuiBaSource/CreditWebViewController.m; sourceTree = "<group>"; };
 		2E11D6F01D1845E10007DF8B /* CWSServiceBYTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSServiceBYTableViewCell.h; sourceTree = "<group>"; };
 		2E11D6F11D1845E10007DF8B /* CWSServiceBYTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWSServiceBYTableViewCell.m; sourceTree = "<group>"; };
 		2E11D6F21D1845E10007DF8B /* CWSSlelectBaoYangViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWSSlelectBaoYangViewController.h; sourceTree = "<group>"; };
@@ -3480,6 +3490,20 @@
 			children = (
 			);
 			path = "一键检测";
+			sourceTree = "<group>";
+		};
+		2E0C04AA1D49005D0067493F /* DuiBaSource */ = {
+			isa = PBXGroup;
+			children = (
+				2E0C04AB1D4900AF0067493F /* CreditConstant.h */,
+				2E0C04AC1D4900AF0067493F /* CreditNavigationController.h */,
+				2E0C04AD1D4900AF0067493F /* CreditNavigationController.m */,
+				2E0C04AE1D4900AF0067493F /* CreditWebView.h */,
+				2E0C04AF1D4900AF0067493F /* CreditWebView.m */,
+				2E0C04B01D4900AF0067493F /* CreditWebViewController.h */,
+				2E0C04B11D4900AF0067493F /* CreditWebViewController.m */,
+			);
+			name = DuiBaSource;
 			sourceTree = "<group>";
 		};
 		3300F4971ADFFD7B00B3D5B7 /* 报告日期 */ = {
@@ -7161,6 +7185,7 @@
 		4CECD25C1C2287EF0069754C /* 积分商城 */ = {
 			isa = PBXGroup;
 			children = (
+				2E0C04AA1D49005D0067493F /* DuiBaSource */,
 				4CECD25D1C2287EF0069754C /* CWSRecordShopViewController.h */,
 				4CECD25E1C2287EF0069754C /* CWSRecordShopViewController.m */,
 				4CECD25F1C2287EF0069754C /* CWSRecordShopViewController.xib */,
@@ -8140,7 +8165,7 @@
 				TargetAttributes = {
 					335C5B8D1AC1062D001EA2AC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = ZJMB8US8MQ;
+						DevelopmentTeam = Y638L9NEZ8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -8834,6 +8859,7 @@
 				4CB70E7B1C3E5A7300046102 /* CWSBoundIDViewController.m in Sources */,
 				4CAB974C1C111FAE00B12A2B /* CWSRecordViewController.m in Sources */,
 				33507BE11AD40CA800F1F236 /* SDWebImageCompat.m in Sources */,
+				2E0C04B31D4900AF0067493F /* CreditWebView.m in Sources */,
 				4CF77D3B1C168A640050B7E2 /* NewCarWashTableViewCell.m in Sources */,
 				33E6B36F1B86C61E00909747 /* CWSUserCenterObject.m in Sources */,
 				928A64291ACCF4460013C666 /* EMChatTimeCell.m in Sources */,
@@ -8844,6 +8870,7 @@
 				33507BDE1AD40CA800F1F236 /* MKAnnotationView+WebCache.m in Sources */,
 				339404231B4CF35F009CCEE2 /* CWSWeatherCell.m in Sources */,
 				4CAB97581C11203600B12A2B /* RecordTableViewCell.m in Sources */,
+				2E0C04B21D4900AF0067493F /* CreditNavigationController.m in Sources */,
 				33507BE61AD40CA800F1F236 /* SDWebImagePrefetcher.m in Sources */,
 				3347088E1AF86D54006A5660 /* UserManager.m in Sources */,
 				4CB73B3C1C18291B003A80A1 /* CWSUserMessageCenterViewController.m in Sources */,
@@ -9012,6 +9039,7 @@
 				334708D81AF8765F006A5660 /* CWSTrajectoryLocationCell.m in Sources */,
 				4CC367A81C21542E0098A6C7 /* qrencode.c in Sources */,
 				928A62BC1ACCE9C50013C666 /* UIImageView+EMHighlightedWebCache.m in Sources */,
+				2E0C04B41D4900AF0067493F /* CreditWebViewController.m in Sources */,
 				4CB912931C433A80002D93BB /* RSADataSigner.m in Sources */,
 				4CDF3AF61C3B9F6E0049A7FA /* CWSInternetPhoneViewController.m in Sources */,
 				928A63DB1ACCF4040013C666 /* LoginViewController.m in Sources */,
@@ -9593,7 +9621,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";
@@ -9606,7 +9634,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing Cheweishi Technology Co., Ltd. (Y638L9NEZ8)";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9675,7 +9703,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carDefender.carLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64";

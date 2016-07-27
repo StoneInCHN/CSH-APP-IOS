@@ -344,7 +344,7 @@
         case 0:{
             //车辆报告
             CWSCarReportViewController* reportVc = [CWSCarReportViewController new];
-            reportVc.searchDate = [Helper currentDateStr];
+            reportVc.searchDate = [Helper yesterdayDateStr];
             [self.navigationController pushViewController:reportVc animated:YES];
             
         };break;

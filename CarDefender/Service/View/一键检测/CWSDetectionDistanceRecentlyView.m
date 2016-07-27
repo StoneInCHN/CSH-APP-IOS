@@ -47,7 +47,8 @@
     self.avgSpeedLabel.text = [self changeStringWithData:dataDic[@"averageSpeed"]];
     self.avgConsumptionLabel.text = [NSString stringWithFormat:@"%@升/百公里",[self changeStringWithData:dataDic[@"averageFuelConsumption"]]];
     self.distanceLabel.text = [NSString stringWithFormat:@"%@公里",[self changeStringWithData:dataDic[@"mileAge"]]];
-    self.timeLabel.text = [NSString stringWithFormat:@"%@分",[self changeStringWithData:dataDic[@"runningTime"]]];
+    NSInteger runningTime = [dataDic[@"runningTime"] integerValue]/60;
+    self.timeLabel.text = [NSString stringWithFormat:@"%@分",[self changeStringWithData:[NSString stringWithFormat:@"%ld", (long)runningTime]]];
     //    [self getData];
     
 }
