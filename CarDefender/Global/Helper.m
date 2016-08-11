@@ -22,7 +22,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"YYYY-dd-MM HH:mm:ss"];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     NSTimeZone* timeZone = [NSTimeZone systemTimeZone];
     [formatter setTimeZone:timeZone];
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:timeStamp / 1000];

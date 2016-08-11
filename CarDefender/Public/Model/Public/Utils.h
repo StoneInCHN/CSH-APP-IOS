@@ -78,6 +78,14 @@
  */
 +(BOOL)isValidateTellphone:(NSString *)tellphone;
 /**
+ *  判断是否是车牌号
+ *
+ *  @param str 传入的字符串
+ *
+ *  @return 返回yes为纯数字反之为no
+ */
++(BOOL)checkCarNumber:(NSString*)lStr;
+/**
  *  判断是否是纯数字
  *
  *  @param str 传入的字符串

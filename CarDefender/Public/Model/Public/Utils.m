@@ -215,6 +215,19 @@
         return NO;
     }
 }
+//检查是否是正确车牌号
++(BOOL)checkCarNumber:(NSString*)lStr
+{
+    NSString * regex = @"^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch = [predicate evaluateWithObject:lStr];
+    
+    if (isMatch == YES) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 // 判断是否含有表情，yes为含有
 +(BOOL)isContainsEmoji:(NSString *)string {
     __block BOOL isEomji = NO;

@@ -678,22 +678,37 @@
     if(self.carNumberTextField.text){  //车牌号码
         NSString* myPlate = [NSString stringWithFormat:@"%@%@%@",self.carAreaLabel.text,self.carLetterLabel.text,self.carNumberTextField.text];
        // NSString* myPlate = [temp stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        if([Utils checkCarNumber:myPlate]){
         [_bodyDic setObject:myPlate forKey:@"plateNo"];
-    }
-    
-    if (self.currentKiloText.text.length) {  //行驶里程
-        if ([self.currentKiloText.text floatValue]>=0 && [self.currentKiloText.text floatValue]<1000001) {
-            [_bodyDic setObject:self.currentKiloText.text forKey:@"driveMileage"];
         }else{
-            [[[UIAlertView alloc]initWithTitle:@"提示" message:@"当前里程输入有误，其里程数应该为0-1000000km" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入正确的车牌号" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
             return;
         }
     }
     
-    if(self.lastKilomText.text.length){  //上次保养里程
-        [_bodyDic setObject:self.lastKilomText.text forKey:@"lastMaintainMileage"];
+    if (self.currentKiloText.text.length) {  //行驶里程
+        if ([self.currentKiloText.text floatValue]>=0 && [self.currentKiloText.text floatValue]<1000001&&[Utils isNumText:self.currentKiloText.text]) {
+            [_bodyDic setObject:self.currentKiloText.text forKey:@"driveMileage"];
+        }else{
+            [[[UIAlertView alloc]initWithTitle:@"提示" message:@"行驶里程输入有误，其里程数应该为0-1000000km" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+            return;
+        }
     }else{
-        [[[UIAlertView alloc]initWithTitle:@"提示" message:@"当前里程输入有误，其里程数应该为0-1000000km" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未输入车辆当前里程" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        return;
+    }
+    
+    if(self.lastKilomText.text.length){  //上次保养里程
+        
+        
+        if ([self.lastKilomText.text floatValue]>=0 && [self.lastKilomText.text floatValue]<1000001&&[Utils isNumText:self.lastKilomText.text]) {
+            [_bodyDic setObject:self.lastKilomText.text forKey:@"lastMaintainMileage"];
+        }else{
+            [[[UIAlertView alloc]initWithTitle:@"提示" message:@"行驶里程输入有误，其里程数应该为0-1000000km" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+            return;
+        }
+    }else{
+        [[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还未输入车辆上次保养里程" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
         return;
     }
     
@@ -718,6 +733,7 @@
     }
     
   
+    
 #pragma mark -====================================================参数验证
     if (self.carBoundIdTextFiled.text.length) { //绑定设备ID
         if (self.carBoundIdTextFiled.text.length==10) {
@@ -728,13 +744,18 @@
         }
     }
     
-    if ([Utils checkNubOrLetter:self.carFrameField.text]) {//判断车架号是否符合字母和数字要求
-        [_bodyDic setObject:self.carFrameField.text forKey:@"vehicleNo"];
-    }else{
-        if (self.carFrameField.text.length) {
-            [[[UIAlertView alloc]initWithTitle:@"提示" message:@"车架号只能含有字母和数字" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-            return;
+    if (self.carFrameField.text.length){
+        if ([Utils checkNubOrLetter:self.carFrameField.text]) {//判断车架号是否符合字母和数字要求
+            [_bodyDic setObject:self.carFrameField.text forKey:@"vehicleNo"];
+        }else{
+            if (self.carFrameField.text.length) {
+                [[[UIAlertView alloc]initWithTitle:@"提示" message:@"车架号只能含有字母和数字" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+                return;
+            }
         }
+    }else{
+        [[[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入车架号" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        return;
     }
     
     
@@ -1037,6 +1058,7 @@
 #pragma 改变保存按钮的状态
 -(void)changeBtnStatus{
     if([self.title isEqualToString:@"添加车辆"]){
+        self.sureBtn.enabled = YES;
         if (self.carNumberTextField.text.length==0) {
             chepai = NO;
         }else{
@@ -1063,13 +1085,13 @@
             chejiahao = YES;
         }
         
-        if (pingpai&&chepai&&licheng&&shangcibaoyang&&nianjian&&baoxian&&chejiahao) {
-            self.sureBtn.enabled = YES;
-            [self.sureBtn setTitleColor:kMainColor forState:UIControlStateNormal];
-        }else{
-            self.sureBtn.enabled = NO;
-            [self.sureBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        }
+//        if (pingpai&&chepai&&licheng&&shangcibaoyang&&nianjian&&baoxian&&chejiahao) {
+//            self.sureBtn.enabled = YES;
+//            [self.sureBtn setTitleColor:kMainColor forState:UIControlStateNormal];
+//        }else{
+//            self.sureBtn.enabled = NO;
+//            [self.sureBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//        }
     }
 }
 @end

@@ -15,7 +15,8 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    NSString *url = @"http://120.27.92.247:10001/csh-interface/endUser/rsa.jhtml";
+    //NSString *url = @"http://120.27.92.247:10001/csh-interface/endUser/rsa.jhtml";
+    NSString *url = [NSString stringWithFormat:@"%@/csh-interface/endUser/rsa.jhtml",SERVERADDRESS];
     [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject :%@",responseObject);
         NSDictionary *dict = (NSDictionary *)responseObject;

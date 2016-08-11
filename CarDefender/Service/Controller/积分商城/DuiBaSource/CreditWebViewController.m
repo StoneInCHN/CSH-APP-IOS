@@ -36,9 +36,6 @@ static NSString *originUserAgent;
 -(id)initWithUrl:(NSString *)url{
     self=[super init];
     self.request=[NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    
-    
-    
     return self;
 }
 -(id)initWithUrlByPresent:(NSString *)url{
